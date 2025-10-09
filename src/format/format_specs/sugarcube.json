@@ -1,0 +1,397 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "format": {
+    "name": "SugarCube",
+    "version": "2.37.3",
+    "type": "twine",
+    "description": "Advanced Twine story format with extensive macro library and JavaScript integration"
+  },
+  "features": {
+    "macros": true,
+    "javascript": true,
+    "css": true,
+    "variables": "story_and_temporary",
+    "state_tracking": "full_history",
+    "conditionals": "macro_based",
+    "loops": "macro_based",
+    "functions": "javascript",
+    "multimedia": "full",
+    "styling": "css_and_inline",
+    "custom_macros": true,
+    "save_system": "built_in",
+    "ui_api": true
+  },
+  "syntax": {
+    "variables": {
+      "story": "$variable",
+      "temporary": "_variable",
+      "declaration": "<<set $var to value>>",
+      "access": "$var",
+      "pattern": "^\\$[a-zA-Z_][a-zA-Z0-9_]*$",
+      "examples": [
+        "<<set $playerName to 'Hero'>>",
+        "<<set $health to 100>>",
+        "<<set $inventory to ['sword', 'potion']>>",
+        "<<set _temp to $health * 2>>"
+      ]
+    },
+    "links": {
+      "basic": "[[Link Text]]",
+      "with_target": "[[Link Text|Target Passage]]",
+      "with_setter": "[[Link|Passage][$var to value]]",
+      "link_macro": "<<link 'Text'>>...<<link>>",
+      "link_goto": "<<link 'Text' 'Passage'>><<link>>",
+      "pattern": "\\[\\[([^\\|\\]]+)(?:\\|([^\\]]+))?(?:\\[([^\\]]+)\\])?\\]\\]",
+      "examples": [
+        "[[Next]]",
+        "[[Go there|Location]]",
+        "[[Take sword|Inventory][$hasSword to true]]",
+        "<<link 'Click me'>><<set $clicked to true>><<link>>"
+      ]
+    },
+    "conditionals": {
+      "if": "<<if condition>>...<<endif>>",
+      "if_else": "<<if condition>>...<<else>>...<<endif>>",
+      "elseif": "<<if cond1>>A<<elseif cond2>>B<<else>>C<<endif>>",
+      "switch": "<<switch expression>><<case value>>...<<default>>...<<endswitch>>",
+      "examples": [
+        "<<if $health > 50>>You feel strong<<endif>>",
+        "<<if $hasKey>>Unlock<<else>>Locked<<endif>>",
+        "<<if $gold >= 100>>Rich<<elseif $gold >= 50>>OK<<else>>Poor<<endif>>",
+        "<<switch $class>><<case 'warrior'>>Strong<<case 'mage'>>Wise<<default>>Average<<endswitch>>"
+      ]
+    },
+    "loops": {
+      "for": "<<for _i to 0; _i < 10; _i++>>...<</for>>",
+      "for_range": "<<for _i range 1 10>>...<</for>>",
+      "for_in": "<<for _item in $array>>...<</for>>",
+      "break": "<<break>>",
+      "continue": "<<continue>>",
+      "examples": [
+        "<<for _i to 0; _i < $inventory.length; _i++>>Item _i<</for>>",
+        "<<for _i range 1 5>>Number _i<</for>>",
+        "<<for _item in $inventory>>* _item\n<</for>>"
+      ]
+    },
+    "output": {
+      "print": "<<print $variable>>",
+      "inline": "$variable",
+      "equal": "<<= $variable>>",
+      "nobr": "<<nobr>>...<<nobr>>",
+      "examples": [
+        "<<print $playerName>>",
+        "You have $gold coins",
+        "<<= $health + 10>>",
+        "<<nobr>>No line breaks here<<nobr>>"
+      ]
+    },
+    "scripting": {
+      "script": "<<script>>...<<script>>",
+      "run": "<<run code>>",
+      "examples": [
+        "<<script>>console.log('Debug info');<<script>>",
+        "<<run $health += 10>>",
+        "<<script>>\n  State.variables.calculated = Math.random() * 100;\n<<script>>"
+      ]
+    },
+    "widgets": {
+      "widget": "<<widget 'name'>>...<<endwidget>>",
+      "call": "<<name args>>",
+      "examples": [
+        "<<widget 'damage'>><<set $health -= $args[0]>><<endwidget>>",
+        "<<damage 10>>"
+      ]
+    }
+  },
+  "macros": {
+    "variables": {
+      "set": "<<set $var to value>>",
+      "unset": "<<unset $var>>",
+      "capture": "<<capture _var>>...<<capture>>",
+      "remember": "<<remember $var>>"
+    },
+    "conditionals": {
+      "if": "<<if condition>>",
+      "elseif": "<<elseif condition>>",
+      "else": "<<else>>",
+      "endif": "<<endif>>",
+      "switch": "<<switch expression>>",
+      "case": "<<case value>>",
+      "default": "<<default>>",
+      "endswitch": "<<endswitch>>"
+    },
+    "loops": {
+      "for": "<<for init; condition; increment>>",
+      "for_range": "<<for _var range start end>>",
+      "for_in": "<<for _var in collection>>",
+      "break": "<<break>>",
+      "continue": "<<continue>>"
+    },
+    "links": {
+      "link": "<<link 'text'>>...<<link>>",
+      "link_goto": "<<link 'text' 'passage'>>",
+      "button": "<<button 'text'>>...<<button>>",
+      "button_goto": "<<button 'text' 'passage'>>",
+      "linkappend": "<<linkappend 'text'>>...<<linkappend>>",
+      "linkprepend": "<<linkprepend 'text'>>...<<linkprepend>>",
+      "linkreplace": "<<linkreplace 'text'>>...<<linkreplace>>"
+    },
+    "display": {
+      "print": "<<print value>>",
+      "equal": "<<= value>>",
+      "append": "<<append selector>>...<<append>>",
+      "prepend": "<<prepend selector>>...<<prepend>>",
+      "replace": "<<replace selector>>...<<replace>>",
+      "remove": "<<remove selector>>",
+      "copy": "<<copy selector>>",
+      "include": "<<include 'PassageName'>>"
+    },
+    "multimedia": {
+      "audio": "<<audio trackID action>>",
+      "cacheaudio": "<<cacheaudio trackID url>>",
+      "createaudiogroup": "<<createaudiogroup groupID>>",
+      "createplaylist": "<<createplaylist listID>>",
+      "removeaudiogroup": "<<removeaudiogroup groupID>>",
+      "removeplaylist": "<<removeplaylist listID>>",
+      "waitforaudio": "<<waitforaudio>>"
+    },
+    "actions": {
+      "goto": "<<goto 'PassageName'>>",
+      "back": "<<back>>",
+      "return": "<<return>>",
+      "actions": "<<actions>>...<<actions>>",
+      "choice": "<<choice 'text' 'passage'>>"
+    },
+    "time": {
+      "timed": "<<timed duration>>...<<timed>>",
+      "next": "<<next>>",
+      "repeat": "<<repeat duration>>...<<repeat>>",
+      "stop": "<<stop>>"
+    },
+    "dom": {
+      "addclass": "<<addclass selector 'class'>>",
+      "removeclass": "<<removeclass selector 'class'>>",
+      "toggleclass": "<<toggleclass selector 'class'>>",
+      "css": "<<css selector property value>>"
+    },
+    "typing": {
+      "type": "<<type speed>>text<<type>>",
+      "typeon": "<<typeon 'class'>>",
+      "typeoff": "<<typeoff>>"
+    },
+    "widgets": {
+      "widget": "<<widget 'name' [container]>>",
+      "endwidget": "<<endwidget>>"
+    },
+    "misc": {
+      "nobr": "<<nobr>>",
+      "silently": "<<silently>>...<<silently>>",
+      "comment": "/% comment %/",
+      "done": "<<done>>...<<done>>",
+      "script": "<<script>>...<<script>>",
+      "run": "<<run code>>"
+    }
+  },
+  "javascript_api": {
+    "state": {
+      "variables": "State.variables",
+      "temporary": "State.temporary",
+      "active": "State.active",
+      "passage": "State.passage",
+      "history": "State.history"
+    },
+    "story": {
+      "get": "Story.get('PassageName')",
+      "has": "Story.has('PassageName')",
+      "lookup": "Story.lookup('tags', 'tag')"
+    },
+    "engine": {
+      "play": "Engine.play('PassageName')",
+      "restart": "Engine.restart()",
+      "backward": "Engine.backward()",
+      "forward": "Engine.forward()",
+      "go": "Engine.go(steps)"
+    },
+    "ui": {
+      "alert": "UI.alert('message')",
+      "jumpto": "UI.jumpto()",
+      "restart": "UI.restart()",
+      "saves": "UI.saves()",
+      "settings": "UI.settings()"
+    },
+    "save": {
+      "save": "Save.save('slot', 'title')",
+      "load": "Save.load('slot')",
+      "delete": "Save.delete('slot')",
+      "clear": "Save.clear()",
+      "autosave": "Save.autosave.save('title')"
+    },
+    "config": {
+      "history": "Config.history.maxStates",
+      "saves": "Config.saves.maxSlotSaves",
+      "macros": "Config.macros.maxLoopIterations"
+    }
+  },
+  "conversion_rules": {
+    "to_whisker": {
+      "variables": {
+        "from": "$variable or _variable",
+        "to": "{{variable}}",
+        "notes": "Remove $ or _ prefix, temporary variables become regular"
+      },
+      "assignment": {
+        "from": "<<set $var to value>>",
+        "to": "{{var = value}}",
+        "notes": "Convert macro to simple assignment"
+      },
+      "conditionals": {
+        "from": "<<if condition>>A<<else>>B<<endif>>",
+        "to": "{{if condition then}}A{{else}}B{{end}}",
+        "notes": "Convert macro tags to block syntax"
+      },
+      "loops": {
+        "from": "<<for _i to 0; _i < 10; _i++>>body<</for>>",
+        "to": "{{for i = 0, 9 do}}body{{end}}",
+        "notes": "Convert C-style for to Lua-style"
+      },
+      "links": {
+        "from": "[[Text|Target]] or <<link 'Text' 'Target'>>",
+        "to": "[[Text|Target]]",
+        "notes": "Preserve standard format, convert macro links"
+      },
+      "print": {
+        "from": "<<print $var>> or $var or <<= $var>>",
+        "to": "{{var}}",
+        "notes": "All output forms become template variable"
+      },
+      "javascript": {
+        "from": "<<script>>code<<script>> or <<run code>>",
+        "to": "{{lua_equivalent}}",
+        "notes": "Convert simple JavaScript to Lua, flag complex code"
+      }
+    },
+    "from_whisker": {
+      "variables": {
+        "from": "{{variable}}",
+        "to": "$variable",
+        "notes": "Add $ prefix for story variables"
+      },
+      "assignment": {
+        "from": "{{var = value}}",
+        "to": "<<set $var to value>>",
+        "notes": "Convert to SugarCube set macro"
+      },
+      "conditionals": {
+        "from": "{{if condition then}}A{{else}}B{{end}}",
+        "to": "<<if condition>>A<<else>>B<<endif>>",
+        "notes": "Convert block syntax to SugarCube macros"
+      },
+      "loops": {
+        "from": "{{for i = start, end do}}body{{end}}",
+        "to": "<<for _i range start end>>body<</for>>",
+        "notes": "Convert to SugarCube range syntax"
+      },
+      "links": {
+        "from": "[[Text|Target]]",
+        "to": "[[Text|Target]]",
+        "notes": "Standard links remain unchanged"
+      },
+      "output": {
+        "from": "{{var}}",
+        "to": "$var",
+        "notes": "Inline variable reference"
+      }
+    }
+  },
+  "operators": {
+    "logical": {
+      "and": "and or &&",
+      "or": "or or ||",
+      "not": "not or !"
+    },
+    "comparison": {
+      "equals": "eq or is or ===",
+      "not_equals": "neq or isnot or !==",
+      "greater": "gt or >",
+      "less": "lt or <",
+      "greater_equal": "gte or >=",
+      "less_equal": "lte or <="
+    },
+    "arithmetic": {
+      "add": "+",
+      "subtract": "-",
+      "multiply": "*",
+      "divide": "/",
+      "modulo": "%"
+    },
+    "assignment": {
+      "set": "to or =",
+      "add": "+=",
+      "subtract": "-=",
+      "multiply": "*=",
+      "divide": "/="
+    }
+  },
+  "special_passages": {
+    "StoryInit": "Run once at story start (setup code)",
+    "StoryCaption": "Display in sidebar/UI bar",
+    "StoryBanner": "Display at top of passages",
+    "StoryMenu": "Custom menu items",
+    "PassageReady": "Before passage display",
+    "PassageDone": "After passage display",
+    "PassageHeader": "Before every passage content",
+    "PassageFooter": "After every passage content",
+    "StoryInterface": "Custom UI layout",
+    "StoryShare": "Social sharing info"
+  },
+  "tags": {
+    "init": "Initialize at story start",
+    "script": "JavaScript passage",
+    "stylesheet": "CSS passage",
+    "widget": "Widget definition passage",
+    "nobr": "Remove line breaks",
+    "Twine.private": "Exclude from published story"
+  },
+  "best_practices": {
+    "variables": [
+      "Use $variables for persistent state",
+      "Use _variables for temporary/loop variables",
+      "Initialize in StoryInit passage",
+      "Use State.variables in JavaScript"
+    ],
+    "performance": [
+      "Cache frequent calculations",
+      "Limit history with Config.history.maxStates",
+      "Use <<silently>> for non-display code",
+      "Minimize DOM operations"
+    ],
+    "widgets": [
+      "Create reusable widgets for common patterns",
+      "Use <<widget>> for custom macros",
+      "Pass parameters via $args array",
+      "Document widget parameters"
+    ],
+    "saves": [
+      "Test save/load functionality",
+      "Version your data structures",
+      "Handle missing variables gracefully",
+      "Use Config.saves for customization"
+    ]
+  },
+  "examples": {
+    "basic_passage": "You enter the room.\n\n<<set $roomsVisited++>>\n\nYou have visited $roomsVisited rooms.\n\n[[Continue|NextRoom]]",
+    "conditional": "<<if $gold >= 50>>\n  [[Buy sword (50g)|BuySword][$gold -= 50; $hasSword to true]]\n<<else>>\n  You need 50 gold for a sword.\n<</if>>\n\n[[Leave|Shop]]",
+    "loop": "<<for _item in $inventory>>\n  * _item\n<</for>>\n\n<<if $inventory.length eq 0>>\n  Your inventory is empty.\n<</if>>",
+    "widget": "<<widget 'statbar'>>\n  <<nobr>>\n  <<set _stat to $args[0]>>\n  <<set _max to $args[1]>>\n  <<set _pct to Math.round((_stat / _max) * 100)>>\n  <div class=\"statbar\">\n    <div class=\"statbar-fill\" style=\"width: _pct%;\"></div>\n  </div>\n  <<nobr>>\n<<endwidget>>\n\n<<statbar $health $maxHealth>>",
+    "timed_event": "<<timed 2s>>\n  A moment passes...\n  <<next 3s>>\n  Something stirs in the darkness.\n  <<next 2s>>\n  [[Run!|Escape]]\n<<timed>>",
+    "audio": "<<cacheaudio 'bgmusic' 'music/theme.mp3'>>\n<<cacheaudio 'sword' 'sounds/sword.wav'>>\n\n<<audio 'bgmusic' loop play>>\n\n<<link 'Attack'>>\n  <<audio 'sword' play>>\n  <<set $enemyHealth -= 10>>\n<<link>>"
+  },
+  "common_patterns": {
+    "inventory_system": "<<if $inventory.includes('key')>>\n  [[Unlock door|Inside]]\n<</if>>",
+    "stat_check": "<<if $strength >= 15>>\n  <<link 'Force door'>><<goto 'Inside'>><</link>>\n<<else>>\n  The door won't budge.\n<</if>>",
+    "visited_check": "<<if visited('SecretRoom')>>\n  You remember this place.\n<</if>>",
+    "random_event": "<<if random(1, 10) >= 7>>\n  <<set $gold += 50>>\n  You found treasure!\n<</if>>",
+    "save_load": "<<link 'Save Game'>>\n  <<if Save.ok()>>\n    <<run Save.autosave.save('Autosave')>>\n    Game saved!\n  <</if>>\n<<link>>\n\n<<link 'Load Game'>>\n  <<run Save.autosave.load()>>\n<<link>>",
+    "custom_ui": ":: StoryCaption\n<<nobr>>\n<div id='stats'>\n  Health: $health / $maxHealth\n  Gold: $gold\n  Location: <<print passage()>>\n</div>\n<<nobr>>"
+  }
+}

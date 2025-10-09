@@ -1,0 +1,145 @@
+:: StoryTitle
+SugarCube Time Test
+
+:: StoryData
+{
+  "ifid": "F6A7B8C9-D0E1-2345-FGHI-456789012345",
+  "format": "SugarCube",
+  "format-version": "2.37.3"
+}
+
+:: StoryInit
+<<set $player to {
+  name: "Adventurer",
+  hp: 100,
+  maxHp: 100
+}>>
+
+<<set $day to 1>>
+<<set $time to 8>>
+<<set $energy to 100>>
+<<set $hunger to 0>>
+<<set $gold to 50>>
+
+:: StoryCaption
+<div id="hud" style="border: 2px solid #666; padding: 10px;">
+  <strong>$player.name</strong><br>
+  Day: $day<br>
+  Time: <<if $time < 10>>0<</if>>$time:00<br>
+  Energy: $energy/100<br>
+  Hunger: $hunger/100<br>
+  Gold: $gold<br>
+  HP: $player.hp/$player.maxHp
+</div>
+
+:: Start
+<h2>Town Square</h2>
+
+<<set _timeOfDay to "">>
+<<if $time < 6>>
+  <<set _timeOfDay to "night">>
+<<elseif $time < 12>>
+  <<set _timeOfDay to "morning">>
+<<elseif $time < 18>>
+  <<set _timeOfDay to "afternoon">>
+<<else>>
+  <<set _timeOfDay to "evening">>
+<</if>>
+
+<p>It's _timeOfDay.</p>
+
+<<if $energy > 20>>
+  <<link "Work (4 hours, 20 gold)" "Work">><</link>><br>
+<<else>>
+  <em>Too tired to work</em><br>
+<</if>>
+
+<<link "Sleep (8 hours)" "Sleep">><</link>><br>
+
+<<if $gold >= 10>>
+  <<link "Eat Meal (10 gold, 1 hour)" "Eat">><</link>><br>
+<<else>>
+  <em>Can't afford a meal</em><br>
+<</if>>
+
+<<link "Rest (2 hours)" "Rest">><</link>><br>
+
+<<if $hunger > 80>>
+  <p style="color: red;"><strong>Warning: You're starving! HP decreasing!</strong></p>
+<</if>>
+
+<<if $energy < 20>>
+  <p style="color: orange;"><strong>Warning: You're exhausted!</strong></p>
+<</if>>
+
+:: Work
+<<set _oldTime to $time>>
+<<set $time to ($time + 4) % 24>>
+<<set $energy to Math.max(0, $energy - 8)>>
+<<set $hunger to Math.min(100, $hunger + 12)>>
+<<set $gold += 20>>
+
+<<if $time < _oldTime>>
+  <<set $day++>>
+<</if>>
+
+<h2>Work</h2>
+
+<p>You worked for 4 hours and earned 20 gold.</p>
+
+<<link "Continue" "Start">><</link>>
+
+:: Sleep
+<<set _oldTime to $time>>
+<<set $time to ($time + 8) % 24>>
+<<set $energy to 100>>
+<<set $hunger to Math.min(100, $hunger + 10)>>
+
+<<if $time < _oldTime>>
+  <<set $day++>>
+<</if>>
+
+<h2>Sleep</h2>
+
+<p>You slept for 8 hours and feel refreshed!</p>
+
+<<link "Continue" "Start">><</link>>
+
+:: Eat
+<<set $time to ($time + 1) % 24>>
+<<set $gold -= 10>>
+<<set $hunger to 0>>
+<<set $player.hp to Math.min($player.maxHp, $player.hp + 10)>>
+
+<h2>Meal</h2>
+
+<p>You enjoyed a hearty meal. Hunger satisfied!</p>
+
+<<link "Continue" "Start">><</link>>
+
+:: Rest
+<<set $time to ($time + 2) % 24>>
+<<set $energy to Math.min(100, $energy + 20)>>
+
+<h2>Rest</h2>
+
+<p>You rested for 2 hours.</p>
+
+<<link "Continue" "Start">><</link>>
+
+:: PassTime
+<<widget "passtime">>
+  <<set _hours to $args[0]>>
+  <<set _oldTime to $time>>
+  <<set $time to ($time + _hours) % 24>>
+  <<set $energy to Math.max(0, $energy - (_hours * 2))>>
+  <<set $hunger to Math.min(100, $hunger + (_hours * 3))>>
+
+  <<if $time < _oldTime>>
+    <<set $day++>>
+  <</if>>
+
+  <<if $hunger > 80>>
+    <<set $player.hp to Math.max(0, $player.hp - 5)>>
+  <</if>>
+<</widget>>

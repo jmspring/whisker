@@ -1,0 +1,125 @@
+:: StoryTitle
+Harlowe Data Structures Test
+
+:: StoryData
+{
+  "ifid": "C3D4E5F6-A7B8-9012-CDEF-123456789012",
+  "format": "Harlowe",
+  "format-version": "3.3.0"
+}
+
+:: Start
+# Character Creation
+
+(set: $player to (dm:
+  "name", "",
+  "class", "",
+  "level", 1,
+  "stats", (dm:
+    "strength", 10,
+    "dexterity", 10,
+    "intelligence", 10,
+    "constitution", 10
+  ),
+  "skills", (a:),
+  "inventory", (a:)
+))
+
+What's your name?
+(input-box: bind $player's name, "=XX=", 1)
+
+(link: "Continue")[
+(if: $player's name is not "")[
+[[Choose Class->ClassSelection]]
+](else:)[
+Please enter a name!
+]
+]
+
+:: ClassSelection
+# Choose Your Class
+
+(link: "⚔️ Warrior")[
+(set: $player's class to "Warrior")
+(set: $player's stats's strength to it + 5)
+(set: $player's stats's constitution to it + 3)
+(set: $player's skills to it + (a: "Power Strike", "Shield Bash"))
+(set: $player's inventory to it + (a: "Iron Sword", "Wooden Shield"))
+[[Character Sheet->CharacterSheet]]
+]
+
+(link: "🗡️ Rogue")[
+(set: $player's class to "Rogue")
+(set: $player's stats's dexterity to it + 5)
+(set: $player's stats's intelligence to it + 2)
+(set: $player's skills to it + (a: "Sneak Attack", "Lockpicking"))
+(set: $player's inventory to it + (a: "Dagger", "Lockpicks"))
+[[Character Sheet->CharacterSheet]]
+]
+
+(link: "🔮 Mage")[
+(set: $player's class to "Mage")
+(set: $player's stats's intelligence to it + 5)
+(set: $player's stats's dexterity to it + 2)
+(set: $player's skills to it + (a: "Fireball", "Heal"))
+(set: $player's inventory to it + (a: "Staff", "Spellbook"))
+[[Character Sheet->CharacterSheet]]
+]
+
+:: CharacterSheet
+# Character Sheet
+
+**Name:** $player's name
+**Class:** $player's class
+**Level:** $player's level
+
+## Stats
+- Strength: (print: $player's stats's strength)
+- Dexterity: (print: $player's stats's dexterity)
+- Intelligence: (print: $player's stats's intelligence)
+- Constitution: (print: $player's stats's constitution)
+
+## Skills
+(for: each _skill, ...$player's skills)[
+- _skill
+]
+
+## Inventory
+(for: each _item, ...$player's inventory)[
+- _item
+]
+
+[[Begin Adventure->Adventure]]
+
+:: Adventure
+# Adventure
+
+Welcome, $player's name the $player's class!
+
+Your adventure begins...
+
+(link: "Use a skill")[
+(if: $player's class is "Warrior")[
+You use Power Strike!
+](else-if: $player's class is "Rogue")[
+You use Sneak Attack!
+](else:)[
+You cast Fireball!
+]
+]
+
+[[Level Up->LevelUp]]
+
+:: LevelUp
+(set: $player's level to it + 1)
+(set: $player's stats's strength to it + 1)
+(set: $player's stats's dexterity to it + 1)
+(set: $player's stats's intelligence to it + 1)
+
+# Level Up!
+
+You are now level $player's level!
+
+All stats increased by 1.
+
+[[View Character->CharacterSheet]]

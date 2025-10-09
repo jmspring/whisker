@@ -1,0 +1,79 @@
+: StoryTitle
+Harlowe Storylets Test
+
+:: StoryData
+{
+  "ifid": "B2C3D4E5-F6A7-8901-BCDE-F12345678901",
+  "format": "Harlowe",
+  "format-version": "3.3.0"
+}
+
+:: Start
+(set: $relationship to 0)
+(set: $day to 1)
+(set: $visited to (a:))
+
+# Day $day
+
+Relationship level: $relationship
+
+Available activities:
+(link-storylet: 1)
+
+[[Next Day->NextDay]]
+
+:: NextDay
+(set: $day to it + 1)
+(go-to: "Start")
+
+:: Morning Coffee
+(storylet: when $relationship >= 2 and not ($visited contains "Morning Coffee"))
+# Morning Coffee
+
+You meet your friend at the café for a pleasant chat.
+
+(link: "Chat about work")[
+(set: $relationship to it + 1)
+(set: $visited to it + (a: "Morning Coffee"))
+[[Done->Start]]
+]
+
+:: Awkward Encounter
+(storylet: when $relationship < 0 and not ($visited contains "Awkward Encounter"))
+# Awkward Encounter
+
+You run into someone you argued with yesterday.
+
+(link: "Apologize")[
+(set: $relationship to it + 2)
+(set: $visited to it + (a: "Awkward Encounter"))
+[[Done->Start]]
+]
+
+(link: "Ignore them")[
+(set: $relationship to it - 1)
+(set: $visited to it + (a: "Awkward Encounter"))
+[[Done->Start]]
+]
+
+:: Park Walk
+(storylet: when $relationship >= 0 and $relationship < 3)
+# Walk in the Park
+
+You decide to take a peaceful walk.
+
+(link: "Enjoy nature")[
+(set: $relationship to it + 1)
+[[Done->Start]]
+]
+
+:: Library Visit
+(storylet: when $day >= 3)
+# Library
+
+You spend time reading at the library.
+
+(link: "Read a book")[
+(set: $relationship to it + 1)
+[[Done->Start]]
+]

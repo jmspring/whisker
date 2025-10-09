@@ -1,0 +1,962 @@
+/* web_runtime.css - Whisker Interactive Fiction Player Styles */
+/* Complete styling for browser-based Whisker player */
+
+/* ============================================
+   BASE STYLES & RESET
+   ============================================ */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 
+                 'Ubuntu', 'Cantarell', 'Helvetica Neue', sans-serif;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* ============================================
+   MAIN CONTAINER
+   ============================================ */
+
+.whisker-app {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    max-width: 1400px;
+    margin: 0 auto;
+    background: #ffffff;
+    box-shadow: 0 0 40px rgba(0, 0, 0, 0.1);
+}
+
+/* ============================================
+   HEADER
+   ============================================ */
+
+.whisker-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 2rem;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    flex-wrap: wrap;
+    gap: 1rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.whisker-title-section {
+    flex: 1;
+    min-width: 200px;
+}
+
+.whisker-title {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin: 0;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.whisker-subtitle {
+    font-size: 0.9rem;
+    opacity: 0.9;
+    margin-top: 0.25rem;
+    display: none;
+}
+
+.whisker-controls {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.whisker-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: white;
+    padding: 0.6rem 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    backdrop-filter: blur(10px);
+}
+
+.whisker-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.whisker-btn:active {
+    transform: translateY(0);
+}
+
+.whisker-icon {
+    font-size: 1.1rem;
+    line-height: 1;
+}
+
+.whisker-btn-text {
+    font-size: 0.85rem;
+}
+
+/* Button variants */
+.whisker-save-btn:hover {
+    background: rgba(40, 167, 69, 0.3);
+}
+
+.whisker-load-btn:hover {
+    background: rgba(23, 162, 184, 0.3);
+}
+
+.whisker-undo-btn:hover {
+    background: rgba(108, 117, 125, 0.3);
+}
+
+.whisker-restart-btn:hover {
+    background: rgba(220, 53, 69, 0.3);
+}
+
+.whisker-settings-btn:hover {
+    background: rgba(111, 66, 193, 0.3);
+}
+
+/* ============================================
+   PROGRESS BAR
+   ============================================ */
+
+.whisker-progress-bar {
+    height: 4px;
+    background: rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.whisker-progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+    transition: width 0.5s ease;
+    width: 0%;
+}
+
+/* ============================================
+   MAIN CONTENT AREA
+   ============================================ */
+
+.whisker-main {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+}
+
+.whisker-content {
+    flex: 1;
+    padding: 2rem;
+    overflow-y: auto;
+    background: #ffffff;
+}
+
+.whisker-passage {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.whisker-passage-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #667eea;
+    margin-bottom: 1.5rem;
+    line-height: 1.3;
+}
+
+.whisker-passage-content {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: #333;
+    margin-bottom: 2rem;
+}
+
+.whisker-passage-content p {
+    margin-bottom: 1.2rem;
+}
+
+.whisker-passage-content p:last-child {
+    margin-bottom: 0;
+}
+
+.whisker-passage-content strong {
+    color: #667eea;
+    font-weight: 600;
+}
+
+.whisker-passage-content em {
+    font-style: italic;
+    color: #555;
+}
+
+.whisker-passage-content u {
+    text-decoration: underline;
+}
+
+/* ============================================
+   CHOICES
+   ============================================ */
+
+.whisker-choices {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-top: 2rem;
+}
+
+.whisker-choice-btn {
+    background: white;
+    border: 2px solid #667eea;
+    color: #667eea;
+    padding: 1rem 1.5rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 500;
+    text-align: left;
+    transition: all 0.2s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.whisker-choice-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(102, 126, 234, 0.1), transparent);
+    transition: left 0.5s ease;
+}
+
+.whisker-choice-btn:hover::before {
+    left: 100%;
+}
+
+.whisker-choice-btn:hover {
+    background: #667eea;
+    color: white;
+    transform: translateX(8px);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+
+.whisker-choice-btn:active {
+    transform: translateX(4px);
+}
+
+/* ============================================
+   SIDEBAR
+   ============================================ */
+
+.whisker-sidebar {
+    width: 300px;
+    background: #f8f9fa;
+    border-left: 1px solid #dee2e6;
+    padding: 1.5rem;
+    overflow-y: auto;
+    flex-shrink: 0;
+}
+
+.whisker-sidebar-section {
+    margin-bottom: 2rem;
+}
+
+.whisker-sidebar-section:last-child {
+    margin-bottom: 0;
+}
+
+.whisker-sidebar-heading {
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #6c757d;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid #dee2e6;
+}
+
+/* Stats */
+.whisker-stats,
+.whisker-progress-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.whisker-stat-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.6rem 0.8rem;
+    background: white;
+    border-radius: 6px;
+    border-left: 3px solid #667eea;
+}
+
+.whisker-stat-label {
+    font-size: 0.9rem;
+    color: #6c757d;
+    font-weight: 500;
+}
+
+.whisker-stat-value {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #667eea;
+}
+
+/* History */
+.whisker-history {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.whisker-history-item {
+    padding: 0.6rem 0.8rem;
+    background: white;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    color: #495057;
+    border-left: 3px solid #667eea;
+    transition: all 0.2s ease;
+}
+
+.whisker-history-item:hover {
+    background: #f0f0ff;
+    transform: translateX(4px);
+}
+
+/* ============================================
+   MODALS
+   ============================================ */
+
+.whisker-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+    animation: modalFadeIn 0.2s ease;
+}
+
+.whisker-modal.whisker-modal-active {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@keyframes modalFadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.whisker-modal-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
+}
+
+.whisker-modal-content {
+    position: relative;
+    background: white;
+    border-radius: 12px;
+    max-width: 600px;
+    width: 90%;
+    max-height: 80vh;
+    overflow-y: auto;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    animation: modalSlideIn 0.3s ease;
+    z-index: 1001;
+}
+
+@keyframes modalSlideIn {
+    from {
+        transform: translateY(-50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.whisker-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 2rem;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.whisker-modal-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #667eea;
+    margin: 0;
+}
+
+.whisker-modal-close {
+    background: none;
+    border: none;
+    font-size: 2rem;
+    line-height: 1;
+    cursor: pointer;
+    color: #6c757d;
+    padding: 0;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+}
+
+.whisker-modal-close:hover {
+    background: #f8f9fa;
+    color: #333;
+}
+
+.whisker-modal-body {
+    padding: 1.5rem 2rem;
+}
+
+/* ============================================
+   SAVE SLOTS
+   ============================================ */
+
+.whisker-save-slot {
+    background: #f8f9fa;
+    padding: 1rem 1.25rem;
+    border-radius: 8px;
+    margin-bottom: 0.75rem;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: all 0.2s ease;
+}
+
+.whisker-save-slot:last-child {
+    margin-bottom: 0;
+}
+
+.whisker-save-slot:hover {
+    border-color: #667eea;
+    background: #f0f0ff;
+    transform: translateX(4px);
+}
+
+.whisker-save-slot.whisker-save-slot-empty {
+    opacity: 0.6;
+}
+
+.whisker-save-slot.whisker-save-slot-empty:hover {
+    border-color: #667eea;
+    opacity: 1;
+}
+
+.whisker-save-slot-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: #333;
+}
+
+.whisker-save-slot-number {
+    font-size: 1rem;
+}
+
+.whisker-save-slot-date {
+    font-size: 0.85rem;
+    color: #6c757d;
+    font-weight: 400;
+}
+
+.whisker-save-slot-info {
+    font-size: 0.9rem;
+    color: #495057;
+}
+
+/* ============================================
+   SETTINGS
+   ============================================ */
+
+.whisker-setting-group {
+    margin-bottom: 1.5rem;
+}
+
+.whisker-setting-group:last-child {
+    margin-bottom: 0;
+}
+
+.whisker-setting-label {
+    display: block;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 0.5rem;
+}
+
+.whisker-setting-select,
+.whisker-setting-range {
+    width: 100%;
+    padding: 0.6rem;
+    border: 1px solid #dee2e6;
+    border-radius: 6px;
+    font-size: 1rem;
+    background: white;
+    transition: border-color 0.2s ease;
+}
+
+.whisker-setting-select:focus,
+.whisker-setting-range:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.whisker-setting-value {
+    display: inline-block;
+    margin-top: 0.5rem;
+    font-weight: 600;
+    color: #667eea;
+}
+
+.whisker-setting-checkbox {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    cursor: pointer;
+    font-weight: 400;
+}
+
+.whisker-setting-checkbox input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+
+/* ============================================
+   NOTIFICATIONS
+   ============================================ */
+
+.whisker-notifications {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 2000;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    pointer-events: none;
+}
+
+.whisker-notification {
+    background: white;
+    padding: 1rem 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    font-size: 0.95rem;
+    font-weight: 500;
+    pointer-events: auto;
+    animation: slideInRight 0.3s ease, slideOutRight 0.3s ease 2.7s;
+    max-width: 320px;
+}
+
+@keyframes slideInRight {
+    from {
+        transform: translateX(400px);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideOutRight {
+    from {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateX(400px);
+        opacity: 0;
+    }
+}
+
+.whisker-notification.whisker-notification-fadeout {
+    animation: slideOutRight 0.3s ease forwards;
+}
+
+.whisker-notification-success {
+    border-left: 4px solid #28a745;
+    color: #155724;
+}
+
+.whisker-notification-error {
+    border-left: 4px solid #dc3545;
+    color: #721c24;
+}
+
+.whisker-notification-info {
+    border-left: 4px solid #667eea;
+    color: #004085;
+}
+
+/* ============================================
+   ANIMATIONS
+   ============================================ */
+
+.whisker-fade-in {
+    animation: fadeIn 0.4s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ============================================
+   THEMES
+   ============================================ */
+
+/* Dark Theme */
+.whisker-theme-dark {
+    background: #1a1a1a;
+    color: #e0e0e0;
+}
+
+.whisker-theme-dark .whisker-content {
+    background: #1a1a1a;
+}
+
+.whisker-theme-dark .whisker-passage-content {
+    color: #e0e0e0;
+}
+
+.whisker-theme-dark .whisker-passage-title {
+    color: #8b9fe8;
+}
+
+.whisker-theme-dark .whisker-sidebar {
+    background: #2a2a2a;
+    border-left-color: #3a3a3a;
+}
+
+.whisker-theme-dark .whisker-stat-row,
+.whisker-theme-dark .whisker-history-item {
+    background: #333;
+    color: #e0e0e0;
+}
+
+.whisker-theme-dark .whisker-choice-btn {
+    background: #2a2a2a;
+    border-color: #8b9fe8;
+    color: #8b9fe8;
+}
+
+.whisker-theme-dark .whisker-choice-btn:hover {
+    background: #8b9fe8;
+    color: #1a1a1a;
+}
+
+.whisker-theme-dark .whisker-modal-content {
+    background: #2a2a2a;
+    color: #e0e0e0;
+}
+
+.whisker-theme-dark .whisker-modal-header {
+    border-bottom-color: #3a3a3a;
+}
+
+.whisker-theme-dark .whisker-save-slot {
+    background: #333;
+    color: #e0e0e0;
+}
+
+.whisker-theme-dark .whisker-save-slot:hover {
+    background: #3a3a3a;
+}
+
+/* Light Theme */
+.whisker-theme-light {
+    background: #ffffff;
+}
+
+.whisker-theme-light .whisker-content {
+    background: #fafafa;
+}
+
+.whisker-theme-light .whisker-sidebar {
+    background: #ffffff;
+}
+
+/* Sepia Theme */
+.whisker-theme-sepia {
+    background: #f4ecd8;
+    color: #5c4b37;
+}
+
+.whisker-theme-sepia .whisker-content {
+    background: #f4ecd8;
+}
+
+.whisker-theme-sepia .whisker-passage-content {
+    color: #5c4b37;
+}
+
+.whisker-theme-sepia .whisker-passage-title {
+    color: #8b6f47;
+}
+
+.whisker-theme-sepia .whisker-sidebar {
+    background: #ede2c8;
+    border-left-color: #d4c4a8;
+}
+
+.whisker-theme-sepia .whisker-stat-row,
+.whisker-theme-sepia .whisker-history-item {
+    background: #f9f3e3;
+    border-left-color: #8b6f47;
+}
+
+.whisker-theme-sepia .whisker-stat-value {
+    color: #8b6f47;
+}
+
+.whisker-theme-sepia .whisker-choice-btn {
+    border-color: #8b6f47;
+    color: #8b6f47;
+    background: #f9f3e3;
+}
+
+.whisker-theme-sepia .whisker-choice-btn:hover {
+    background: #8b6f47;
+    color: #f4ecd8;
+}
+
+/* ============================================
+   RESPONSIVE DESIGN
+   ============================================ */
+
+@media (max-width: 992px) {
+    .whisker-main {
+        flex-direction: column;
+    }
+
+    .whisker-sidebar {
+        width: 100%;
+        border-left: none;
+        border-top: 1px solid #dee2e6;
+    }
+
+    .whisker-content {
+        padding: 1.5rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .whisker-header {
+        padding: 1rem;
+    }
+
+    .whisker-title {
+        font-size: 1.4rem;
+    }
+
+    .whisker-btn-text {
+        display: none;
+    }
+
+    .whisker-btn {
+        padding: 0.6rem;
+    }
+
+    .whisker-passage-title {
+        font-size: 1.5rem;
+    }
+
+    .whisker-passage-content {
+        font-size: 1rem;
+    }
+
+    .whisker-content {
+        padding: 1rem;
+    }
+
+    .whisker-sidebar {
+        padding: 1rem;
+    }
+
+    .whisker-choice-btn {
+        padding: 0.9rem 1.2rem;
+        font-size: 0.95rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .whisker-header {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .whisker-controls {
+        justify-content: center;
+    }
+
+    .whisker-modal-content {
+        width: 95%;
+    }
+
+    .whisker-notifications {
+        left: 10px;
+        right: 10px;
+    }
+
+    .whisker-notification {
+        max-width: 100%;
+    }
+}
+
+/* ============================================
+   ACCESSIBILITY
+   ============================================ */
+
+.whisker-btn:focus,
+.whisker-choice-btn:focus,
+.whisker-modal-close:focus,
+.whisker-save-slot:focus,
+.whisker-setting-select:focus,
+.whisker-setting-checkbox input:focus {
+    outline: 2px solid #667eea;
+    outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* ============================================
+   PRINT STYLES
+   ============================================ */
+
+@media print {
+    .whisker-header,
+    .whisker-sidebar,
+    .whisker-progress-bar,
+    .whisker-modal,
+    .whisker-notifications {
+        display: none !important;
+    }
+
+    .whisker-app {
+        box-shadow: none;
+    }
+
+    .whisker-content {
+        padding: 0;
+    }
+
+    .whisker-passage-content {
+        color: #000;
+    }
+
+    .whisker-choice-btn {
+        border: 1px solid #000;
+        color: #000;
+    }
+}
+
+/* ============================================
+   SCROLLBAR STYLING
+   ============================================ */
+
+.whisker-content::-webkit-scrollbar,
+.whisker-sidebar::-webkit-scrollbar,
+.whisker-modal-content::-webkit-scrollbar {
+    width: 8px;
+}
+
+.whisker-content::-webkit-scrollbar-track,
+.whisker-sidebar::-webkit-scrollbar-track,
+.whisker-modal-content::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+.whisker-content::-webkit-scrollbar-thumb,
+.whisker-sidebar::-webkit-scrollbar-thumb,
+.whisker-modal-content::-webkit-scrollbar-thumb {
+    background: #667eea;
+    border-radius: 4px;
+}
+
+.whisker-content::-webkit-scrollbar-thumb:hover,
+.whisker-sidebar::-webkit-scrollbar-thumb:hover,
+.whisker-modal-content::-webkit-scrollbar-thumb:hover {
+    background: #5568d3;
+}
+
+/* ============================================
+   LOADING STATES
+   ============================================ */
+
+.whisker-loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem;
+}
+
+.whisker-loading::after {
+    content: '';
+    width: 40px;
+    height: 40px;
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #667eea;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}

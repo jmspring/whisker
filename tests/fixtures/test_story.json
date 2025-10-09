@@ -1,0 +1,145 @@
+{
+  "format": "whisker",
+  "version": "1.0",
+  "metadata": {
+    "title": "Test Story",
+    "author": "Test Suite",
+    "ifid": "TEST-FIXTURE-001",
+    "created": "2025-01-01T00:00:00Z",
+    "modified": "2025-01-01T00:00:00Z",
+    "description": "A simple test story for the Whisker engine test suite"
+  },
+  "settings": {
+    "start_passage": "Start",
+    "undo_enabled": true,
+    "max_undo_steps": 10,
+    "autosave": false
+  },
+  "variables": {
+    "hasWizardKey": false,
+    "playerName": "Hero",
+    "visitCount": 0
+  },
+  "passages": [
+    {
+      "id": "Start",
+      "name": "Start",
+      "content": "Welcome to the test story!\n\nYou find yourself in a mysterious forest. The path splits in two directions.",
+      "tags": ["start"],
+      "position": {
+        "x": 100,
+        "y": 100
+      },
+      "choices": [
+        {
+          "text": "Go left",
+          "target": "Left Path",
+          "condition": null,
+          "visible": true,
+          "enabled": true
+        },
+        {
+          "text": "Go right",
+          "target": "Right Path",
+          "condition": null,
+          "visible": true,
+          "enabled": true
+        }
+      ],
+      "on_enter": null,
+      "on_exit": null
+    },
+    {
+      "id": "Left Path",
+      "name": "Left Path",
+      "content": "You take the left path and discover a small cottage.\n\nA friendly wizard greets you.",
+      "tags": [],
+      "position": {
+        "x": 100,
+        "y": 300
+      },
+      "choices": [
+        {
+          "text": "Continue",
+          "target": "Cottage Interior",
+          "condition": null,
+          "visible": true,
+          "enabled": true
+        },
+        {
+          "text": "Go back",
+          "target": "Start",
+          "condition": null,
+          "visible": true,
+          "enabled": true
+        }
+      ],
+      "on_enter": "hasWizardKey = true",
+      "on_exit": null
+    },
+    {
+      "id": "Right Path",
+      "name": "Right Path",
+      "content": "You take the right path and find a locked gate.",
+      "tags": [],
+      "position": {
+        "x": 300,
+        "y": 300
+      },
+      "choices": [
+        {
+          "text": "Enter the gate",
+          "target": "Victory",
+          "condition": "hasWizardKey == true",
+          "visible": true,
+          "enabled": true
+        },
+        {
+          "text": "Go back (gate is locked)",
+          "target": "Start",
+          "condition": "hasWizardKey == false",
+          "visible": true,
+          "enabled": true
+        }
+      ],
+      "on_enter": null,
+      "on_exit": null
+    },
+    {
+      "id": "Cottage Interior",
+      "name": "Cottage Interior",
+      "content": "The wizard gives you a magical key.\n\n\"This will help you on your journey,\" he says.",
+      "tags": [],
+      "position": {
+        "x": 100,
+        "y": 500
+      },
+      "choices": [
+        {
+          "text": "Thank the wizard and leave",
+          "target": "Start",
+          "condition": null,
+          "visible": true,
+          "enabled": true
+        }
+      ],
+      "on_enter": null,
+      "on_exit": null
+    },
+    {
+      "id": "Victory",
+      "name": "Victory",
+      "content": "You've made it through the gate!\n\nCongratulations, you win!\n\n**THE END**",
+      "tags": ["ending", "victory"],
+      "position": {
+        "x": 500,
+        "y": 300
+      },
+      "choices": [],
+      "on_enter": null,
+      "on_exit": null
+    }
+  ],
+  "macros": [],
+  "styles": []
+}

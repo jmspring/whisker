@@ -1,0 +1,67 @@
+:: StoryTitle
+Chapbook Inserts Test
+
+:: Start
+playerName: ""
+favoriteColor: "Blue"
+meal: "Breakfast"
+--
+# Character Creation
+
+Enter your name:
+{text input for: 'playerName'}
+
+Choose your favorite color:
+{cycling link for: 'favoriteColor', choices: ['Blue', 'Red', 'Green', 'Yellow']}
+
+Select your preferred meal:
+{dropdown menu for: 'meal', choices: ['Breakfast', 'Lunch', 'Dinner']}
+
+[if playerName !== ""]
+[[Continue->Summary]]
+[continue]
+
+:: Summary
+--
+# Character Summary
+
+**Name:** {playerName}
+**Favorite Color:** {favoriteColor}
+**Preferred Meal:** {meal}
+
+You can {link to: 'Start', label: 'start over'} or [[Continue->Adventure]].
+
+:: Adventure
+questProgress: 0
+--
+# Your Adventure Begins
+
+Welcome, {playerName}!
+
+[if questProgress === 0]
+Your journey is just beginning.
+
+[[Start Quest->QuestStart]]
+[continue]
+
+[if questProgress > 0]
+Quest progress: {questProgress}/5
+
+[[Continue Quest->QuestContinue]]
+[continue]
+
+{back link}
+
+:: QuestStart
+questProgress: 1
+--
+You've started your quest!
+
+[[Continue->Adventure]]
+
+:: QuestContinue
+questProgress: questProgress + 1
+--
+You made progress on your quest!
+
+[[Continue->Adventure]]

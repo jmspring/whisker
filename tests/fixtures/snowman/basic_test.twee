@@ -1,0 +1,181 @@
+:: StoryTitle
+Snowman Basic Test
+
+:: StoryData
+{
+  "ifid": "C9D0E1F2-A3B4-5678-IJKL-789012345678",
+  "format": "Snowman",
+  "format-version": "2.0.3"
+}
+
+:: StoryInit
+<%
+s.player = {
+  name: "Hero",
+  hp: 100,
+  maxHp: 100,
+  inventory: [],
+  gold: 100
+};
+
+s.gameState = {
+  location: "town",
+  day: 1
+};
+%>
+
+:: Start
+<% if (!s.player.name || s.player.name === "Hero") {
+  s.player.name = prompt("Enter your name:", "Adventurer");
+} %>
+
+# Welcome, <%= s.player.name %>!
+
+**HP:** <%= s.player.hp %>/<%= s.player.maxHp %>
+**Gold:** <%= s.player.gold %>
+**Day:** <%= s.gameState.day %>
+
+**Inventory:** <%= s.player.inventory.length > 0 ? s.player.inventory.join(", ") : "Empty" %>
+
+[Go to Town](Town)
+[View Stats](Stats)
+
+:: Town
+# Town Square
+
+You are in the town square.
+
+**Current HP:** <%= s.player.hp %>/<%= s.player.maxHp %>
+**Gold:** <%= s.player.gold %>
+
+[Visit Shop](Shop)
+[Rest at Inn](Inn)
+[Go on Adventure](Adventure)
+
+:: Shop
+<%
+window.buyItem = function(itemName, price) {
+  if (s.player.gold >= price) {
+    s.player.gold -= price;
+    s.player.inventory.push(itemName);
+    $('#message').html('✓ Bought ' + itemName + '!').show().delay(2000).fadeOut();
+    $('#gold-display').text(s.player.gold);
+    $('#inventory-display').text(s.player.inventory.join(', ') || 'Empty');
+  } else {
+    $('#message').html('✗ Not enough gold!').show().delay(2000).fadeOut();
+  }
+};
+%>
+
+# Shop
+
+**Gold:** <span id="gold-display"><%= s.player.gold %></span>
+**Inventory:** <span id="inventory-display"><%= s.player.inventory.join(', ') || 'Empty' %></span>
+
+<div class="shop-items">
+  <div class="item">
+    <strong>Health Potion</strong> - 20 gold
+    <button onclick="buyItem('Health Potion', 20)">Buy</button>
+  </div>
+
+  <div class="item">
+    <strong>Sword</strong> - 50 gold
+    <button onclick="buyItem('Sword', 50)">Buy</button>
+  </div>
+
+  <div class="item">
+    <strong>Armor</strong> - 75 gold
+    <button onclick="buyItem('Armor', 75)">Buy</button>
+  </div>
+</div>
+
+<div id="message" style="display:none; padding: 10px; background: #dfd; margin-top: 10px;"></div>
+
+[Leave Shop](Town)
+
+:: Inn
+<%
+if (s.player.gold >= 10) {
+  s.player.gold -= 10;
+  s.player.hp = s.player.maxHp;
+  s.gameState.day++;
+}
+%>
+
+# Inn
+
+<% if (s.player.gold >= 0 && s.player.hp === s.player.maxHp) { %>
+  You rested at the inn. HP fully restored!
+
+  It's now day <%= s.gameState.day %>.
+<% } else { %>
+  Not enough gold to rest! (Cost: 10 gold)
+<% } %>
+
+[Leave Inn](Town)
+
+:: Adventure
+<%
+s.adventureResult = {
+  goldFound: Math.floor(Math.random() * 30) + 10,
+  damage: Math.floor(Math.random() * 20)
+};
+
+s.player.hp -= s.adventureResult.damage;
+s.player.gold += s.adventureResult.goldFound;
+
+if (s.player.hp <= 0) {
+  s.player.hp = 0;
+}
+%>
+
+# Adventure
+
+You went on an adventure!
+
+**Found:** <%= s.adventureResult.goldFound %> gold
+**Took:** <%= s.adventureResult.damage %> damage
+
+**Current HP:** <%= s.player.hp %>/<%= s.player.maxHp %>
+**Gold:** <%= s.player.gold %>
+
+<% if (s.player.hp <= 0) { %>
+  [You were defeated!](GameOver)
+<% } else { %>
+  [Return to Town](Town)
+<% } %>
+
+:: Stats
+# Character Stats
+
+**Name:** <%= s.player.name %>
+**HP:** <%= s.player.hp %>/<%= s.player.maxHp %>
+**Gold:** <%= s.player.gold %>
+**Day:** <%= s.gameState.day %>
+
+**Inventory:**
+<% if (s.player.inventory.length > 0) { %>
+  <ul>
+  <% _.each(s.player.inventory, function(item) { %>
+    <li><%= item %></li>
+  <% }); %>
+  </ul>
+<% } else { %>
+  <p><em>No items</em></p>
+<% } %>
+
+[Back](Start)
+
+:: GameOver
+# Game Over
+
+You were defeated!
+
+[Start Over](Start)
+
+<%
+s.player.hp = 100;
+s.player.gold = 100;
+s.player.inventory = [];
+s.gameState.day = 1;
+%>

@@ -1,0 +1,118 @@
+:: StoryTitle
+SugarCube Save Test
+
+:: StoryData
+{
+  "ifid": "A7B8C9D0-E1F2-3456-GHIJ-567890123456",
+  "format": "SugarCube",
+  "format-version": "2.37.3"
+}
+
+:: StoryInit
+<<set $player to {
+  name: "Hero",
+  level: 1,
+  xp: 0,
+  gold: 100
+}>>
+
+<<set $gameProgress to 0>>
+
+:: Start
+<h2>Save System Test</h2>
+
+<strong>Player:</strong> $player.name<br>
+<strong>Level:</strong> $player.level<br>
+<strong>XP:</strong> $player.xp<br>
+<strong>Gold:</strong> $player.gold<br>
+<strong>Progress:</strong> $gameProgress%
+
+[[Advance Game->Progress]]
+[[Save/Load->SaveLoad]]
+
+:: Progress
+<<set $player.xp += 50>>
+<<set $player.gold += 25>>
+<<set $gameProgress += 10>>
+
+<<if $player.xp >= 100>>
+  <<set $player.level++>>
+  <<set $player.xp to 0>>
+  <h2>Level Up!</h2>
+  <p>You reached level $player.level!</p>
+<<else>>
+  <h2>Progress</h2>
+  <p>Gained 50 XP and 25 gold!</p>
+<</if>>
+
+[[Continue->Start]]
+
+:: SaveLoad
+<h2>Save/Load Game</h2>
+
+<h3>Save Game</h3>
+<p>Enter save name: <<textbox "$saveName" "SaveSlot1">></p>
+
+<<button "Save Game">>
+  <<if Save.slots.ok()>>
+    <<run Save.slots.save($saveName, {
+      day: $gameProgress,
+      level: $player.level
+    })>>
+    <<replace "#save-message">>✓ Game saved to slot "$saveName"!<</replace>>
+  <<else>>
+    <<replace "#save-message">>✗ Error saving game.<</replace>>
+  <</if>>
+<</button>>
+
+<span id="save-message"></span>
+
+<h3>Load Game</h3>
+<<set _saves to Save.slots.get()>>
+<<if _saves.length > 0>>
+  <ul>
+  <<for _i to 0; _i lt _saves.length; _i++>>
+    <<set _slot to _saves[_i]>>
+    <li>
+      <<capture _slot>>
+        <strong>_slot.title</strong>
+        <<if _slot.metadata>>
+          (Day _slot.metadata.day, Level _slot.metadata.level)
+        <</if>>
+        <<button "Load">>
+          <<run Save.slots.load(_slot.id)>>
+          <<goto "Start">>
+        <</button>>
+        <<button "Delete">>
+          <<run Save.slots.delete(_slot.id)>>
+          <<goto "SaveLoad">>
+        <</button>>
+      <</capture>>
+    </li>
+  <</for>>
+  </ul>
+<<else>>
+  <p><em>No saved games found.</em></p>
+<</if>>
+
+<h3>Auto Save</h3>
+<<button "Enable Auto Save">>
+  <<run Save.autosave.save()>>
+  <<replace "#autosave-message">>✓ Auto save enabled!<</replace>>
+<</button>>
+
+<<if Save.autosave.ok()>>
+  <<button "Load Auto Save">>
+    <<run Save.autosave.load()>>
+    <<goto "Start">>
+  <</button>>
+
+  <<button "Delete Auto Save">>
+    <<run Save.autosave.delete()>>
+    <<replace "#autosave-message">>✓ Auto save deleted!<</replace>>
+  <</button>>
+<</if>>
+
+<span id="autosave-message"></span>
+
+[[Back->Start]]

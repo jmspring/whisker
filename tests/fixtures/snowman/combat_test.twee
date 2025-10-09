@@ -1,0 +1,194 @@
+:: StoryTitle
+Snowman Combat Test
+
+:: StoryData
+{
+  "ifid": "D0E1F2A3-B4C5-6789-JKLM-890123456789",
+  "format": "Snowman",
+  "format-version": "2.0.3"
+}
+
+:: StoryInit
+<%
+s.player = {
+  hp: 100,
+  maxHp: 100,
+  attack: 15,
+  defense: 5,
+  inventory: ['Health Potion', 'Health Potion']
+};
+
+s.enemies = {
+  goblin: { name: 'Goblin', hp: 50, maxHp: 50, attack: 10, defense: 3 },
+  orc: { name: 'Orc', hp: 80, maxHp: 80, attack: 15, defense: 5 },
+  dragon: { name: 'Dragon', hp: 150, maxHp: 150, attack: 25, defense: 10 }
+};
+%>
+
+:: Start
+# Combat System Test
+
+Choose your enemy:
+
+[Fight Goblin](StartCombat?enemy=goblin)
+[Fight Orc](StartCombat?enemy=orc)
+[Fight Dragon](StartCombat?enemy=dragon)
+
+**Your HP:** <%= s.player.hp %>/<%= s.player.maxHp %>
+**Inventory:** <%= s.player.inventory.join(', ') %>
+
+:: StartCombat
+<%
+var enemyType = window.location.hash.split('?enemy=')[1] || 'goblin';
+s.currentEnemy = _.clone(s.enemies[enemyType]);
+s.combatLog = [];
+
+window.attack = function() {
+  var playerDamage = Math.max(1, s.player.attack - s.currentEnemy.defense + Math.floor(Math.random() * 6) - 3);
+  s.currentEnemy.hp -= playerDamage;
+
+  var logEntry = 'You dealt ' + playerDamage + ' damage!';
+  s.combatLog.push(logEntry);
+  $('#log').append('<div>' + logEntry + '</div>');
+
+  if (s.currentEnemy.hp <= 0) {
+    s.currentEnemy.hp = 0;
+    var goldReward = Math.floor(Math.random() * 50) + 20;
+    s.combatLog.push('Victory! Gained ' + goldReward + ' gold!');
+    $('#log').append('<div><strong>Victory! Gained ' + goldReward + ' gold!</strong></div>');
+    $('#actions').html('<a href="#Start">Return</a>');
+    updateCombatDisplay();
+    return;
+  }
+
+  var enemyDamage = Math.max(1, s.currentEnemy.attack - s.player.defense + Math.floor(Math.random() * 4) - 2);
+  s.player.hp -= enemyDamage;
+
+  logEntry = s.currentEnemy.name + ' dealt ' + enemyDamage + ' damage!';
+  s.combatLog.push(logEntry);
+  $('#log').append('<div>' + logEntry + '</div>');
+
+  if (s.player.hp <= 0) {
+    s.player.hp = 0;
+    s.combatLog.push('Defeat!');
+    $('#log').append('<div><strong>Defeat!</strong></div>');
+    $('#actions').html('<a href="#Start">Try Again</a>');
+  }
+
+  updateCombatDisplay();
+};
+
+window.usePotion = function() {
+  var potionIndex = s.player.inventory.indexOf('Health Potion');
+  if (potionIndex > -1) {
+    s.player.inventory.splice(potionIndex, 1);
+    var healAmount = 30;
+    s.player.hp = Math.min(s.player.hp + healAmount, s.player.maxHp);
+
+    var logEntry = 'Used Health Potion! Restored ' + healAmount + ' HP!';
+    s.combatLog.push(logEntry);
+    $('#log').append('<div>' + logEntry + '</div>');
+
+    var enemyDamage = Math.max(1, s.currentEnemy.attack - s.player.defense);
+    s.player.hp -= enemyDamage;
+
+    logEntry = s.currentEnemy.name + ' dealt ' + enemyDamage + ' damage!';
+    s.combatLog.push(logEntry);
+    $('#log').append('<div>' + logEntry + '</div>');
+
+    updateCombatDisplay();
+    updatePotionButton();
+  }
+};
+
+window.updateCombatDisplay = function() {
+  $('#player-hp').text(s.player.hp + '/' + s.player.maxHp);
+  $('#enemy-hp').text(s.currentEnemy.hp + '/' + s.currentEnemy.maxHp);
+
+  $('#player-hp-bar').css('width', (s.player.hp / s.player.maxHp * 100) + '%');
+  $('#enemy-hp-bar').css('width', (s.currentEnemy.hp / s.currentEnemy.maxHp * 100) + '%');
+};
+
+window.updatePotionButton = function() {
+  if (s.player.inventory.indexOf('Health Potion') === -1) {
+    $('#potion-btn').prop('disabled', true).text('No Potions');
+  } else {
+    var potionCount = s.player.inventory.filter(function(item) { return item === 'Health Potion'; }).length;
+    $('#potion-btn').text('Use Potion (' + potionCount + ')');
+  }
+};
+%>
+
+<style>
+.combat-ui {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+.combatant {
+  border: 2px solid #666;
+  padding: 15px;
+  flex: 1;
+  margin: 0 10px;
+}
+.hp-bar-container {
+  width: 100%;
+  height: 20px;
+  background: #ddd;
+  margin-top: 5px;
+}
+.hp-bar {
+  height: 100%;
+  background: #0f0;
+  transition: width 0.3s;
+}
+#log {
+  border: 1px solid #666;
+  padding: 10px;
+  max-height: 200px;
+  overflow-y: auto;
+  margin-top: 20px;
+  background: #f9f9f9;
+}
+button {
+  padding: 10px 20px;
+  margin: 5px;
+  font-size: 16px;
+  cursor: pointer;
+}
+</style>
+
+# Battle: <%= s.currentEnemy.name %>
+
+<div class="combat-ui">
+  <div class="combatant" style="border-color: green;">
+    <strong>You</strong><br>
+    HP: <span id="player-hp"><%= s.player.hp %>/<%= s.player.maxHp %></span>
+    <div class="hp-bar-container">
+      <div id="player-hp-bar" class="hp-bar" style="width: <%= (s.player.hp / s.player.maxHp * 100) %>%;"></div>
+    </div>
+  </div>
+
+  <div class="combatant" style="border-color: red;">
+    <strong><%= s.currentEnemy.name %></strong><br>
+    HP: <span id="enemy-hp"><%= s.currentEnemy.hp %>/<%= s.currentEnemy.maxHp %></span>
+    <div class="hp-bar-container">
+      <div id="enemy-hp-bar" class="hp-bar" style="width: <%= (s.currentEnemy.hp / s.currentEnemy.maxHp * 100) %>%; background: #f00;"></div>
+    </div>
+  </div>
+</div>
+
+<div id="actions">
+  <button onclick="attack()">⚔️ Attack</button>
+  <% if (s.player.inventory.indexOf('Health Potion') > -1) { %>
+    <button id="potion-btn" onclick="usePotion()">🧪 Use Potion</button>
+  <% } %>
+</div>
+
+<div id="log"></div>
+
+<script>
+$(function() {
+  updatePotionButton();
+});
+</script>

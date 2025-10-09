@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Whisker Interactive Fiction Player</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica', 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f5f5f5;
+        }
+
+        .whisker-container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+
+        .whisker-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1.5rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .whisker-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .whisker-controls {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .control-btn {
+            background: rgba(255,255,255,0.2);
+            border: 1px solid rgba(255,255,255,0.3);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.2s;
+            backdrop-filter: blur(10px);
+        }
+
+        .control-btn:hover {
+            background: rgba(255,255,255,0.3);
+            transform: translateY(-1px);
+        }
+
+        .control-btn:active {
+            transform: translateY(0);
+        }
+
+        .whisker-main {
+            display: flex;
+            flex: 1;
+        }
+
+        .whisker-content {
+            flex: 1;
+            padding: 2rem;
+            overflow-y: auto;
+        }
+
+        .passage {
+            animation: fadeIn 0.4s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .passage-title {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #667eea;
+            font-weight: 600;
+        }
+
+        .passage-content {
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            line-height: 1.8;
+        }
+
+        .passage-content p {
+            margin-bottom: 1rem;
+        }
+
+        .passage-content strong {
+            color: #667eea;
+            font-weight: 600;
+        }
+
+        .passage-content em {
+            font-style: italic;
+            color: #666;
+        }
+
+        .choices {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .choice-btn {
+            background: white;
+            border: 2px solid #667eea;
+            color: #667eea;
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 500;
+            text-align: left;
+            transition: all 0.2s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .choice-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(102, 126, 234, 0.1), transparent);
+            transition: left 0.5s;
+        }
+
+        .choice-btn:hover::before {
+            left: 100%;
+        }
+
+        .choice-btn:hover {
+            background: #667eea;
+            color: white;
+            transform: translateX(5px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+        }
+
+        .whisker-sidebar {
+            width: 280px;
+            background: #f8f9fa;
+            border-left: 1px solid #dee2e6;
+            padding: 1.5rem;
+            overflow-y: auto;
+        }
+
+        .sidebar-section {
+            margin-bottom: 2rem;
+        }
+
+        .sidebar-section h3 {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            color: #6c757d;
+            margin-bottom: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .stat-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .stat-label {
+            color: #6c757d;
+            font-size: 0.9rem;
+        }
+
+        .stat-value {
+            font-weight: 600;
+            color: #667eea;
+        }
+
+        .history-item {
+            padding: 0.5rem 0.75rem;
+            background: white;
+            border-radius: 4px;
+            margin-bottom: 0.5rem;
+            font-size: 0.85rem;
+            border-left: 3px solid #667eea;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(4px);
+            z-index: 1000;
+            animation: modalFadeIn 0.2s;
+        }
+
+        @keyframes modalFadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            animation: modalSlideIn 0.3s;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+
+        @keyframes modalSlideIn {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            color: #667eea;
+            font-weight: 600;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #6c757d;
+            padding: 0;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+            transition: all 0.2s;
+        }
+
+        .modal-close:hover {
+            background: #f8f9fa;
+            color: #333;
+        }
+
+        .save-slot {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 0.75rem;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: all 0.2s;
+        }
+
+        .save-slot:hover {
+            border-color: #667eea;
+            background: #f0f0ff;
+        }
+
+        .save-slot.empty {
+            opacity: 0.6;
+            font-style: italic;
+            color: #6c757d;
+        }
+
+        .save-slot-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .save-slot-info {
+            font-size: 0.85rem;
+            color: #6c757d;
+        }
+
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: white;
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            z-index: 2000;
+            animation: slideInRight 0.3s, slideOutRight 0.3s 2.7s;
+            max-width: 300px;
+        }
+
+        @keyframes slideInRight {
+            from { transform: translateX(400px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        @keyframes slideOutRight {
+            from { transform: translateX(0); opacity: 1; }
+            to { transform: translateX(400px); opacity: 0; }
+        }
+
+        .notification.success {
+            border-left: 4px solid #28a745;
+        }
+
+        .notification.error {
+            border-left: 4px solid #dc3545;
+        }
+
+        .notification.info {
+            border-left: 4px solid #667eea;
+        }
+
+        @media (max-width: 768px) {
+            .whisker-main {
+                flex-direction: column;
+            }
+
+            .whisker-sidebar {
+                width: 100%;
+                border-left: none;
+                border-top: 1px solid #dee2e6;
+            }
+
+            .whisker-content {
+                padding: 1.5rem;
+            }
+
+            .whisker-header {
+                padding: 1rem;
+            }
+
+            .whisker-title {
+                font-size: 1.4rem;
+            }
+        }
+
+        .progress-bar {
+            height: 4px;
+            background: rgba(255,255,255,0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: white;
+            transition: width 0.3s;
+        }
+    </style>
+</head>
+<body>
+    <div class="whisker-container">
+        <div class="whisker-header">
+            <div class="whisker-title" id="story-title">Whisker Player</div>
+            <div class="whisker-controls">
+                <button class="control-btn" onclick="whiskerPlayer.undo()" title="Undo (Ctrl+Z)">↶ Undo</button>
+                <button class="control-btn" onclick="whiskerPlayer.showSaveModal()" title="Save (Ctrl+S)">💾 Save</button>
+                <button class="control-btn" onclick="whiskerPlayer.showLoadModal()">📁 Load</button>
+                <button class="control-btn" onclick="whiskerPlayer.restart()">🔄 Restart</button>
+            </div>
+        </div>
+        <div class="progress-bar">
+            <div class="progress-fill" id="progress-bar"></div>
+        </div>
+
+        <div class="whisker-main">
+            <div class="whisker-content">
+                <div id="passage-container" class="passage">
+                    <div class="passage-title" id="passage-title">Loading...</div>
+                    <div class="passage-content" id="passage-content"></div>
+                    <div class="choices" id="choices-container"></div>
+                </div>
+            </div>
+
+            <div class="whisker-sidebar">
+                <div class="sidebar-section">
+                    <h3>Statistics</h3>
+                    <div id="stats-container"></div>
+                </div>
+
+                <div class="sidebar-section">
+                    <h3>History</h3>
+                    <div id="history-container"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Save Modal -->
+    <div class="modal" id="save-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">Save Game</div>
+                <button class="modal-close" onclick="whiskerPlayer.closeModal('save-modal')">×</button>
+            </div>
+            <div id="save-slots-container"></div>
+        </div>
+    </div>
+
+    <!-- Load Modal -->
+    <div class="modal" id="load-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">Load Game</div>
+                <button class="modal-close" onclick="whiskerPlayer.closeModal('load-modal')">×</button>
+            </div>
+            <div id="load-slots-container"></div>
+        </div>
+    </div>
+
+    <script>
+        class WhiskerPlayer {
+            constructor() {
+                this.story = null;
+                this.currentPassage = null;
+                this.variables = {};
+                this.visited = {};
+                this.history = [];
+                this.maxHistory = 50;
+            }
+
+            loadStory(storyData) {
+                this.story = storyData;
+                this.variables = {...(storyData.variables || {})};
+                document.getElementById('story-title').textContent = storyData.title || 'Whisker Story';
+                this.updateStats();
+            }
+
+            start() {
+                if (!this.story) {
+                    console.error('No story loaded');
+                    return;
+                }
+
+                const startPassage = this.story.start || this.story.passages[0].id;
+                this.goToPassage(startPassage);
+            }
+
+            goToPassage(passageId, saveHistory = true) {
+                const passage = this.story.passages.find(p => p.id === passageId);
+
+                if (!passage) {
+                    console.error('Passage not found:', passageId);
+                    return;
+                }
+
+                // Save history
+                if (saveHistory && this.currentPassage) {
+                    this.history.push({
+                        passageId: this.currentPassage.id,
+                        variables: {...this.variables},
+                        visited: {...this.visited}
+                    });
+
+                    if (this.history.length > this.maxHistory) {
+                        this.history.shift();
+                    }
+                }
+
+                this.currentPassage = passage;
+                this.visited[passageId] = (this.visited[passageId] || 0) + 1;
+
+                // Execute passage script if present
+                if (passage.script) {
+                    this.executeScript(passage.script);
+                }
+
+                this.render();
+                this.updateProgress();
+                this.updateHistory();
+            }
+
+            render() {
+                const passage = this.currentPassage;
+
+                // Render title
+                document.getElementById('passage-title').innerHTML = this.processInline(passage.title || '');
+
+                // Process and render content
+                const content = this.processContent(passage.content);
+                document.getElementById('passage-content').innerHTML = content;
+
+                // Render choices
+                const choicesContainer = document.getElementById('choices-container');
+                choicesContainer.innerHTML = '';
+
+                if (passage.choices && passage.choices.length > 0) {
+                    passage.choices.forEach(choice => {
+                        if (this.evaluateCondition(choice.condition)) {
+                            const btn = document.createElement('button');
+                            btn.className = 'choice-btn';
+                            btn.innerHTML = this.processInline(choice.text);
+                            btn.onclick = () => {
+                                if (choice.script) {
+                                    this.executeScript(choice.script);
+                                }
+                                this.goToPassage(choice.target);
+                            };
+                            choicesContainer.appendChild(btn);
+                        }
+                    });
+                }
+
+                this.updateStats();
+            }
+
+            processInline(content) {
+                if (!content) return '';
+
+                // Process {{expression}} syntax
+                content = content.replace(/\{\{(.+?)\}\}/g, (match, expression) => {
+                    try {
+                        const context = {
+                            ...this.variables,
+                            visited: (passageId) => this.visited[passageId] || 0
+                        };
+
+                        const func = new Function('context', `with(context) { return ${expression}; }`);
+                        const result = func(context);
+                        return result !== undefined ? result : match;
+                    } catch (error) {
+                        console.error('Expression evaluation error:', error);
+                        return match;
+                    }
+                });
+
+                // Process markdown-style formatting (no paragraphs for inline)
+                content = content.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+                content = content.replace(/\*(.+?)\*/g, '<em>$1</em>');
+
+                return content;
+            }
+
+            processContent(content) {
+                if (!content) return '';
+
+                // First process inline elements (variables and formatting)
+                content = this.processInline(content);
+
+                // Then split by double newlines to create paragraphs
+                const paragraphs = content.split(/\n\n+/).filter(p => p.trim());
+                content = paragraphs.map(p => `<p>${p.trim()}</p>`).join('');
+
+                return content;
+            }
+
+            executeScript(script) {
+                try {
+                    const context = {
+                        set: (key, value) => { this.variables[key] = value; },
+                        get: (key, defaultValue = null) => this.variables[key] !== undefined ? this.variables[key] : defaultValue,
+                        visited: (passageId) => this.visited[passageId] || 0,
+                        random: (min, max) => Math.floor(Math.random() * (max - min + 1)) + min
+                    };
+
+                    const func = new Function('context', `with(context) { ${script} }`);
+                    func(context);
+                    this.updateStats();
+                } catch (error) {
+                    console.error('Script execution error:', error);
+                }
+            }
+
+            evaluateCondition(condition) {
+                if (!condition) return true;
+
+                try {
+                    const context = {
+                        ...this.variables,
+                        visited: (passageId) => this.visited[passageId] || 0
+                    };
+
+                    const func = new Function('context', `with(context) { return ${condition}; }`);
+                    return func(context);
+                } catch (error) {
+                    console.error('Condition evaluation error:', error);
+                    return true;
+                }
+            }
+
+            updateStats() {
+                const container = document.getElementById('stats-container');
+                container.innerHTML = '';
+
+                for (const [key, value] of Object.entries(this.variables)) {
+                    const statItem = document.createElement('div');
+                    statItem.className = 'stat-item';
+                    statItem.innerHTML = `
+                        <span class="stat-label">${key}</span>
+                        <span class="stat-value">${value}</span>
+                    `;
+                    container.appendChild(statItem);
+                }
+            }
+
+            updateProgress() {
+                const totalPassages = this.story.passages.length;
+                const visitedCount = Object.keys(this.visited).length;
+                const percentage = (visitedCount / totalPassages) * 100;
+                document.getElementById('progress-bar').style.width = percentage + '%';
+            }
+
+            updateHistory() {
+                const container = document.getElementById('history-container');
+                const recentHistory = this.history.slice(-5).reverse();
+
+                container.innerHTML = '';
+
+                recentHistory.forEach(entry => {
+                    const passage = this.story.passages.find(p => p.id === entry.passageId);
+                    if (passage) {
+                        const item = document.createElement('div');
+                        item.className = 'history-item';
+                        item.textContent = passage.title || passage.id;
+                        container.appendChild(item);
+                    }
+                });
+            }
+
+            undo() {
+                if (this.history.length === 0) {
+                    this.showNotification('No more history', 'info');
+                    return;
+                }
+
+                const previousState = this.history.pop();
+                this.variables = {...previousState.variables};
+                this.visited = {...previousState.visited};
+                this.goToPassage(previousState.passageId, false);
+                this.showNotification('Undone', 'success');
+            }
+
+            restart() {
+                if (confirm('Are you sure you want to restart the story?')) {
+                    this.variables = {...(this.story.variables || {})};
+                    this.visited = {};
+                    this.history = [];
+                    this.start();
+                    this.showNotification('Story restarted', 'info');
+                }
+            }
+
+            saveGame(slot) {
+                const saveData = {
+                    passageId: this.currentPassage.id,
+                    variables: this.variables,
+                    visited: this.visited,
+                    history: this.history,
+                    timestamp: new Date().toISOString(),
+                    storyTitle: this.story.title
+                };
+
+                localStorage.setItem(`whisker_save_${slot}`, JSON.stringify(saveData));
+                this.showNotification('Game saved', 'success');
+                this.closeModal('save-modal');
+            }
+
+            loadGame(slot) {
+                const saveData = JSON.parse(localStorage.getItem(`whisker_save_${slot}`));
+
+                if (!saveData) {
+                    this.showNotification('No save found', 'error');
+                    return;
+                }
+
+                this.variables = saveData.variables;
+                this.visited = saveData.visited;
+                this.history = saveData.history;
+                this.goToPassage(saveData.passageId, false);
+                this.showNotification('Game loaded', 'success');
+                this.closeModal('load-modal');
+            }
+
+            showSaveModal() {
+                const container = document.getElementById('save-slots-container');
+                container.innerHTML = '';
+
+                for (let i = 1; i <= 5; i++) {
+                    const saveData = localStorage.getItem(`whisker_save_${i}`);
+                    const slot = document.createElement('div');
+                    slot.className = 'save-slot';
+
+                    if (saveData) {
+                        const data = JSON.parse(saveData);
+                        const date = new Date(data.timestamp);
+                        slot.innerHTML = `
+                            <div class="save-slot-header">
+                                <span>Slot ${i}</span>
+                                <span>${date.toLocaleDateString()}</span>
+                            </div>
+                            <div class="save-slot-info">
+                                ${data.storyTitle || 'Unknown Story'} - ${this.story.passages.find(p => p.id === data.passageId)?.title || data.passageId}
+                            </div>
+                        `;
+                    } else {
+                        slot.classList.add('empty');
+                        slot.innerHTML = `
+                            <div class="save-slot-header">Slot ${i}</div>
+                            <div class="save-slot-info">Empty</div>
+                        `;
+                    }
+
+                    slot.onclick = () => this.saveGame(i);
+                    container.appendChild(slot);
+                }
+
+                document.getElementById('save-modal').classList.add('active');
+            }
+
+            showLoadModal() {
+                const container = document.getElementById('load-slots-container');
+                container.innerHTML = '';
+
+                for (let i = 1; i <= 5; i++) {
+                    const saveData = localStorage.getItem(`whisker_save_${i}`);
+                    const slot = document.createElement('div');
+                    slot.className = 'save-slot';
+
+                    if (saveData) {
+                        const data = JSON.parse(saveData);
+                        const date = new Date(data.timestamp);
+                        slot.innerHTML = `
+                            <div class="save-slot-header">
+                                <span>Slot ${i}</span>
+                                <span>${date.toLocaleDateString()}</span>
+                            </div>
+                            <div class="save-slot-info">
+                                ${data.storyTitle || 'Unknown Story'} - ${this.story.passages.find(p => p.id === data.passageId)?.title || data.passageId}
+                            </div>
+                        `;
+                        slot.onclick = () => this.loadGame(i);
+                    } else {
+                        slot.classList.add('empty');
+                        slot.innerHTML = `
+                            <div class="save-slot-header">Slot ${i}</div>
+                            <div class="save-slot-info">Empty</div>
+                        `;
+                        slot.style.cursor = 'not-allowed';
+                    }
+
+                    container.appendChild(slot);
+                }
+
+                document.getElementById('load-modal').classList.add('active');
+            }
+
+            closeModal(modalId) {
+                document.getElementById(modalId).classList.remove('active');
+            }
+
+            showNotification(message, type = 'info') {
+                const notification = document.createElement('div');
+                notification.className = `notification ${type}`;
+                notification.textContent = message;
+                document.body.appendChild(notification);
+
+                setTimeout(() => {
+                    notification.remove();
+                }, 3000);
+            }
+        }
+
+        // Initialize player
+        const whiskerPlayer = new WhiskerPlayer();
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', (e) => {
+            if (e.ctrlKey || e.metaKey) {
+                if (e.key === 's') {
+                    e.preventDefault();
+                    whiskerPlayer.showSaveModal();
+                } else if (e.key === 'z') {
+                    e.preventDefault();
+                    whiskerPlayer.undo();
+                }
+            }
+        });
+
+        // Demo story data
+        const demoStory = {
+            title: "The Enchanted Forest",
+            variables: {
+                playerName: "Traveler",
+                gold: 0,
+                health: 100,
+                hasKey: false
+            },
+            start: "forest_entrance",
+            passages: [
+                {
+                    id: "forest_entrance",
+                    title: "The Forest Entrance",
+                    content: "You stand at the edge of an ancient forest. The trees tower above you, their branches forming a canopy that blocks most of the sunlight. A worn path leads deeper into the woods.\n\nYour name is **{{playerName}}**, and you have **{{gold}}** gold coins. Your health is at **{{health}}**.",
+                    choices: [
+                        { text: "Follow the path deeper into the forest", target: "deep_forest" },
+                        { text: "Search the forest edge", target: "forest_edge" },
+                        { text: "Turn back", target: "village" }
+                    ]
+                },
+                {
+                    id: "deep_forest",
+                    title: "Deep in the Forest",
+                    content: "The path winds through dense undergrowth. You hear strange sounds all around you. Suddenly, you spot a glowing mushroom circle.",
+                    choices: [
+                        { text: "Step into the mushroom circle", target: "fairy_ring" },
+                        { text: "Avoid it and continue", target: "ancient_tree" }
+                    ]
+                },
+                {
+                    id: "forest_edge",
+                    title: "Forest Edge",
+                    content: "You search along the edge of the forest and find a small leather pouch hidden beneath some leaves. Inside are 50 gold coins!",
+                    script: "set('gold', get('gold') + 50)",
+                    choices: [
+                        { text: "Take the gold and continue", target: "forest_entrance" }
+                    ]
+                },
+                {
+                    id: "fairy_ring",
+                    title: "The Fairy Ring",
+                    content: "As you step into the circle, the world shimmers. A tiny fairy appears before you, offering you a golden key in exchange for 30 gold coins.",
+                    choices: [
+                        {
+                            text: "Buy the key (30 gold)",
+                            target: "got_key",
+                            condition: "gold >= 30",
+                            script: "set('gold', get('gold') - 30); set('hasKey', true)"
+                        },
+                        { text: "Politely decline", target: "ancient_tree" },
+                        {
+                            text: "You don't have enough gold",
+                            target: "ancient_tree",
+                            condition: "gold < 30"
+                        }
+                    ]
+                },
+                {
+                    id: "got_key",
+                    title: "The Golden Key",
+                    content: "The fairy hands you the key with a mysterious smile. **'This will open what needs opening,'** she whispers before vanishing.",
+                    choices: [
+                        { text: "Continue your journey", target: "ancient_tree" }
+                    ]
+                },
+                {
+                    id: "ancient_tree",
+                    title: "The Ancient Tree",
+                    content: "You come upon a massive tree with a door carved into its trunk. {{hasKey ? 'Your golden key glows faintly.' : 'It appears to be locked.'}}",
+                    choices: [
+                        {
+                            text: "Use the golden key",
+                            target: "treasure_room",
+                            condition: "hasKey === true"
+                        },
+                        {
+                            text: "The door is locked - return to the entrance",
+                            target: "forest_entrance",
+                            condition: "hasKey === false"
+                        }
+                    ]
+                },
+                {
+                    id: "treasure_room",
+                    title: "The Treasure Room",
+                    content: "The door swings open to reveal a room filled with gold and jewels! You've found the legendary treasure of the Enchanted Forest! You gain **500 gold**!\n\n**Congratulations! You've completed the story!**",
+                    script: "set('gold', get('gold') + 500)",
+                    choices: [
+                        { text: "Restart the adventure", target: "forest_entrance" }
+                    ]
+                },
+                {
+                    id: "village",
+                    title: "Back to the Village",
+                    content: "You decide discretion is the better part of valor and return to the village. Perhaps another day you'll be ready for adventure.",
+                    choices: [
+                        { text: "Try again", target: "forest_entrance" }
+                    ]
+                }
+            ]
+        };
+
+        // Load and start the demo story
+        whiskerPlayer.loadStory(demoStory);
+        whiskerPlayer.start();
+    </script>
+</body>
+</html>

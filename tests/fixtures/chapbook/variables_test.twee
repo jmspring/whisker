@@ -1,0 +1,44 @@
+:: StoryTitle
+Chapbook Variables Test
+
+:: Start
+name: "Hero"
+gold: 100
+inventory: []
+stats: {
+  strength: 10,
+  dexterity: 10,
+  intelligence: 10
+}
+--
+Welcome, {name}!
+
+You have {gold} gold.
+
+[[Go to Shop->Shop]]
+
+:: Shop
+price: 50
+itemName: "Iron Sword"
+--
+**{itemName}** - {price} gold
+
+[if gold >= price]
+You can afford this item!
+
+[[Buy Item->BuyItem]]
+[else]
+Not enough gold.
+[continue]
+
+[[Back->Start]]
+
+:: BuyItem
+gold: gold - 50
+inventory: inventory.concat(['Iron Sword'])
+--
+You bought the {itemName}!
+
+Gold remaining: {gold}
+
+[[Continue->Start]]

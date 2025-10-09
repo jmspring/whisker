@@ -1,0 +1,178 @@
+:: StoryTitle
+Snowman Shop Test
+
+:: StoryData
+{
+  "ifid": "E1F2A3B4-C5D6-7890-KLMN-901234567890",
+  "format": "Snowman",
+  "format-version": "2.0.3"
+}
+
+:: StoryInit
+<%
+s.player = {
+  gold: 200,
+  inventory: []
+};
+
+s.shopItems = [
+  { id: 'healthPotion', name: 'Health Potion', price: 20, desc: 'Restores 50 HP', category: 'consumable', stock: 10 },
+  { id: 'manaPotion', name: 'Mana Potion', price: 25, desc: 'Restores 30 MP', category: 'consumable', stock: 8 },
+  { id: 'ironSword', name: 'Iron Sword', price: 100, desc: '+15 Attack', category: 'weapon', stock: 3 },
+  { id: 'steelArmor', name: 'Steel Armor', price: 150, desc: '+20 Defense', category: 'armor', stock: 2 },
+  { id: 'bow', name: 'Hunting Bow', price: 80, desc: '+12 Attack', category: 'weapon', stock: 4 }
+];
+%>
+
+:: Start
+<%
+window.buyItem = function(itemId) {
+  var item = _.findWhere(s.shopItems, {id: itemId});
+
+  if (!item) return;
+
+  if (s.player.gold >= item.price && item.stock > 0) {
+    s.player.gold -= item.price;
+    s.player.inventory.push(itemId);
+    item.stock -= 1;
+
+    updateShopDisplay();
+    $('#message').html('✓ Purchased ' + item.name + ' for ' + item.price + ' gold!')
+               .css('background', '#dfd')
+               .fadeIn()
+               .delay(2000)
+               .fadeOut();
+  } else if (item.stock <= 0) {
+    $('#message').html('✗ Out of stock!')
+               .css('background', '#fdd')
+               .fadeIn()
+               .delay(2000)
+               .fadeOut();
+  } else {
+    $('#message').html('✗ Not enough gold! Need ' + item.price + ' gold.')
+               .css('background', '#fdd')
+               .fadeIn()
+               .delay(2000)
+               .fadeOut();
+  }
+};
+
+window.updateShopDisplay = function() {
+  $('#gold-display').text(s.player.gold);
+
+  var inventoryText = s.player.inventory.length > 0 ?
+    s.player.inventory.map(function(id) {
+      var item = _.findWhere(s.shopItems, {id: id});
+      return item ? item.name : id;
+    }).join(', ') : 'Empty';
+  $('#inventory-display').text(inventoryText);
+};
+
+window.filterCategory = function(category) {
+  $('.shop-item').each(function() {
+    var itemCategory = $(this).data('category');
+    if (category === 'all' || itemCategory === category) {
+      $(this).show();
+    } else {
+      $(this).hide();
+    }
+  });
+
+  $('.filter-btn').removeClass('active');
+  $('[data-filter="' + category + '"]').addClass('active');
+};
+%>
+
+<style>
+.shop-item {
+  border: 1px solid #999;
+  padding: 15px;
+  margin: 10px 0;
+  background: #f9f9f9;
+}
+.shop-item h3 {
+  margin-top: 0;
+}
+.filter-btn {
+  padding: 8px 16px;
+  margin: 5px;
+  cursor: pointer;
+  border: 2px solid #666;
+  background: #fff;
+}
+.filter-btn.active {
+  background: #4CAF50;
+  color: white;
+}
+#message {
+  display: none;
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 4px;
+}
+.hud {
+  border: 2px solid #666;
+  padding: 10px;
+  margin-bottom: 20px;
+  background: #f0f0f0;
+}
+</style>
+
+# Adventurer's Shop
+
+<div class="hud">
+  <strong>Gold:</strong> <span id="gold-display"><%= s.player.gold %></span><br>
+  <strong>Inventory:</strong> <span id="inventory-display"><%= s.player.inventory.length > 0 ? s.player.inventory.map(function(id) { var item = _.findWhere(s.shopItems, {id: id}); return item ? item.name : id; }).join(', ') : 'Empty' %></span>
+</div>
+
+<div id="message"></div>
+
+<h3>Categories</h3>
+<div class="filters">
+  <button class="filter-btn active" data-filter="all" onclick="filterCategory('all')">All Items</button>
+  <button class="filter-btn" data-filter="consumable" onclick="filterCategory('consumable')">Consumables</button>
+  <button class="filter-btn" data-filter="weapon" onclick="filterCategory('weapon')">Weapons</button>
+  <button class="filter-btn" data-filter="armor" onclick="filterCategory('armor')">Armor</button>
+</div>
+
+<h3>Items</h3>
+<div id="shop-items">
+<% _.each(s.shopItems, function(item) { %>
+  <div class="shop-item" data-category="<%= item.category %>">
+    <h3><%= item.name %></h3>
+    <p><%= item.desc %></p>
+    <p><strong>Price:</strong> <%= item.price %> gold</p>
+    <p><strong>Stock:</strong> <%= item.stock %></p>
+
+    <% if (item.stock > 0) { %>
+      <% if (s.player.inventory.indexOf(item.id) > -1) { %>
+        <em>Already owned</em>
+      <% } else { %>
+        <button onclick="buyItem('<%= item.id %>')">Buy</button>
+      <% } %>
+    <% } else { %>
+      <em style="color: red;">Out of Stock</em>
+    <% } %>
+  </div>
+<% }); %>
+</div>
+
+[Leave Shop](#Exit)
+
+:: Exit
+# Thanks for shopping!
+
+**Final Inventory:**
+<% if (s.player.inventory.length > 0) { %>
+  <ul>
+  <% _.each(s.player.inventory, function(id) {
+    var item = _.findWhere(s.shopItems, {id: id});
+  %>
+    <li><%= item ? item.name : id %></li>
+  <% }); %>
+  </ul>
+<% } else { %>
+  <p><em>No items purchased</em></p>
+<% } %>
+
+**Remaining Gold:** <%= s.player.gold %>

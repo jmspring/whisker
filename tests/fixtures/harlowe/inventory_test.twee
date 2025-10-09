@@ -1,0 +1,74 @@
+:: StoryTitle
+Harlowe Inventory Test
+
+:: StoryData
+{
+  "ifid": "D674C1C8-BFAC-4603-BE77-F5B1E54C7F49",
+  "format": "Harlowe",
+  "format-version": "3.3.0"
+}
+
+:: Start
+(set: $inventory to (a:))
+(set: $maxItems to 5)
+(set: $gold to 100)
+
+# Inventory System Test
+
+Gold: $gold
+Inventory: (print: $inventory's length)/$maxItems
+
+{(if: $inventory's length > 0)[
+Items: (print: $inventory)
+]}
+
+[[Go to Market->Market]]
+
+:: Market
+# Market
+
+You have $gold gold.
+Inventory: (print: $inventory's length)/$maxItems
+
+{(if: $inventory's length < $maxItems)[
+(if: $gold >= 50)[[[Buy Sword (50g)->BuySword]]]
+(if: $gold >= 20)[[[Buy Potion (20g)->BuyPotion]]]
+(if: $gold >= 75)[[[Buy Armor (75g)->BuyArmor]]]
+](else:)[
+//Your inventory is full! You cannot carry more items.//
+]}
+
+[[Leave Market->Start]]
+
+:: BuySword
+(if: $gold >= 50)[
+(set: $inventory to it + (a: "Sword"))
+(set: $gold to it - 50)
+✓ You bought a sword!
+](else:)[
+✗ Not enough gold!
+]
+
+[[Back to Market->Market]]
+
+:: BuyPotion
+(if: $gold >= 20)[
+(set: $inventory to it + (a: "Potion"))
+(set: $gold to it - 20)
+✓ You bought a potion!
+](else:)[
+✗ Not enough gold!
+]
+
+[[Back to Market->Market]]
+
+:: BuyArmor
+(if: $gold >= 75)[
+(set: $inventory to it + (a: "Armor"))
+(set: $gold to it - 75)
+✓ You bought armor!
+](else:)[
+✗ Not enough gold!
+]
+
+[[Back to Market->Market]]

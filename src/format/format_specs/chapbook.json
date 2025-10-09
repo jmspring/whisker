@@ -1,0 +1,312 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "format": {
+    "name": "Chapbook",
+    "version": "2.2.0",
+    "type": "twine",
+    "description": "Simple, accessible Twine story format with straightforward modifier-based syntax"
+  },
+  "features": {
+    "modifiers": true,
+    "markdown": true,
+    "variables": "simple",
+    "state_tracking": "automatic",
+    "conditionals": "modifier_based",
+    "loops": "javascript",
+    "functions": "javascript",
+    "multimedia": "limited",
+    "styling": "css_and_modifiers",
+    "custom_macros": false
+  },
+  "syntax": {
+    "variables": {
+      "declaration": "varName: value",
+      "access": "{varName}",
+      "set_modifier": "[modifier]",
+      "pattern": "^[a-zA-Z_][a-zA-Z0-9_]*$",
+      "examples": [
+        "playerName: 'Hero'",
+        "health: 100",
+        "inventory: ['sword', 'potion']",
+        "You have {health} HP"
+      ]
+    },
+    "links": {
+      "basic": "[[Link Text]]",
+      "with_target": "[[Link Text->Target]]",
+      "conditional": "[if condition]\n[[Link]]\n[continued]",
+      "pattern": "\\[\\[([^\\]\\->]+)(?:->([^\\]]+))?\\]\\]",
+      "examples": [
+        "[[Continue]]",
+        "[[Go there->Location]]",
+        "[if hasKey]\n[[Unlock door->Inside]]\n[continued]"
+      ]
+    },
+    "modifiers": {
+      "if": "[if condition]",
+      "else": "[else]",
+      "unless": "[unless condition]",
+      "continued": "[continued]",
+      "note": "[note]",
+      "align": "[align center/left/right]",
+      "append": "[append]",
+      "examples": [
+        "[if health > 50]\nYou feel strong\n[continued]",
+        "[unless hasKey]\nThe door is locked\n[continued]",
+        "[align center]\nCentered text",
+        "[note]\nThis is a comment\n[continued]"
+      ]
+    },
+    "output": {
+      "inline": "{variable}",
+      "expression": "{expression}",
+      "examples": [
+        "You have {gold} coins",
+        "Health: {health}/{maxHealth}",
+        "{playerName.toUpperCase()}"
+      ]
+    },
+    "javascript": {
+      "block": "[JavaScript]\ncode\n[continued]",
+      "inline": "{javascript_expression}",
+      "examples": [
+        "[JavaScript]\nlet result = Math.random() * 100;\nhealth = result;\n[continued]",
+        "Random: {Math.floor(Math.random() * 10)}"
+      ]
+    },
+    "markdown": {
+      "italic": "_text_ or *text*",
+      "bold": "__text__ or **text**",
+      "heading": "# Heading",
+      "list": "* item or - item",
+      "examples": [
+        "_italic text_",
+        "**bold text**",
+        "# Chapter One",
+        "* First item\n* Second item"
+      ]
+    }
+  },
+  "modifiers": {
+    "conditionals": {
+      "if": "[if condition]",
+      "unless": "[unless condition]",
+      "else": "[else]",
+      "continued": "[continued]",
+      "notes": "Conditional blocks must end with [continued]"
+    },
+    "text": {
+      "align": "[align center/left/right]",
+      "note": "[note] - hidden comment",
+      "append": "[append]",
+      "prepend": "[prepend]"
+    },
+    "links": {
+      "back": "[back] - return to previous passage",
+      "restart": "[restart] - restart story"
+    },
+    "javascript": {
+      "javascript": "[JavaScript] - execute JavaScript code block"
+    },
+    "style": {
+      "style": "[style] - inline CSS styling"
+    }
+  },
+  "state": {
+    "access": "Direct variable names in JavaScript blocks",
+    "persistence": "Automatic - all variables persist",
+    "special": {
+      "trail": "Array of visited passages",
+      "visits": "Object with passage visit counts"
+    },
+    "examples": [
+      "[JavaScript]\nhealth += 10;\n[continued]",
+      "{visits.cave || 0}",
+      "{trail.includes('forest')}"
+    ]
+  },
+  "conversion_rules": {
+    "to_whisker": {
+      "variables": {
+        "from": "{variable}",
+        "to": "{{variable}}",
+        "notes": "Similar syntax, just different brackets"
+      },
+      "assignment": {
+        "from": "variable: value (in passage text)",
+        "to": "{{variable = value}}",
+        "notes": "Convert colon syntax to explicit assignment"
+      },
+      "conditionals": {
+        "from": "[if condition]...text...[continued]",
+        "to": "{{if condition then}}text{{end}}",
+        "notes": "Convert modifier blocks to template blocks"
+      },
+      "else": {
+        "from": "[if cond]A[else]B[continued]",
+        "to": "{{if cond then}}A{{else}}B{{end}}",
+        "notes": "Map else modifier to else clause"
+      },
+      "links": {
+        "from": "[[Text->Target]]",
+        "to": "[[Text|Target]]",
+        "notes": "Change arrow to pipe separator"
+      },
+      "output": {
+        "from": "{var}",
+        "to": "{{var}}",
+        "notes": "Add extra braces"
+      },
+      "javascript": {
+        "from": "[JavaScript]code[continued]",
+        "to": "{{lua_equivalent}}",
+        "notes": "Convert JavaScript to Lua where possible"
+      }
+    },
+    "from_whisker": {
+      "variables": {
+        "from": "{{variable}}",
+        "to": "{variable}",
+        "notes": "Remove one set of braces"
+      },
+      "assignment": {
+        "from": "{{variable = value}}",
+        "to": "variable: value",
+        "notes": "Convert to Chapbook colon syntax (in separate line)"
+      },
+      "conditionals": {
+        "from": "{{if condition then}}text{{end}}",
+        "to": "[if condition]\ntext\n[continued]",
+        "notes": "Convert to modifier block with line breaks"
+      },
+      "else": {
+        "from": "{{if cond then}}A{{else}}B{{end}}",
+        "to": "[if cond]\nA\n[else]\nB\n[continued]",
+        "notes": "Split into modifier blocks"
+      },
+      "links": {
+        "from": "[[Text|Target]]",
+        "to": "[[Text->Target]]",
+        "notes": "Change pipe to arrow"
+      },
+      "output": {
+        "from": "{{var}}",
+        "to": "{var}",
+        "notes": "Remove one set of braces"
+      }
+    }
+  },
+  "operators": {
+    "logical": {
+      "and": "&&",
+      "or": "||",
+      "not": "!"
+    },
+    "comparison": {
+      "equals": "===",
+      "not_equals": "!==",
+      "greater": ">",
+      "less": "<",
+      "greater_equal": ">=",
+      "less_equal": "<="
+    },
+    "arithmetic": {
+      "add": "+",
+      "subtract": "-",
+      "multiply": "*",
+      "divide": "/",
+      "modulo": "%"
+    }
+  },
+  "special_passages": {
+    "StoryTitle": "Story title",
+    "config.style.page.style": "Custom CSS styling",
+    "config.style.page.link.style": "Link styling",
+    "config.style.backdrop": "Background styling",
+    "vars passages": "Any passage with 'vars' tag sets initial variables"
+  },
+  "tags": {
+    "vars": "Initialize variables from this passage",
+    "header": "Display before every passage",
+    "footer": "Display after every passage"
+  },
+  "vars_passage": {
+    "format": "varName: value (one per line)",
+    "types": "string, number, boolean, array, object",
+    "examples": [
+      "playerName: 'Hero'",
+      "health: 100",
+      "hasKey: false",
+      "inventory: ['sword']",
+      "stats: {strength: 10, dexterity: 8}"
+    ]
+  },
+  "best_practices": {
+    "variables": [
+      "Initialize all variables in a passage tagged 'vars'",
+      "Use descriptive variable names",
+      "Keep variable names simple (no special characters)",
+      "Use camelCase for consistency"
+    ],
+    "modifiers": [
+      "Always close [if] and [unless] with [continued]",
+      "Use [note] for comments instead of HTML comments",
+      "Keep modifier blocks simple and readable",
+      "Place modifiers at start of line"
+    ],
+    "markdown": [
+      "Leverage Markdown for basic formatting",
+      "Use headings for chapter/section breaks",
+      "Lists work well for inventory or choices",
+      "Combine modifiers with Markdown freely"
+    ],
+    "javascript": [
+      "Use [JavaScript] blocks for complex logic",
+      "Keep JavaScript simple and readable",
+      "Access variables directly (no $ or _)",
+      "Use inline {expression} for simple calculations"
+    ]
+  },
+  "examples": {
+    "basic_passage": "You enter the room.\n\n[JavaScript]\nroomsVisited = (roomsVisited || 0) + 1;\n[continued]\n\nYou have visited {roomsVisited} rooms.\n\n[[Continue->NextRoom]]",
+    "conditional": "[if gold >= 50]\n[[Buy sword (50g)->BuySword]]\n[else]\nYou need 50 gold for a sword.\n[continued]\n\n[[Leave->Shop]]",
+    "vars_initialization": "playerName: 'Hero'\nhealth: 100\nmaxHealth: 100\ngold: 50\ninventory: []\nroomsVisited: 0",
+    "markdown_styling": "# Chapter One: The Beginning\n\nYou find yourself in a **dark forest**. The path ahead is _barely visible_.\n\nYour inventory:\n* Rusty sword\n* Leather armor\n* Torch\n\n[[Continue->Forest]]",
+    "javascript_block": "[JavaScript]\nif (Math.random() > 0.5) {\n  gold += 10;\n  foundTreasure = true;\n}\n[continued]\n\n[if foundTreasure]\nYou found **10 gold**!\n[continued]",
+    "aligned_text": "[align center]\n**GAME OVER**\n\nYour final score: {score}\n\n[[Try again->Start]]\n[[Quit->Exit]]"
+  },
+  "common_patterns": {
+    "inventory_check": "[if inventory.includes('key')]\n[[Unlock door->Inside]]\n[else]\nYou need a key to open this door.\n[continued]",
+    "stat_check": "[if strength >= 15]\n[[Force the door->Inside]]\n[continued]\n\n[unless strength >= 15]\nThe door is too heavy.\n[continued]",
+    "visited_check": "[if trail.includes('cave')]\nYou've been here before.\n[continued]",
+    "increment_counter": "[JavaScript]\ngold += 10;\nitemsFound = (itemsFound || 0) + 1;\n[continued]\n\nYou found treasure! You now have {gold} gold.",
+    "conditional_link": "[if hasKey]\n[[Open the locked door->TreasureRoom]]\n[continued]\n\n[unless hasKey]\n[[Search for a key->KeyRoom]]\n[continued]",
+    "visit_counter": "You have visited this passage {visits[passage()] || 0} times.",
+    "append_content": "[append]\nThis text appears after the passage content.\n[continued]"
+  },
+  "config": {
+    "page": {
+      "style.page.color": "Text color",
+      "style.page.font": "Font family",
+      "style.page.link.color": "Link color",
+      "style.page.link.lineColor": "Link underline color"
+    },
+    "header": {
+      "left": "config.header.left: 'content'",
+      "center": "config.header.center: 'content'",
+      "right": "config.header.right: 'content'"
+    },
+    "footer": {
+      "left": "config.footer.left: 'content'",
+      "center": "config.footer.center: 'content'",
+      "right": "config.footer.right: 'content'"
+    }
+  },
+  "notes": {
+    "simplicity": "Chapbook is designed for simplicity - avoid overcomplicating",
+    "accessibility": "Built-in accessibility features - use semantic structure",
+    "markdown": "Markdown is first-class - use it for formatting",
+    "modifiers": "Modifiers are powerful but limited - use JavaScript for complex logic",
+    "variables": "All variables persist automatically - no special state management needed"
+  }
+}

@@ -1,0 +1,63 @@
+:: StoryTitle
+Chapbook Conditionals Test
+
+:: Start
+playerClass: ""
+health: 100
+level: 1
+--
+Choose your class:
+
+[[Warrior->SelectWarrior]]
+[[Mage->SelectMage]]
+[[Rogue->SelectRogue]]
+
+:: SelectWarrior
+playerClass: "Warrior"
+health: 150
+--
+You are now a {playerClass}!
+
+[[Continue->Stats]]
+
+:: SelectMage
+playerClass: "Mage"
+health: 80
+--
+You are now a {playerClass}!
+
+[[Continue->Stats]]
+
+:: SelectRogue
+playerClass: "Rogue"
+health: 100
+--
+You are now a {playerClass}!
+
+[[Continue->Stats]]
+
+:: Stats
+--
+**Class:** {playerClass}
+**Health:** {health}
+**Level:** {level}
+
+[if playerClass === "Warrior"]
+You have high health and strong attacks.
+[continue]
+
+[if playerClass === "Mage"]
+You have powerful spells but low health.
+[continue]
+
+[if playerClass === "Rogue"]
+You have balanced stats and stealth abilities.
+[continue]
+
+[if level < 5]
+You are still learning your abilities.
+[else]
+You have mastered your class!
+[continue]
+
+[[Advance->Start]]

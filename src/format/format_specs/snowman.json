@@ -1,0 +1,192 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "format": {
+    "name": "Snowman",
+    "version": "2.0.3",
+    "type": "twine",
+    "description": "Minimal JavaScript-based Twine story format with direct DOM access"
+  },
+  "features": {
+    "javascript": true,
+    "jquery": true,
+    "markdown": false,
+    "variables": "global",
+    "state_tracking": "manual",
+    "conditionals": "javascript",
+    "loops": "javascript",
+    "functions": "javascript",
+    "multimedia": "html5",
+    "styling": "css",
+    "custom_macros": false
+  },
+  "syntax": {
+    "variables": {
+      "declaration": "window.story.state.variable = value",
+      "access": "window.story.state.variable",
+      "pattern": "^window\\.story\\.state\\.[a-zA-Z_][a-zA-Z0-9_]*$",
+      "examples": [
+        "window.story.state.playerName = 'Hero'",
+        "window.story.state.health = 100",
+        "window.story.state.inventory = []"
+      ]
+    },
+    "links": {
+      "basic": "[[Link Text|Passage Name]]",
+      "simple": "[[Passage Name]]",
+      "custom": "<a href=\"javascript:void(0)\" data-passage=\"PassageName\">Link Text</a>",
+      "pattern": "\\[\\[([^\\|\\]]+)(?:\\|([^\\]]+))?\\]\\]",
+      "examples": [
+        "[[Continue|NextPassage]]",
+        "[[Go back|Previous]]",
+        "[[Start]]"
+      ]
+    },
+    "conditionals": {
+      "format": "JavaScript if/else statements",
+      "embedding": "<% if (condition) { %> ... <% } %>",
+      "inline": "<%= expression %>",
+      "examples": [
+        "<% if (s.health > 50) { %>You feel strong<% } else { %>You feel weak<% } %>",
+        "<% if (s.hasKey) { %>[[Open the door|Inside]]<% } %>"
+      ]
+    },
+    "code_blocks": {
+      "javascript": "<% javascript code %>",
+      "output": "<%= expression %>",
+      "examples": [
+        "<% s.counter = (s.counter || 0) + 1 %>",
+        "You have <%= s.gold %> gold coins",
+        "<% _.times(3, function(i) { %> Item <%= i %> <% }) %>"
+      ]
+    },
+    "modifiers": {
+      "none": "Snowman doesn't use macros, just JavaScript"
+    }
+  },
+  "api": {
+    "story_object": {
+      "window.story.state": "Global state object (aliased as 's')",
+      "window.story.render(passageName)": "Navigate to passage",
+      "window.story.checkpoint()": "Create save point",
+      "window.story.restore()": "Restore from save point"
+    },
+    "passage_object": {
+      "passage.name": "Current passage name",
+      "passage.id": "Current passage ID",
+      "passage.tags": "Array of passage tags",
+      "passage.source": "Raw passage text"
+    },
+    "utilities": {
+      "underscore.js": "Available as _ for collection operations",
+      "jquery": "Available as $ for DOM manipulation"
+    }
+  },
+  "conversion_rules": {
+    "to_Whisker": {
+      "variables": {
+        "from": "window.story.state.var or s.var",
+        "to": "set('var', value) or get('var')",
+        "notes": "Convert JavaScript state access to Lua function calls"
+      },
+      "links": {
+        "from": "[[Text|Target]] or [[Target]]",
+        "to": "choice with text and target",
+        "notes": "Standard Twine link syntax converts directly"
+      },
+      "conditionals": {
+        "from": "<% if (condition) { %> ... <% } %>",
+        "to": "{% if condition %} ... {% endif %}",
+        "notes": "Convert embedded JavaScript to Lua templates"
+      },
+      "code_blocks": {
+        "from": "<% code %>",
+        "to": "{% lua code %}",
+        "notes": "Convert JavaScript blocks to Lua equivalents"
+      },
+      "expressions": {
+        "from": "<%= expression %>",
+        "to": "{{expression}}",
+        "notes": "Convert output expressions to Lua template syntax"
+      }
+    },
+    "from_Whisker": {
+      "variables": {
+        "from": "set('var', value) or get('var')",
+        "to": "s.var = value or s.var",
+        "notes": "Convert Lua state to JavaScript object properties"
+      },
+      "links": {
+        "from": "choice object",
+        "to": "[[text|target]]",
+        "notes": "Convert choice objects to Snowman link syntax"
+      },
+      "conditionals": {
+        "from": "{% if condition %} ... {% endif %}",
+        "to": "<% if (condition) { %> ... <% } %>",
+        "notes": "Convert Lua templates to embedded JavaScript"
+      },
+      "code_blocks": {
+        "from": "{% lua code %}",
+        "to": "<% javascript equivalent %>",
+        "notes": "Convert Lua code to JavaScript"
+      }
+    }
+  },
+  "javascript_mapping": {
+    "operators": {
+      "and": "&&",
+      "or": "||",
+      "not": "!",
+      "concat": "+"
+    },
+    "functions": {
+      "get('var')": "s.var",
+      "set('var', val)": "s.var = val",
+      "visited('passage')": "s.visited.includes('passage')",
+      "increment('var')": "s.var = (s.var || 0) + 1",
+      "decrement('var')": "s.var = (s.var || 0) - 1"
+    },
+    "collections": {
+      "array_access": "arr[index]",
+      "array_length": "arr.length",
+      "array_push": "arr.push(item)",
+      "array_contains": "arr.includes(item)",
+      "object_access": "obj.key or obj['key']"
+    }
+  },
+  "special_passages": {
+    "Start": "Default starting passage",
+    "StoryTitle": "Story title metadata",
+    "StoryData": "Story configuration (JSON)",
+    "StoryInit": "Initialization code (runs once)",
+    "PassageHeader": "Rendered before every passage",
+    "PassageFooter": "Rendered after every passage",
+    "PassageReady": "JavaScript hook after passage display"
+  },
+  "best_practices": {
+    "state_management": [
+      "Use s.variable shorthand for state access",
+      "Initialize variables in StoryInit passage",
+      "Use checkpoint() and restore() for save points",
+      "Track visited passages with s.visited array"
+    ],
+    "code_organization": [
+      "Keep JavaScript in <% %> blocks separate from content",
+      "Use PassageHeader/Footer for common elements",
+      "Use StoryInit for setup code",
+      "Use underscore.js for complex operations"
+    ],
+    "performance": [
+      "Minimize DOM manipulation in passages",
+      "Cache jQuery selections",
+      "Use event delegation for dynamic content",
+      "Avoid blocking operations in code blocks"
+    ]
+  },
+  "examples": {
+    "basic_passage": "You enter the room.\n\n<% s.roomsVisited = (s.roomsVisited || 0) + 1 %>\n\nYou have visited <%= s.roomsVisited %> rooms.\n\n[[Continue|NextRoom]]",
+    "conditional_link": "<% if (s.hasKey) { %>\n  [[Unlock the door|Inside]]\n<% } else { %>\n  The door is locked.\n  [[Look for a key|SearchKey]]\n<% } %>",
+    "inventory_system": "<% s.inventory = s.inventory || [] %>\n<% if (!s.inventory.includes('sword')) { %>\n  [[Pick up the sword]]\n  <% s.inventory.push('sword') %>\n<% } %>\n\nInventory: <%= s.inventory.join(', ') %>",
+    "loop_example": "<% _.times(3, function(i) { %>\n  Option <%= i + 1 %>: [[Choice <%= i + 1 %>|Passage<%= i %>]]\n<% }) %>"
+  }
+}

@@ -1,0 +1,85 @@
+:: StoryTitle
+Harlowe Combat Test
+
+:: StoryData
+{
+  "ifid": "A1B2C3D4-E5F6-7890-ABCD-EF1234567890",
+  "format": "Harlowe",
+  "format-version": "3.3.0"
+}
+
+:: Start
+(set: $hp to 100)
+(set: $maxHP to 100)
+(set: $enemyHP to 50)
+(set: $enemyMaxHP to 50)
+(set: $inventory to (a: "Potion", "Potion"))
+
+# Combat System Test
+
+You encounter a goblin!
+
+[[Begin Battle->Combat]]
+
+:: Combat
+# Battle
+
+Your health: $hp/$maxHP
+Enemy health: $enemyHP/$enemyMaxHP
+
+(link-repeat: "⚔️ Attack")[
+(set: $damage to (random: 5, 15))
+(set: $enemyHP to it - $damage)
+(append: ?combat)[
+You dealt $damage damage!
+]
+(if: $enemyHP <= 0)[(go-to: "Victory")]
+(set: $enemyDamage to (random: 3, 10))
+(set: $hp to it - $enemyDamage)
+(append: ?combat)[
+Enemy dealt $enemyDamage damage!
+]
+(if: $hp <= 0)[(go-to: "GameOver")]
+(replace: ?status)[
+Your HP: $hp/$maxHP | Enemy HP: $enemyHP/$enemyMaxHP
+]
+]
+
+(if: $inventory contains "Potion")[
+(link: "🧪 Use Potion")[
+(set: $inventory to it - (a: "Potion"))
+(set: $hp to (min: it + 30, $maxHP))
+(append: ?combat)[
+You used a potion and restored 30 HP!
+]
+(set: $enemyDamage to (random: 3, 10))
+(set: $hp to it - $enemyDamage)
+(append: ?combat)[
+Enemy dealt $enemyDamage damage!
+]
+(replace: ?status)[
+Your HP: $hp/$maxHP | Enemy HP: $enemyHP/$enemyMaxHP
+]
+]
+]
+
+|status>[Your HP: $hp/$maxHP | Enemy HP: $enemyHP/$enemyMaxHP]
+
+---
+|combat>[]
+
+:: Victory
+# Victory!
+
+You defeated the goblin!
+
+Found 25 gold and a health potion.
+
+[[Continue->Start]]
+
+:: GameOver
+# Game Over
+
+You were defeated...
+
+[[Try Again->Start]]

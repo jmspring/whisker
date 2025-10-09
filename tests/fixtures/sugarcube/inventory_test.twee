@@ -1,0 +1,130 @@
+:: StoryTitle
+SugarCube Inventory Test
+
+:: StoryData
+{
+  "ifid": "D4E5F6A7-B8C9-0123-DEFG-234567890123",
+  "format": "SugarCube",
+  "format-version": "2.37.3"
+}
+
+:: StoryInit
+<<set $inventory to []>>
+<<set $gold to 100>>
+
+<<set $items to {
+  sword: {
+    name: "Iron Sword",
+    type: "weapon",
+    damage: 15,
+    price: 50,
+    desc: "A sturdy iron blade"
+  },
+  potion: {
+    name: "Health Potion",
+    type: "consumable",
+    healing: 30,
+    price: 20,
+    desc: "Restores 30 HP"
+  },
+  armor: {
+    name: "Leather Armor",
+    type: "armor",
+    defense: 10,
+    price: 75,
+    desc: "Basic protection"
+  },
+  bow: {
+    name: "Hunting Bow",
+    type: "weapon",
+    damage: 12,
+    price: 60,
+    desc: "A well-crafted bow"
+  }
+}>>
+
+:: Start
+<h2>Inventory System Test</h2>
+
+<strong>Gold:</strong> $gold<br>
+<strong>Inventory:</strong>
+<<if $inventory.length > 0>>
+  <<for _i to 0; _i lt $inventory.length; _i++>>
+    <<print $items[$inventory[_i]].name>><<if _i lt $inventory.length - 1>>, <</if>>
+  <</for>>
+<<else>>
+  Empty
+<</if>>
+
+[[Visit Shop->Shop]]
+
+:: Shop
+<h2>Merchant's Shop</h2>
+<strong>Gold:</strong> $gold
+
+<div id="shop-items">
+<<for _itemKey, _item range $items>>
+  <div class="item-card" style="border: 1px solid #ccc; padding: 10px; margin: 10px 0;">
+    <h3>_item.name</h3>
+    <p>_item.desc</p>
+    <p><strong>Type:</strong> _item.type</p>
+    <<if _item.damage>>
+      <p><strong>Damage:</strong> _item.damage</p>
+    <</if>>
+    <<if _item.defense>>
+      <p><strong>Defense:</strong> _item.defense</p>
+    <</if>>
+    <<if _item.healing>>
+      <p><strong>Healing:</strong> _item.healing</p>
+    <</if>>
+    <p><strong>Price:</strong> _item.price gold</p>
+
+    <<if $inventory.includes(_itemKey)>>
+      <em>Already owned</em>
+    <<else>>
+      <<capture _itemKey, _item>>
+        <<link "Buy">>
+          <<if $gold >= _item.price>>
+            <<set $gold -= _item.price>>
+            <<set $inventory.push(_itemKey)>>
+            <<replace "#message">>✓ You bought _item.name!<</replace>>
+            <<replace "#shop-items">><<include "ShopDisplay">><</replace>>
+          <<else>>
+            <<replace "#message">>✗ Not enough gold!<</replace>>
+          <</if>>
+        <</link>>
+      <</capture>>
+    <</if>>
+  </div>
+<</for>>
+</div>
+
+<span id="message"></span>
+
+[[Leave Shop->Start]]
+
+:: ShopDisplay
+<<for _itemKey, _item range $items>>
+  <div class="item-card" style="border: 1px solid #ccc; padding: 10px; margin: 10px 0;">
+    <h3>_item.name</h3>
+    <p>_item.desc</p>
+    <p><strong>Price:</strong> _item.price gold</p>
+
+    <<if $inventory.includes(_itemKey)>>
+      <em>Already owned</em>
+    <<else>>
+      <<capture _itemKey, _item>>
+        <<link "Buy">>
+          <<if $gold >= _item.price>>
+            <<set $gold -= _item.price>>
+            <<set $inventory.push(_itemKey)>>
+            <<replace "#message">>✓ You bought _item.name!<</replace>>
+            <<replace "#shop-items">><<include "ShopDisplay">><</replace>>
+          <<else>>
+            <<replace "#message">>✗ Not enough gold!<</replace>>
+          <</if>>
+        <</link>>
+      <</capture>>
+    <</if>>
+  </div>
+<</for>>

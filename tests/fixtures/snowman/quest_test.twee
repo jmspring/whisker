@@ -1,0 +1,233 @@
+:: StoryTitle
+Snowman Quest Test
+
+:: StoryData
+{
+  "ifid": "F2A3B4C5-D6E7-8901-LMNO-012345678901",
+  "format": "Snowman",
+  "format-version": "2.0.3"
+}
+
+:: StoryInit
+<%
+s.player = {
+  name: 'Hero',
+  gold: 100,
+  inventory: []
+};
+
+s.quests = {
+  dragonQuest: {
+    id: 'dragonQuest',
+    title: 'Defeat the Dragon',
+    description: 'Find and defeat the dragon terrorizing the village',
+    progress: 0,
+    maxProgress: 3,
+    stages: ['Find dragon lair', 'Gather equipment', 'Defeat dragon'],
+    rewards: { gold: 500, items: ['Dragon Scale'] },
+    completed: false,
+    active: true
+  },
+  herbQuest: {
+    id: 'herbQuest',
+    title: 'Collect Herbs',
+    description: 'Gather 5 medicinal herbs for the healer',
+    progress: 0,
+    maxProgress: 5,
+    stages: [],
+    rewards: { gold: 50, items: ['Health Potion', 'Health Potion'] },
+    completed: false,
+    active: true
+  },
+  treasureQuest: {
+    id: 'treasureQuest',
+    title: 'Find the Treasure',
+    description: 'Locate the hidden treasure in the forest',
+    progress: 0,
+    maxProgress: 1,
+    stages: ['Search the forest'],
+    rewards: { gold: 200, items: ['Ancient Amulet'] },
+    completed: false,
+    active: false
+  }
+};
+
+window.updateQuest = function(questId, amount) {
+  var quest = s.quests[questId];
+  if (!quest || quest.completed) return;
+
+  quest.progress = Math.min(quest.progress + amount, quest.maxProgress);
+
+  var message = 'Quest Progress: ' + quest.title + ' (' + quest.progress + '/' + quest.maxProgress + ')';
+  $('#quest-message').html(message).fadeIn().delay(2000).fadeOut();
+
+  if (quest.progress >= quest.maxProgress) {
+    completeQuest(questId);
+  }
+
+  displayQuests();
+};
+
+window.completeQuest = function(questId) {
+  var quest = s.quests[questId];
+  if (quest.completed) return;
+
+  quest.completed = true;
+  s.player.gold += quest.rewards.gold;
+
+  _.each(quest.rewards.items, function(item) {
+    s.player.inventory.push(item);
+  });
+
+  var message = '✓ Quest Complete: ' + quest.title + '!<br>Rewards: ' +
+                quest.rewards.gold + ' gold';
+  if (quest.rewards.items.length > 0) {
+    message += ', ' + quest.rewards.items.join(', ');
+  }
+
+  $('#quest-message').html(message)
+                     .css('background', '#dfd')
+                     .fadeIn()
+                     .delay(3000)
+                     .fadeOut();
+
+  displayQuests();
+};
+
+window.displayQuests = function() {
+  var html = '';
+
+  _.each(s.quests, function(quest) {
+    if (!quest.active && !quest.completed) return;
+
+    var statusClass = quest.completed ? 'completed' : 'active';
+    var status = quest.completed ? 'Completed' : quest.progress + '/' + quest.maxProgress;
+
+    html += '<div class="quest ' + statusClass + '">';
+    html += '<h4>' + quest.title + '</h4>';
+    html += '<p>' + quest.description + '</p>';
+    html += '<p><strong>Status:</strong> ' + status + '</p>';
+
+    if (!quest.completed && quest.stages.length > 0) {
+      html += '<p><strong>Current Stage:</strong> ' + quest.stages[quest.progress] + '</p>';
+    }
+
+    if (quest.completed) {
+      html += '<p><em>Completed!</em></p>';
+    }
+
+    html += '</div>';
+  });
+
+  $('#quest-list').html(html);
+  $('#gold-display').text(s.player.gold);
+  $('#inventory-display').text(s.player.inventory.length > 0 ?
+                                s.player.inventory.join(', ') : 'Empty');
+};
+
+window.activateQuest = function(questId) {
+  s.quests[questId].active = true;
+  displayQuests();
+  $('#quest-message').html('New quest activated: ' + s.quests[questId].title)
+                     .css('background', '#ddf')
+                     .fadeIn()
+                     .delay(2000)
+                     .fadeOut();
+};
+%>
+
+<style>
+.quest {
+  border: 2px solid #666;
+  padding: 15px;
+  margin: 10px 0;
+  background: #f9f9f9;
+}
+.quest.completed {
+  border-color: #0a0;
+  background: #efe;
+}
+.quest.active {
+  border-color: #00f;
+  background: #eef;
+}
+#quest-message {
+  display: none;
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 4px;
+  font-weight: bold;
+}
+.hud {
+  border: 2px solid #666;
+  padding: 10px;
+  margin-bottom: 20px;
+  background: #f0f0f0;
+}
+</style>
+
+:: Start
+<div class="hud">
+  <strong><%= s.player.name %></strong><br>
+  <strong>Gold:</strong> <span id="gold-display"><%= s.player.gold %></span><br>
+  <strong>Inventory:</strong> <span id="inventory-display"><%= s.player.inventory.length > 0 ? s.player.inventory.join(', ') : 'Empty' %></span>
+</div>
+
+# Quest Hub
+
+[View Quest Log](#QuestLog)
+[Go on Adventure](#Adventure)
+[Visit Quest Board](#QuestBoard)
+
+:: QuestLog
+<script>displayQuests();</script>
+
+# Quest Log
+
+<div id="quest-list"></div>
+<div id="quest-message"></div>
+
+[Back](#Start)
+
+:: Adventure
+# Adventure
+
+Choose an activity:
+
+<button onclick="updateQuest('dragonQuest', 1)">Search for Dragon Lair</button><br>
+<button onclick="updateQuest('herbQuest', 1)">Collect Herb</button><br>
+<% if (s.quests.treasureQuest.active) { %>
+  <button onclick="updateQuest('treasureQuest', 1)">Search for Treasure</button><br>
+<% } %>
+
+<div id="quest-message"></div>
+
+<div id="quest-list" style="margin-top: 20px;"></div>
+
+<script>displayQuests();</script>
+
+[Back](#Start)
+
+:: QuestBoard
+# Quest Board
+
+Available Quests:
+
+<% _.each(s.quests, function(quest) { %>
+  <% if (!quest.active && !quest.completed) { %>
+    <div class="quest">
+      <h4><%= quest.title %></h4>
+      <p><%= quest.description %></p>
+      <p><strong>Rewards:</strong> <%= quest.rewards.gold %> gold
+      <% if (quest.rewards.items.length > 0) { %>
+        , <%= quest.rewards.items.join(', ') %>
+      <% } %>
+      </p>
+      <button onclick="activateQuest('<%= quest.id %>')">Accept Quest</button>
+    </div>
+  <% } %>
+<% }); %>
+
+<div id="quest-message"></div>
+
+[Back](#Start)

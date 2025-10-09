@@ -1,0 +1,322 @@
+<tw-storydata name="Snowman Adventure" startnode="1" creator="Whisker" creator-version="1.0" ifid="12345678-1234-1234-1234-123456789012" format="Snowman" format-version="2.0.3" options="">
+
+<style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">
+body {
+  font-family: 'Georgia', serif;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  line-height: 1.6;
+}
+
+#passage {
+  margin: 20px 0;
+}
+
+a {
+  color: #2563eb;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+.stats {
+  background: #f3f4f6;
+  padding: 10px;
+  border-radius: 5px;
+  margin: 10px 0;
+}
+</style>
+
+<script role="script" id="twine-user-script" type="text/twine-javascript">
+// Global helpers
+window.s = window.story.state;
+</script>
+
+<tw-passagedata pid="0" name="StoryInit" tags="init" position="0,0">
+&lt;%
+// Initialize game state
+s.playerName = "Hero";
+s.health = 100;
+s.maxHealth = 100;
+s.gold = 50;
+s.inventory = [];
+s.visitedRooms = 0;
+s.hasKey = false;
+s.enemyDefeated = false;
+%&gt;
+</tw-passagedata>
+
+<tw-passagedata pid="1" name="Start" tags="" position="200,100">
+# Welcome to Snowman Adventure!
+
+&lt;%
+s.visitedRooms += 1;
+%&gt;
+
+You awaken in a dimly lit chamber. Dust particles dance in the shaft of light piercing through a crack in the stone wall.
+
+&lt;div class="stats"&gt;
+**Health:** &lt;%= s.health %&gt;/&lt;%= s.maxHealth %&gt; | **Gold:** &lt;%= s.gold %&gt; | **Inventory:** &lt;%= s.inventory.length &gt; 0 ? s.inventory.join(', ') : 'Empty' %&gt;
+&lt;/div&gt;
+
+To your left, you see a wooden door. To your right, a narrow passageway leads into darkness.
+
+[[Examine the door|Door]]
+[[Take the passageway|Passage]]
+[[Check your surroundings|SearchRoom]]
+</tw-passagedata>
+
+<tw-passagedata pid="2" name="Door" tags="" position="100,250">
+# The Wooden Door
+
+&lt;%
+s.visitedRooms += 1;
+%&gt;
+
+You approach the heavy wooden door. Ancient runes are carved into its surface, glowing faintly with an ethereal blue light.
+
+&lt;div class="stats"&gt;
+**Health:** &lt;%= s.health %&gt;/&lt;%= s.maxHealth %&gt; | **Gold:** &lt;%= s.gold %&gt;
+&lt;/div&gt;
+
+&lt;% if (s.hasKey) { %&gt;
+  You have the ancient key! The runes pulse brighter as you approach.
+
+  [[Unlock the door|TreasureRoom]]
+  [[Go back|Start]]
+&lt;% } else { %&gt;
+  The door is firmly locked. You'll need a key to open it.
+
+  [[Look for a key|SearchKey]]
+  [[Go back|Start]]
+&lt;% } %&gt;
+</tw-passagedata>
+
+<tw-passagedata pid="3" name="Passage" tags="" position="300,250">
+# Dark Passageway
+
+&lt;%
+s.visitedRooms += 1;
+%&gt;
+
+The narrow passage is shrouded in darkness. You hear water dripping somewhere ahead and the faint echo of... something moving.
+
+&lt;div class="stats"&gt;
+**Health:** &lt;%= s.health %&gt;/&lt;%= s.maxHealth %&gt; | **Gold:** &lt;%= s.gold %&gt;
+&lt;/div&gt;
+
+&lt;% if (!s.enemyDefeated) { %&gt;
+  [[Continue deeper|Combat]]
+&lt;% } else { %&gt;
+  The passage is now clear. You can see light at the far end.
+
+  [[Continue to the exit|Victory]]
+&lt;% } %&gt;
+
+[[Turn back|Start]]
+</tw-passagedata>
+
+<tw-passagedata pid="4" name="SearchRoom" tags="" position="200,400">
+# Searching...
+
+&lt;%
+s.visitedRooms += 1;
+%&gt;
+
+You carefully examine the chamber, running your hands along the cold stone walls.
+
+&lt;% if (Math.random() &gt; 0.5) { %&gt;
+  Behind a loose stone, you find a small pouch containing **20 gold coins**!
+
+  &lt;%
+  s.gold += 20;
+  %&gt;
+
+  You now have &lt;%= s.gold %&gt; gold.
+&lt;% } else { %&gt;
+  You find nothing of value, just dust and cobwebs.
+&lt;% } %&gt;
+
+[[Continue|Start]]
+</tw-passagedata>
+
+<tw-passagedata pid="5" name="SearchKey" tags="" position="150,400">
+# Searching for the Key
+
+&lt;%
+s.visitedRooms += 1;
+%&gt;
+
+You search the area near the door, looking for any sign of a key.
+
+After a few minutes, you notice a small alcove in the wall. Inside, resting on a stone pedestal, is an ancient bronze key!
+
+&lt;%
+s.hasKey = true;
+s.inventory.push("Ancient Key");
+%&gt;
+
+**You obtained: Ancient Key**
+
+[[Return to the door|Door]]
+[[Explore more first|Start]]
+</tw-passagedata>
+
+<tw-passagedata pid="6" name="Combat" tags="" position="400,400">
+# Combat!
+
+&lt;%
+s.visitedRooms += 1;
+%&gt;
+
+A shadowy creature emerges from the darkness! Its glowing red eyes fix on you menacingly.
+
+&lt;div class="stats"&gt;
+**Your Health:** &lt;%= s.health %&gt;/&lt;%= s.maxHealth %&gt;
+**Enemy Health:** &lt;%= s.enemyHealth || 50 %&gt;
+&lt;/div&gt;
+
+&lt;% if (!s.enemyHealth) { s.enemyHealth = 50; } %&gt;
+
+&lt;% if (s.enemyHealth &gt; 0 &amp;&amp; s.health &gt; 0) { %&gt;
+  [[Attack|CombatAttack]]
+
+  &lt;% if (s.inventory.includes("Health Potion")) { %&gt;
+    [[Use Health Potion|UsePotion]]
+  &lt;% } %&gt;
+
+  [[Try to flee|CombatFlee]]
+&lt;% } else if (s.enemyHealth &lt;= 0) { %&gt;
+  You have defeated the creature! It dissolves into shadow, leaving behind a glowing orb and **30 gold coins**.
+
+  &lt;%
+  s.enemyDefeated = true;
+  s.gold += 30;
+  s.inventory.push("Shadow Orb");
+  %&gt;
+
+  [[Continue|Passage]]
+&lt;% } else { %&gt;
+  [[Game Over|GameOver]]
+&lt;% } %&gt;
+</tw-passagedata>
+
+<tw-passagedata pid="7" name="CombatAttack" tags="" position="500,500">
+&lt;%
+// Player attacks
+var playerDamage = Math.floor(Math.random() * 15) + 10;
+s.enemyHealth -= playerDamage;
+
+// Enemy attacks back if still alive
+if (s.enemyHealth &gt; 0) {
+  var enemyDamage = Math.floor(Math.random() * 12) + 5;
+  s.health -= enemyDamage;
+}
+%&gt;
+
+You strike the creature for **&lt;%= playerDamage %&gt; damage**!
+
+&lt;% if (s.enemyHealth &gt; 0) { %&gt;
+  The creature retaliates, dealing **&lt;%= enemyDamage %&gt; damage** to you!
+&lt;% } %&gt;
+
+[[Continue|Combat]]
+</tw-passagedata>
+
+<tw-passagedata pid="8" name="CombatFlee" tags="" position="500,600">
+&lt;%
+// 50% chance to flee successfully
+if (Math.random() &gt; 0.5) {
+  s.fleeFailed = false;
+  s.enemyHealth = 50; // Reset enemy for next encounter
+} else {
+  s.fleeFailed = true;
+  var enemyDamage = Math.floor(Math.random() * 15) + 8;
+  s.health -= enemyDamage;
+}
+%&gt;
+
+&lt;% if (s.fleeFailed) { %&gt;
+  You try to flee, but the creature blocks your path and strikes you for **&lt;%= enemyDamage %&gt; damage**!
+
+  [[Continue fighting|Combat]]
+&lt;% } else { %&gt;
+  You successfully escape back to the starting chamber!
+
+  [[Catch your breath|Start]]
+&lt;% } %&gt;
+</tw-passagedata>
+
+<tw-passagedata pid="9" name="TreasureRoom" tags="" position="50,550">
+# The Treasure Room
+
+&lt;%
+s.visitedRooms += 1;
+%&gt;
+
+The key fits perfectly! The door swings open with a deep groan, revealing a chamber filled with treasures.
+
+Gold coins, ancient artifacts, and magical items lie scattered across ornate pedestals.
+
+&lt;%
+s.gold += 100;
+s.inventory.push("Ancient Amulet");
+s.health = s.maxHealth; // Full heal
+%&gt;
+
+**You found:**
+- 100 gold coins
+- Ancient Amulet (fully restores health)
+
+Your health has been restored to &lt;%= s.maxHealth %&gt;!
+
+&lt;div class="stats"&gt;
+**Total Gold:** &lt;%= s.gold %&gt;
+**Inventory:** &lt;%= s.inventory.join(', ') %&gt;
+&lt;/div&gt;
+
+[[Exit through the secret passage|Victory]]
+</tw-passagedata>
+
+<tw-passagedata pid="10" name="Victory" tags="" position="300,700">
+# Victory!
+
+Congratulations! You've successfully navigated the dungeon and emerged victorious!
+
+**Final Statistics:**
+- **Health:** &lt;%= s.health %&gt;/&lt;%= s.maxHealth %&gt;
+- **Gold Collected:** &lt;%= s.gold %&gt;
+- **Rooms Visited:** &lt;%= s.visitedRooms %&gt;
+- **Items Found:** &lt;%= s.inventory.length %&gt;
+
+**Inventory:** &lt;%= s.inventory.join(', ') %&gt;
+
+&lt;% if (s.enemyDefeated) { %&gt;
+  You defeated the shadow creature!
+&lt;% } %&gt;
+
+&lt;% if (s.hasKey) { %&gt;
+  You unlocked the ancient door!
+&lt;% } %&gt;
+
+Thank you for playing this Snowman Adventure demo!
+
+[[Play Again|Start]]
+</tw-passagedata>
+
+<tw-passagedata pid="11" name="GameOver" tags="" position="600,650">
+# Game Over
+
+Your health has dropped to zero. The darkness claims you...
+
+**Statistics:**
+- **Gold Collected:** &lt;%= s.gold %&gt;
+- **Rooms Visited:** &lt;%= s.visitedRooms %&gt;
+
+[[Try Again|Start]]
+</tw-passagedata>
+
+</tw-storydata>

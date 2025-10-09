@@ -1,0 +1,166 @@
+:: StoryTitle
+SugarCube Shop Test
+
+:: StoryData
+{
+  "ifid": "B8C9D0E1-F2A3-4567-HIJK-678901234567",
+  "format": "SugarCube",
+  "format-version": "2.37.3"
+}
+
+:: StoryInit
+<<set $gold to 200>>
+<<set $inventory to []>>
+
+<<set $shopItems to [
+  {
+    id: "healthPotion",
+    name: "Health Potion",
+    desc: "Restores 50 HP",
+    price: 20,
+    stock: 10,
+    category: "consumable"
+  },
+  {
+    id: "manaPotion",
+    name: "Mana Potion",
+    desc: "Restores 30 MP",
+    price: 25,
+    stock: 8,
+    category: "consumable"
+  },
+  {
+    id: "ironSword",
+    name: "Iron Sword",
+    desc: "+15 Attack",
+    price: 100,
+    stock: 3,
+    category: "weapon"
+  },
+  {
+    id: "steelArmor",
+    name: "Steel Armor",
+    desc: "+20 Defense",
+    price: 150,
+    stock: 2,
+    category: "armor"
+  }
+]>>
+
+:: Start
+<h2>Adventurer's Shop</h2>
+
+<p><strong>Gold:</strong> <span id="gold-display">$gold</span></p>
+<p><strong>Inventory:</strong> <span id="inventory-display"><<if $inventory.length > 0>><<for _i to 0; _i lt $inventory.length; _i++>>_i<<if _i lt $inventory.length - 1>>, <</if>><</for>><<else>>Empty<</if>></span></p>
+
+<h3>Shop Categories</h3>
+<<link "All Items" "AllItems">><</link>> |
+<<link "Consumables" "Consumables">><</link>> |
+<<link "Weapons" "Weapons">><</link>> |
+<<link "Armor" "Armor">><</link>>
+
+<div id="message" style="margin-top: 20px; padding: 10px; background: #f0f0f0;"></div>
+
+:: AllItems
+<<include "ShopDisplay">>
+
+[[Back->Start]]
+
+:: Consumables
+<h2>Consumables</h2>
+
+<<include "ShopFilterDisplay">>
+
+[[Back->Start]]
+
+<<set _category to "consumable">>
+
+:: Weapons
+<h2>Weapons</h2>
+
+<<include "ShopFilterDisplay">>
+
+[[Back->Start]]
+
+<<set _category to "weapon">>
+
+:: Armor
+<h2>Armor</h2>
+
+<<include "ShopFilterDisplay">>
+
+[[Back->Start]]
+
+<<set _category to "armor">>
+
+:: ShopDisplay
+<div class="shop-grid">
+<<for _i to 0; _i lt $shopItems.length; _i++>>
+  <<set _item to $shopItems[_i]>>
+  <div class="shop-item" style="border: 1px solid #999; padding: 15px; margin: 10px 0;">
+    <h3>_item.name</h3>
+    <p>_item.desc</p>
+    <p><strong>Price:</strong> _item.price gold</p>
+    <p><strong>Stock:</strong> _item.stock</p>
+
+    <<if _item.stock > 0>>
+      <<if $inventory.includes(_item.id)>>
+        <em>Already owned</em>
+      <<else>>
+        <<capture _item, _i>>
+          <<link "Buy">>
+            <<if $gold >= _item.price>>
+              <<set $gold -= _item.price>>
+              <<set $inventory.push(_item.id)>>
+              <<set $shopItems[_i].stock -= 1>>
+              <<replace "#gold-display">>$gold<</replace>>
+              <<replace "#message">>✓ Purchased _item.name for _item.price gold!<</replace>>
+            <<else>>
+              <<replace "#message">>✗ Not enough gold! Need _item.price gold.<</replace>>
+            <</if>>
+          <</link>>
+        <</capture>>
+      <</if>>
+    <<else>>
+      <em style="color: red;">Out of Stock</em>
+    <</if>>
+  </div>
+<</for>>
+</div>
+
+:: ShopFilterDisplay
+<div class="shop-grid">
+<<for _i to 0; _i lt $shopItems.length; _i++>>
+  <<set _item to $shopItems[_i]>>
+  <<if _item.category is _category>>
+    <div class="shop-item" style="border: 1px solid #999; padding: 15px; margin: 10px 0;">
+      <h3>_item.name</h3>
+      <p>_item.desc</p>
+      <p><strong>Price:</strong> _item.price gold</p>
+      <p><strong>Stock:</strong> _item.stock</p>
+
+      <<if _item.stock > 0>>
+        <<if $inventory.includes(_item.id)>>
+          <em>Already owned</em>
+        <<else>>
+          <<capture _item, _i>>
+            <<link "Buy">>
+              <<if $gold >= _item.price>>
+                <<set $gold -= _item.price>>
+                <<set $inventory.push(_item.id)>>
+                <<set $shopItems[_i].stock -= 1>>
+                <<replace "#gold-display">>$gold<</replace>>
+                <<replace "#message">>✓ Purchased _item.name!<</replace>>
+              <<else>>
+                <<replace "#message">>✗ Not enough gold!<</replace>>
+              <</if>>
+            <</link>>
+          <</capture>>
+        <</if>>
+      <<else>>
+        <em style="color: red;">Out of Stock</em>
+      <</if>>
+    </div>
+  <</if>>
+<</for>>
+</div>

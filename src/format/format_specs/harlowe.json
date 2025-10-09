@@ -1,0 +1,328 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "format": {
+    "name": "Harlowe",
+    "version": "3.3.9",
+    "type": "twine",
+    "description": "Default Twine 2 story format with macro-based syntax designed for writers"
+  },
+  "features": {
+    "macros": true,
+    "markdown": true,
+    "animations": true,
+    "variables": "temp_and_persistent",
+    "state_tracking": "automatic",
+    "conditionals": "macro_based",
+    "loops": "macro_based",
+    "functions": "macro_based",
+    "multimedia": "limited",
+    "styling": "enchantments",
+    "custom_macros": false
+  },
+  "syntax": {
+    "variables": {
+      "persistent": "$variable",
+      "temporary": "_variable",
+      "declaration": "(set: $var to value)",
+      "access": "$var",
+      "pattern": "^\\$[a-zA-Z_][a-zA-Z0-9_]*$",
+      "examples": [
+        "(set: $playerName to 'Hero')",
+        "(set: $health to 100)",
+        "(set: $inventory to (a: 'sword', 'potion'))"
+      ]
+    },
+    "links": {
+      "basic": "[[Link Text]]",
+      "with_target": "[[Link Text|Target Passage]]",
+      "link_goto": "(link-goto: 'Text', 'Passage')",
+      "link_reveal": "(link-reveal: 'Click me')[ Revealed text]",
+      "link_repeat": "(link-repeat: 'Click')[ Each click shows this]",
+      "pattern": "\\[\\[([^\\|\\]]+)(?:\\|([^\\]]+))?\\]\\]",
+      "examples": [
+        "[[Next passage]]",
+        "[[Go there|Location]]",
+        "(link-goto: 'Continue', 'NextPage')",
+        "(link-reveal: 'Show hint')[The answer is 42]"
+      ]
+    },
+    "conditionals": {
+      "if": "(if: condition)[true branch]",
+      "if_else": "(if: condition)[true](else:)[false]",
+      "else_if": "(if: cond1)[A](else-if: cond2)[B](else:)[C]",
+      "unless": "(unless: condition)[false branch]",
+      "examples": [
+        "(if: $health > 50)[You feel strong]",
+        "(if: $hasKey)[Open door](else:)[Locked]",
+        "(if: $gold >= 100)[Rich](else-if: $gold >= 50)[Moderate](else:)[Poor]",
+        "(unless: $visited contains 'forest')[First time here]"
+      ]
+    },
+    "loops": {
+      "for": "(for: each _item in $array)[Process _item]",
+      "for_range": "(for: each _num in (range: 1, 10))[Number _num]",
+      "for_datamap": "(for: each _key, _value in $map)[_key: _value]",
+      "examples": [
+        "(for: each _item in $inventory)[* _item\n]",
+        "(for: each _i in (range: 1, 5))[Step _i ]",
+        "(for: each _name, _age in $people)[_name is _age years old]"
+      ]
+    },
+    "output": {
+      "print": "(print: $variable)",
+      "inline": "$variable",
+      "text": "(text: value)",
+      "examples": [
+        "(print: $playerName)",
+        "You have $gold coins",
+        "(text: $health + 10)"
+      ]
+    },
+    "arrays": {
+      "create": "(a: item1, item2, item3)",
+      "access": "$array's 1st",
+      "length": "$array's length",
+      "contains": "$array contains item",
+      "examples": [
+        "(set: $items to (a: 'sword', 'shield'))",
+        "(print: $items's 1st)",
+        "(if: $items contains 'sword')[You have a sword]",
+        "(set: $count to $items's length)"
+      ]
+    },
+    "datamaps": {
+      "create": "(dm: 'key1', value1, 'key2', value2)",
+      "access": "$map's key",
+      "examples": [
+        "(set: $stats to (dm: 'str', 10, 'dex', 8))",
+        "(print: $stats's str)",
+        "(set: $stats's str to 15)"
+      ]
+    }
+  },
+  "macros": {
+    "variables": {
+      "set": "(set: $var to value)",
+      "put": "(put: value into $var)",
+      "move": "(move: $var into $other)"
+    },
+    "conditionals": {
+      "if": "(if: condition)[branch]",
+      "else": "(else:)[branch]",
+      "else-if": "(else-if: condition)[branch]",
+      "unless": "(unless: condition)[branch]"
+    },
+    "links": {
+      "link": "(link: 'text')[ action]",
+      "link-goto": "(link-goto: 'text', 'passage')",
+      "link-reveal": "(link-reveal: 'text')[ revealed]",
+      "link-repeat": "(link-repeat: 'text')[ repeated]",
+      "link-undo": "(link-undo: 'text')",
+      "link-show": "(link-show: 'text', ?hook)"
+    },
+    "display": {
+      "print": "(print: value)",
+      "show": "(show: ?hook)",
+      "replace": "(replace: ?hook)[new content]",
+      "append": "(append: ?hook)[additional content]",
+      "prepend": "(prepend: ?hook)[prepended content]"
+    },
+    "text": {
+      "text": "(text: value)",
+      "str": "(str: value)",
+      "uppercase": "(uppercase: text)",
+      "lowercase": "(lowercase: text)",
+      "lowerfirst": "(lowerfirst: text)",
+      "upperfirst": "(upperfirst: text)"
+    },
+    "data": {
+      "array": "(a: items...)",
+      "datamap": "(dm: key, value...)",
+      "dataset": "(ds: items...)",
+      "range": "(range: start, end)"
+    },
+    "logic": {
+      "and": "condition1 and condition2",
+      "or": "condition1 or condition2",
+      "not": "not condition",
+      "is": "value is other",
+      "matches": "text matches pattern"
+    },
+    "math": {
+      "operators": "+ - * / %",
+      "min": "(min: numbers...)",
+      "max": "(max: numbers...)",
+      "abs": "(abs: number)",
+      "sqrt": "(sqrt: number)",
+      "pow": "(pow: base, exp)",
+      "random": "(random: min, max)"
+    },
+    "time": {
+      "live": "(live: time)[update]",
+      "after": "(after: time)[delayed]",
+      "stop": "(stop:)"
+    },
+    "enchantments": {
+      "text-colour": "(text-colour: color)",
+      "text-style": "(text-style: style)",
+      "bg": "(bg: color)",
+      "font": "(font: name)",
+      "align": "(align: direction)"
+    }
+  },
+  "conversion_rules": {
+    "to_whisker": {
+      "variables": {
+        "from": "$variable or _variable",
+        "to": "{{variable}}",
+        "notes": "Remove $ or _ prefix, temporary variables become regular variables"
+      },
+      "assignment": {
+        "from": "(set: $var to value)",
+        "to": "{{var = value}}",
+        "notes": "Convert macro syntax to simple assignment"
+      },
+      "conditionals": {
+        "from": "(if: condition)[true](else:)[false]",
+        "to": "{{if condition then}}true{{else}}false{{end}}",
+        "notes": "Convert macro brackets to block syntax"
+      },
+      "loops": {
+        "from": "(for: each _item in $array)[body]",
+        "to": "{{for item in array do}}body{{end}}",
+        "notes": "Convert macro syntax to standard loop, remove underscore prefix"
+      },
+      "links": {
+        "from": "[[Text|Target]] or (link-goto: 'Text', 'Target')",
+        "to": "[[Text|Target]]",
+        "notes": "Preserve standard link format, convert macro links to standard"
+      },
+      "output": {
+        "from": "(print: $var) or $var inline",
+        "to": "{{var}}",
+        "notes": "Both print macros and inline variables become template variables"
+      }
+    },
+    "from_whisker": {
+      "variables": {
+        "from": "{{variable}}",
+        "to": "$variable",
+        "notes": "Add $ prefix for persistent variables"
+      },
+      "assignment": {
+        "from": "{{var = value}}",
+        "to": "(set: $var to value)",
+        "notes": "Convert to Harlowe set macro"
+      },
+      "conditionals": {
+        "from": "{{if condition then}}true{{else}}false{{end}}",
+        "to": "(if: condition)[true](else:)[false]",
+        "notes": "Convert block syntax to Harlowe macros"
+      },
+      "loops": {
+        "from": "{{for item in array do}}body{{end}}",
+        "to": "(for: each _item in $array)[body]",
+        "notes": "Convert to Harlowe for macro, add underscore for loop variables"
+      },
+      "links": {
+        "from": "[[Text|Target]]",
+        "to": "[[Text|Target]]",
+        "notes": "Standard links remain unchanged"
+      },
+      "output": {
+        "from": "{{var}}",
+        "to": "$var",
+        "notes": "Inline variable reference"
+      }
+    }
+  },
+  "operators": {
+    "logical": {
+      "and": "and",
+      "or": "or",
+      "not": "not"
+    },
+    "comparison": {
+      "equals": "is",
+      "not_equals": "is not",
+      "greater": ">",
+      "less": "<",
+      "greater_equal": ">=",
+      "less_equal": "<=",
+      "contains": "contains",
+      "is_in": "is in"
+    },
+    "arithmetic": {
+      "add": "+",
+      "subtract": "-",
+      "multiply": "*",
+      "divide": "/",
+      "modulo": "%"
+    },
+    "string": {
+      "concatenate": "+",
+      "of": "'s"
+    }
+  },
+  "special_passages": {
+    "StoryTitle": "Story title metadata",
+    "StoryData": "Story configuration (JSON)",
+    "StoryInit": "Initialization code (rarely used in Harlowe)",
+    "header": "Content shown before every passage (tag)",
+    "footer": "Content shown after every passage (tag)",
+    "startup": "Code run at story start (tag)",
+    "debug-header": "Debug information header (tag)",
+    "debug-footer": "Debug information footer (tag)"
+  },
+  "hooks": {
+    "named": "|hookname>[content]",
+    "hidden": "|)[ hidden content]",
+    "inline": "[text]<hookname|",
+    "examples": [
+      "|warning>[This is a warning message]",
+      "(show: ?warning)",
+      "(replace: ?warning)[Updated warning]"
+    ]
+  },
+  "best_practices": {
+    "variables": [
+      "Use $variables for persistent state",
+      "Use _variables for temporary/local values",
+      "Initialize variables before use",
+      "Use descriptive names"
+    ],
+    "style": [
+      "Keep conditionals simple and readable",
+      "Use hooks for dynamic content",
+      "Leverage enchantments for styling",
+      "Avoid complex nested macros"
+    ],
+    "performance": [
+      "Minimize live macros usage",
+      "Cache computed values",
+      "Use datasets for unique collections",
+      "Prefer simple conditionals"
+    ],
+    "compatibility": [
+      "Test with target Harlowe version",
+      "Avoid undocumented features",
+      "Use standard macro syntax",
+      "Document custom patterns"
+    ]
+  },
+  "examples": {
+    "basic_passage": "You enter the room.\n\n(set: $roomsVisited to it + 1)\n\nYou have visited $roomsVisited rooms.\n\n[[Continue|NextRoom]]",
+    "conditional": "(if: $gold >= 50)[\n  [[Buy sword (50g)|BuySword]]\n](else:)[\n  You need 50 gold for a sword.\n]\n\n[[Leave|Shop]]",
+    "loop": "(for: each _item in $inventory)[\n  * _item\n]\n\n(if: $inventory's length is 0)[\n  Your inventory is empty.\n]",
+    "enchantment": "(text-colour: red)[WARNING:] Do not proceed!\n\n(bg: yellow)+(text-colour: black)[This is highlighted text]",
+    "link_reveal": "(link-reveal: 'Open the box')[\n  You find a (text-colour: gold)[golden key]!\n  (set: $hasKey to true)\n]",
+    "live_update": "(live: 1s)[\n  Time remaining: (print: $timeLeft)\n  (set: $timeLeft to it - 1)\n  (if: $timeLeft <= 0)[(stop:)(go-to: 'GameOver')]\n]"
+  },
+  "common_patterns": {
+    "inventory_check": "(if: $inventory contains 'key')[\n  [[Unlock door|Inside]]\n]",
+    "stat_check": "(if: $strength >= 15)[\n  [[Force door|Inside]]\n](else:)[\n  The door won't budge.\n]",
+    "visited_check": "(if: (history:) contains 'SecretRoom')[\n  You remember this place.\n]",
+    "random_event": "(if: (random: 1, 10) >= 7)[\n  You find treasure!\n  (set: $gold to it + 50)\n]",
+    "timed_choice": "(link-repeat: 'Wait')[\n  (set: $waitTime to it + 1)\n  (if: $waitTime >= 3)[\n    Something happens!\n    (replace: ?scene)[New scene]\n  ]\n]"
+  }
+}

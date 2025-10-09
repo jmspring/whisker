@@ -1,0 +1,75 @@
+:: StoryTitle
+Chapbook Modifiers Test
+
+:: Start
+alignment: "center"
+showDelayed: false
+--
+[align center]
+# Welcome to Chapbook
+
+This text is centered.
+[continue]
+
+[align left]
+This text is left-aligned.
+[continue]
+
+[align right]
+This text is right-aligned.
+[continue]
+
+[[Test Delayed Text->DelayedText]]
+[[Test Notes->Notes]]
+
+:: DelayedText
+--
+This appears immediately.
+
+[after 2s]
+This appears after 2 seconds.
+[continue]
+
+[after 4s]
+This appears after 4 seconds.
+[continue]
+
+[after 6s]
+[[Back to Start->Start]]
+[continue]
+
+:: Notes
+secretNote: "Hidden information"
+--
+[align center]
+# Notes Section
+[continue]
+
+This is regular text.
+
+[note]
+This is a note to the author that won't appear in the published story.
+[continue]
+
+The secret note says: {secretNote}
+
+[note]
+Another author note here.
+[continue]
+
+[[Back->Start]]
+
+:: Styling
+textColor: "red"
+--
+[style]
+body {
+  font-family: 'Georgia', serif;
+}
+[continue]
+
+This passage has custom styling applied.
+
+Some {textColor} colored text reference.
+
+[[Back->Start]]

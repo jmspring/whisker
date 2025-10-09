@@ -1,0 +1,128 @@
+:: StoryTitle
+SugarCube Combat Test
+
+:: StoryData
+{
+  "ifid": "E5F6A7B8-C9D0-1234-EFGH-345678901234",
+  "format": "SugarCube",
+  "format-version": "2.37.3"
+}
+
+:: StoryInit
+<<set $player to {
+  hp: 100,
+  maxHp: 100,
+  attack: 15,
+  defense: 5,
+  effects: []
+}>>
+
+<<set $inventory to ["potion", "potion"]>>
+
+:: Start
+<h2>Combat System Test</h2>
+
+<p>You encounter a goblin!</p>
+
+<<link "Fight!" "InitCombat">><</link>>
+
+:: InitCombat
+<<set $enemy to {
+  name: "Goblin",
+  hp: 50,
+  maxHp: 50,
+  attack: 10,
+  defense: 3
+}>>
+<<goto "Combat">>
+
+:: Combat
+<div id="combat-ui">
+<h2>Battle: $enemy.name</h2>
+
+<div style="display: flex; justify-content: space-between;">
+  <div class="player-stats" style="border: 2px solid green; padding: 10px;">
+    <strong>You</strong><br>
+    HP: <span id="player-hp">$player.hp/$player.maxHp</span>
+    <<if $player.effects.length > 0>>
+      <br>Effects: <<print $player.effects.join(", ")>>
+    <</if>>
+  </div>
+
+  <div class="enemy-stats" style="border: 2px solid red; padding: 10px;">
+    <strong>$enemy.name</strong><br>
+    HP: <span id="enemy-hp">$enemy.hp/$enemy.maxHp</span>
+  </div>
+</div>
+
+<div style="margin-top: 20px;">
+<<link "⚔️ Attack">>
+  <<set _damage to Math.max(1, $player.attack - $enemy.defense + random(-3, 3))>>
+  <<set $enemy.hp -= _damage>>
+  <<append "#log">>You dealt _damage damage!<br><</append>>
+
+  <<if $enemy.hp <= 0>>
+    <<goto "Victory">>
+  <<else>>
+    <<set _enemyDamage to Math.max(1, $enemy.attack - $player.defense + random(-2, 2))>>
+    <<set $player.hp -= _enemyDamage>>
+    <<append "#log">>$enemy.name dealt _enemyDamage damage!<br><</append>>
+
+    <<if $player.hp <= 0>>
+      <<goto "Defeat">>
+    <<else>>
+      <<replace "#player-hp">>$player.hp/$player.maxHp<</replace>>
+      <<replace "#enemy-hp">>$enemy.hp/$enemy.maxHp<</replace>>
+    <</if>>
+  <</if>>
+<</link>>
+
+<<if $inventory.includes("potion")>>
+  <<link "🧪 Use Potion">>
+    <<set $player.hp to Math.min($player.hp + 30, $player.maxHp)>>
+    <<set $inventory.delete("potion")>>
+    <<append "#log">>Restored 30 HP!<br><</append>>
+
+    <<set _enemyDamage to Math.max(1, $enemy.attack - $player.defense)>>
+    <<set $player.hp -= _enemyDamage>>
+    <<append "#log">>$enemy.name dealt _enemyDamage damage!<br><</append>>
+
+    <<replace "#player-hp">>$player.hp/$player.maxHp<</replace>>
+  <</link>>
+<</if>>
+
+<<link "🏃 Flee">>
+  <<if random(1, 100) > 50>>
+    <<goto "Start">>
+  <<else>>
+    <<append "#log">>Couldn't escape!<br><</append>>
+    <<set _enemyDamage to $enemy.attack>>
+    <<set $player.hp -= _enemyDamage>>
+    <<append "#log">>$enemy.name dealt _enemyDamage damage!<br><</append>>
+    <<replace "#player-hp">>$player.hp/$player.maxHp<</replace>>
+  <</if>>
+<</link>>
+</div>
+
+<div id="log" style="margin-top: 20px; padding: 10px; border: 1px solid #666; max-height: 200px; overflow-y: auto;"></div>
+</div>
+
+:: Victory
+<h2>Victory!</h2>
+
+<p>You defeated the $enemy.name!</p>
+
+<p>Gained 25 gold and restored full HP.</p>
+
+<<set $player.hp to $player.maxHp>>
+
+[[Continue->Start]]
+
+:: Defeat
+<h2>Defeat!</h2>
+
+<p>You were defeated by the $enemy.name...</p>
+
+<<set $player.hp to $player.maxHp>>
+
+[[Try Again->Start]]
