@@ -34,13 +34,13 @@ lua -v
 ### Option 1: Clone Repository
 
 ```bash
-git clone https://github.com/yourusername/whisker.git
+git clone https://github.com/jmspring/whisker.git
 cd whisker
 ```
 
 ### Option 2: Download ZIP
 
-1. Download from [GitHub releases](https://github.com/yourusername/whisker/releases)
+1. Download from [GitHub releases](https://github.com/jmspring/whisker/releases)
 2. Extract to your preferred location
 3. Open terminal/command prompt in the directory
 

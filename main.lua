@@ -90,7 +90,7 @@ STORY FORMATS:
     Supported output formats:
         - json, twee, html, md (markdown)
 
-For more information, visit: https://github.com/yourusername/whisker
+For more information, visit: https://github.com/jmspring/whisker
 ]], APP_NAME, VERSION))
 end
 

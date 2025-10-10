@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Export System Debug</title>
+    <style>
+        body {
+            font-family: monospace;
+            padding: 20px;
+            background: #1e1e1e;
+            color: #e0e0e0;
+        }
+        .test-section {
+            background: #2d2d2d;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            border: 2px solid #3d3d3d;
+        }
+        .test-section h2 {
+            margin-top: 0;
+            color: #61dafb;
+        }
+        button {
+            background: #0e639c;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background: #1177bb;
+        }
+        .result {
+            background: #1e1e1e;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 4px;
+            white-space: pre-wrap;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+        }
+        .success {
+            color: #4caf50;
+        }
+        .error {
+            color: #ff5252;
+        }
+        .warning {
+            color: #ffb74d;
+        }
+        .info {
+            color: #64b5f6;
+        }
+    </style>
+</head>
+<body>
+    <h1>🔍 Export System Debugging Tool</h1>
+    <p>This tool tests each component of the export system step by step.</p>
+
+    <!-- Test 1: Check if scripts load -->
+    <div class="test-section">
+        <h2>Test 1: Script Loading</h2>
+        <button onclick="test1()">Run Test</button>
+        <div id="test1-result" class="result"></div>
+    </div>
+
+    <!-- Test 2: Check editor object -->
+    <div class="test-section">
+        <h2>Test 2: Editor Object</h2>
+        <button onclick="test2()">Run Test</button>
+        <div id="test2-result" class="result"></div>
+    </div>
+
+    <!-- Test 3: Check export system -->
+    <div class="test-section">
+        <h2>Test 3: Export System</h2>
+        <button onclick="test3()">Run Test</button>
+        <div id="test3-result" class="result"></div>
+    </div>
+
+    <!-- Test 4: Create test project -->
+    <div class="test-section">
+        <h2>Test 4: Create Test Project</h2>
+        <button onclick="test4()">Run Test</button>
+        <div id="test4-result" class="result"></div>
+    </div>
+
+    <!-- Test 5: Show export dialog -->
+    <div class="test-section">
+        <h2>Test 5: Show Export Dialog</h2>
+        <button onclick="test5()">Run Test</button>
+        <div id="test5-result" class="result"></div>
+    </div>
+
+    <!-- Test 6: Test export functionality -->
+    <div class="test-section">
+        <h2>Test 6: Test Export to JSON</h2>
+        <button onclick="test6()">Run Test</button>
+        <div id="test6-result" class="result"></div>
+    </div>
+
+    <!-- Run All Tests -->
+    <div class="test-section">
+        <h2>Run All Tests</h2>
+        <button onclick="runAllTests()">Run All Tests</button>
+    </div>
+
+    <!-- Export Modal (for testing) -->
+    <div class="export-modal hidden" id="exportModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); justify-content: center; align-items: center; z-index: 1000;">
+        <div style="background: #2d2d2d; padding: 20px; border-radius: 8px; max-width: 600px;">
+            <h2>Export Dialog Test</h2>
+            <div id="exportFormats"></div>
+            <div id="exportOptions"></div>
+            <button onclick="exportSystem.hideDialog()">Close</button>
+            <button onclick="exportSystem.doExport()">Export</button>
+        </div>
+    </div>
+
+    <!-- Load Scripts -->
+    <script src="js/editor.js"></script>
+    <script src="js/export.js"></script>
+
+    <script>
+        // Test functions
+        function log(testNum, message, type = 'info') {
+            const result = document.getElementById(`test${testNum}-result`);
+            const className = type === 'success' ? 'success' : 
+                            type === 'error' ? 'error' : 
+                            type === 'warning' ? 'warning' : 'info';
+            result.innerHTML += `<div class="${className}">${message}</div>`;
+        }
+
+        function clearLog(testNum) {
+            document.getElementById(`test${testNum}-result`).innerHTML = '';
+        }
+
+        // Test 1: Check if scripts loaded
+        function test1() {
+            clearLog(1);
+            log(1, '=== Testing Script Loading ===');
+            
+            try {
+                if (typeof WhiskerEditor !== 'undefined') {
+                    log(1, '✓ WhiskerEditor class found', 'success');
+                } else {
+                    log(1, '✗ WhiskerEditor class NOT found', 'error');
+                }
+                
+                if (typeof ExportSystem !== 'undefined') {
+                    log(1, '✓ ExportSystem class found', 'success');
+                } else {
+                    log(1, '✗ ExportSystem class NOT found', 'error');
+                }
+                
+                if (typeof editor !== 'undefined') {
+                    log(1, '✓ editor global variable exists', 'success');
+                } else {
+                    log(1, '✗ editor global variable NOT found', 'error');
+                }
+                
+                log(1, '\nConclusion: Scripts loaded successfully', 'success');
+            } catch (error) {
+                log(1, '✗ Error: ' + error.message, 'error');
+            }
+        }
+
+        // Test 2: Check editor object
+        function test2() {
+            clearLog(2);
+            log(2, '=== Testing Editor Object ===');
+            
+            try {
+                log(2, 'editor type: ' + typeof editor);
+                log(2, 'editor.project: ' + JSON.stringify(editor.project, null, 2));
+                
+                if (editor.project) {
+                    log(2, '✓ Editor has a project', 'success');
+                } else {
+                    log(2, '⚠ Editor does NOT have a project', 'warning');
+                }
+                
+                log(2, '\nEditor methods available:');
+                log(2, '  - newProject: ' + typeof editor.newProject);
+                log(2, '  - saveProject: ' + typeof editor.saveProject);
+                log(2, '  - updateStatus: ' + typeof editor.updateStatus);
+            } catch (error) {
+                log(2, '✗ Error: ' + error.message, 'error');
+            }
+        }
+
+        // Test 3: Check export system
+        function test3() {
+            clearLog(3);
+            log(3, '=== Testing Export System ===');
+            
+            try {
+                // Check if exportSystem exists
+                if (typeof exportSystem === 'undefined') {
+                    log(3, '⚠ exportSystem not found, creating...', 'warning');
+                    window.exportSystem = new ExportSystem(editor);
+                    log(3, '✓ exportSystem created', 'success');
+                } else {
+                    log(3, '✓ exportSystem already exists', 'success');
+                }
+                
+                log(3, '\nExportSystem methods:');
+                log(3, '  - showDialog: ' + typeof exportSystem.showDialog);
+                log(3, '  - hideDialog: ' + typeof exportSystem.hideDialog);
+                log(3, '  - doExport: ' + typeof exportSystem.doExport);
+                log(3, '  - getFormats: ' + typeof exportSystem.getFormats);
+                
+                const formats = exportSystem.getFormats();
+                log(3, '\nAvailable formats: ' + formats.length);
+                formats.forEach(f => {
+                    log(3, '  - ' + f.id + ': ' + f.title);
+                });
+            } catch (error) {
+                log(3, '✗ Error: ' + error.message, 'error');
+                log(3, error.stack, 'error');
+            }
+        }
+
+        // Test 4: Create test project
+        function test4() {
+            clearLog(4);
+            log(4, '=== Creating Test Project ===');
+            
+            try {
+                editor.project = {
+                    metadata: {
+                        title: "Debug Test Story",
+                        author: "Debug Tool",
+                        version: "1.0.0",
+                        created: new Date().toISOString(),
+                        modified: new Date().toISOString()
+                    },
+                    settings: {
+                        startPassage: "start"
+                    },
+                    variables: {
+                        score: { type: "number", initial: 0 }
+                    },
+                    passages: [
+                        {
+                            id: "start",
+                            title: "Beginning",
+                            content: "This is a test story. Your score: {{score}}",
+                            choices: [
+                                { text: "Continue", target: "end" }
+                            ],
+                            position: { x: 100, y: 100 }
+                        },
+                        {
+                            id: "end",
+                            title: "The End",
+                            content: "You reached the end!",
+                            choices: [],
+                            position: { x: 100, y: 250 }
+                        }
+                    ]
+                };
+                
+                log(4, '✓ Test project created', 'success');
+                log(4, '\nProject details:');
+                log(4, '  Title: ' + editor.project.metadata.title);
+                log(4, '  Passages: ' + editor.project.passages.length);
+                log(4, '  Variables: ' + Object.keys(editor.project.variables).length);
+                log(4, '\nFull project:');
+                log(4, JSON.stringify(editor.project, null, 2));
+            } catch (error) {
+                log(4, '✗ Error: ' + error.message, 'error');
+            }
+        }
+
+        // Test 5: Show export dialog
+        function test5() {
+            clearLog(5);
+            log(5, '=== Testing Export Dialog ===');
+            
+            try {
+                if (!editor.project) {
+                    log(5, '⚠ No project loaded, creating test project...', 'warning');
+                    test4();
+                }
+                
+                log(5, 'Attempting to show export dialog...');
+                exportSystem.showDialog();
+                
+                // Check if modal is visible
+                const modal = document.getElementById('exportModal');
+                if (modal) {
+                    const isHidden = modal.classList.contains('hidden') || 
+                                   modal.style.display === 'none';
+                    if (!isHidden) {
+                        log(5, '✓ Export dialog is now visible!', 'success');
+                        log(5, '\n⚠ Note: You may need to manually close the modal', 'warning');
+                    } else {
+                        log(5, '✗ Export dialog is still hidden', 'error');
+                        log(5, '  classList: ' + modal.classList.value);
+                        log(5, '  style.display: ' + modal.style.display);
+                    }
+                } else {
+                    log(5, '✗ Export modal element not found', 'error');
+                }
+            } catch (error) {
+                log(5, '✗ Error: ' + error.message, 'error');
+                log(5, error.stack, 'error');
+            }
+        }
+
+        // Test 6: Test export
+        function test6() {
+            clearLog(6);
+            log(6, '=== Testing Export Functionality ===');
+            
+            try {
+                if (!editor.project) {
+                    log(6, '⚠ No project loaded, creating test project...', 'warning');
+                    test4();
+                }
+                
+                log(6, 'Attempting to export as JSON...');
+                
+                // Try exporting
+                const result = exportSystem.exportJSON();
+                
+                if (result) {
+                    log(6, '✓ Export completed successfully!', 'success');
+                    log(6, '\n⚠ Check your downloads folder for the exported file', 'warning');
+                } else {
+                    log(6, '✗ Export returned false', 'error');
+                }
+            } catch (error) {
+                log(6, '✗ Error: ' + error.message, 'error');
+                log(6, error.stack, 'error');
+            }
+        }
+
+        // Run all tests
+        async function runAllTests() {
+            test1();
+            await new Promise(r => setTimeout(r, 500));
+            test2();
+            await new Promise(r => setTimeout(r, 500));
+            test3();
+            await new Promise(r => setTimeout(r, 500));
+            test4();
+            await new Promise(r => setTimeout(r, 500));
+            test5();
+            await new Promise(r => setTimeout(r, 500));
+            test6();
+        }
+
+        // Initialize on load
+        window.addEventListener('load', () => {
+            console.log('=== Debug Tool Loaded ===');
+            console.log('editor:', editor);
+            console.log('exportSystem:', typeof exportSystem);
+            
+            // Initialize exportSystem if not already initialized
+            if (typeof exportSystem === 'undefined') {
+                window.exportSystem = new ExportSystem(editor);
+                console.log('exportSystem initialized');
+            }
+        });
+    </script>
+</body>
+</html>

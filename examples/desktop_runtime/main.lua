@@ -391,7 +391,7 @@ May your future adventures be just as grand!]],
 function love.load()
     -- Set window icon and title
     love.window.setTitle("Whisker - The Enchanted Forest")
-    
+
     -- Create runtime with configuration
     runtime = DesktopRuntime:new({
         width = 1280,
@@ -400,35 +400,35 @@ function love.load()
         font_size = 20,
         debug = false
     })
-    
+
     -- Initialize the runtime
     runtime:load()
-    
+
     -- Try to load story from JSON file first
     local story_loaded = false
-    
+
     if love.filesystem.getInfo("story.json") then
         print("Found story.json, attempting to load...")
         local success, err = pcall(function()
             runtime:load_story_from_file("story.json")
             story_loaded = true
         end)
-        
+
         if not success then
             print("Failed to load story.json: " .. tostring(err))
             print("Using default story instead.")
         end
     end
-    
+
     -- Fall back to default story if file not found or failed to load
     if not story_loaded then
         print("Loading default example story...")
         runtime:load_story(DEFAULT_STORY)
     end
-    
+
     -- Start the story
     runtime:start()
-    
+
     print("\n=== Whisker Desktop Runtime Started ===")
     print("Keyboard Shortcuts:")
     print("  F1: Settings")

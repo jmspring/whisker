@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Export Test - SIMPLE</title>
+    <style>
+        body { background: #1e1e1e; color: #e0e0e0; font-family: monospace; padding: 20px; }
+        button { background: #0e639c; color: white; padding: 15px 30px; font-size: 18px; 
+                border: none; border-radius: 4px; cursor: pointer; margin: 10px; }
+        button:hover { background: #1177bb; }
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+                background: rgba(0,0,0,0.8); align-items: center; justify-content: center; }
+        .modal.show { display: flex; }
+        .dialog { background: #2d2d2d; padding: 30px; border-radius: 8px; max-width: 500px; }
+        .success { color: #4caf50; font-size: 20px; margin: 20px 0; }
+    </style>
+</head>
+<body>
+    <h1>🔧 EXPORT TEST - NO BULLSHIT VERSION</h1>
+    
+    <h2>Step 1: Click this button</h2>
+    <button onclick="testExport()">CLICK TO TEST EXPORT</button>
+    
+    <div id="result"></div>
+    
+    <!-- Modal -->
+    <div id="testModal" class="modal">
+        <div class="dialog">
+            <h2>Export Dialog</h2>
+            <p>If you see this, the modal is working!</p>
+            <button onclick="doExport()">Download Test File</button>
+            <button onclick="closeModal()">Close</button>
+        </div>
+    </div>
+    
+    <script>
+        // Create test project
+        const testProject = {
+            metadata: { title: "Test Story", author: "Test" },
+            settings: { startPassage: "start" },
+            passages: [
+                { id: "start", title: "Start", content: "Hello", choices: [] }
+            ]
+        };
+        
+        function testExport() {
+            document.getElementById('result').innerHTML = '<div class="success">✓ Opening modal...</div>';
+            document.getElementById('testModal').classList.add('show');
+        }
+        
+        function closeModal() {
+            document.getElementById('testModal').classList.remove('show');
+        }
+        
+        function doExport() {
+            const json = JSON.stringify(testProject, null, 2);
+            const blob = new Blob([json], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'test_export.json';
+            a.click();
+            URL.revokeObjectURL(url);
+            
+            document.getElementById('result').innerHTML = '<div class="success">✓ File downloaded! Check your Downloads folder for test_export.json</div>';
+            closeModal();
+        }
+    </script>
+</body>
+</html>

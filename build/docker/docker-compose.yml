@@ -1,0 +1,51 @@
+version: '3.8'
+
+services:
+  build:
+    build:
+      context: ../..
+      dockerfile: build/docker/Dockerfile.build
+    volumes:
+      - ../..:/workspace
+      - build-cache:/workspace/node_modules
+    working_dir: /workspace
+    command: ./build/scripts/build-all.sh
+
+  test:
+    build:
+      context: ../..
+      dockerfile: build/docker/Dockerfile.test
+    volumes:
+      - ../..:/workspace
+      - test-cache:/workspace/node_modules
+    working_dir: /workspace
+    command: ./build/scripts/run-tests.sh all
+    environment:
+      - CI=true
+
+  web-editor:
+    build:
+      context: ../..
+      dockerfile: build/docker/Dockerfile.web
+    ports:
+      - "3000:3000"
+    volumes:
+      - ../../editor/web:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+      - PORT=3000
+    restart: unless-stopped
+
+  docs:
+    image: python:3.11-alpine
+    volumes:
+      - ../../docs:/docs
+    working_dir: /docs
+    ports:
+      - "8000:8000"
+    command: sh -c "pip install mkdocs mkdocs-material && mkdocs serve -a 0.0.0.0:8000"
+
+volumes:
+  build-cache:
+  test-cache:

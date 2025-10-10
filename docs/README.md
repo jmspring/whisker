@@ -1,6 +1,6 @@
 # whisker - Interactive Fiction Engine
 
-[![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)](https://github.com/yourusername/whisker)
+[![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)](https://github.com/jmspring/whisker)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![Lua](https://img.shields.io/badge/lua-5.1%2B-purple.svg)](https://www.lua.org/)
 
@@ -23,7 +23,7 @@
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/whisker.git
+git clone https://github.com/jmspring/whisker.git
 cd whisker
 
 # Run a story
@@ -205,8 +205,8 @@ This project is licensed under the MIT License - see the [LICENSE](../LICENSE) f
 
 - **Documentation:** [docs/](.)
 - **Examples:** [examples/](../examples/)
-- **Issues:** [GitHub Issues](https://github.com/yourusername/whisker/issues)
-- **Discussions:** [GitHub Discussions](https://github.com/yourusername/whisker/discussions)
+- **Issues:** [GitHub Issues](https://github.com/jmspring/whisker/issues)
+- **Discussions:** [GitHub Discussions](https://github.com/jmspring/whisker/discussions)
 
 ## 🗺️ Roadmap
 

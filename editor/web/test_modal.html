@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+.export-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.export-modal:not(.hidden) {
+    display: flex;
+}
+</style>
+</head>
+<body>
+<h1>Modal Test</h1>
+<button onclick="test()">Test Modal</button>
+<div class="export-modal hidden" id="modal">
+  <div style="background:white;padding:20px;">MODAL CONTENT</div>
+</div>
+<script>
+function test() {
+  const modal = document.getElementById('modal');
+  console.log('Before:', modal.className);
+  console.log('Display before:', getComputedStyle(modal).display);
+  modal.classList.remove('hidden');
+  console.log('After:', modal.className);
+  console.log('Display after:', getComputedStyle(modal).display);
+}
+</script>
+</body>
+</html>

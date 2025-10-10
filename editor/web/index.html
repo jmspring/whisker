@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Whisker Story Editor</title>
+    <link rel="stylesheet" href="css/editor.css">
+    <link rel="stylesheet" href="css/graph.css">
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/theme.css">
+</head>
+<body>
+    <div class="editor-container">
+        <!-- Toolbar -->
+        <div class="toolbar">
+            <h1>Whisker Story Editor</h1>
+            <button class="btn" onclick="templateSystem.showDialog()">New from Template</button>
+            <button class="btn" onclick="editor.newProject()">New Project</button>
+            <button class="btn-secondary btn" onclick="editor.openProject()">Open</button>
+            <button class="btn-secondary btn" onclick="editor.saveProject()">Save</button>
+            
+            <!-- Export Menu -->
+            <div class="theme-selector" style="position: relative;">
+                <button class="btn-secondary btn" id="exportButton" onclick="console.log('Export button clicked!'); console.log('exportSystem:', exportSystem); console.log('editor.project:', editor.project); exportSystem.showDialog()">Export ▾</button>
+            </div>
+            
+            <!-- Theme Selector -->
+            <div class="theme-selector">
+                <button class="btn-secondary btn" id="themeBtn" onclick="themeManager.toggleDropdown()">🎨 Theme</button>
+                <div class="theme-dropdown hidden" id="themeDropdown"></div>
+            </div>
+            
+            <!-- Settings -->
+            <button class="btn-secondary btn" onclick="settingsManager.showDialog()">⚙️</button>
+            
+            <!-- History Controls -->
+            <div class="history-controls">
+                <button class="btn-secondary btn history-btn" id="undoBtn" onclick="historySystem.undo()" disabled title="Undo (Ctrl+Z)">↶</button>
+                <button class="btn-secondary btn history-btn" id="redoBtn" onclick="historySystem.redo()" disabled title="Redo (Ctrl+Shift+Z)">↷</button>
+                <span class="history-indicator" id="historyIndicator">0 / 0</span>
+            </div>
+        </div>
+
+        <!-- Main Content Area -->
+        <div class="main-content">
+            <!-- Passage List Sidebar -->
+            <div class="passage-list">
+                <div class="passage-list-header">
+                    <h2>Passages</h2>
+                    <button class="btn-small btn" onclick="editor.addPassage()">+ Add</button>
+                </div>
+                <div class="passage-items" id="passageList">
+                    <!-- Passages will be inserted here -->
+                </div>
+            </div>
+
+            <!-- Editor Panel -->
+            <div class="editor-panel">
+                <!-- Welcome Screen -->
+                <div id="welcomeScreen" class="welcome-screen">
+                    <h2>Welcome to Whisker</h2>
+                    <p>Create a new project or open an existing one to get started</p>
+                    <button class="btn" onclick="editor.newProject()">Create New Project</button>
+                    <button class="btn-secondary btn" onclick="templateSystem.showDialog()" style="margin-top: 10px;">Choose Template</button>
+                </div>
+
+                <!-- Graph View -->
+                <div id="graphView" class="hidden">
+                    <div class="graph-container" id="graphContainer">
+                        <!-- View Toggle -->
+                        <div class="view-toggle">
+                            <button onclick="editor.switchView('graph')" class="active">Graph</button>
+                            <button onclick="editor.switchView('list')">List</button>
+                        </div>
+
+                        <!-- Graph Canvas -->
+                        <div class="graph-canvas" id="graphCanvas">
+                            <svg id="graphConnections" class="graph-connections"></svg>
+                            <!-- Nodes will be added here -->
+                        </div>
+
+                        <!-- Graph Controls -->
+                        <div class="graph-controls">
+                            <div class="control-group">
+                                <button onclick="graph.zoomIn()" title="Zoom In">+</button>
+                                <div class="zoom-level" id="zoomLevel">100%</div>
+                                <button onclick="graph.zoomOut()" title="Zoom Out">−</button>
+                            </div>
+                            <div class="control-group">
+                                <button onclick="graph.zoomReset()" title="Reset Zoom">⊙</button>
+                                <button onclick="graph.zoomToFit()" title="Fit All">⊡</button>
+                                <button onclick="graph.autoLayout(); graph.render()" title="Auto Layout">⚡</button>
+                            </div>
+                        </div>
+
+                        <!-- Layout Indicator -->
+                        <div class="layout-indicator hidden" id="layoutIndicator">
+                            <div class="layout-spinner"></div>
+                            <div>Arranging passages...</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- List/Editor View -->
+                <div id="editorContent" class="hidden">
+                    <div class="view-toggle" style="position: static; margin: 12px 20px;">
+                        <button onclick="editor.switchView('graph')">Graph</button>
+                        <button onclick="editor.switchView('list')" class="active">List</button>
+                    </div>
+
+                    <div class="editor-header">
+                        <input type="text" id="passageTitle" placeholder="Passage Title" 
+                               onchange="editor.updateCurrentPassage()">
+                    </div>
+                    <div class="editor-content">
+                        <div class="form-group">
+                            <label>Passage ID (unique identifier)</label>
+                            <input type="text" id="passageId" readonly>
+                        </div>
+
+                        <div class="form-group">
+                            <label>
+                                Content
+                                <button class="btn-small btn-secondary" 
+                                        onclick="variablesManager.showInsertPopup(event)"
+                                        style="margin-left: 10px;">Insert Variable</button>
+                                <button class="btn-small btn-secondary" 
+                                        onclick="assetManager.togglePanel()"
+                                        style="margin-left: 4px;">📎 Assets</button>
+                            </label>
+                            <div class="rich-editor-container">
+                                <div class="rich-toolbar">
+                                    <div class="toolbar-group">
+                                        <button class="toolbar-btn" onclick="editor.formatText('bold')" title="Bold"><b>B</b></button>
+                                        <button class="toolbar-btn" onclick="editor.formatText('italic')" title="Italic"><i>I</i></button>
+                                        <button class="toolbar-btn" onclick="editor.formatText('code')" title="Code">&lt;/&gt;</button>
+                                    </div>
+                                    <div class="toolbar-group">
+                                        <button class="toolbar-btn" onclick="editor.formatText('h1')" title="Heading 1">H1</button>
+                                        <button class="toolbar-btn" onclick="editor.formatText('h2')" title="Heading 2">H2</button>
+                                    </div>
+                                    <div class="toolbar-group">
+                                        <button class="toolbar-btn" onclick="editor.formatText('list')" title="List">☰</button>
+                                        <button class="toolbar-btn" onclick="editor.formatText('link')" title="Link">🔗</button>
+                                    </div>
+                                    <span class="format-indicator">Markdown supported</span>
+                                </div>
+                                <textarea id="passageContent" 
+                                          class="rich-content"
+                                          onchange="editor.updateCurrentPassage()"
+                                          placeholder="Write your story here...
+
+Formatting tips:
+**bold** _italic_ `code`
+# Heading
+- List item
+{{variable}}"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="choices-section">
+                            <div class="form-group">
+                                <label>Choices</label>
+                                <div id="choicesList">
+                                    <!-- Choices will be inserted here -->
+                                </div>
+                                <button class="btn-secondary btn" onclick="editor.addChoice()">+ Add Choice</button>
+                            </div>
+                        </div>
+
+                        <div style="margin-top: 30px;">
+                            <button class="btn-danger btn" onclick="editor.deleteCurrentPassage()">Delete Passage</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Validation Panel -->
+                <div class="validation-panel" id="validationPanel">
+                    <div class="validation-header">
+                        <div class="validation-title">
+                            Issues
+                            <span class="validation-count" id="validationCount">0</span>
+                        </div>
+                        <button class="btn-small btn-secondary" onclick="validationSystem.validate()">Validate</button>
+                    </div>
+                    <div class="validation-list" id="validationList">
+                        <!-- Validation issues will appear here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Variables Panel -->
+            <div class="variables-panel">
+                <div class="variables-header">
+                    <h2>Variables</h2>
+                    <button class="panel-toggle" id="toggleVariables" title="Toggle Panel">◀</button>
+                </div>
+                <div class="variables-content">
+                    <div id="variablesList">
+                        <!-- Variables will be listed here -->
+                    </div>
+                    <button class="btn btn-secondary add-variable-btn" onclick="variablesManager.addVariable()">
+                        + Add Variable
+                    </button>
+                </div>
+            </div>
+
+            <!-- Preview Panel -->
+            <div class="preview-panel">
+                <div class="preview-header">
+                    <h2>Preview</h2>
+                    <button class="btn-small btn-secondary" onclick="editor.restartPreview()">Restart</button>
+                </div>
+                <div class="preview-content" id="previewContent">
+                    <p style="color: #888;">No story to preview</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Status Bar -->
+        <div class="status-bar">
+            <span id="statusText">Ready</span>
+            <span id="passageCount">0 passages</span>
+        </div>
+    </div>
+
+    <!-- Templates Modal -->
+    <div class="templates-modal hidden" id="templatesModal">
+        <div class="templates-dialog">
+            <div class="templates-dialog-header">
+                <h2>Choose a Template</h2>
+                <button class="close-modal" onclick="templateSystem.hideDialog()">×</button>
+            </div>
+            <div class="templates-content">
+                <div class="template-grid" id="templateGrid">
+                    <!-- Templates will be inserted here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Export Modal -->
+    <div class="export-modal hidden" id="exportModal">
+        <div class="export-dialog">
+            <div class="export-dialog-header">
+                <h2>Export Story</h2>
+                <button class="close-modal" onclick="exportSystem.hideDialog()">×</button>
+            </div>
+            <div class="export-content">
+                <div id="exportFormats">
+                    <!-- Export formats will be inserted here -->
+                </div>
+                <div class="export-options" id="exportOptions">
+                    <!-- Options will be inserted here -->
+                </div>
+            </div>
+            <div class="export-dialog-footer">
+                <button class="btn-secondary btn" onclick="exportSystem.hideDialog()">Cancel</button>
+                <button class="btn" onclick="exportSystem.doExport()">Export</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Settings Modal -->
+    <div class="settings-modal hidden" id="settingsModal">
+        <div class="settings-dialog">
+            <div class="export-dialog-header">
+                <h2>Settings</h2>
+                <button class="close-modal" onclick="settingsManager.hideDialog()">×</button>
+            </div>
+            <div class="settings-tabs" id="settingsTabs">
+                <!-- Tabs will be inserted here -->
+            </div>
+            <div class="settings-content" id="settingsContent">
+                <!-- Settings content will be inserted here -->
+            </div>
+            <div class="export-dialog-footer">
+                <button class="btn" onclick="settingsManager.hideDialog()">Done</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Assets Panel (collapsible overlay) -->
+    <div class="assets-panel hidden" id="assetsPanel" style="position: fixed; bottom: 0; left: 300px; right: 0; height: 200px; z-index: 50; background: var(--bg-secondary); border-top: 1px solid var(--border-color);">
+        <div class="assets-header">
+            <h2>Assets</h2>
+            <div>
+                <button class="btn-small btn" onclick="assetManager.uploadAsset()">+ Upload</button>
+                <button class="btn-small btn-secondary" onclick="assetManager.hidePanel()">Close</button>
+            </div>
+        </div>
+        <div class="assets-grid" id="assetsGrid" style="overflow-y: auto; height: calc(100% - 60px);">
+            <!-- Assets will be inserted here -->
+        </div>
+    </div>
+
+    <!-- Insert Variable Popup -->
+    <div class="insert-variable-popup hidden" id="insertVariablePopup">
+        <!-- Variable list will be inserted here -->
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/editor.js"></script>
+    <script src="js/graph.js"></script>
+    <script src="js/variables.js"></script>
+    <script src="js/validation.js"></script>
+    <script src="js/history.js"></script>
+    <script src="js/templates.js"></script>
+    <script src="js/export.js"></script>
+    <script src="js/theme.js"></script>
+    <script src="js/assets.js"></script>
+    <script src="js/settings.js"></script>
+    
+    <script>
+        // Initialize all systems when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            // IMPORTANT: Ensure export modal starts hidden
+            const exportModal = document.getElementById('exportModal');
+            if (exportModal && !exportModal.classList.contains('hidden')) {
+                console.warn('[Init] Export modal missing hidden class, adding it');
+                exportModal.classList.add('hidden');
+            }
+            
+            // Phase 3 systems
+            variablesManager = new VariablesManager(editor);
+            variablesManager.initialize();
+            
+            validationSystem = new ValidationSystem(editor);
+            
+            historySystem = new HistorySystem(editor);
+            historySystem.initialize();
+            
+            templateSystem = new TemplateSystem(editor);
+            
+            // Phase 4 systems
+            exportSystem = new ExportSystem(editor);
+            exportSystem.initialize();
+            
+            themeManager = new ThemeManager();
+            themeManager.initialize();
+            
+            assetManager = new AssetManager(editor);
+            assetManager.initialize();
+            
+            settingsManager = new SettingsManager(editor);
+            settingsManager.initialize();
+            
+            console.log('[Init] All systems initialized');
+            console.log('[Init] Export modal classes:', exportModal ? exportModal.classList.value : 'NOT FOUND');
+        });
+    </script>
+</body>
+</html>
