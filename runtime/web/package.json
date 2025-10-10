@@ -1,0 +1,16 @@
+{
+  "name": "whisker-web-runtime",
+  "version": "0.1.0",
+  "description": "Web runtime for Whisker interactive fiction",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 0",
+    "test:e2e": "echo \"Error: no e2e tests specified\" && exit 0",
+    "lint": "echo \"No linting configured yet\" && exit 0",
+    "build": "echo \"No build configured yet\" && exit 0",
+    "serve": "echo \"No serve configured yet\" && exit 0",
+    "test:performance": "echo \"No performance tests configured yet\" && exit 0"
+  },
+  "keywords": ["whisker", "interactive-fiction", "runtime"],
+  "author": "",
+  "license": "MIT"
+}

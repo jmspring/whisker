@@ -1,0 +1,13 @@
+{
+  "name": "whisker-web-editor",
+  "version": "0.1.0",
+  "description": "Web-based editor for Whisker interactive fiction",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 0",
+    "test:integration": "echo \"Error: no integration tests specified\" && exit 0",
+    "lint": "echo \"No linting configured yet\" && exit 0"
+  },
+  "keywords": ["whisker", "interactive-fiction", "editor"],
+  "author": "",
+  "license": "MIT"
+}
