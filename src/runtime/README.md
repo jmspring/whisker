@@ -120,7 +120,7 @@ function love.load()
         theme = "default",  -- "default", "dark", "sepia"
         font_size = 20
     })
-    
+
     runtime:load()
     runtime:load_story_from_file("story.json")
     runtime:start()
@@ -250,7 +250,7 @@ function NewRuntime:process_content(content)
     content = content:gsub("{{([%w_]+)}}", function(var)
         return self.engine:get_variable(var) or ""
     end)
-    
+
     -- Apply platform-specific formatting
     return content
 end

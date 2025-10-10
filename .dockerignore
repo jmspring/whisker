@@ -1,0 +1,19 @@
+# Docker ignore file
+
+.git
+.github
+.gitignore
+
+dist/
+node_modules/
+coverage/
+
+*.md
+docs/
+
+.env*
+.DS_Store
+*.log
+
+tests/
+examples/

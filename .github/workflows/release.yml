@@ -1,0 +1,132 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Release version (e.g., 1.0.0)'
+        required: true
+
+jobs:
+  create-release:
+    name: Create Release
+    runs-on: ubuntu-latest
+    outputs:
+      upload_url: ${{ steps.create_release.outputs.upload_url }}
+      version: ${{ steps.get_version.outputs.version }}
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Get version
+        id: get_version
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "version=${{ github.event.inputs.version }}" >> $GITHUB_OUTPUT
+          else
+            echo "version=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
+          fi
+      
+      - name: Generate changelog
+        id: changelog
+        run: |
+          ./build/scripts/generate-changelog.sh > RELEASE_NOTES.md
+      
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: v${{ steps.get_version.outputs.version }}
+          release_name: Whisker v${{ steps.get_version.outputs.version }}
+          body_path: RELEASE_NOTES.md
+          draft: false
+          prerelease: false
+
+  build-and-upload:
+    name: Build & Upload Release Assets
+    needs: create-release
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        include:
+          - os: ubuntu-latest
+            platform: linux
+            ext: tar.gz
+          - os: windows-latest
+            platform: windows
+            ext: zip
+          - os: macos-latest
+            platform: macos
+            ext: dmg
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup build environment
+        run: ./scripts/setup-dev.sh
+      
+      - name: Build release package
+        run: ./build/scripts/package-release.sh ${{ needs.create-release.outputs.version }} ${{ matrix.platform }}
+      
+      - name: Upload Release Asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ needs.create-release.outputs.upload_url }}
+          asset_path: ./dist/whisker-v${{ needs.create-release.outputs.version }}-${{ matrix.platform }}.${{ matrix.ext }}
+          asset_name: whisker-v${{ needs.create-release.outputs.version }}-${{ matrix.platform }}.${{ matrix.ext }}
+          asset_content_type: application/octet-stream
+
+  publish-npm:
+    name: Publish to NPM
+    needs: create-release
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          registry-url: 'https://registry.npmjs.org'
+      
+      - name: Publish web runtime
+        run: |
+          cd runtime/web
+          npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+  publish-luarocks:
+    name: Publish to LuaRocks
+    needs: create-release
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup Lua & LuaRocks
+        uses: leafo/gh-actions-lua@v10
+      
+      - name: Upload to LuaRocks
+        run: |
+          luarocks upload rockspec/whisker-${{ needs.create-release.outputs.version }}-1.rockspec --api-key=${{ secrets.LUAROCKS_API_KEY }}
+
+  deploy-docs:
+    name: Deploy Documentation
+    needs: create-release
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Build documentation
+        run: ./build/scripts/generate-docs.sh
+      
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./docs/build

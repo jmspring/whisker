@@ -301,16 +301,16 @@ end
 -- Main function
 local function main()
     print_banner()
-    
+
     -- Determine story source
     local story_file = arg[1]
     local story_data
-    
+
     if story_file then
         -- Load from file
         print("Loading story from: " .. story_file)
         local file = io.open(story_file, "r")
-        
+
         if not file then
             print("ERROR: Could not open story file: " .. story_file)
             print("Using default example story instead...")
@@ -318,7 +318,7 @@ local function main()
         else
             local content = file:read("*all")
             file:close()
-            
+
             local success, result = pcall(json.decode, content)
             if success then
                 story_data = result
@@ -335,9 +335,9 @@ local function main()
         print("(You can provide a story file: lua run.lua path/to/story.json)")
         story_data = DEFAULT_STORY
     end
-    
+
     print()
-    
+
     -- Create and configure runtime
     local runtime = CLIRuntime:new({
         width = 80,              -- Terminal width in characters
@@ -345,28 +345,28 @@ local function main()
         save_file = "save.json", -- Save file location
         history_size = 10        -- Number of history entries to show
     })
-    
+
     -- Initialize runtime
     if not runtime:initialize() then
         print("ERROR: Failed to initialize runtime")
         return 1
     end
-    
+
     -- Load story
     if not runtime:load_story(story_data) then
         print("ERROR: Failed to load story")
         return 1
     end
-    
+
     -- Start story
     if not runtime:start() then
         print("ERROR: Failed to start story")
         return 1
     end
-    
+
     -- Run game loop
     runtime:run()
-    
+
     return 0
 end
 

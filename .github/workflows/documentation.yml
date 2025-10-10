@@ -1,0 +1,50 @@
+name: Documentation
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'docs/**'
+      - 'src/**/*.lua'
+  workflow_dispatch:
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup Lua
+        uses: leafo/gh-actions-lua@v10
+        with:
+          luaVersion: "5.4"
+      
+      - name: Setup LuaRocks
+        uses: leafo/gh-actions-luarocks@v4
+      
+      - name: Install LDoc
+        run: luarocks install ldoc
+      
+      - name: Generate API documentation
+        run: |
+          ldoc -c docs/config.ld src/
+      
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+      
+      - name: Install MkDocs
+        run: |
+          pip install mkdocs mkdocs-material
+      
+      - name: Build documentation site
+        run: |
+          cd docs
+          mkdocs build
+      
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./docs/build

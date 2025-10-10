@@ -133,11 +133,11 @@ Add custom CSS after the stylesheet link:
     .whisker-container {
         max-width: 1200px; /* Wider content */
     }
-    
+
     .whisker-header {
         background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
     }
-    
+
     .choice-btn {
         background: #ff6b6b;
         border-color: #c92a2a;

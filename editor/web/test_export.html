@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Export System</title>
+    <link rel="stylesheet" href="css/editor.css">
+    <link rel="stylesheet" href="css/theme.css">
+</head>
+<body>
+    <div style="padding: 20px;">
+        <h1>Export System Test</h1>
+        <button class="btn" onclick="testExport()">Test Export</button>
+        <div id="status"></div>
+    </div>
+
+    <!-- Export Modal -->
+    <div class="export-modal hidden" id="exportModal">
+        <div class="export-dialog">
+            <div class="export-dialog-header">
+                <h2>Export Story</h2>
+                <button class="close-modal" onclick="exportSystem.hideDialog()">×</button>
+            </div>
+            <div class="export-content">
+                <div id="exportFormats"></div>
+                <div class="export-options" id="exportOptions"></div>
+            </div>
+            <div class="export-dialog-footer">
+                <button class="btn-secondary btn" onclick="exportSystem.hideDialog()">Cancel</button>
+                <button class="btn" onclick="exportSystem.doExport()">Export</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/editor.js"></script>
+    <script src="js/export.js"></script>
+    
+    <script>
+        // Initialize test project
+        editor.project = {
+            metadata: {
+                title: "Test Story",
+                author: "Test Author",
+                version: "1.0.0",
+                created: new Date().toISOString(),
+                modified: new Date().toISOString()
+            },
+            settings: {
+                startPassage: "start"
+            },
+            variables: {
+                health: { initial: 100, type: "number" }
+            },
+            passages: [
+                {
+                    id: "start",
+                    title: "Start",
+                    content: "This is the beginning. Your health is {{health}}.",
+                    choices: [
+                        { text: "Go left", target: "left" },
+                        { text: "Go right", target: "right" }
+                    ],
+                    position: { x: 100, y: 100 }
+                },
+                {
+                    id: "left",
+                    title: "Left Path",
+                    content: "You went left.",
+                    choices: [],
+                    position: { x: 100, y: 250 }
+                },
+                {
+                    id: "right",
+                    title: "Right Path",
+                    content: "You went right.",
+                    choices: [],
+                    position: { x: 300, y: 250 }
+                }
+            ]
+        };
+
+        // Initialize export system
+        exportSystem = new ExportSystem(editor);
+
+        function testExport() {
+            const status = document.getElementById('status');
+            try {
+                exportSystem.showDialog();
+                status.innerHTML = '<p style="color: green;">✓ Export dialog opened successfully!</p>';
+            } catch (error) {
+                status.innerHTML = `<p style="color: red;">✗ Error: ${error.message}</p>`;
+                console.error(error);
+            }
+        }
+
+        // Test on load
+        window.addEventListener('load', () => {
+            console.log('Export system initialized:', exportSystem);
+            console.log('Editor project:', editor.project);
+        });
+    </script>
+</body>
+</html>

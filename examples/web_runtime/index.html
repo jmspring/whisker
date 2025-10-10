@@ -12,7 +12,7 @@
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
             background: #f5f5f5;
         }
-        
+
         .loading {
             display: flex;
             align-items: center;
@@ -21,7 +21,7 @@
             flex-direction: column;
             gap: 2rem;
         }
-        
+
         .loading-spinner {
             width: 50px;
             height: 50px;
@@ -30,12 +30,12 @@
             border-radius: 50%;
             animation: spin 1s linear infinite;
         }
-        
+
         @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
-        
+
         .loading-text {
             color: #667eea;
             font-size: 1.2rem;
@@ -295,7 +295,7 @@
                 this.story = storyData;
                 this.variables = {...(storyData.variables || {})};
                 document.getElementById('story-title').textContent = storyData.title || 'Whisker Story';
-                
+
                 // Show author if present
                 const authorEl = document.getElementById('story-author');
                 if (storyData.author) {
@@ -304,7 +304,7 @@
                 } else {
                     authorEl.style.display = 'none';
                 }
-                
+
                 this.updateStats();
             }
 
@@ -313,14 +313,14 @@
                     console.error('No story loaded');
                     return;
                 }
-                
+
                 const startPassage = this.story.start || this.story.passages[0].id;
                 this.goToPassage(startPassage);
             }
 
             goToPassage(passageId, saveHistory = true) {
                 const passage = this.story.passages.find(p => p.id === passageId);
-                
+
                 if (!passage) {
                     console.error('Passage not found:', passageId);
                     return;
@@ -333,7 +333,7 @@
                         variables: {...this.variables},
                         visited: {...this.visited}
                     });
-                    
+
                     if (this.history.length > this.maxHistory) {
                         this.history.shift();
                     }
@@ -354,7 +354,7 @@
 
             render() {
                 const passage = this.currentPassage;
-                
+
                 // Render title
                 document.getElementById('passage-title').innerHTML = this.processInline(passage.title || '');
 
@@ -388,7 +388,7 @@
 
             processInline(content) {
                 if (!content) return '';
-                
+
                 // Process {{expression}} syntax
                 content = content.replace(/\{\{(.+?)\}\}/g, (match, expression) => {
                     try {
@@ -396,7 +396,7 @@
                             ...this.variables,
                             visited: (passageId) => this.visited[passageId] || 0
                         };
-                        
+
                         const func = new Function('context', `with(context) { return ${expression}; }`);
                         const result = func(context);
                         return result !== undefined ? result : match;
@@ -415,10 +415,10 @@
 
             processContent(content) {
                 if (!content) return '';
-                
+
                 // First process inline elements
                 content = this.processInline(content);
-                
+
                 // Then split by double newlines to create paragraphs
                 const paragraphs = content.split(/\n\n+/).filter(p => p.trim());
                 content = paragraphs.map(p => `<p>${p.trim()}</p>`).join('');
@@ -446,7 +446,7 @@
 
             evaluateCondition(condition) {
                 if (!condition) return true;
-                
+
                 try {
                     const context = {
                         ...this.variables,
@@ -486,9 +486,9 @@
             updateHistory() {
                 const container = document.getElementById('history-container');
                 const recentHistory = this.history.slice(-5).reverse();
-                
+
                 container.innerHTML = '';
-                
+
                 recentHistory.forEach(entry => {
                     const passage = this.story.passages.find(p => p.id === entry.passageId);
                     if (passage) {
@@ -532,14 +532,14 @@
                     history: this.history,
                     timestamp: new Date().toISOString()
                 };
-                
+
                 localStorage.setItem('whisker_save', JSON.stringify(saveData));
                 this.showNotification('Game saved', 'success');
             }
 
             showLoadModal() {
                 const saveData = localStorage.getItem('whisker_save');
-                
+
                 if (!saveData) {
                     this.showNotification('No save found', 'error');
                     return;
@@ -570,12 +570,12 @@
             // Hide loading, show container
             document.getElementById('loading').style.display = 'none';
             document.getElementById('whisker-container').style.display = 'block';
-            
+
             // Create and start player
             window.whiskerPlayer = new WhiskerPlayer();
             window.whiskerPlayer.loadStory(STORY_DATA);
             window.whiskerPlayer.start();
-            
+
             console.log('Whisker Web Player loaded successfully!');
         });
 

@@ -1,0 +1,505 @@
+/* Whisker Story Editor - Variables Manager Styles */
+/* Phase 3 - Enhanced Features */
+
+/* ===========================
+   Variables Panel
+   =========================== */
+
+.variables-panel {
+    width: 300px;
+    background: #252526;
+    border-left: 1px solid #3d3d3d;
+    display: flex;
+    flex-direction: column;
+    max-height: 100%;
+}
+
+.variables-panel.collapsed {
+    width: 40px;
+}
+
+.variables-header {
+    padding: 12px 16px;
+    background: #2d2d2d;
+    border-bottom: 1px solid #3d3d3d;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.variables-header h2 {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.variables-panel.collapsed .variables-header h2 {
+    display: none;
+}
+
+.panel-toggle {
+    background: transparent;
+    border: none;
+    color: #888;
+    cursor: pointer;
+    font-size: 18px;
+    padding: 4px;
+    transition: color 0.2s;
+}
+
+.panel-toggle:hover {
+    color: #e0e0e0;
+}
+
+.variables-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 12px;
+}
+
+.variables-panel.collapsed .variables-content {
+    display: none;
+}
+
+.variable-item {
+    background: #2d2d2d;
+    border: 1px solid #3d3d3d;
+    border-radius: 4px;
+    padding: 12px;
+    margin-bottom: 8px;
+}
+
+.variable-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.variable-name {
+    font-weight: 500;
+    color: #4ec9b0;
+    font-family: 'Consolas', monospace;
+}
+
+.variable-type {
+    font-size: 11px;
+    color: #888;
+    text-transform: uppercase;
+}
+
+.variable-value {
+    background: #1e1e1e;
+    border: 1px solid #3d3d3d;
+    color: #e0e0e0;
+    padding: 6px 8px;
+    border-radius: 3px;
+    font-family: 'Consolas', monospace;
+    font-size: 13px;
+    margin-top: 6px;
+    width: 100%;
+}
+
+.variable-actions {
+    display: flex;
+    gap: 4px;
+    margin-top: 8px;
+}
+
+.variable-actions button {
+    flex: 1;
+    padding: 4px 8px;
+    font-size: 11px;
+}
+
+.add-variable-btn {
+    width: 100%;
+    margin-top: 8px;
+}
+
+/* Variable Type Selector */
+.type-selector {
+    background: #1e1e1e;
+    border: 1px solid #3d3d3d;
+    color: #e0e0e0;
+    padding: 6px 8px;
+    border-radius: 3px;
+    font-size: 12px;
+    width: 100%;
+    margin-top: 4px;
+}
+
+/* ===========================
+   Rich Text Editor Toolbar
+   =========================== */
+
+.rich-editor-container {
+    position: relative;
+}
+
+.rich-toolbar {
+    background: #2d2d2d;
+    border: 1px solid #3d3d3d;
+    border-bottom: none;
+    border-radius: 4px 4px 0 0;
+    padding: 8px;
+    display: flex;
+    gap: 4px;
+    flex-wrap: wrap;
+}
+
+.toolbar-group {
+    display: flex;
+    gap: 2px;
+    padding-right: 8px;
+    border-right: 1px solid #3d3d3d;
+}
+
+.toolbar-group:last-child {
+    border-right: none;
+}
+
+.toolbar-btn {
+    background: transparent;
+    border: 1px solid transparent;
+    color: #888;
+    padding: 6px 10px;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    transition: all 0.2s;
+    min-width: 32px;
+}
+
+.toolbar-btn:hover {
+    background: #3d3d3d;
+    color: #e0e0e0;
+}
+
+.toolbar-btn.active {
+    background: #0e639c;
+    color: white;
+    border-color: #0e639c;
+}
+
+.toolbar-btn[disabled] {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+/* Rich text content area */
+.rich-content {
+    border-top: none;
+    border-radius: 0 0 4px 4px;
+}
+
+/* Format indicators */
+.format-indicator {
+    font-size: 11px;
+    color: #888;
+    padding: 4px 8px;
+    background: #1e1e1e;
+    border-radius: 3px;
+    margin-left: auto;
+}
+
+/* ===========================
+   Validation Panel
+   =========================== */
+
+.validation-panel {
+    background: #2d2d2d;
+    border-top: 1px solid #3d3d3d;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.validation-header {
+    padding: 8px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #252526;
+}
+
+.validation-title {
+    font-size: 13px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.validation-count {
+    background: #c5262c;
+    color: white;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.validation-count.warning {
+    background: #cca700;
+}
+
+.validation-count.success {
+    background: #4caf50;
+}
+
+.validation-list {
+    padding: 8px;
+}
+
+.validation-item {
+    padding: 8px 12px;
+    margin-bottom: 4px;
+    border-radius: 4px;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.validation-item:hover {
+    background: #3d3d3d;
+}
+
+.validation-item.error {
+    background: rgba(197, 38, 44, 0.1);
+    border-left: 3px solid #c5262c;
+}
+
+.validation-item.warning {
+    background: rgba(204, 167, 0, 0.1);
+    border-left: 3px solid #cca700;
+}
+
+.validation-item.info {
+    background: rgba(14, 99, 156, 0.1);
+    border-left: 3px solid #0e639c;
+}
+
+.validation-icon {
+    font-size: 16px;
+    line-height: 1;
+}
+
+.validation-content {
+    flex: 1;
+}
+
+.validation-message {
+    font-size: 13px;
+    line-height: 1.4;
+    margin-bottom: 4px;
+}
+
+.validation-location {
+    font-size: 11px;
+    color: #888;
+    font-family: 'Consolas', monospace;
+}
+
+/* ===========================
+   Templates Panel
+   =========================== */
+
+.templates-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.templates-modal.hidden {
+    display: none;
+}
+
+.templates-dialog {
+    background: #2d2d2d;
+    border: 1px solid #3d3d3d;
+    border-radius: 8px;
+    max-width: 800px;
+    width: 90%;
+    max-height: 80vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.templates-dialog-header {
+    padding: 20px;
+    border-bottom: 1px solid #3d3d3d;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.templates-dialog-header h2 {
+    font-size: 20px;
+}
+
+.close-modal {
+    background: transparent;
+    border: none;
+    color: #888;
+    font-size: 24px;
+    cursor: pointer;
+    padding: 0;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+}
+
+.close-modal:hover {
+    background: #3d3d3d;
+    color: #e0e0e0;
+}
+
+.templates-content {
+    padding: 20px;
+    overflow-y: auto;
+    flex: 1;
+}
+
+.template-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 16px;
+}
+
+.template-card {
+    background: #252526;
+    border: 2px solid #3d3d3d;
+    border-radius: 8px;
+    padding: 16px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.template-card:hover {
+    border-color: #0e639c;
+    box-shadow: 0 4px 12px rgba(14, 99, 156, 0.3);
+}
+
+.template-icon {
+    font-size: 32px;
+    margin-bottom: 12px;
+}
+
+.template-title {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.template-description {
+    font-size: 13px;
+    color: #888;
+    line-height: 1.4;
+}
+
+.template-meta {
+    margin-top: 12px;
+    display: flex;
+    gap: 12px;
+    font-size: 11px;
+    color: #666;
+}
+
+/* ===========================
+   Undo/Redo Controls
+   =========================== */
+
+.history-controls {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+}
+
+.history-btn {
+    padding: 8px 12px;
+}
+
+.history-indicator {
+    font-size: 11px;
+    color: #888;
+    padding: 0 8px;
+}
+
+/* Undo/redo in toolbar */
+.toolbar .history-controls {
+    margin-left: auto;
+    margin-right: 16px;
+}
+
+/* ===========================
+   Insert Variable Dialog
+   =========================== */
+
+.insert-variable-popup {
+    position: absolute;
+    background: #2d2d2d;
+    border: 1px solid #3d3d3d;
+    border-radius: 6px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+    padding: 12px;
+    min-width: 200px;
+    z-index: 100;
+}
+
+.insert-variable-popup.hidden {
+    display: none;
+}
+
+.variable-list-item {
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.2s;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.variable-list-item:hover {
+    background: #3d3d3d;
+}
+
+.variable-syntax {
+    font-family: 'Consolas', monospace;
+    font-size: 12px;
+    color: #4ec9b0;
+}
+
+/* ===========================
+   Tooltips
+   =========================== */
+
+.tooltip {
+    position: absolute;
+    background: #252526;
+    border: 1px solid #3d3d3d;
+    border-radius: 4px;
+    padding: 6px 10px;
+    font-size: 12px;
+    color: #e0e0e0;
+    pointer-events: none;
+    z-index: 1000;
+    white-space: nowrap;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.tooltip.hidden {
+    display: none;
+}

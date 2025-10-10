@@ -39,43 +39,43 @@ function WebRuntime:initialize()
     local success, err = self.engine:initialize({
         debug = self.config.debug or false
     })
-    
+
     if not success then
         self:show_error("Failed to initialize engine: " .. tostring(err))
         return false
     end
-    
+
     -- Set up DOM structure
     self:create_dom()
-    
+
     -- Set up event handlers
     self:setup_event_handlers()
-    
+
     -- Load settings from localStorage
     self:load_settings()
-    
+
     -- Apply theme
     self:apply_theme(self.current_theme)
-    
+
     -- Set up auto-save
     if self.ui_state.auto_save_enabled then
         self:start_auto_save()
     end
-    
+
     -- Register engine callbacks
     self:register_engine_callbacks()
-    
+
     return true
 end
 
 -- DOM Creation
 function WebRuntime:create_dom()
     local container = js.global.document:getElementById(self.container_id)
-    
+
     if not container then
         error("Container element not found: " .. self.container_id)
     end
-    
+
     container.innerHTML = [[
         <div class="whisker-app">
             <header class="whisker-header">
@@ -106,11 +106,11 @@ function WebRuntime:create_dom()
                     </button>
                 </div>
             </header>
-            
+
             <div class="whisker-progress-bar">
                 <div class="whisker-progress-fill" id="whisker-progress"></div>
             </div>
-            
+
             <div class="whisker-main">
                 <div class="whisker-content">
                     <div class="whisker-passage" id="whisker-passage">
@@ -119,18 +119,18 @@ function WebRuntime:create_dom()
                         <div class="whisker-choices" id="whisker-choices"></div>
                     </div>
                 </div>
-                
+
                 <aside class="whisker-sidebar" id="whisker-sidebar">
                     <div class="whisker-sidebar-section">
                         <h3 class="whisker-sidebar-heading">Variables</h3>
                         <div class="whisker-stats" id="whisker-stats"></div>
                     </div>
-                    
+
                     <div class="whisker-sidebar-section">
                         <h3 class="whisker-sidebar-heading">History</h3>
                         <div class="whisker-history" id="whisker-history"></div>
                     </div>
-                    
+
                     <div class="whisker-sidebar-section">
                         <h3 class="whisker-sidebar-heading">Progress</h3>
                         <div class="whisker-progress-info" id="whisker-progress-info">
@@ -150,10 +150,10 @@ function WebRuntime:create_dom()
                     </div>
                 </aside>
             </div>
-            
+
             <div class="whisker-notifications" id="whisker-notifications"></div>
         </div>
-        
+
         <!-- Save Modal -->
         <div class="whisker-modal" id="whisker-save-modal">
             <div class="whisker-modal-overlay"></div>
@@ -165,7 +165,7 @@ function WebRuntime:create_dom()
                 <div class="whisker-modal-body" id="whisker-save-slots"></div>
             </div>
         </div>
-        
+
         <!-- Load Modal -->
         <div class="whisker-modal" id="whisker-load-modal">
             <div class="whisker-modal-overlay"></div>
@@ -177,7 +177,7 @@ function WebRuntime:create_dom()
                 <div class="whisker-modal-body" id="whisker-load-slots"></div>
             </div>
         </div>
-        
+
         <!-- Settings Modal -->
         <div class="whisker-modal" id="whisker-settings-modal">
             <div class="whisker-modal-overlay"></div>
@@ -196,21 +196,21 @@ function WebRuntime:create_dom()
                             <option value="sepia">Sepia</option>
                         </select>
                     </div>
-                    
+
                     <div class="whisker-setting-group">
                         <label class="whisker-setting-label">Font Size</label>
                         <input type="range" class="whisker-setting-range" id="whisker-font-size" 
                                min="0.8" max="1.5" step="0.1" value="1.0">
                         <span class="whisker-setting-value" id="whisker-font-size-value">100%</span>
                     </div>
-                    
+
                     <div class="whisker-setting-group">
                         <label class="whisker-setting-checkbox">
                             <input type="checkbox" id="whisker-auto-save" checked>
                             <span>Enable Auto-Save</span>
                         </label>
                     </div>
-                    
+
                     <div class="whisker-setting-group">
                         <label class="whisker-setting-checkbox">
                             <input type="checkbox" id="whisker-animations" checked>
@@ -221,7 +221,7 @@ function WebRuntime:create_dom()
             </div>
         </div>
     ]]
-    
+
     -- Store DOM element references
     self.dom_elements = {
         story_title = js.global.document:getElementById("whisker-story-title"),
@@ -243,14 +243,14 @@ end
 -- Event Handlers
 function WebRuntime:setup_event_handlers()
     local doc = js.global.document
-    
+
     -- Control buttons
     doc:getElementById("whisker-undo").onclick = function() self:undo() end
     doc:getElementById("whisker-save").onclick = function() self:show_save_modal() end
     doc:getElementById("whisker-load").onclick = function() self:show_load_modal() end
     doc:getElementById("whisker-restart").onclick = function() self:restart() end
     doc:getElementById("whisker-settings").onclick = function() self:show_settings_modal() end
-    
+
     -- Modal close buttons
     doc:getElementById("whisker-save-modal-close").onclick = function() 
         self:close_modal("whisker-save-modal") 
@@ -261,17 +261,17 @@ function WebRuntime:setup_event_handlers()
     doc:getElementById("whisker-settings-modal-close").onclick = function() 
         self:close_modal("whisker-settings-modal") 
     end
-    
+
     -- Settings controls
     doc:getElementById("whisker-theme-select").onchange = function(event)
         self:apply_theme(event.target.value)
     end
-    
+
     doc:getElementById("whisker-font-size").oninput = function(event)
         local value = tonumber(event.target.value)
         self:set_font_size(value)
     end
-    
+
     doc:getElementById("whisker-auto-save").onchange = function(event)
         self.ui_state.auto_save_enabled = event.target.checked
         if event.target.checked then
@@ -281,12 +281,12 @@ function WebRuntime:setup_event_handlers()
         end
         self:save_settings()
     end
-    
+
     doc:getElementById("whisker-animations").onchange = function(event)
         self.ui_state.animations_enabled = event.target.checked
         self:save_settings()
     end
-    
+
     -- Keyboard shortcuts
     js.global.document.onkeydown = function(event)
         if event.ctrlKey or event.metaKey then
@@ -302,7 +302,7 @@ function WebRuntime:setup_event_handlers()
             end
         end
     end
-    
+
     -- Close modals when clicking overlay
     local modals = {"whisker-save-modal", "whisker-load-modal", "whisker-settings-modal"}
     for _, modal_id in ipairs(modals) do
@@ -321,22 +321,22 @@ function WebRuntime:register_engine_callbacks()
         self:update_progress()
         self:update_history()
     end)
-    
+
     -- Choice made callback
     self.engine:on("choice_made", function(choice_index)
         self:update_progress()
     end)
-    
+
     -- Variable changed callback
     self.engine:on("variable_changed", function(key, value)
         self:update_stats()
     end)
-    
+
     -- Game saved callback
     self.engine:on("game_saved", function()
         self:show_notification("Game saved", "success")
     end)
-    
+
     -- Game loaded callback
     self.engine:on("game_loaded", function()
         self:show_notification("Game loaded", "success")
@@ -348,60 +348,60 @@ end
 -- Story Management
 function WebRuntime:load_story(story_data)
     local success, err = self.engine:load_story(story_data)
-    
+
     if not success then
         self:show_error("Failed to load story: " .. tostring(err))
         return false
     end
-    
+
     -- Update UI with story info
     self.dom_elements.story_title.textContent = story_data.title or "Untitled Story"
     if story_data.author then
         self.dom_elements.story_author.textContent = "by " .. story_data.author
         self.dom_elements.story_author.style.display = "block"
     end
-    
+
     -- Update total passages count
     self.dom_elements.passages_total.textContent = tostring(#story_data.passages or 0)
-    
+
     return true
 end
 
 function WebRuntime:start_story()
     local success, err = self.engine:start()
-    
+
     if not success then
         self:show_error("Failed to start story: " .. tostring(err))
         return false
     end
-    
+
     self:render_current_passage()
     self:update_all()
-    
+
     return true
 end
 
 -- Rendering
 function WebRuntime:render_current_passage()
     local passage = self.engine:get_current_passage()
-    
+
     if not passage then
         return
     end
-    
+
     -- Render title
     self.dom_elements.passage_title.textContent = passage.title or ""
-    
+
     -- Process and render content
     local content = self:process_content(passage.content or "")
     self.dom_elements.passage_content.innerHTML = content
-    
+
     -- Render choices
     self:render_choices(passage.choices or {})
-    
+
     -- Update stats
     self:update_stats()
-    
+
     -- Animate passage if enabled
     if self.ui_state.animations_enabled then
         self.dom_elements.passage_title.classList:add("whisker-fade-in")
@@ -411,18 +411,18 @@ end
 
 function WebRuntime:render_choices(choices)
     self.dom_elements.choices.innerHTML = ""
-    
+
     for i, choice in ipairs(choices) do
         -- Check if choice condition is met
         if self:evaluate_choice_condition(choice) then
             local button = js.global.document:createElement("button")
             button.className = "whisker-choice-btn"
             button.innerHTML = self:process_inline(choice.text)
-            
+
             button.onclick = function()
                 self.engine:make_choice(i)
             end
-            
+
             self.dom_elements.choices:appendChild(button)
         end
     end
@@ -434,12 +434,12 @@ function WebRuntime:process_content(content)
         local value = self.engine:get_variable(var_name)
         return value ~= nil and tostring(value) or ""
     end)
-    
+
     -- Process markdown-style formatting
     content = content:gsub("%*%*(.-)%*%*", "<strong>%1</strong>")
     content = content:gsub("%*(.-)%*", "<em>%1</em>")
     content = content:gsub("__(.-)__", "<u>%1</u>")
-    
+
     -- Convert double line breaks to paragraphs
     local paragraphs = {}
     for para in content:gmatch("[^\n\n]+") do
@@ -447,7 +447,7 @@ function WebRuntime:process_content(content)
             table.insert(paragraphs, "<p>" .. para:gsub("\n", "<br>") .. "</p>")
         end
     end
-    
+
     return table.concat(paragraphs, "\n")
 end
 
@@ -457,10 +457,10 @@ function WebRuntime:process_inline(content)
         local value = self.engine:get_variable(var_name)
         return value ~= nil and tostring(value) or ""
     end)
-    
+
     content = content:gsub("%*%*(.-)%*%*", "<strong>%1</strong>")
     content = content:gsub("%*(.-)%*", "<em>%1</em>")
-    
+
     return content
 end
 
@@ -468,7 +468,7 @@ function WebRuntime:evaluate_choice_condition(choice)
     if not choice.condition then
         return true
     end
-    
+
     return self.engine:evaluate_condition(choice.condition)
 end
 
@@ -476,7 +476,7 @@ end
 function WebRuntime:update_stats()
     local variables = self.engine:get_all_variables()
     self.dom_elements.stats.innerHTML = ""
-    
+
     for key, value in pairs(variables) do
         local stat_row = js.global.document:createElement("div")
         stat_row.className = "whisker-stat-row"
@@ -491,17 +491,17 @@ end
 function WebRuntime:update_history()
     local history = self.engine:get_history()
     self.dom_elements.history.innerHTML = ""
-    
+
     -- Show last 5 passages
     local recent = {}
     for i = math.max(1, #history - 4), #history do
         table.insert(recent, history[i])
     end
-    
+
     for i = #recent, 1, -1 do
         local passage_id = recent[i]
         local passage = self.engine:get_passage(passage_id)
-        
+
         if passage then
             local item = js.global.document:createElement("div")
             item.className = "whisker-history-item"
@@ -515,11 +515,11 @@ function WebRuntime:update_progress()
     local visited_count = self.engine:get_visited_count()
     local total_count = self.engine:get_total_passages()
     local choices_made = self.engine:get_choices_made_count()
-    
+
     self.dom_elements.passages_visited.textContent = tostring(visited_count)
     self.dom_elements.passages_total.textContent = tostring(total_count)
     self.dom_elements.choices_made.textContent = tostring(choices_made)
-    
+
     local percentage = total_count > 0 and (visited_count / total_count * 100) or 0
     self.dom_elements.progress.style.width = string.format("%.1f%%", percentage)
 end
@@ -533,7 +533,7 @@ end
 -- Game Actions
 function WebRuntime:undo()
     local success = self.engine:undo()
-    
+
     if success then
         self:render_current_passage()
         self:update_all()
@@ -566,12 +566,12 @@ end
 function WebRuntime:render_save_slots()
     local container = js.global.document:getElementById("whisker-save-slots")
     container.innerHTML = ""
-    
+
     for slot = 1, self.save_slots do
         local save_data = self:get_save_data(slot)
         local slot_elem = js.global.document:createElement("div")
         slot_elem.className = "whisker-save-slot"
-        
+
         if save_data then
             slot_elem.innerHTML = string.format([[
                 <div class="whisker-save-slot-header">
@@ -589,7 +589,7 @@ function WebRuntime:render_save_slots()
                 <div class="whisker-save-slot-info">Empty Slot</div>
             ]], slot)
         end
-        
+
         slot_elem.onclick = function() self:save_game(slot) end
         container:appendChild(slot_elem)
     end
@@ -598,12 +598,12 @@ end
 function WebRuntime:render_load_slots()
     local container = js.global.document:getElementById("whisker-load-slots")
     container.innerHTML = ""
-    
+
     for slot = 1, self.save_slots do
         local save_data = self:get_save_data(slot)
         local slot_elem = js.global.document:createElement("div")
         slot_elem.className = "whisker-save-slot"
-        
+
         if save_data then
             slot_elem.innerHTML = string.format([[
                 <div class="whisker-save-slot-header">
@@ -623,24 +623,24 @@ function WebRuntime:render_load_slots()
             ]], slot)
             slot_elem.style.cursor = "not-allowed"
         end
-        
+
         container:appendChild(slot_elem)
     end
 end
 
 function WebRuntime:save_game(slot)
     local save_data = self.engine:save_game()
-    
+
     if save_data then
         local passage = self.engine:get_current_passage()
         save_data.passage_title = passage.title or "Unknown"
         save_data.date = os.date("%Y-%m-%d %H:%M:%S")
-        
+
         js.global.localStorage:setItem(
             "whisker_save_" .. slot,
             json.encode(save_data)
         )
-        
+
         self:close_modal("whisker-save-modal")
         self:show_notification("Game saved to slot " .. slot, "success")
     else
@@ -650,15 +650,15 @@ end
 
 function WebRuntime:load_game(slot)
     local save_json = js.global.localStorage:getItem("whisker_save_" .. slot)
-    
+
     if not save_json then
         self:show_error("No save data in slot " .. slot)
         return
     end
-    
+
     local save_data = json.decode(save_json)
     local success = self.engine:load_game(save_data)
-    
+
     if success then
         self:close_modal("whisker-load-modal")
         self:render_current_passage()
@@ -671,11 +671,11 @@ end
 
 function WebRuntime:get_save_data(slot)
     local save_json = js.global.localStorage:getItem("whisker_save_" .. slot)
-    
+
     if save_json then
         return json.decode(save_json)
     end
-    
+
     return nil
 end
 
@@ -684,7 +684,7 @@ function WebRuntime:start_auto_save()
     if self.auto_save_timer then
         return
     end
-    
+
     self.auto_save_timer = js.global:setInterval(function()
         local save_data = self.engine:save_game()
         if save_data then
@@ -703,7 +703,7 @@ end
 -- Settings
 function WebRuntime:show_settings_modal()
     self:open_modal("whisker-settings-modal")
-    
+
     -- Update settings UI
     local doc = js.global.document
     doc:getElementById("whisker-theme-select").value = self.current_theme
@@ -717,16 +717,16 @@ end
 function WebRuntime:apply_theme(theme_name)
     self.current_theme = theme_name
     local app = js.global.document:querySelector(".whisker-app")
-    
+
     -- Remove all theme classes
     app.classList:remove("whisker-theme-default")
     app.classList:remove("whisker-theme-dark")
     app.classList:remove("whisker-theme-light")
     app.classList:remove("whisker-theme-sepia")
-    
+
     -- Add new theme class
     app.classList:add("whisker-theme-" .. theme_name)
-    
+
     self:save_settings()
 end
 
@@ -734,10 +734,10 @@ function WebRuntime:set_font_size(size)
     self.ui_state.font_size = size
     local content = js.global.document:querySelector(".whisker-content")
     content.style.fontSize = string.format("%.2frem", size)
-    
+
     js.global.document:getElementById("whisker-font-size-value").textContent = 
         string.format("%.0f%%", size * 100)
-    
+
     self:save_settings()
 end
 
@@ -748,20 +748,20 @@ function WebRuntime:save_settings()
         auto_save = self.ui_state.auto_save_enabled,
         animations = self.ui_state.animations_enabled
     }
-    
+
     js.global.localStorage:setItem("whisker_settings", json.encode(settings))
 end
 
 function WebRuntime:load_settings()
     local settings_json = js.global.localStorage:getItem("whisker_settings")
-    
+
     if settings_json then
         local settings = json.decode(settings_json)
         self.current_theme = settings.theme or "default"
         self.ui_state.font_size = settings.font_size or 1.0
         self.ui_state.auto_save_enabled = settings.auto_save ~= false
         self.ui_state.animations_enabled = settings.animations ~= false
-        
+
         self:apply_theme(self.current_theme)
         self:set_font_size(self.ui_state.font_size)
     end
@@ -781,13 +781,13 @@ end
 -- Notifications
 function WebRuntime:show_notification(message, type)
     type = type or "info"
-    
+
     local notification = js.global.document:createElement("div")
     notification.className = "whisker-notification whisker-notification-" .. type
     notification.textContent = message
-    
+
     self.dom_elements.notifications:appendChild(notification)
-    
+
     js.global:setTimeout(function()
         notification.classList:add("whisker-notification-fadeout")
         js.global:setTimeout(function()
