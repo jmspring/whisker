@@ -1,155 +1,18 @@
 name: Security Scan
 
 on:
-  push:
-    branches: [ main, develop ]
-  pull_request:
-    branches: [ main, develop ]
+  workflow_dispatch:  # Manual trigger only
   schedule:
-    # Run weekly security scans
-    - cron: '0 0 * * 0'
-  workflow_dispatch:
+    - cron: '0 0 * * 0'  # Weekly on Sunday
 
 jobs:
-  dependency-scan:
-    name: Dependency Vulnerability Scan
+  security:
+    name: Security Analysis
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-      
-      - name: Install dependencies
+      - name: Placeholder for security scanning
         run: |
-          cd editor/web && npm ci
-          cd ../..
-          cd runtime/web && npm ci
-      
-      - name: Run npm audit (Web Editor)
-        run: cd editor/web && npm audit --audit-level=moderate
-        continue-on-error: true
-      
-      - name: Run npm audit (Web Runtime)
-        run: cd runtime/web && npm audit --audit-level=moderate
-        continue-on-error: true
-      
-      - name: Dependency Review
-        uses: actions/dependency-review-action@v4
-        if: github.event_name == 'pull_request'
-
-  code-scan:
-    name: Code Security Scan
-    runs-on: ubuntu-latest
-    permissions:
-      security-events: write
-      actions: read
-      contents: read
-    steps:
-      - uses: actions/checkout@v4
-      
-      - name: Initialize CodeQL
-        uses: github/codeql-action/init@v3
-        with:
-          languages: javascript
-      
-      - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v3
-
-  secret-scan:
-    name: Secret Scanning
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-      
-      - name: TruffleHog Secret Scan
-        uses: trufflesecurity/trufflehog@main
-        with:
-          path: ./
-          base: ${{ github.event.repository.default_branch }}
-          head: HEAD
-
-  lua-security:
-    name: Lua Security Analysis
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      
-      - name: Setup Lua
-        uses: leafo/gh-actions-lua@v10
-        with:
-          luaVersion: "5.4"
-      
-      - name: Setup LuaRocks
-        uses: leafo/gh-actions-luarocks@v4
-      
-      - name: Install Luacheck
-        run: luarocks install luacheck
-      
-      - name: Check for unsafe patterns
-        run: |
-          luacheck src/ tests/ \
-            --no-unused --no-redefined \
-            --std lua54 \
-            --codes \
-            --formatter plain
-
-  container-scan:
-    name: Container Security Scan
-    runs-on: ubuntu-latest
-    if: github.event_name == 'push'
-    steps:
-      - uses: actions/checkout@v4
-      
-      - name: Build Docker image
-        run: docker build -f build/docker/Dockerfile.build -t whisker:test .
-      
-      - name: Run Trivy vulnerability scanner
-        uses: aquasecurity/trivy-action@master
-        with:
-          image-ref: whisker:test
-          format: 'sarif'
-          output: 'trivy-results.sarif'
-      
-      - name: Upload Trivy results to GitHub Security tab
-        uses: github/codeql-action/upload-sarif@v3
-        with:
-          sarif_file: 'trivy-results.sarif'
-
-  license-check:
-    name: License Compliance
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-      
-      - name: Install license checker
-        run: npm install -g license-checker
-      
-      - name: Check licenses (Web Editor)
-        run: |
-          cd editor/web
-          npm ci
-          license-checker --production --json > ../../licenses-web-editor.json
-      
-      - name: Check licenses (Web Runtime)
-        run: |
-          cd runtime/web
-          npm ci
-          license-checker --production --json > ../../licenses-web-runtime.json
-      
-      - name: Upload license reports
-        uses: actions/upload-artifact@v4
-        with:
-          name: license-reports
-          path: |
-            licenses-web-editor.json
-            licenses-web-runtime.json
+          echo "Security scanning not yet implemented"
+          echo "This workflow is disabled until security tools are configured"

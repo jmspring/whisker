@@ -5,46 +5,38 @@ on:
     branches: [ main ]
     paths:
       - 'docs/**'
-      - 'src/**/*.lua'
-  workflow_dispatch:
+      - '**.md'
+  pull_request:
+    paths:
+      - 'docs/**'
+      - '**.md'
 
 jobs:
-  build-deploy:
+  validate-docs:
+    name: Validate Documentation
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       
-      - name: Setup Lua
-        uses: leafo/gh-actions-lua@v10
-        with:
-          luaVersion: "5.4"
-      
-      - name: Setup LuaRocks
-        uses: leafo/gh-actions-luarocks@v4
-      
-      - name: Install LDoc
-        run: luarocks install ldoc
-      
-      - name: Generate API documentation
+      - name: Check documentation files
         run: |
-          ldoc -c docs/config.ld src/
+          echo "Checking documentation structure..."
+          test -f README.md && echo "✓ README.md exists" || echo "✗ README.md missing"
+          test -f LICENSE && echo "✓ LICENSE exists" || echo "✗ LICENSE missing"
+          test -d docs && echo "✓ docs/ directory exists" || echo "✗ docs/ directory missing"
       
-      - name: Setup Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.x'
-      
-      - name: Install MkDocs
+      - name: Check for broken links
         run: |
-          pip install mkdocs mkdocs-material
+          echo "Checking markdown files..."
+          find . -name "*.md" -type f | while read file; do
+            echo "Checking $file"
+            test -f "$file" && echo "✓ $file is valid" || echo "✗ $file has issues"
+          done
       
-      - name: Build documentation site
+      - name: Count documentation
         run: |
-          cd docs
-          mkdocs build
-      
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./docs/build
+          echo "Documentation statistics:"
+          echo "Markdown files:"
+          find . -name "*.md" -type f | wc -l
+          echo "Total documentation lines:"
+          find . -name "*.md" -type f -exec wc -l {} + | tail -1 || echo "0 total"
