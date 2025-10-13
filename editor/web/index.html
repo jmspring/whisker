@@ -61,6 +61,7 @@
                     <h2>Welcome to Whisker</h2>
                     <p>Create a new project or open an existing one to get started</p>
                     <button class="btn" onclick="editor.newProject()">Create New Project</button>
+                    <button class="btn-secondary btn" onclick="editor.openProject()" style="margin-top: 10px;">Open Project</button>
                     <button class="btn-secondary btn" onclick="templateSystem.showDialog()" style="margin-top: 10px;">Choose Template</button>
                 </div>
 
@@ -300,6 +301,7 @@ Formatting tips:
     </div>
 
     <!-- Scripts -->
+    <script src="js/template-processor.js"></script>
     <script src="js/editor.js"></script>
     <script src="js/graph.js"></script>
     <script src="js/variables.js"></script>
