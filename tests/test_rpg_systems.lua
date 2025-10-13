@@ -59,12 +59,12 @@ local function assert_not_nil(value, msg)
 end
 
 print("="..string.rep("=", 70))
-print("  Keep on the Borderlands - RPG Systems Test Suite")
+print("  Shadows of Thornhaven - RPG Systems Test Suite")
 print("="..string.rep("=", 70))
 print()
 
 -- Load the story
-local story, err = WhiskerLoader.load_from_file('examples/stories/keep_on_the_borderlands.whisker')
+local story, err = WhiskerLoader.load_from_file('examples/stories/shadows_of_thornhaven.whisker')
 if not story then
     print("✗ FATAL ERROR: Could not load story file")
     print("  " .. tostring(err))
@@ -185,10 +185,10 @@ test("Quest journal passage exists", function()
 end)
 
 test("Quest tracking variables exist", function()
-    assert_not_nil(story.variables['quest_clear_caves'], "Missing 'quest_clear_caves'")
+    assert_not_nil(story.variables['quest_clear_ruins'], "Missing 'quest_clear_ruins'")
     assert_not_nil(story.variables['quest_merchant_treasure'], "Missing 'quest_merchant_treasure'")
-    assert_not_nil(story.variables['quest_hermit_herbs'], "Missing 'quest_hermit_herbs'")
-    assert_not_nil(story.variables['quest_castellan_orcs'], "Missing 'quest_castellan_orcs'")
+    assert_not_nil(story.variables['quest_healer_herbs'], "Missing 'quest_healer_herbs'")
+    assert_not_nil(story.variables['quest_elder_shadows'], "Missing 'quest_elder_shadows'")
     assert_not_nil(story.variables['monsters_killed'], "Missing 'monsters_killed'")
 end)
 
@@ -254,17 +254,17 @@ end)
 test("Original story passages still exist", function()
     -- Check some key original passages
     assert_not_nil(story:get_passage('start'), "Missing original 'start' passage")
-    assert_not_nil(story:get_passage('keep_entrance'), "Missing 'keep_entrance'")
-    assert_not_nil(story:get_passage('cave_entrance'), "Missing 'cave_entrance'")
-    assert_not_nil(story:get_passage('kobold_cave'), "Missing 'kobold_cave'")
+    assert_not_nil(story:get_passage('village_center'), "Missing 'village_center'")
+    assert_not_nil(story:get_passage('to_ruins'), "Missing 'to_ruins'")
+    assert_not_nil(story:get_passage('wolf_den_entrance'), "Missing 'wolf_den_entrance'")
     assert_not_nil(story:get_passage('victory'), "Missing 'victory'")
     assert_not_nil(story:get_passage('death'), "Missing 'death'")
 end)
 
 test("Story has appropriate number of passages", function()
     local total_passages = #story:get_all_passages()
-    assert_true(total_passages >= 120, "Should have at least 120 passages (original + RPG)")
-    assert_true(total_passages <= 130, "Should have no more than 130 passages")
+    assert_true(total_passages >= 68, "Should have at least 68 passages (original + RPG)")
+    assert_true(total_passages <= 72, "Should have no more than 72 passages")
 end)
 
 test("Character creation is mandatory", function()

@@ -1,4 +1,4 @@
-# Keep on the Borderlands - RPG Systems Implementation Status
+# Shadows of Thornhaven - RPG Systems Implementation Status
 
 ## Overview
 Implementing Tier 1 and Tier 2 RPG enhancements to create a full-featured tabletop RPG experience.

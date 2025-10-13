@@ -21,7 +21,7 @@ print("="..string.rep("=", 70))
 print()
 
 -- Load story
-local story, err = WhiskerLoader.load_from_file('examples/stories/keep_on_the_borderlands.whisker')
+local story, err = WhiskerLoader.load_from_file('examples/stories/shadows_of_thornhaven.whisker')
 if not story then
     print("✗ FATAL: Could not load story")
     os.exit(1)
