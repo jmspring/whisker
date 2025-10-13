@@ -751,11 +751,88 @@
     {
       "pid": "p040",
       "name": "tower_fight",
-      "text": "You climb through a broken window into the tower. Shadow creatures lurk in the darkness - more powerful than the ones at the temple!\n\n**Combat: Greater Shadow**\n**Your Health:** {{health}}/{{max_health}}\n\nThis is a dangerous fight! The greater shadow is a formidable foe.\n\nAfter an intense battle, you banish the creature!\n\n**Victory!**\n\nYou take 18 damage.\n\n**Gained 120 XP**\n**Gained 90 gold**\n\n{{lua: \n  game_state:set(\"health\", math.max(1, game_state:get(\"health\") - 18));\n  game_state:set(\"experience\", game_state:get(\"experience\") + 120);\n  game_state:set(\"gold\", game_state:get(\"gold\") + 90);\n  game_state:set(\"tower_explored\", true);\n  game_state:set(\"explored_ruined_tower\", true);\n  game_state:set(\"quest_clear_ruins\", game_state:get(\"quest_clear_ruins\") + 1);\n  game_state:set(\"monsters_killed\", game_state:get(\"monsters_killed\") + 1);\n  game_state:set(\"alignment_good_evil\", game_state:get(\"alignment_good_evil\") + 2)\n}}\n\n[[Search the tower->tower_loot]]\n[[Return to ruins->to_ruins]]",
+      "text": "You climb through a broken window into the tower. Shadow creatures lurk in the darkness - more powerful than the ones at the temple!\n\n**Combat: Greater Shadow**\n**Enemy Type:** Elite Shadow (Boss)\n**Your Health:** {{health}}/{{max_health}}\n**Your Stamina:** {{stamina}}/{{max_stamina}}\n{{#if companion_name != \"none\"}}**{{companion_name}}:** {{companion_health}}/{{companion_max_health}} HP{{/if}}\n\nThis is a dangerous fight! The greater shadow is a formidable foe.\n\n[[Fight defensively->tower_fight_defensive]]\n[[Fight aggressively->tower_fight_aggressive]]\n\n**Class Abilities:**\n{{#if stamina >= 3 and class == \"Fighter\"}}[[Power Strike (3 stamina) - Strike with fury->tower_fight_power]]{{/if}}\n{{#if stamina >= 2 and class == \"Rogue\"}}[[Sneak Attack (2 stamina) - Find weakness->tower_fight_sneak]]{{/if}}\n{{#if stamina >= 4 and class == \"Cleric\"}}[[Turn Undead (4 stamina) - Banish darkness->tower_fight_turn]]{{/if}}\n{{#if stamina >= 3 and class == \"Mage\"}}[[Magic Missile (3 stamina) - Disrupt shadow->tower_fight_magic]]{{/if}}\n\n{{#if has_healing_potion and health < max_health}}[[Drink healing potion->tower_fight_heal]]{{/if}}",
       "tags": [
         "ruins",
         "combat",
-        "tower"
+        "tower",
+        "boss"
+      ]
+    },
+    {
+      "pid": "p040a",
+      "name": "tower_fight_defensive",
+      "text": "You fight carefully against the greater shadow. Its draining touch is powerful, but you endure through skill and determination.\n\n**Victory!**\n\nYou take 15 damage but banish the elite creature.{{#if companion_name != \"none\" and companion_ability == \"protective\"}}\n{{companion_name}} protected you from the shadow's worst attacks!{{/if}}\n\n**Gained 120 XP**\n**Gained 90 gold**\n\n{{lua: \n  local damage = 15;\n  if game_state:get(\"companion_name\") ~= \"none\" and game_state:get(\"companion_ability\") == \"protective\" then\n    damage = math.ceil(damage / 2);\n  end\n  game_state:set(\"health\", math.max(1, game_state:get(\"health\") - damage));\n  game_state:set(\"experience\", game_state:get(\"experience\") + 120);\n  game_state:set(\"gold\", game_state:get(\"gold\") + 90);\n  game_state:set(\"tower_explored\", true);\n  game_state:set(\"explored_ruined_tower\", true);\n  game_state:set(\"quest_clear_ruins\", game_state:get(\"quest_clear_ruins\") + 1);\n  game_state:set(\"monsters_killed\", game_state:get(\"monsters_killed\") + 1);\n  game_state:set(\"alignment_good_evil\", game_state:get(\"alignment_good_evil\") + 2)\n}}\n\n[[Search the tower->tower_loot]]\n[[Return to ruins->to_ruins]]",
+      "tags": [
+        "ruins",
+        "combat",
+        "victory",
+        "tower",
+        "boss"
+      ]
+    },
+    {
+      "pid": "p040b",
+      "name": "tower_fight_aggressive",
+      "text": "You attack the greater shadow with reckless fury! The battle is brutal and its dark power tears at your life force.\n\n**Victory!**\n\nYou take 20 damage but defeat the elite shadow.{{#if companion_name != \"none\" and companion_ability == \"protective\"}}\n{{companion_name}} intercepted some of its attacks!{{/if}}\n\n**Gained 120 XP**\n**Gained 90 gold**\n\n{{lua: \n  local damage = 20;\n  if game_state:get(\"companion_name\") ~= \"none\" and game_state:get(\"companion_ability\") == \"protective\" then\n    damage = math.ceil(damage / 2);\n  end\n  game_state:set(\"health\", math.max(1, game_state:get(\"health\") - damage));\n  game_state:set(\"experience\", game_state:get(\"experience\") + 120);\n  game_state:set(\"gold\", game_state:get(\"gold\") + 90);\n  game_state:set(\"tower_explored\", true);\n  game_state:set(\"explored_ruined_tower\", true);\n  game_state:set(\"quest_clear_ruins\", game_state:get(\"quest_clear_ruins\") + 1);\n  game_state:set(\"monsters_killed\", game_state:get(\"monsters_killed\") + 1);\n  game_state:set(\"alignment_good_evil\", game_state:get(\"alignment_good_evil\") + 2)\n}}\n\n[[Search the tower->tower_loot]]\n[[Return to ruins->to_ruins]]",
+      "tags": [
+        "ruins",
+        "combat",
+        "victory",
+        "tower",
+        "boss"
+      ]
+    },
+    {
+      "pid": "p040c",
+      "name": "tower_fight_power",
+      "text": "You unleash devastating Power Strikes! Each blow disrupts the greater shadow's form!\n\n**POWER STRIKE!**\n\nYour overwhelming strength forces the elite shadow to dissipate!\n\n**Victory!**\n\nYou take only 8 damage through raw power.{{#if companion_name != \"none\"}}\n{{companion_name}} fought valiantly at your side!{{/if}}\n\n**Gained 120 XP**\n**Gained 90 gold**\n\n{{lua: \n  game_state:set(\"stamina\", game_state:get(\"stamina\") - 3);\n  local damage = 8;\n  if game_state:get(\"companion_name\") ~= \"none\" and game_state:get(\"companion_ability\") == \"protective\" then\n    damage = math.ceil(damage / 2);\n  end\n  game_state:set(\"health\", math.max(1, game_state:get(\"health\") - damage));\n  game_state:set(\"experience\", game_state:get(\"experience\") + 120);\n  game_state:set(\"gold\", game_state:get(\"gold\") + 90);\n  game_state:set(\"tower_explored\", true);\n  game_state:set(\"explored_ruined_tower\", true);\n  game_state:set(\"quest_clear_ruins\", game_state:get(\"quest_clear_ruins\") + 1);\n  game_state:set(\"monsters_killed\", game_state:get(\"monsters_killed\") + 1);\n  game_state:set(\"alignment_good_evil\", game_state:get(\"alignment_good_evil\") + 2)\n}}\n\n[[Search the tower->tower_loot]]\n[[Return to ruins->to_ruins]]",
+      "tags": [
+        "ruins",
+        "combat",
+        "victory",
+        "fighter",
+        "tower",
+        "boss"
+      ]
+    },
+    {
+      "pid": "p040d",
+      "name": "tower_fight_sneak",
+      "text": "You use cunning to exploit the greater shadow's weakness! Precise strikes at its core!\n\n**SNEAK ATTACK!**\n\nYour tactical genius finds the shadow's vulnerable essence!\n\n**Victory!**\n\nYou take only 7 damage through clever tactics.{{#if companion_name != \"none\"}}\n{{companion_name}} provided the perfect distraction!{{/if}}\n\n**Gained 120 XP**\n**Gained 90 gold**\n\n{{lua: \n  game_state:set(\"stamina\", game_state:get(\"stamina\") - 2);\n  local damage = 7;\n  if game_state:get(\"companion_name\") ~= \"none\" and game_state:get(\"companion_ability\") == \"protective\" then\n    damage = math.ceil(damage / 2);\n  end\n  game_state:set(\"health\", math.max(1, game_state:get(\"health\") - damage));\n  game_state:set(\"experience\", game_state:get(\"experience\") + 120);\n  game_state:set(\"gold\", game_state:get(\"gold\") + 90);\n  game_state:set(\"tower_explored\", true);\n  game_state:set(\"explored_ruined_tower\", true);\n  game_state:set(\"quest_clear_ruins\", game_state:get(\"quest_clear_ruins\") + 1);\n  game_state:set(\"monsters_killed\", game_state:get(\"monsters_killed\") + 1);\n  game_state:set(\"alignment_good_evil\", game_state:get(\"alignment_good_evil\") + 2)\n}}\n\n[[Search the tower->tower_loot]]\n[[Return to ruins->to_ruins]]",
+      "tags": [
+        "ruins",
+        "combat",
+        "victory",
+        "rogue",
+        "tower",
+        "boss"
+      ]
+    },
+    {
+      "pid": "p040e",
+      "name": "tower_fight_turn",
+      "text": "You raise your holy symbol high! \"By divine light, be banished!\"\n\n**TURN UNDEAD!**\n\nYour faith blazes brilliantly! The greater shadow shrieks and dissolves before your power!\n\n**Victory!**\n\nYou take only 4 damage - your divine power is supreme!{{#if companion_name != \"none\"}}\n{{companion_name}} witnesses your holy might!{{/if}}\n\n**Gained 120 XP**\n**Gained 90 gold**\n\n{{lua: \n  game_state:set(\"stamina\", game_state:get(\"stamina\") - 4);\n  local damage = 4;\n  if game_state:get(\"companion_name\") ~= \"none\" and game_state:get(\"companion_ability\") == \"protective\" then\n    damage = math.ceil(damage / 2);\n  end\n  game_state:set(\"health\", math.max(1, game_state:get(\"health\") - damage));\n  game_state:set(\"experience\", game_state:get(\"experience\") + 120);\n  game_state:set(\"gold\", game_state:get(\"gold\") + 90);\n  game_state:set(\"tower_explored\", true);\n  game_state:set(\"explored_ruined_tower\", true);\n  game_state:set(\"quest_clear_ruins\", game_state:get(\"quest_clear_ruins\") + 1);\n  game_state:set(\"monsters_killed\", game_state:get(\"monsters_killed\") + 1);\n  game_state:set(\"alignment_good_evil\", game_state:get(\"alignment_good_evil\") + 2)\n}}\n\n[[Search the tower->tower_loot]]\n[[Return to ruins->to_ruins]]",
+      "tags": [
+        "ruins",
+        "combat",
+        "victory",
+        "cleric",
+        "tower",
+        "boss"
+      ]
+    },
+    {
+      "pid": "p040f",
+      "name": "tower_fight_magic",
+      "text": "You unleash powerful Magic Missiles! The arcane projectiles pierce the greater shadow's ethereal form!\n\n**MAGIC MISSILE!**\n\nYour spells disrupt the elite shadow's dark magic from afar!\n\n**Victory!**\n\nYou take only 6 damage, maintaining distance.{{#if companion_name != \"none\"}}\n{{companion_name}} kept the shadow away from you!{{/if}}\n\n**Gained 120 XP**\n**Gained 90 gold**\n\n{{lua: \n  game_state:set(\"stamina\", game_state:get(\"stamina\") - 3);\n  local damage = 6;\n  if game_state:get(\"companion_name\") ~= \"none\" and game_state:get(\"companion_ability\") == \"protective\" then\n    damage = math.ceil(damage / 2);\n  end\n  game_state:set(\"health\", math.max(1, game_state:get(\"health\") - damage));\n  game_state:set(\"experience\", game_state:get(\"experience\") + 120);\n  game_state:set(\"gold\", game_state:get(\"gold\") + 90);\n  game_state:set(\"tower_explored\", true);\n  game_state:set(\"explored_ruined_tower\", true);\n  game_state:set(\"quest_clear_ruins\", game_state:get(\"quest_clear_ruins\") + 1);\n  game_state:set(\"monsters_killed\", game_state:get(\"monsters_killed\") + 1);\n  game_state:set(\"alignment_good_evil\", game_state:get(\"alignment_good_evil\") + 2)\n}}\n\n[[Search the tower->tower_loot]]\n[[Return to ruins->to_ruins]]",
+      "tags": [
+        "ruins",
+        "combat",
+        "victory",
+        "mage",
+        "tower",
+        "boss"
       ]
     },
     {
