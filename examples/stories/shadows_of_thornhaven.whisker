@@ -275,7 +275,7 @@
     {
       "pid": "p014",
       "name": "healing_house",
-      "text": "The Healing House is filled with the scent of herbs and medicinal plants. The herbalist, an elderly woman named Elara, greets you warmly.\n\n\"Welcome, child. I can tend to your wounds for 15 gold, or if you have time, I need help gathering rare moonflower herbs that grow near the ancient crypt. They're essential for my healing potions.\"\n\n{{#if skill_medicine >= 3}}\n*Your Medicine knowledge impresses Elara!*\n\"I see you know your herbs! Let me give you a discount, healer to healer.\"\n{{/if}}\n\n**Health:** {{health}}/{{max_health}}\n**Gold:** {{gold}}\n\n{{#if skill_medicine >= 3}}\n  {{#if gold >= 10 and health < max_health}}[[Pay for discounted healing (10 gold)->pay_healing_discount]]{{/if}}\n  {{#if health < max_health}}[[Assist Elara with healing (free, Medicine)->assist_healing]]{{/if}}\n{{else}}\n  {{#if gold >= 15 and health < max_health}}[[Pay for healing (15 gold)->pay_healing]]{{/if}}\n{{/if}}\n{{#if not quest_healer_herbs}}[[Accept herb gathering quest->healer_quest]]{{/if}}\n[[Leave->village_center]]",
+      "text": "The Healing House is filled with the scent of herbs and medicinal plants. The herbalist, an elderly woman named Elara, greets you warmly.\n\n{{#if has_moonflowers}}\n\"You found the moonflowers! Wonderful! These will save many lives.\"\n{{else}}\n\"Welcome, child. I can tend to your wounds for 15 gold, or if you have time, I need help gathering rare moonflower herbs that grow near the ancient crypt. They're essential for my healing potions.\"\n{{/if}}\n\n{{#if skill_medicine >= 3 and not has_moonflowers}}\n*Your Medicine knowledge impresses Elara!*\n\"I see you know your herbs! Let me give you a discount, healer to healer.\"\n{{/if}}\n\n**Health:** {{health}}/{{max_health}}\n**Gold:** {{gold}}\n\n{{#if has_moonflowers}}[[Return the moonflowers to Elara->return_moonflowers]]{{/if}}\n{{#if skill_medicine >= 3}}\n  {{#if gold >= 10 and health < max_health}}[[Pay for discounted healing (10 gold)->pay_healing_discount]]{{/if}}\n  {{#if health < max_health}}[[Assist Elara with healing (free, Medicine)->assist_healing]]{{/if}}\n{{else}}\n  {{#if gold >= 15 and health < max_health}}[[Pay for healing (15 gold)->pay_healing]]{{/if}}\n{{/if}}\n{{#if not quest_healer_herbs and not has_moonflowers}}[[Accept herb gathering quest->healer_quest]]{{/if}}\n[[Leave->village_center]]",
       "tags": [
         "village",
         "healing"
@@ -314,6 +314,15 @@
       "pid": "p016",
       "name": "healer_quest",
       "text": "\"The moonflowers bloom near the ancient crypt, but shadow creatures have made the area dangerous. If you can bring me 5 moonflower blooms, I'll give you 3 healing potions as reward.\"\n\n{{lua: game_state:set(\"quest_healer_herbs\", true) }}\n\n**New Quest:** Moonflower Harvest - Gather 5 moonflowers near the Ancient Crypt\n\n[[Accept the quest->village_center]]",
+      "tags": [
+        "village",
+        "quest"
+      ]
+    },
+    {
+      "pid": "p016a",
+      "name": "return_moonflowers",
+      "text": "You present the moonflowers to Elara. Her eyes light up as she examines them carefully.\n\n\"Perfect! These are exactly what I need. You've risked much to bring these to me, and I am grateful.\"\n\nShe hands you three carefully wrapped healing potions.\n\n**Quest Complete:** Moonflower Harvest\n**Gained 3 Healing Potions**\n**Gained 75 XP**\n\n{{lua: \n  game_state:set(\"has_moonflowers\", false);\n  game_state:set(\"quest_healer_herbs\", false);\n  game_state:set(\"quest_healer_complete\", true);\n  game_state:set(\"healing_potions\", game_state:get(\"healing_potions\") + 3);\n  game_state:set(\"experience\", game_state:get(\"experience\") + 75)\n}}\n\n[[Leave->healing_house]]",
       "tags": [
         "village",
         "quest"
@@ -754,7 +763,7 @@
     {
       "pid": "p037",
       "name": "crypt_loot",
-      "text": "You search the ancient crypt and find treasures buried with the dead:\n\n**Found:**\n- 100 additional gold\n- A masterwork longsword (+2 weapon bonus)\n- 5 moonflowers growing near the entrance (quest item!)\n\n{{lua: \n  game_state:set(\"gold\", game_state:get(\"gold\") + 100);\n  game_state:set(\"weapon_bonus\", game_state:get(\"weapon_bonus\") + 2)\n}}\n\n{{#if quest_healer_herbs}}\n  You found the moonflowers Elara needs!\n{{/if}}\n\n[[Return to ruins->to_ruins]]",
+      "text": "You search the ancient crypt and find treasures buried with the dead:\n\n**Found:**\n- 100 additional gold\n- A masterwork longsword (+2 weapon bonus)\n{{#if quest_healer_herbs}}\n- 5 moonflowers growing near the entrance (quest item!)\n{{/if}}\n\n{{lua: \n  game_state:set(\"gold\", game_state:get(\"gold\") + 100);\n  game_state:set(\"weapon_bonus\", game_state:get(\"weapon_bonus\") + 2)\n}}\n\n{{#if quest_healer_herbs}}\n  You found the moonflowers Elara needs! Return them to the Healing House.\n  {{lua: game_state:set(\"has_moonflowers\", true) }}\n{{/if}}\n\n[[Return to ruins->to_ruins]]",
       "tags": [
         "ruins",
         "loot"
