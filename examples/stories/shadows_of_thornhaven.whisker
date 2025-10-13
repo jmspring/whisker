@@ -355,7 +355,7 @@
     {
       "pid": "p024",
       "name": "wolf_den_fight",
-      "text": "You enter the cave and are immediately set upon by a pack of dire wolves! Their eyes gleam in the darkness.\n\n**Combat: Pack of Dire Wolves**\n**Enemy Health:** 25\n**Your Health:** {{health}}/{{max_health}}\n\nThe alpha wolf lunges at you!\n\n[[Fight defensively (safer)->wolf_fight_defensive]]\n[[Attack aggressively (riskier)->wolf_fight_aggressive]]\n{{#if stamina >= 3 and class == \"Fighter\"}}[[Use Power Strike (3 stamina)->wolf_fight_power]]{{/if}}\n{{#if has_healing_potion and health < max_health}}[[Drink healing potion->wolf_fight_heal]]{{/if}}",
+      "text": "You enter the cave and are immediately set upon by a pack of dire wolves! Their eyes gleam in the darkness.\n\n**Combat: Pack of Dire Wolves**\n**Enemy Health:** 25\n**Your Health:** {{health}}/{{max_health}}\n**Your Stamina:** {{stamina}}/{{max_stamina}}\n{{#if companion_name != \"none\"}}**{{companion_name}}:** {{companion_health}}/{{companion_max_health}} HP{{/if}}\n\nThe alpha wolf lunges at you!\n\n[[Fight defensively (safer)->wolf_fight_defensive]]\n[[Attack aggressively (riskier)->wolf_fight_aggressive]]\n\n**Class Abilities:**\n{{#if stamina >= 3 and class == \"Fighter\"}}[[Power Strike (3 stamina) - Double damage->wolf_fight_power]]{{/if}}\n{{#if stamina >= 2 and class == \"Rogue\"}}[[Sneak Attack (2 stamina) - Triple damage->wolf_fight_sneak]]{{/if}}\n{{#if stamina >= 4 and class == \"Cleric\"}}[[Divine Strike (4 stamina) - Extra damage vs beasts->wolf_fight_divine]]{{/if}}\n{{#if stamina >= 3 and class == \"Mage\"}}[[Magic Missile (3 stamina) - Auto-hit damage->wolf_fight_magic]]{{/if}}\n\n{{#if has_healing_potion and health < max_health}}[[Drink healing potion->wolf_fight_heal]]{{/if}}",
       "tags": [
         "ruins",
         "combat",
@@ -365,7 +365,7 @@
     {
       "pid": "p025",
       "name": "wolf_fight_defensive",
-      "text": "You fight carefully, using your shield to deflect attacks. After a tense battle, you slay the last wolf!\n\n**Victory!**\n\nYou take 8 damage but win the fight.\n\n**Gained 50 XP**\n**Gained 30 gold from wolf pelts**\n\n{{lua: \n  game_state:set(\"health\", math.max(1, game_state:get(\"health\") - 8));\n  game_state:set(\"experience\", game_state:get(\"experience\") + 50);\n  game_state:set(\"gold\", game_state:get(\"gold\") + 30);\n  game_state:set(\"wolves_defeated\", true);\n  game_state:set(\"explored_wolf_den\", true);\n  game_state:set(\"quest_clear_ruins\", game_state:get(\"quest_clear_ruins\") + 1);\n  game_state:set(\"monsters_killed\", game_state:get(\"monsters_killed\") + 5)\n}}\n\n[[Search the den->wolf_den_loot]]\n[[Return to ruins->to_ruins]]",
+      "text": "You fight carefully, using your shield to deflect attacks. After a tense battle, you slay the last wolf!\n\n**Victory!**\n\nYou take 8 damage but win the fight.{{#if companion_name != \"none\" and companion_ability == \"protective\"}}\n{{companion_name}} shielded you from some attacks, reducing the damage!{{/if}}\n\n**Gained 50 XP**\n**Gained 30 gold from wolf pelts**\n\n{{lua: \n  local damage = 8;\n  if game_state:get(\"companion_name\") ~= \"none\" and game_state:get(\"companion_ability\") == \"protective\" then\n    damage = math.ceil(damage / 2);\n  end\n  game_state:set(\"health\", math.max(1, game_state:get(\"health\") - damage));\n  game_state:set(\"experience\", game_state:get(\"experience\") + 50);\n  game_state:set(\"gold\", game_state:get(\"gold\") + 30);\n  game_state:set(\"wolves_defeated\", true);\n  game_state:set(\"explored_wolf_den\", true);\n  game_state:set(\"quest_clear_ruins\", game_state:get(\"quest_clear_ruins\") + 1);\n  game_state:set(\"monsters_killed\", game_state:get(\"monsters_killed\") + 5)\n}}\n\n[[Search the den->wolf_den_loot]]\n[[Return to ruins->to_ruins]]",
       "tags": [
         "ruins",
         "combat",
@@ -375,11 +375,55 @@
     {
       "pid": "p026",
       "name": "wolf_fight_aggressive",
-      "text": "You charge forward with a battle cry! Your aggressive tactics overwhelm the wolves, though you take some vicious bites.\n\n**Victory!**\n\nYou take 12 damage but win quickly.\n\n**Gained 50 XP**\n**Gained 30 gold from wolf pelts**\n\n{{lua: \n  game_state:set(\"health\", math.max(1, game_state:get(\"health\") - 12));\n  game_state:set(\"experience\", game_state:get(\"experience\") + 50);\n  game_state:set(\"gold\", game_state:get(\"gold\") + 30);\n  game_state:set(\"wolves_defeated\", true);\n  game_state:set(\"explored_wolf_den\", true);\n  game_state:set(\"quest_clear_ruins\", game_state:get(\"quest_clear_ruins\") + 1);\n  game_state:set(\"monsters_killed\", game_state:get(\"monsters_killed\") + 5)\n}}\n\n[[Search the den->wolf_den_loot]]\n[[Return to ruins->to_ruins]]",
+      "text": "You charge forward with a battle cry! Your aggressive tactics overwhelm the wolves, though you take some vicious bites.\n\n**Victory!**\n\nYou take 12 damage but win quickly.{{#if companion_name != \"none\" and companion_ability == \"protective\"}}\n{{companion_name}} covered your flank, absorbing some attacks!{{/if}}\n\n**Gained 50 XP**\n**Gained 30 gold from wolf pelts**\n\n{{lua: \n  local damage = 12;\n  if game_state:get(\"companion_name\") ~= \"none\" and game_state:get(\"companion_ability\") == \"protective\" then\n    damage = math.ceil(damage / 2);\n  end\n  game_state:set(\"health\", math.max(1, game_state:get(\"health\") - damage));\n  game_state:set(\"experience\", game_state:get(\"experience\") + 50);\n  game_state:set(\"gold\", game_state:get(\"gold\") + 30);\n  game_state:set(\"wolves_defeated\", true);\n  game_state:set(\"explored_wolf_den\", true);\n  game_state:set(\"quest_clear_ruins\", game_state:get(\"quest_clear_ruins\") + 1);\n  game_state:set(\"monsters_killed\", game_state:get(\"monsters_killed\") + 5)\n}}\n\n[[Search the den->wolf_den_loot]]\n[[Return to ruins->to_ruins]]",
       "tags": [
         "ruins",
         "combat",
         "victory"
+      ]
+    },
+    {
+      "pid": "p026a",
+      "name": "wolf_fight_power",
+      "text": "You channel all your strength into a devastating Power Strike! Your weapon cleaves through the alpha wolf with brutal force!\n\n**POWER STRIKE!**\n\nYour enhanced attack overwhelms the wolf pack quickly!\n\n**Victory!**\n\nYou take only 5 damage thanks to your decisive strike.{{#if companion_name != \"none\"}}\n{{companion_name}} helped protect you during the battle!{{/if}}\n\n**Gained 50 XP**\n**Gained 30 gold from wolf pelts**\n\n{{lua: \n  game_state:set(\"stamina\", game_state:get(\"stamina\") - 3);\n  local damage = 5;\n  if game_state:get(\"companion_name\") ~= \"none\" and game_state:get(\"companion_ability\") == \"protective\" then\n    damage = math.ceil(damage / 2);\n  end\n  game_state:set(\"health\", math.max(1, game_state:get(\"health\") - damage));\n  game_state:set(\"experience\", game_state:get(\"experience\") + 50);\n  game_state:set(\"gold\", game_state:get(\"gold\") + 30);\n  game_state:set(\"wolves_defeated\", true);\n  game_state:set(\"explored_wolf_den\", true);\n  game_state:set(\"quest_clear_ruins\", game_state:get(\"quest_clear_ruins\") + 1);\n  game_state:set(\"monsters_killed\", game_state:get(\"monsters_killed\") + 5)\n}}\n\n[[Search the den->wolf_den_loot]]\n[[Return to ruins->to_ruins]]",
+      "tags": [
+        "ruins",
+        "combat",
+        "victory",
+        "fighter"
+      ]
+    },
+    {
+      "pid": "p026b",
+      "name": "wolf_fight_sneak",
+      "text": "You use your rogue training to strike from the shadows! Your Sneak Attack finds the alpha wolf's vital points with devastating precision!\n\n**SNEAK ATTACK!**\n\nThe wolves are taken completely by surprise as you dispatch them with surgical strikes!\n\n**Victory!**\n\nYou take only 4 damage thanks to your cunning tactics.{{#if companion_name != \"none\"}}\n{{companion_name}} provided the perfect distraction!{{/if}}\n\n**Gained 50 XP**\n**Gained 30 gold from wolf pelts**\n\n{{lua: \n  game_state:set(\"stamina\", game_state:get(\"stamina\") - 2);\n  local damage = 4;\n  if game_state:get(\"companion_name\") ~= \"none\" and game_state:get(\"companion_ability\") == \"protective\" then\n    damage = math.ceil(damage / 2);\n  end\n  game_state:set(\"health\", math.max(1, game_state:get(\"health\") - damage));\n  game_state:set(\"experience\", game_state:get(\"experience\") + 50);\n  game_state:set(\"gold\", game_state:get(\"gold\") + 30);\n  game_state:set(\"wolves_defeated\", true);\n  game_state:set(\"explored_wolf_den\", true);\n  game_state:set(\"quest_clear_ruins\", game_state:get(\"quest_clear_ruins\") + 1);\n  game_state:set(\"monsters_killed\", game_state:get(\"monsters_killed\") + 5)\n}}\n\n[[Search the den->wolf_den_loot]]\n[[Return to ruins->to_ruins]]",
+      "tags": [
+        "ruins",
+        "combat",
+        "victory",
+        "rogue"
+      ]
+    },
+    {
+      "pid": "p026c",
+      "name": "wolf_fight_divine",
+      "text": "You call upon divine power to smite these beasts! Your holy energy channels through your weapon in a brilliant Divine Strike!\n\n**DIVINE STRIKE!**\n\nThe sacred energy is particularly effective against these corrupted creatures! The wolves recoil from your righteous fury!\n\n**Victory!**\n\nYou take only 4 damage, your faith protecting you.{{#if companion_name != \"none\"}}\n{{companion_name}} fought bravely at your side!{{/if}}\n\n**Gained 50 XP**\n**Gained 30 gold from wolf pelts**\n\n{{lua: \n  game_state:set(\"stamina\", game_state:get(\"stamina\") - 4);\n  local damage = 4;\n  if game_state:get(\"companion_name\") ~= \"none\" and game_state:get(\"companion_ability\") == \"protective\" then\n    damage = math.ceil(damage / 2);\n  end\n  game_state:set(\"health\", math.max(1, game_state:get(\"health\") - damage));\n  game_state:set(\"experience\", game_state:get(\"experience\") + 50);\n  game_state:set(\"gold\", game_state:get(\"gold\") + 30);\n  game_state:set(\"wolves_defeated\", true);\n  game_state:set(\"explored_wolf_den\", true);\n  game_state:set(\"quest_clear_ruins\", game_state:get(\"quest_clear_ruins\") + 1);\n  game_state:set(\"monsters_killed\", game_state:get(\"monsters_killed\") + 5)\n}}\n\n[[Search the den->wolf_den_loot]]\n[[Return to ruins->to_ruins]]",
+      "tags": [
+        "ruins",
+        "combat",
+        "victory",
+        "cleric"
+      ]
+    },
+    {
+      "pid": "p026d",
+      "name": "wolf_fight_magic",
+      "text": "You focus your arcane power and unleash a volley of Magic Missiles! The glowing projectiles streak through the air, each one finding its target with unerring accuracy!\n\n**MAGIC MISSILE!**\n\nYour spell devastates the wolf pack - they have no defense against your magical onslaught!\n\n**Victory!**\n\nYou take only 3 damage, keeping your distance with magic.{{#if companion_name != \"none\"}}\n{{companion_name}} kept the wolves at bay while you cast!{{/if}}\n\n**Gained 50 XP**\n**Gained 30 gold from wolf pelts**\n\n{{lua: \n  game_state:set(\"stamina\", game_state:get(\"stamina\") - 3);\n  local damage = 3;\n  if game_state:get(\"companion_name\") ~= \"none\" and game_state:get(\"companion_ability\") == \"protective\" then\n    damage = math.ceil(damage / 2);\n  end\n  game_state:set(\"health\", math.max(1, game_state:get(\"health\") - damage));\n  game_state:set(\"experience\", game_state:get(\"experience\") + 50);\n  game_state:set(\"gold\", game_state:get(\"gold\") + 30);\n  game_state:set(\"wolves_defeated\", true);\n  game_state:set(\"explored_wolf_den\", true);\n  game_state:set(\"quest_clear_ruins\", game_state:get(\"quest_clear_ruins\") + 1);\n  game_state:set(\"monsters_killed\", game_state:get(\"monsters_killed\") + 5)\n}}\n\n[[Search the den->wolf_den_loot]]\n[[Return to ruins->to_ruins]]",
+      "tags": [
+        "ruins",
+        "combat",
+        "victory",
+        "mage"
       ]
     },
     {
