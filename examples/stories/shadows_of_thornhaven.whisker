@@ -152,6 +152,42 @@
       ]
     },
     {
+      "pid": "p007a",
+      "name": "buy_shield_discount",
+      "text": "You haggle skillfully and purchase a sturdy oak shield at a discount! Your Persuasion pays off.\n\n**Shield acquired!**\n**Gold remaining:** {{gold - 16}}\n\n{{lua: game_state:set(\"gold\", game_state:get(\"gold\") - 16); game_state:set(\"has_shield\", true) }}\n\n[[Continue shopping->general_store]]\n[[Leave->village_center]]",
+      "tags": [
+        "village",
+        "shop"
+      ]
+    },
+    {
+      "pid": "p007b",
+      "name": "buy_potion_discount",
+      "text": "Your silver tongue earns you a discount on the healing potion!\n\n\"This will restore 10 health when you drink it,\" Harven explains.\n\n**Healing Potion acquired!**\n**Gold remaining:** {{gold - 24}}\n\n{{lua: game_state:set(\"gold\", game_state:get(\"gold\") - 24); game_state:set(\"has_healing_potion\", true) }}\n\n[[Continue shopping->general_store]]\n[[Leave->village_center]]",
+      "tags": [
+        "village",
+        "shop"
+      ]
+    },
+    {
+      "pid": "p007c",
+      "name": "buy_rope_discount",
+      "text": "You convince Harven to give you a better price on the rope!\n\n**Rope acquired!**\n**Gold remaining:** {{gold - 12}}\n\n{{lua: game_state:set(\"gold\", game_state:get(\"gold\") - 12); game_state:set(\"has_rope\", true) }}\n\n[[Continue shopping->general_store]]\n[[Leave->village_center]]",
+      "tags": [
+        "village",
+        "shop"
+      ]
+    },
+    {
+      "pid": "p007d",
+      "name": "buy_lantern_discount",
+      "text": "Your Persuasion skill gets you a discount on the lantern!\n\n**Lantern acquired!**\n**Gold remaining:** {{gold - 20}}\n\n{{lua: game_state:set(\"gold\", game_state:get(\"gold\") - 20); game_state:set(\"has_lantern\", true) }}\n\n[[Continue shopping->general_store]]\n[[Leave->village_center]]",
+      "tags": [
+        "village",
+        "shop"
+      ]
+    },
+    {
       "pid": "p008",
       "name": "tavern",
       "text": "The Copper Mug Tavern is warm and welcoming. The aroma of stew and fresh bread mingles with pipe smoke. You find a spot at the bar.\n\nThe innkeeper, a portly woman named Marta, leans in. \"First time in Thornhaven? If you're planning to investigate those ruins, listen well...\"\n\n\"The wolf den is closest - the pack has grown bold lately. The bandits camp further in the forest - nasty bunch. But the worst are the shadow creatures near the old temple. They're not natural, if you ask me.\"\n\n{{#if warned_by_merchant}}A traveling peddler in the corner waves at you.{{/if}}\n\n**Health:** {{health}}/{{max_health}} | **Gold:** {{gold}}\n\n{{lua: if not game_state:get(\"heard_rumors\") then game_state:set(\"heard_rumors\", true) end }}\n\n{{#if not warned_by_merchant}}[[Talk to the peddler->merchant]]{{/if}}\n{{#if gold >= 5}}[[Buy a drink and listen for more rumors (5 gold)->tavern_rumors]]{{/if}}\n[[Leave the tavern->village_center]]",
