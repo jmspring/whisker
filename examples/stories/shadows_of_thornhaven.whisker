@@ -545,7 +545,7 @@
     {
       "pid": "p032",
       "name": "shadow_fight",
-      "text": "You step into the temple and living shadows coalesce around you! These are no natural creatures - they're manifestations of dark magic.\n\n**Combat: Shadow Wraiths**\n**Your Health:** {{health}}/{{max_health}}\n\n{{#if class == \"Cleric\"}}\n  Your holy powers are effective against these creatures!\n  [[Use Turn Undead (4 stamina)->shadow_cleric_win]]\n{{else}}\n  Fighting shadows is difficult - your weapons barely harm them.\n{{/if}}\n\n[[Fight with determination->shadow_normal_fight]]\n[[Retreat->shadow_temple_entrance]]",
+      "text": "You step into the temple and living shadows coalesce around you! These are no natural creatures - they're manifestations of dark magic.\n\n**Combat: Shadow Wraiths**\n**Enemy Type:** Undead/Shadow (4 wraiths)\n**Your Health:** {{health}}/{{max_health}}\n**Your Stamina:** {{stamina}}/{{max_stamina}}\n{{#if companion_name != \"none\"}}**{{companion_name}}:** {{companion_health}}/{{companion_max_health}} HP{{/if}}\n\nFighting shadows is difficult - your weapons barely harm them.\n\n[[Fight defensively->shadow_fight_defensive]]\n[[Fight aggressively->shadow_fight_aggressive]]\n\n**Class Abilities:**\n{{#if stamina >= 3 and class == \"Fighter\"}}[[Power Strike (3 stamina) - Strike with fury->shadow_fight_power]]{{/if}}\n{{#if stamina >= 2 and class == \"Rogue\"}}[[Sneak Attack (2 stamina) - Strike vital points->shadow_fight_sneak]]{{/if}}\n{{#if stamina >= 4 and class == \"Cleric\"}}[[Turn Undead (4 stamina) - Banish shadows->shadow_fight_turn]]{{/if}}\n{{#if stamina >= 3 and class == \"Mage\"}}[[Magic Missile (3 stamina) - Pierce shadows->shadow_fight_magic]]{{/if}}\n\n{{#if has_healing_potion and health < max_health}}[[Drink healing potion->shadow_fight_heal]]{{/if}}\n[[Retreat->shadow_temple_entrance]]",
       "tags": [
         "ruins",
         "combat",
@@ -554,12 +554,72 @@
     },
     {
       "pid": "p033",
-      "name": "shadow_normal_fight",
-      "text": "You battle the shadow wraiths with all your might. It's a harrowing fight - their touch drains your life force. {{#if skill_arcana >= 3}}Your Arcana knowledge helps you exploit their weakness!{{/if}} But eventually, you prevail!\n\n**Victory!**\n\n{{#if skill_arcana >= 3}}\nYour understanding of dark magic reduced the damage!\n\nYou take 12 damage but banish the shadows!\n{{else}}\nYou take 20 damage but banish the shadows!\n{{/if}}\n\n**Gained 100 XP**\n**Gained 60 gold from temple offerings**\n\n{{#if skill_arcana >= 3}}\n{{lua: \n  game_state:set(\"health\", math.max(1, game_state:get(\"health\") - 12));\n  game_state:set(\"experience\", game_state:get(\"experience\") + 100);\n  game_state:set(\"gold\", game_state:get(\"gold\") + 60);\n  game_state:set(\"shadows_defeated\", true);\n  game_state:set(\"explored_shadow_temple\", true);\n  game_state:set(\"quest_clear_ruins\", game_state:get(\"quest_clear_ruins\") + 1);\n  game_state:set(\"monsters_killed\", game_state:get(\"monsters_killed\") + 4);\n  game_state:set(\"alignment_good_evil\", game_state:get(\"alignment_good_evil\") + 3)\n}}\n{{else}}\n{{lua: \n  game_state:set(\"health\", math.max(1, game_state:get(\"health\") - 20));\n  game_state:set(\"experience\", game_state:get(\"experience\") + 100);\n  game_state:set(\"gold\", game_state:get(\"gold\") + 60);\n  game_state:set(\"shadows_defeated\", true);\n  game_state:set(\"explored_shadow_temple\", true);\n  game_state:set(\"quest_clear_ruins\", game_state:get(\"quest_clear_ruins\") + 1);\n  game_state:set(\"monsters_killed\", game_state:get(\"monsters_killed\") + 4);\n  game_state:set(\"alignment_good_evil\", game_state:get(\"alignment_good_evil\") + 3)\n}}\n{{/if}}\n\n[[Search the temple->shadow_loot]]\n[[Return to ruins->to_ruins]]",
+      "name": "shadow_fight_defensive",
+      "text": "You fight cautiously against the shadow wraiths. Their touch is cold and draining, but you endure.\n\n**Victory!**\n\nYou take 14 damage but survive the harrowing fight.{{#if skill_arcana >= 3}}\n*Your Arcana knowledge helped you exploit their weakness!*{{/if}}{{#if companion_name != \"none\" and companion_ability == \"protective\"}}\n{{companion_name}} shielded you from the worst attacks!{{/if}}\n\n**Gained 100 XP**\n**Gained 60 gold from temple offerings**\n\n{{lua: \n  local damage = 14;\n  if game_state:get(\"skill_arcana\") >= 3 then\n    damage = damage - 3;\n  end\n  if game_state:get(\"companion_name\") ~= \"none\" and game_state:get(\"companion_ability\") == \"protective\" then\n    damage = math.ceil(damage / 2);\n  end\n  game_state:set(\"health\", math.max(1, game_state:get(\"health\") - damage));\n  game_state:set(\"experience\", game_state:get(\"experience\") + 100);\n  game_state:set(\"gold\", game_state:get(\"gold\") + 60);\n  game_state:set(\"shadows_defeated\", true);\n  game_state:set(\"explored_shadow_temple\", true);\n  game_state:set(\"quest_clear_ruins\", game_state:get(\"quest_clear_ruins\") + 1);\n  game_state:set(\"monsters_killed\", game_state:get(\"monsters_killed\") + 4);\n  game_state:set(\"alignment_good_evil\", game_state:get(\"alignment_good_evil\") + 3)\n}}\n\n[[Search the temple->shadow_loot]]\n[[Return to ruins->to_ruins]]",
       "tags": [
         "ruins",
         "combat",
-        "victory"
+        "victory",
+        "shadow_temple"
+      ]
+    },
+    {
+      "pid": "p033a",
+      "name": "shadow_fight_aggressive",
+      "text": "You attack the shadows with all your might! The fight is brutal and their draining touch takes its toll.\n\n**Victory!**\n\nYou take 18 damage but banish the wraiths quickly.{{#if skill_arcana >= 3}}\n*Your Arcana knowledge helped you exploit their weakness!*{{/if}}{{#if companion_name != \"none\" and companion_ability == \"protective\"}}\n{{companion_name}} intercepted some shadow attacks!{{/if}}\n\n**Gained 100 XP**\n**Gained 60 gold from temple offerings**\n\n{{lua: \n  local damage = 18;\n  if game_state:get(\"skill_arcana\") >= 3 then\n    damage = damage - 3;\n  end\n  if game_state:get(\"companion_name\") ~= \"none\" and game_state:get(\"companion_ability\") == \"protective\" then\n    damage = math.ceil(damage / 2);\n  end\n  game_state:set(\"health\", math.max(1, game_state:get(\"health\") - damage));\n  game_state:set(\"experience\", game_state:get(\"experience\") + 100);\n  game_state:set(\"gold\", game_state:get(\"gold\") + 60);\n  game_state:set(\"shadows_defeated\", true);\n  game_state:set(\"explored_shadow_temple\", true);\n  game_state:set(\"quest_clear_ruins\", game_state:get(\"quest_clear_ruins\") + 1);\n  game_state:set(\"monsters_killed\", game_state:get(\"monsters_killed\") + 4);\n  game_state:set(\"alignment_good_evil\", game_state:get(\"alignment_good_evil\") + 3)\n}}\n\n[[Search the temple->shadow_loot]]\n[[Return to ruins->to_ruins]]",
+      "tags": [
+        "ruins",
+        "combat",
+        "victory",
+        "shadow_temple"
+      ]
+    },
+    {
+      "pid": "p033b",
+      "name": "shadow_fight_power",
+      "text": "You channel all your strength into powerful strikes! Even shadows cannot withstand your fury!\n\n**POWER STRIKE!**\n\nYour devastating blows disperse the shadow wraiths!\n\n**Victory!**\n\nYou take only 7 damage through sheer force.{{#if companion_name != \"none\"}}\n{{companion_name}} fought valiantly at your side!{{/if}}\n\n**Gained 100 XP**\n**Gained 60 gold from temple offerings**\n\n{{lua: \n  game_state:set(\"stamina\", game_state:get(\"stamina\") - 3);\n  local damage = 7;\n  if game_state:get(\"companion_name\") ~= \"none\" and game_state:get(\"companion_ability\") == \"protective\" then\n    damage = math.ceil(damage / 2);\n  end\n  game_state:set(\"health\", math.max(1, game_state:get(\"health\") - damage));\n  game_state:set(\"experience\", game_state:get(\"experience\") + 100);\n  game_state:set(\"gold\", game_state:get(\"gold\") + 60);\n  game_state:set(\"shadows_defeated\", true);\n  game_state:set(\"explored_shadow_temple\", true);\n  game_state:set(\"quest_clear_ruins\", game_state:get(\"quest_clear_ruins\") + 1);\n  game_state:set(\"monsters_killed\", game_state:get(\"monsters_killed\") + 4);\n  game_state:set(\"alignment_good_evil\", game_state:get(\"alignment_good_evil\") + 3)\n}}\n\n[[Search the temple->shadow_loot]]\n[[Return to ruins->to_ruins]]",
+      "tags": [
+        "ruins",
+        "combat",
+        "victory",
+        "fighter",
+        "shadow_temple"
+      ]
+    },
+    {
+      "pid": "p033c",
+      "name": "shadow_fight_sneak",
+      "text": "You use stealth and cunning to strike at the shadows' essence! Your precise attacks find their weak points!\n\n**SNEAK ATTACK!**\n\nYour surgical strikes disrupt the shadows' dark magic!\n\n**Victory!**\n\nYou take only 6 damage through clever tactics.{{#if companion_name != \"none\"}}\n{{companion_name}} distracted the wraiths perfectly!{{/if}}\n\n**Gained 100 XP**\n**Gained 60 gold from temple offerings**\n\n{{lua: \n  game_state:set(\"stamina\", game_state:get(\"stamina\") - 2);\n  local damage = 6;\n  if game_state:get(\"companion_name\") ~= \"none\" and game_state:get(\"companion_ability\") == \"protective\" then\n    damage = math.ceil(damage / 2);\n  end\n  game_state:set(\"health\", math.max(1, game_state:get(\"health\") - damage));\n  game_state:set(\"experience\", game_state:get(\"experience\") + 100);\n  game_state:set(\"gold\", game_state:get(\"gold\") + 60);\n  game_state:set(\"shadows_defeated\", true);\n  game_state:set(\"explored_shadow_temple\", true);\n  game_state:set(\"quest_clear_ruins\", game_state:get(\"quest_clear_ruins\") + 1);\n  game_state:set(\"monsters_killed\", game_state:get(\"monsters_killed\") + 4);\n  game_state:set(\"alignment_good_evil\", game_state:get(\"alignment_good_evil\") + 3)\n}}\n\n[[Search the temple->shadow_loot]]\n[[Return to ruins->to_ruins]]",
+      "tags": [
+        "ruins",
+        "combat",
+        "victory",
+        "rogue",
+        "shadow_temple"
+      ]
+    },
+    {
+      "pid": "p033d",
+      "name": "shadow_fight_turn",
+      "text": "You raise your holy symbol and channel divine power! \"By the light, be gone!\"\n\n**TURN UNDEAD!**\n\nYour faith blazes like the sun! The shadow wraiths shriek and dissolve before your righteous power!\n\n**Victory!**\n\nYou take only 3 damage - your faith is a perfect shield!{{#if companion_name != \"none\"}}\n{{companion_name}} witnesses your divine might!{{/if}}\n\n**Gained 100 XP**\n**Gained 60 gold from temple offerings**\n\n{{lua: \n  game_state:set(\"stamina\", game_state:get(\"stamina\") - 4);\n  local damage = 3;\n  if game_state:get(\"companion_name\") ~= \"none\" and game_state:get(\"companion_ability\") == \"protective\" then\n    damage = math.ceil(damage / 2);\n  end\n  game_state:set(\"health\", math.max(1, game_state:get(\"health\") - damage));\n  game_state:set(\"experience\", game_state:get(\"experience\") + 100);\n  game_state:set(\"gold\", game_state:get(\"gold\") + 60);\n  game_state:set(\"shadows_defeated\", true);\n  game_state:set(\"explored_shadow_temple\", true);\n  game_state:set(\"quest_clear_ruins\", game_state:get(\"quest_clear_ruins\") + 1);\n  game_state:set(\"monsters_killed\", game_state:get(\"monsters_killed\") + 4);\n  game_state:set(\"alignment_good_evil\", game_state:get(\"alignment_good_evil\") + 3)\n}}\n\n[[Search the temple->shadow_loot]]\n[[Return to ruins->to_ruins]]",
+      "tags": [
+        "ruins",
+        "combat",
+        "victory",
+        "cleric",
+        "shadow_temple"
+      ]
+    },
+    {
+      "pid": "p033e",
+      "name": "shadow_fight_magic",
+      "text": "You unleash a volley of Magic Missiles! The arcane energy pierces through the shadows' ethereal forms!\n\n**MAGIC MISSILE!**\n\nYour spell strikes with perfect accuracy, disrupting the shadow magic!\n\n**Victory!**\n\nYou take only 5 damage, keeping your distance.{{#if companion_name != \"none\"}}\n{{companion_name}} kept the shadows at bay!{{/if}}\n\n**Gained 100 XP**\n**Gained 60 gold from temple offerings**\n\n{{lua: \n  game_state:set(\"stamina\", game_state:get(\"stamina\") - 3);\n  local damage = 5;\n  if game_state:get(\"companion_name\") ~= \"none\" and game_state:get(\"companion_ability\") == \"protective\" then\n    damage = math.ceil(damage / 2);\n  end\n  game_state:set(\"health\", math.max(1, game_state:get(\"health\") - damage));\n  game_state:set(\"experience\", game_state:get(\"experience\") + 100);\n  game_state:set(\"gold\", game_state:get(\"gold\") + 60);\n  game_state:set(\"shadows_defeated\", true);\n  game_state:set(\"explored_shadow_temple\", true);\n  game_state:set(\"quest_clear_ruins\", game_state:get(\"quest_clear_ruins\") + 1);\n  game_state:set(\"monsters_killed\", game_state:get(\"monsters_killed\") + 4);\n  game_state:set(\"alignment_good_evil\", game_state:get(\"alignment_good_evil\") + 3)\n}}\n\n[[Search the temple->shadow_loot]]\n[[Return to ruins->to_ruins]]",
+      "tags": [
+        "ruins",
+        "combat",
+        "victory",
+        "mage",
+        "shadow_temple"
       ]
     },
     {
