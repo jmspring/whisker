@@ -198,6 +198,48 @@ function template_processor.evaluate_condition(condition, variables)
         print(string.format("Evaluating condition: '%s'", condition))
     end
 
+    -- Check for logical operators FIRST (before comparison operators)
+    -- This allows expressions like "gold >= 100 and has_key" to be parsed correctly
+    if condition:match("%s+and%s+") then
+        -- Split on " and "
+        local parts = {}
+        for part in (condition .. " and "):gmatch("(.-) and ") do
+            if part ~= "" then
+                table.insert(parts, part)
+            end
+        end
+
+        for _, part in ipairs(parts) do
+            if not template_processor.evaluate_condition(part, variables) then
+                return false
+            end
+        end
+        return true
+    end
+
+    if condition:match("%s+or%s+") then
+        -- Split on " or "
+        local parts = {}
+        for part in (condition .. " or "):gmatch("(.-) or ") do
+            if part ~= "" then
+                table.insert(parts, part)
+            end
+        end
+
+        for _, part in ipairs(parts) do
+            if template_processor.evaluate_condition(part, variables) then
+                return true
+            end
+        end
+        return false
+    end
+
+    -- Check for negation
+    if condition:match("^not%s+") or condition:match("^!") then
+        local inner = condition:gsub("^not%s+", ""):gsub("^!", "")
+        return not template_processor.evaluate_condition(inner, variables)
+    end
+
     -- Check for comparison operators
     -- Use (.+) for right side to match one or more characters (not empty)
     local operators = {
@@ -245,48 +287,6 @@ function template_processor.evaluate_condition(condition, variables)
 
             return op_info.op(left, right)
         end
-    end
-
-    -- Check for logical operators
-    -- Split on " and " or " or " keywords
-    if condition:match("%s+and%s+") then
-        -- Split on " and "
-        local parts = {}
-        for part in (condition .. " and "):gmatch("(.-) and ") do
-            if part ~= "" then
-                table.insert(parts, part)
-            end
-        end
-
-        for _, part in ipairs(parts) do
-            if not template_processor.evaluate_condition(part, variables) then
-                return false
-            end
-        end
-        return true
-    end
-
-    if condition:match("%s+or%s+") then
-        -- Split on " or "
-        local parts = {}
-        for part in (condition .. " or "):gmatch("(.-) or ") do
-            if part ~= "" then
-                table.insert(parts, part)
-            end
-        end
-
-        for _, part in ipairs(parts) do
-            if template_processor.evaluate_condition(part, variables) then
-                return true
-            end
-        end
-        return false
-    end
-
-    -- Check for negation
-    if condition:match("^not%s+") or condition:match("^!") then
-        local inner = condition:gsub("^not%s+", ""):gsub("^!", "")
-        return not template_processor.evaluate_condition(inner, variables)
     end
 
     -- Simple variable lookup - check if variable exists and is truthy
