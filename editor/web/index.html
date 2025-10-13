@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Whisker Story Editor</title>
+    <!-- Fengari: Lua VM for preview -->
+    <script src="https://cdn.jsdelivr.net/npm/fengari-web@0.1.4/dist/fengari-web.js"></script>
     <link rel="stylesheet" href="css/editor.css">
     <link rel="stylesheet" href="css/graph.css">
     <link rel="stylesheet" href="css/variables.css">
@@ -326,7 +328,12 @@ Formatting tips:
                 console.warn('[Init] Export modal missing hidden class, adding it');
                 exportModal.classList.add('hidden');
             }
-            
+
+            // Initialize Lua for preview (if Fengari is loaded)
+            if (typeof TemplateProcessor !== 'undefined') {
+                TemplateProcessor.initializeLua();
+            }
+
             // Phase 3 systems
             variablesManager = new VariablesManager(editor);
             variablesManager.initialize();

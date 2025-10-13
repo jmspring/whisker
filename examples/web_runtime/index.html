@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Whisker - The Enchanted Forest (Web Demo)</title>
+    <!-- Fengari: Lua VM for JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/fengari-web@0.1.4/dist/fengari-web.js"></script>
     <link rel="stylesheet" href="../../src/runtime/web_runtime.css">
     <style>
         body {
@@ -41,9 +43,31 @@
             font-size: 1.2rem;
             font-weight: 600;
         }
+
+        .lua-indicator {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            background: #10b981;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+
+        .lua-indicator::before {
+            content: '🌙';
+            margin-right: 8px;
+        }
     </style>
 </head>
 <body>
+    <!-- Lua Indicator -->
+    <div class="lua-indicator">Lua Runtime Active</div>
+
     <!-- Loading indicator -->
     <div id="loading" class="loading">
         <div class="loading-spinner"></div>
@@ -280,8 +304,8 @@
             ]
         };
 
-        // Initialize the Whisker player
-        class WhiskerPlayer {
+        // Lua-Enabled Whisker Player
+        class LuaWhiskerPlayer {
             constructor() {
                 this.story = null;
                 this.currentPassage = null;
@@ -289,6 +313,25 @@
                 this.visited = {};
                 this.history = [];
                 this.maxHistory = 50;
+                this.luaState = null;
+                this.initializeLua();
+            }
+
+            initializeLua() {
+                if (typeof fengari === 'undefined') {
+                    console.error('Fengari not loaded!');
+                    return;
+                }
+
+                // Initialize Fengari Lua state
+                const lua = fengari.lua;
+                const lauxlib = fengari.lauxlib;
+                const lualib = fengari.lualib;
+
+                this.luaState = lauxlib.luaL_newstate();
+                lualib.luaL_openlibs(this.luaState);
+
+                console.log('✅ Lua runtime initialized with Fengari');
             }
 
             loadStory(storyData) {
@@ -296,7 +339,6 @@
                 this.variables = {...(storyData.variables || {})};
                 document.getElementById('story-title').textContent = storyData.title || 'Whisker Story';
 
-                // Show author if present
                 const authorEl = document.getElementById('story-author');
                 if (storyData.author) {
                     authorEl.textContent = 'by ' + storyData.author;
@@ -326,7 +368,6 @@
                     return;
                 }
 
-                // Save history
                 if (saveHistory && this.currentPassage) {
                     this.history.push({
                         passageId: this.currentPassage.id,
@@ -342,7 +383,6 @@
                 this.currentPassage = passage;
                 this.visited[passageId] = (this.visited[passageId] || 0) + 1;
 
-                // Execute passage script if present
                 if (passage.script) {
                     this.executeScript(passage.script);
                 }
@@ -355,14 +395,11 @@
             render() {
                 const passage = this.currentPassage;
 
-                // Render title
                 document.getElementById('passage-title').innerHTML = this.processInline(passage.title || '');
 
-                // Process and render content
                 const content = this.processContent(passage.content);
                 document.getElementById('passage-content').innerHTML = content;
 
-                // Render choices
                 const choicesContainer = document.getElementById('choices-container');
                 choicesContainer.innerHTML = '';
 
@@ -386,40 +423,184 @@
                 this.updateStats();
             }
 
+            executeLuaCode(code) {
+                if (!this.luaState || typeof fengari === 'undefined') {
+                    console.error('Lua not available');
+                    return;
+                }
+
+                try {
+                    const lua = fengari.lua;
+                    const lauxlib = fengari.lauxlib;
+                    const to_jsstring = fengari.to_jsstring;
+
+                    // Create game_state table with get/set methods
+                    const luaCode = `
+                        game_state = {
+                            data = {},
+                            set = function(self, key, value)
+                                self.data[key] = value
+                                js_set_variable(key, value)
+                            end,
+                            get = function(self, key)
+                                return js_get_variable(key)
+                            end
+                        }
+
+                        -- User code
+                        ${code}
+                    `;
+
+                    // Register JavaScript callbacks
+                    const L = this.luaState;
+
+                    // js_set_variable callback
+                    lua.lua_pushcfunction(L, (L) => {
+                        const key = to_jsstring(lua.lua_tostring(L, -2));
+                        const value = lua.lua_tonumber(L, -1) !== null ?
+                            lua.lua_tonumber(L, -1) :
+                            (lua.lua_toboolean(L, -1) ?
+                                lua.lua_toboolean(L, -1) :
+                                to_jsstring(lua.lua_tostring(L, -1)));
+
+                        this.variables[key] = value;
+                        return 0;
+                    });
+                    lua.lua_setglobal(L, to_jsstring("js_set_variable"));
+
+                    // js_get_variable callback
+                    lua.lua_pushcfunction(L, (L) => {
+                        const key = to_jsstring(lua.lua_tostring(L, -1));
+                        const value = this.variables[key];
+
+                        if (typeof value === 'number') {
+                            lua.lua_pushnumber(L, value);
+                        } else if (typeof value === 'boolean') {
+                            lua.lua_pushboolean(L, value);
+                        } else if (typeof value === 'string') {
+                            lua.lua_pushstring(L, to_jsstring(value));
+                        } else {
+                            lua.lua_pushnil(L);
+                        }
+
+                        return 1;
+                    });
+                    lua.lua_setglobal(L, to_jsstring("js_get_variable"));
+
+                    // Execute Lua code
+                    lauxlib.luaL_dostring(L, to_jsstring(luaCode));
+
+                    console.log('✅ Lua code executed successfully');
+                } catch (error) {
+                    console.error('❌ Lua execution error:', error);
+                }
+            }
+
             processInline(content) {
                 if (!content) return '';
 
-                // Process {{expression}} syntax
-                content = content.replace(/\{\{(.+?)\}\}/g, (match, expression) => {
-                    try {
-                        const context = {
-                            ...this.variables,
-                            visited: (passageId) => this.visited[passageId] || 0
-                        };
-
-                        const func = new Function('context', `with(context) { return ${expression}; }`);
-                        const result = func(context);
-                        return result !== undefined ? result : match;
-                    } catch (error) {
-                        console.error('Expression evaluation error:', error);
-                        return match;
-                    }
+                // Process {{lua:}} blocks FIRST
+                content = content.replace(/\{\{lua:([\s\S]*?)\}\}/g, (match, code) => {
+                    this.executeLuaCode(code.trim());
+                    return ''; // Lua blocks don't output text
                 });
 
-                // Process markdown-style formatting (no paragraphs for inline)
+                // Process {{#if}}...{{/if}} conditionals
+                content = this.processConditionals(content);
+
+                // Process {{variable}} expressions
+                content = content.replace(/\{\{([a-zA-Z_][a-zA-Z0-9_]*)\}\}/g, (match, varName) => {
+                    varName = varName.trim();
+                    if (this.variables.hasOwnProperty(varName)) {
+                        return String(this.variables[varName]);
+                    }
+                    return `<span style="color: #ef4444;">[${varName}]</span>`;
+                });
+
+                // Process markdown
                 content = content.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
                 content = content.replace(/\*(.+?)\*/g, '<em>$1</em>');
 
                 return content;
             }
 
+            processConditionals(content) {
+                let maxIterations = 100;
+                let iteration = 0;
+
+                while (content.includes('{{#if') && iteration < maxIterations) {
+                    iteration++;
+
+                    const ifMatch = content.match(/\{\{#if\s+([^}]+)\}\}/);
+                    if (!ifMatch) break;
+
+                    const ifStart = ifMatch.index;
+                    const ifEnd = ifStart + ifMatch[0].length;
+                    const condition = ifMatch[1];
+
+                    const endifMatch = content.substring(ifEnd).match(/\{\{\/if\}\}/);
+                    if (!endifMatch) break;
+
+                    const endifStart = ifEnd + endifMatch.index;
+                    const endifEnd = endifStart + endifMatch[0].length;
+                    const blockContent = content.substring(ifEnd, endifStart);
+
+                    // Parse else if / else
+                    const blocks = this.parseConditionalBlocks(blockContent, condition);
+
+                    let replacement = '';
+                    for (const block of blocks) {
+                        if (block.condition === null || this.evaluateCondition(block.condition)) {
+                            replacement = block.content;
+                            break;
+                        }
+                    }
+
+                    content = content.substring(0, ifStart) + replacement + content.substring(endifEnd);
+                }
+
+                return content;
+            }
+
+            parseConditionalBlocks(blockContent, initialCondition) {
+                const blocks = [{condition: initialCondition, content: ''}];
+                let currentBlock = 0;
+                let pos = 0;
+
+                while (pos < blockContent.length) {
+                    const elseIfMatch = blockContent.substring(pos).match(/\{\{else if\s+([^}]+)\}\}/);
+                    const elseMatch = blockContent.substring(pos).match(/\{\{else\}\}/);
+
+                    let nextPos = blockContent.length;
+                    let newCondition = null;
+
+                    if (elseIfMatch && (!elseMatch || elseIfMatch.index < elseMatch.index)) {
+                        blocks[currentBlock].content = blockContent.substring(0, pos + elseIfMatch.index);
+                        newCondition = elseIfMatch[1];
+                        nextPos = pos + elseIfMatch.index + elseIfMatch[0].length;
+                    } else if (elseMatch) {
+                        blocks[currentBlock].content = blockContent.substring(0, pos + elseMatch.index);
+                        newCondition = null;
+                        nextPos = pos + elseMatch.index + elseMatch[0].length;
+                    } else {
+                        blocks[currentBlock].content = blockContent.substring(pos);
+                        break;
+                    }
+
+                    blocks.push({condition: newCondition, content: ''});
+                    currentBlock++;
+                    blockContent = blockContent.substring(nextPos);
+                    pos = 0;
+                }
+
+                return blocks;
+            }
+
             processContent(content) {
                 if (!content) return '';
 
-                // First process inline elements
                 content = this.processInline(content);
 
-                // Then split by double newlines to create paragraphs
                 const paragraphs = content.split(/\n\n+/).filter(p => p.trim());
                 content = paragraphs.map(p => `<p>${p.trim()}</p>`).join('');
 
@@ -524,7 +705,6 @@
             }
 
             showSaveModal() {
-                // Simplified save for web demo
                 const saveData = {
                     passageId: this.currentPassage.id,
                     variables: this.variables,
@@ -572,11 +752,11 @@
             document.getElementById('whisker-container').style.display = 'block';
 
             // Create and start player
-            window.whiskerPlayer = new WhiskerPlayer();
+            window.whiskerPlayer = new LuaWhiskerPlayer();
             window.whiskerPlayer.loadStory(STORY_DATA);
             window.whiskerPlayer.start();
 
-            console.log('Whisker Web Player loaded successfully!');
+            console.log('🌙 Whisker Lua Runtime loaded successfully!');
         });
 
         // Keyboard shortcuts
