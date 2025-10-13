@@ -32,32 +32,27 @@
 
 ### 🔄 PARTIALLY COMPLETE
 
-#### Skill Checks (Found: 2/10 needed)
-**Already Implemented:**
-- Bandit Camp (p028) - Stealth check to sneak past sentries
-- General Store (p003) - Persuasion >= 3 gives 20% discount ✅ (JUST ADDED)
+#### Skill Checks (Found: 5/10 needed) ✅
+**Implemented:**
+1. **Stealth** (p028) - Sneak past bandit sentries
+2. **Persuasion** (p003) - 20% discount at General Store (with 4 discount passages p007a-d)
+3. **Perception** (p027) - Find hidden healing potion at Wolf Den
+4. **Perception** (p039) - Find bonus 25 gold with Finn's lockbox at Tower
+5. **Arcana** (p031, p033) - Understand symbols and reduce Shadow damage (20→12)
+6. **Medicine** (p014, p015a, p015b) - Discounted healing (10g) or free self-heal (8 HP)
 
-**Needs Addition:**
-1. **Persuasion Checks** (Need 2-3 more):
-   - Tavern - Convince NPCs to share information
+**Could Add More (Optional):**
+1. **Persuasion Checks**:
+   - Tavern - Convince NPCs to share better information
    - Elder Hall - Negotiate better quest rewards
    - Bandit encounter - Talk your way out
 
-2. **Perception Checks** (Need 2-3):
-   - Wolf Den - Notice hidden treasure alcove
-   - Tower Search - Spot the lockbox faster
-   - Crypt - Find secret door
+2. **Perception Checks**:
+   - Crypt - Find secret door with bonus treasure
 
-3. **Lockpicking Checks** (Need 1-2):
+3. **Lockpicking Checks**:
    - Merchant's lockbox - Pick it open if found locked
    - Treasure chests in loot areas
-
-4. **Arcana Checks** (Need 1):
-   - Shadow Temple - Understand dark magic symbols
-   - Tower - Decipher mage's spellbook
-
-5. **Medicine Checks** (Need 1):
-   - Healing House - Assist Elara for discount/bonus
 
 #### Combat Enhancement (Found: 0/15 needed)
 **Current State:** Combat passages exist but lack:
