@@ -111,6 +111,10 @@ function GameState:has(key)
     return self.variables[key] ~= nil
 end
 
+function GameState:get_all_variables()
+    return self.variables
+end
+
 function GameState:push_to_history()
     -- Create snapshot of current state
     local snapshot = {

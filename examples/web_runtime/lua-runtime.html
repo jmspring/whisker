@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Whisker - Lua-Enabled Runtime</title>
+    <!-- Fengari: Lua VM for JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/fengari-web@0.1.4/dist/fengari-web.js"></script>
+    <link rel="stylesheet" href="../../src/runtime/web_runtime.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            background: #f5f5f5;
+        }
+
+        .loading {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .loading-text {
+            color: #667eea;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .lua-indicator {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            background: #10b981;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+
+        .lua-indicator::before {
+            content: '🌙';
+            margin-right: 8px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Lua Indicator -->
+    <div class="lua-indicator">Lua Runtime Active</div>
+
+    <!-- Loading indicator -->
+    <div id="loading" class="loading">
+        <div class="loading-spinner"></div>
+        <div class="loading-text">Loading Whisker with Lua Support...</div>
+    </div>
+
+    <!-- Whisker container (hidden until loaded) -->
+    <div id="whisker-container" style="display: none;"></div>
+
+    <script>
+        // Test story with Lua code
+        const STORY_DATA = {
+            title: "Lua Runtime Test Story",
+            author: "Whisker Lua Runtime",
+            variables: {
+                player_name: "Hero",
+                health: 100,
+                max_health: 100,
+                gold: 50,
+                level: 1,
+                experience: 0,
+                skill_perception: 2
+            },
+            start: "test_start",
+            passages: [
+                {
+                    id: "test_start",
+                    title: "Lua Runtime Test",
+                    content: `Welcome to the **Lua-Enabled Whisker Runtime**, {{player_name}}!
+
+**Your Stats:**
+• Health: {{health}}/{{max_health}}
+• Gold: {{gold}}
+• Level: {{level}}
+• Experience: {{experience}}
+
+This runtime can execute Lua code in {{lua:}} blocks!`,
+                    choices: [
+                        {
+                            text: "🎲 Test Lua dice roll",
+                            target: "test_dice"
+                        },
+                        {
+                            text: "💰 Test Lua variable modification",
+                            target: "test_variables"
+                        },
+                        {
+                            text: "⚔️ Test combat simulation",
+                            target: "test_combat"
+                        },
+                        {
+                            text: "📊 Test skill check (D20)",
+                            target: "test_skill_check"
+                        }
+                    ]
+                },
+                {
+                    id: "test_dice",
+                    title: "Dice Roll Test",
+                    content: `Rolling a 20-sided die using Lua...
+
+{{lua:
+    math.randomseed(os.time())
+    local roll = math.random(1, 20)
+    game_state:set("last_roll", roll)
+}}
+
+**Result:** You rolled a {{last_roll}}!
+
+{{#if last_roll >= 15}}
+🎉 **Critical success!** (15-20)
+{{else if last_roll >= 10}}
+✅ **Success!** (10-14)
+{{else if last_roll >= 5}}
+⚠️ **Partial success** (5-9)
+{{else}}
+❌ **Failure** (1-4)
+{{/if}}`,
+                    choices: [
+                        {
+                            text: "Roll again",
+                            target: "test_dice"
+                        },
+                        {
+                            text: "Back to menu",
+                            target: "test_start"
+                        }
+                    ]
+                },
+                {
+                    id: "test_variables",
+                    title: "Variable Modification Test",
+                    content: `Testing Lua variable modification...
+
+**Before:** Gold = {{gold}}
+
+{{lua:
+    local current_gold = game_state:get("gold")
+    local found_gold = math.random(10, 50)
+    game_state:set("gold", current_gold + found_gold)
+    game_state:set("found_amount", found_gold)
+}}
+
+**After:** Gold = {{gold}}
+
+You found **{{found_amount}} gold coins**! 💰`,
+                    choices: [
+                        {
+                            text: "Find more gold",
+                            target: "test_variables"
+                        },
+                        {
+                            text: "Back to menu",
+                            target: "test_start"
+                        }
+                    ]
+                },
+                {
+                    id: "test_combat",
+                    title: "Combat Simulation",
+                    content: `**Combat Encounter!**
+
+You face a goblin!
+
+{{lua:
+    -- Player attack
+    local player_damage = math.random(5, 15)
+    game_state:set("player_damage", player_damage)
+
+    -- Enemy attack
+    local enemy_damage = math.random(3, 12)
+    local current_health = game_state:get("health")
+    local new_health = math.max(0, current_health - enemy_damage)
+    game_state:set("health", new_health)
+    game_state:set("enemy_damage", enemy_damage)
+
+    -- Experience gain
+    local current_xp = game_state:get("experience")
+    game_state:set("experience", current_xp + 25)
+}}
+
+**Combat Results:**
+• You dealt **{{player_damage}} damage** to the goblin! ⚔️
+• The goblin hit you for **{{enemy_damage}} damage**! 💥
+• Your health: **{{health}}/{{max_health}}**
+• You gained **25 XP**! Current XP: {{experience}}
+
+{{#if health <= 0}}
+💀 **You were defeated!** Health restored to test more.
+{{lua: game_state:set("health", 100) }}
+{{else if health < 30}}
+⚠️ **Warning: Low health!**
+{{else}}
+✅ **You survived!**
+{{/if}}`,
+                    choices: [
+                        {
+                            text: "Fight another goblin",
+                            target: "test_combat"
+                        },
+                        {
+                            text: "Heal to full (Lua test)",
+                            target: "test_heal"
+                        },
+                        {
+                            text: "Back to menu",
+                            target: "test_start"
+                        }
+                    ]
+                },
+                {
+                    id: "test_heal",
+                    title: "Healing Test",
+                    content: `**Before:** Health = {{health}}/{{max_health}}
+
+{{lua:
+    local max_hp = game_state:get("max_health")
+    game_state:set("health", max_hp)
+}}
+
+**After:** Health = {{health}}/{{max_health}}
+
+✨ **Fully healed with Lua magic!**`,
+                    choices: [
+                        {
+                            text: "Back to menu",
+                            target: "test_start"
+                        }
+                    ]
+                },
+                {
+                    id: "test_skill_check",
+                    title: "Skill Check (D20 + Modifier)",
+                    content: `You attempt to spot a hidden treasure...
+
+**Perception Check (DC 15):**
+
+{{lua:
+    math.randomseed(os.time())
+    local roll = math.random(1, 20)
+    local skill = game_state:get("skill_perception") or 0
+    local total = roll + skill
+    local dc = 15
+
+    game_state:set("check_roll", roll)
+    game_state:set("check_total", total)
+    game_state:set("check_passed", total >= dc)
+}}
+
+• **Roll:** {{check_roll}}
+• **Skill Bonus:** +{{skill_perception}}
+• **Total:** {{check_total}}
+
+{{#if check_passed}}
+✅ **SUCCESS!** (Total: {{check_total}} vs DC 15)
+
+You spot a hidden chest and find **100 gold**!
+
+{{lua:
+    local current_gold = game_state:get("gold")
+    game_state:set("gold", current_gold + 100)
+}}
+
+**New gold total:** {{gold}}
+{{else}}
+❌ **FAILURE** (Total: {{check_total}} vs DC 15)
+
+You don't notice anything unusual.
+{{/if}}`,
+                    choices: [
+                        {
+                            text: "Try again",
+                            target: "test_skill_check"
+                        },
+                        {
+                            text: "Back to menu",
+                            target: "test_start"
+                        }
+                    ]
+                }
+            ]
+        };
+
+        // Lua-Enabled Whisker Player
+        class LuaWhiskerPlayer {
+            constructor() {
+                this.story = null;
+                this.currentPassage = null;
+                this.variables = {};
+                this.visited = {};
+                this.history = [];
+                this.maxHistory = 50;
+                this.luaState = null;
+                this.initializeLua();
+            }
+
+            initializeLua() {
+                if (typeof fengari === 'undefined') {
+                    console.error('Fengari not loaded!');
+                    return;
+                }
+
+                // Initialize Fengari Lua state
+                const lua = fengari.lua;
+                const lauxlib = fengari.lauxlib;
+                const lualib = fengari.lualib;
+
+                this.luaState = lauxlib.luaL_newstate();
+                lualib.luaL_openlibs(this.luaState);
+
+                console.log('✅ Lua runtime initialized with Fengari');
+            }
+
+            loadStory(storyData) {
+                this.story = storyData;
+                this.variables = {...(storyData.variables || {})};
+                document.getElementById('story-title').textContent = storyData.title || 'Whisker Story';
+
+                const authorEl = document.getElementById('story-author');
+                if (storyData.author) {
+                    authorEl.textContent = 'by ' + storyData.author;
+                    authorEl.style.display = 'block';
+                } else {
+                    authorEl.style.display = 'none';
+                }
+
+                this.updateStats();
+            }
+
+            start() {
+                if (!this.story) {
+                    console.error('No story loaded');
+                    return;
+                }
+
+                const startPassage = this.story.start || this.story.passages[0].id;
+                this.goToPassage(startPassage);
+            }
+
+            goToPassage(passageId, saveHistory = true) {
+                const passage = this.story.passages.find(p => p.id === passageId);
+
+                if (!passage) {
+                    console.error('Passage not found:', passageId);
+                    return;
+                }
+
+                if (saveHistory && this.currentPassage) {
+                    this.history.push({
+                        passageId: this.currentPassage.id,
+                        variables: {...this.variables},
+                        visited: {...this.visited}
+                    });
+
+                    if (this.history.length > this.maxHistory) {
+                        this.history.shift();
+                    }
+                }
+
+                this.currentPassage = passage;
+                this.visited[passageId] = (this.visited[passageId] || 0) + 1;
+
+                if (passage.script) {
+                    this.executeScript(passage.script);
+                }
+
+                this.render();
+                this.updateProgress();
+                this.updateHistory();
+            }
+
+            render() {
+                const passage = this.currentPassage;
+
+                document.getElementById('passage-title').innerHTML = this.processInline(passage.title || '');
+
+                const content = this.processContent(passage.content);
+                document.getElementById('passage-content').innerHTML = content;
+
+                const choicesContainer = document.getElementById('choices-container');
+                choicesContainer.innerHTML = '';
+
+                if (passage.choices && passage.choices.length > 0) {
+                    passage.choices.forEach(choice => {
+                        if (this.evaluateCondition(choice.condition)) {
+                            const btn = document.createElement('button');
+                            btn.className = 'choice-btn';
+                            btn.innerHTML = this.processInline(choice.text);
+                            btn.onclick = () => {
+                                if (choice.script) {
+                                    this.executeScript(choice.script);
+                                }
+                                this.goToPassage(choice.target);
+                            };
+                            choicesContainer.appendChild(btn);
+                        }
+                    });
+                }
+
+                this.updateStats();
+            }
+
+            executeLuaCode(code) {
+                if (!this.luaState || typeof fengari === 'undefined') {
+                    console.error('Lua not available');
+                    return;
+                }
+
+                try {
+                    const lua = fengari.lua;
+                    const lauxlib = fengari.lauxlib;
+                    const to_jsstring = fengari.to_jsstring;
+
+                    // Create game_state table with get/set methods
+                    const luaCode = `
+                        game_state = {
+                            data = {},
+                            set = function(self, key, value)
+                                self.data[key] = value
+                                js_set_variable(key, value)
+                            end,
+                            get = function(self, key)
+                                return js_get_variable(key)
+                            end
+                        }
+
+                        -- User code
+                        ${code}
+                    `;
+
+                    // Register JavaScript callbacks
+                    const L = this.luaState;
+
+                    // js_set_variable callback
+                    lua.lua_pushcfunction(L, (L) => {
+                        const key = to_jsstring(lua.lua_tostring(L, -2));
+                        const value = lua.lua_tonumber(L, -1) !== null ?
+                            lua.lua_tonumber(L, -1) :
+                            (lua.lua_toboolean(L, -1) ?
+                                lua.lua_toboolean(L, -1) :
+                                to_jsstring(lua.lua_tostring(L, -1)));
+
+                        this.variables[key] = value;
+                        return 0;
+                    });
+                    lua.lua_setglobal(L, to_jsstring("js_set_variable"));
+
+                    // js_get_variable callback
+                    lua.lua_pushcfunction(L, (L) => {
+                        const key = to_jsstring(lua.lua_tostring(L, -1));
+                        const value = this.variables[key];
+
+                        if (typeof value === 'number') {
+                            lua.lua_pushnumber(L, value);
+                        } else if (typeof value === 'boolean') {
+                            lua.lua_pushboolean(L, value);
+                        } else if (typeof value === 'string') {
+                            lua.lua_pushstring(L, to_jsstring(value));
+                        } else {
+                            lua.lua_pushnil(L);
+                        }
+
+                        return 1;
+                    });
+                    lua.lua_setglobal(L, to_jsstring("js_get_variable"));
+
+                    // Execute Lua code
+                    lauxlib.luaL_dostring(L, to_jsstring(luaCode));
+
+                    console.log('✅ Lua code executed successfully');
+                } catch (error) {
+                    console.error('❌ Lua execution error:', error);
+                }
+            }
+
+            processInline(content) {
+                if (!content) return '';
+
+                // Process {{lua:}} blocks FIRST
+                content = content.replace(/\{\{lua:([\s\S]*?)\}\}/g, (match, code) => {
+                    this.executeLuaCode(code.trim());
+                    return ''; // Lua blocks don't output text
+                });
+
+                // Process {{#if}}...{{/if}} conditionals
+                content = this.processConditionals(content);
+
+                // Process {{variable}} expressions
+                content = content.replace(/\{\{([a-zA-Z_][a-zA-Z0-9_]*)\}\}/g, (match, varName) => {
+                    varName = varName.trim();
+                    if (this.variables.hasOwnProperty(varName)) {
+                        return String(this.variables[varName]);
+                    }
+                    return `<span style="color: #ef4444;">[${varName}]</span>`;
+                });
+
+                // Process markdown
+                content = content.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+                content = content.replace(/\*(.+?)\*/g, '<em>$1</em>');
+
+                return content;
+            }
+
+            processConditionals(content) {
+                let maxIterations = 100;
+                let iteration = 0;
+
+                while (content.includes('{{#if') && iteration < maxIterations) {
+                    iteration++;
+
+                    const ifMatch = content.match(/\{\{#if\s+([^}]+)\}\}/);
+                    if (!ifMatch) break;
+
+                    const ifStart = ifMatch.index;
+                    const ifEnd = ifStart + ifMatch[0].length;
+                    const condition = ifMatch[1];
+
+                    const endifMatch = content.substring(ifEnd).match(/\{\{\/if\}\}/);
+                    if (!endifMatch) break;
+
+                    const endifStart = ifEnd + endifMatch.index;
+                    const endifEnd = endifStart + endifMatch[0].length;
+                    const blockContent = content.substring(ifEnd, endifStart);
+
+                    // Parse else if / else
+                    const blocks = this.parseConditionalBlocks(blockContent, condition);
+
+                    let replacement = '';
+                    for (const block of blocks) {
+                        if (block.condition === null || this.evaluateCondition(block.condition)) {
+                            replacement = block.content;
+                            break;
+                        }
+                    }
+
+                    content = content.substring(0, ifStart) + replacement + content.substring(endifEnd);
+                }
+
+                return content;
+            }
+
+            parseConditionalBlocks(blockContent, initialCondition) {
+                const blocks = [{condition: initialCondition, content: ''}];
+                let currentBlock = 0;
+                let pos = 0;
+
+                while (pos < blockContent.length) {
+                    const elseIfMatch = blockContent.substring(pos).match(/\{\{else if\s+([^}]+)\}\}/);
+                    const elseMatch = blockContent.substring(pos).match(/\{\{else\}\}/);
+
+                    let nextPos = blockContent.length;
+                    let newCondition = null;
+
+                    if (elseIfMatch && (!elseMatch || elseIfMatch.index < elseMatch.index)) {
+                        blocks[currentBlock].content = blockContent.substring(0, pos + elseIfMatch.index);
+                        newCondition = elseIfMatch[1];
+                        nextPos = pos + elseIfMatch.index + elseIfMatch[0].length;
+                    } else if (elseMatch) {
+                        blocks[currentBlock].content = blockContent.substring(0, pos + elseMatch.index);
+                        newCondition = null;
+                        nextPos = pos + elseMatch.index + elseMatch[0].length;
+                    } else {
+                        blocks[currentBlock].content = blockContent.substring(pos);
+                        break;
+                    }
+
+                    blocks.push({condition: newCondition, content: ''});
+                    currentBlock++;
+                    blockContent = blockContent.substring(nextPos);
+                    pos = 0;
+                }
+
+                return blocks;
+            }
+
+            processContent(content) {
+                if (!content) return '';
+
+                content = this.processInline(content);
+
+                const paragraphs = content.split(/\n\n+/).filter(p => p.trim());
+                content = paragraphs.map(p => `<p>${p.trim()}</p>`).join('');
+
+                return content;
+            }
+
+            executeScript(script) {
+                try {
+                    const context = {
+                        set: (key, value) => { this.variables[key] = value; },
+                        get: (key, defaultValue = null) => this.variables[key] !== undefined ? this.variables[key] : defaultValue,
+                        visited: (passageId) => this.visited[passageId] || 0,
+                        random: (min, max) => Math.floor(Math.random() * (max - min + 1)) + min,
+                        Math: Math
+                    };
+
+                    const func = new Function('context', `with(context) { ${script} }`);
+                    func(context);
+                    this.updateStats();
+                } catch (error) {
+                    console.error('Script execution error:', error);
+                }
+            }
+
+            evaluateCondition(condition) {
+                if (!condition) return true;
+
+                try {
+                    const context = {
+                        ...this.variables,
+                        visited: (passageId) => this.visited[passageId] || 0
+                    };
+
+                    const func = new Function('context', `with(context) { return ${condition}; }`);
+                    return func(context);
+                } catch (error) {
+                    console.error('Condition evaluation error:', error);
+                    return true;
+                }
+            }
+
+            updateStats() {
+                const container = document.getElementById('stats-container');
+                container.innerHTML = '';
+
+                for (const [key, value] of Object.entries(this.variables)) {
+                    const statItem = document.createElement('div');
+                    statItem.className = 'stat-item';
+                    statItem.innerHTML = `
+                        <span class="stat-label">${key}</span>
+                        <span class="stat-value">${value}</span>
+                    `;
+                    container.appendChild(statItem);
+                }
+            }
+
+            updateProgress() {
+                const totalPassages = this.story.passages.length;
+                const visitedCount = Object.keys(this.visited).length;
+                const percentage = (visitedCount / totalPassages) * 100;
+                document.getElementById('progress-bar').style.width = percentage + '%';
+            }
+
+            updateHistory() {
+                const container = document.getElementById('history-container');
+                const recentHistory = this.history.slice(-5).reverse();
+
+                container.innerHTML = '';
+
+                recentHistory.forEach(entry => {
+                    const passage = this.story.passages.find(p => p.id === entry.passageId);
+                    if (passage) {
+                        const item = document.createElement('div');
+                        item.className = 'history-item';
+                        item.textContent = passage.title || passage.id;
+                        container.appendChild(item);
+                    }
+                });
+            }
+
+            undo() {
+                if (this.history.length === 0) {
+                    this.showNotification('No more history', 'info');
+                    return;
+                }
+
+                const previousState = this.history.pop();
+                this.variables = {...previousState.variables};
+                this.visited = {...previousState.visited};
+                this.goToPassage(previousState.passageId, false);
+                this.showNotification('Undone', 'success');
+            }
+
+            restart() {
+                if (confirm('Are you sure you want to restart the story?')) {
+                    this.variables = {...(this.story.variables || {})};
+                    this.visited = {};
+                    this.history = [];
+                    this.start();
+                    this.showNotification('Story restarted', 'info');
+                }
+            }
+
+            showSaveModal() {
+                const saveData = {
+                    passageId: this.currentPassage.id,
+                    variables: this.variables,
+                    visited: this.visited,
+                    history: this.history,
+                    timestamp: new Date().toISOString()
+                };
+
+                localStorage.setItem('whisker_lua_save', JSON.stringify(saveData));
+                this.showNotification('Game saved', 'success');
+            }
+
+            showLoadModal() {
+                const saveData = localStorage.getItem('whisker_lua_save');
+
+                if (!saveData) {
+                    this.showNotification('No save found', 'error');
+                    return;
+                }
+
+                const data = JSON.parse(saveData);
+                this.variables = data.variables;
+                this.visited = data.visited;
+                this.history = data.history;
+                this.goToPassage(data.passageId, false);
+                this.showNotification('Game loaded', 'success');
+            }
+
+            showNotification(message, type = 'info') {
+                const notification = document.createElement('div');
+                notification.className = `notification ${type}`;
+                notification.textContent = message;
+                document.body.appendChild(notification);
+
+                setTimeout(() => {
+                    notification.remove();
+                }, 3000);
+            }
+        }
+
+        // Initialize player when page loads
+        window.addEventListener('DOMContentLoaded', () => {
+            // Hide loading, show container
+            document.getElementById('loading').style.display = 'none';
+            document.getElementById('whisker-container').style.display = 'block';
+
+            // Create and start player
+            window.whiskerPlayer = new LuaWhiskerPlayer();
+            window.whiskerPlayer.loadStory(STORY_DATA);
+            window.whiskerPlayer.start();
+
+            console.log('🌙 Whisker Lua Runtime loaded successfully!');
+        });
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', (e) => {
+            if (e.ctrlKey || e.metaKey) {
+                if (e.key === 's') {
+                    e.preventDefault();
+                    window.whiskerPlayer.showSaveModal();
+                } else if (e.key === 'z') {
+                    e.preventDefault();
+                    window.whiskerPlayer.undo();
+                } else if (e.key === 'l') {
+                    e.preventDefault();
+                    window.whiskerPlayer.showLoadModal();
+                }
+            }
+        });
+    </script>
+</body>
+</html>

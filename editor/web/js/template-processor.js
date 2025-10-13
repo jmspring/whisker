@@ -16,8 +16,8 @@ class TemplateProcessor {
         // Process conditionals first
         content = this.processConditionals(content, variables);
 
-        // Remove {{lua:...}} tags
-        content = content.replace(/\{\{lua:[^}]*\}\}/g, '');
+        // Process {{lua:...}} blocks (execute if possible, otherwise show indicator)
+        content = this.processLuaBlocks(content, variables);
 
         // Then process variable substitutions
         content = this.processVariables(content, variables);
@@ -234,6 +234,33 @@ class TemplateProcessor {
 
         // Otherwise, look up as variable
         return variables[str];
+    }
+
+    /**
+     * Process Lua blocks
+     * @param {string} content - Content with Lua blocks
+     * @param {Object} variables - Variable values (mutable)
+     * @returns {string} Processed content
+     */
+    static processLuaBlocks(content, variables) {
+        // For editor preview, show a visual indicator for Lua blocks
+        // The actual execution happens in the runtime
+        return content.replace(/\{\{lua:([\s\S]*?)\}\}/g, (match, code) => {
+            // In preview mode, show an indicator that Lua code exists
+            const codePreview = code.trim().split('\n')[0].substring(0, 50);
+            return `<span style="display: inline-block; background: #fef3c7; color: #92400e; padding: 2px 8px; border-radius: 4px; font-size: 0.85em; font-family: monospace;" title="${this.escapeHtml(code.trim())}">🌙 Lua: ${this.escapeHtml(codePreview)}${code.length > 50 ? '...' : ''}</span>`;
+        });
+    }
+
+    /**
+     * Escape HTML for safe display
+     * @param {string} str - String to escape
+     * @returns {string} Escaped string
+     */
+    static escapeHtml(str) {
+        const div = document.createElement('div');
+        div.textContent = str;
+        return div.innerHTML;
     }
 
     /**
