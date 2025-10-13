@@ -643,10 +643,80 @@
     {
       "pid": "p036",
       "name": "crypt_fight",
-      "text": "You push open the stone doors and enter the crypt. Immediately, skeletal warriors rise from their tombs, animated by dark magic!\n\n**Combat: Undead Guardians**\n**Your Health:** {{health}}/{{max_health}}\n\nThe skeletons attack with ancient weapons!\n\nAfter a desperate battle, you shatter the last skeleton!\n\n**Victory!**\n\nYou take 12 damage.\n\n**Gained 80 XP**\n**Gained 70 gold from ancient coins**\n\n{{lua: \n  game_state:set(\"health\", math.max(1, game_state:get(\"health\") - 12));\n  game_state:set(\"experience\", game_state:get(\"experience\") + 80);\n  game_state:set(\"gold\", game_state:get(\"gold\") + 70);\n  game_state:set(\"undead_defeated\", true);\n  game_state:set(\"explored_ancient_crypt\", true);\n  game_state:set(\"quest_clear_ruins\", game_state:get(\"quest_clear_ruins\") + 1);\n  game_state:set(\"monsters_killed\", game_state:get(\"monsters_killed\") + 6)\n}}\n\n[[Search the crypt->crypt_loot]]\n[[Return to ruins->to_ruins]]",
+      "text": "You push open the stone doors and enter the crypt. Immediately, skeletal warriors rise from their tombs, animated by dark magic!\n\n**Combat: Undead Guardians**\n**Enemy Type:** Undead (6 skeletons)\n**Your Health:** {{health}}/{{max_health}}\n**Your Stamina:** {{stamina}}/{{max_stamina}}\n{{#if companion_name != \"none\"}}**{{companion_name}}:** {{companion_health}}/{{companion_max_health}} HP{{/if}}\n\nThe skeletons attack with ancient weapons!\n\n[[Fight defensively->crypt_fight_defensive]]\n[[Fight aggressively->crypt_fight_aggressive]]\n\n**Class Abilities:**\n{{#if stamina >= 3 and class == \"Fighter\"}}[[Power Strike (3 stamina) - Shatter bones->crypt_fight_power]]{{/if}}\n{{#if stamina >= 2 and class == \"Rogue\"}}[[Sneak Attack (2 stamina) - Dismantle undead->crypt_fight_sneak]]{{/if}}\n{{#if stamina >= 4 and class == \"Cleric\"}}[[Turn Undead (4 stamina) - Destroy skeletons->crypt_fight_turn]]{{/if}}\n{{#if stamina >= 3 and class == \"Mage\"}}[[Magic Missile (3 stamina) - Blast bones->crypt_fight_magic]]{{/if}}\n\n{{#if has_healing_potion and health < max_health}}[[Drink healing potion->crypt_fight_heal]]{{/if}}",
       "tags": [
         "ruins",
         "combat",
+        "crypt"
+      ]
+    },
+    {
+      "pid": "p036a",
+      "name": "crypt_fight_defensive",
+      "text": "You fight carefully, blocking bone blades with your shield. The skeletons are relentless but you prevail!\n\n**Victory!**\n\nYou take 10 damage but shatter the last skeleton.{{#if companion_name != \"none\" and companion_ability == \"protective\"}}\n{{companion_name}} protected you from many blows!{{/if}}\n\n**Gained 80 XP**\n**Gained 70 gold from ancient coins**\n\n{{lua: \n  local damage = 10;\n  if game_state:get(\"companion_name\") ~= \"none\" and game_state:get(\"companion_ability\") == \"protective\" then\n    damage = math.ceil(damage / 2);\n  end\n  game_state:set(\"health\", math.max(1, game_state:get(\"health\") - damage));\n  game_state:set(\"experience\", game_state:get(\"experience\") + 80);\n  game_state:set(\"gold\", game_state:get(\"gold\") + 70);\n  game_state:set(\"undead_defeated\", true);\n  game_state:set(\"explored_ancient_crypt\", true);\n  game_state:set(\"quest_clear_ruins\", game_state:get(\"quest_clear_ruins\") + 1);\n  game_state:set(\"monsters_killed\", game_state:get(\"monsters_killed\") + 6)\n}}\n\n[[Search the crypt->crypt_loot]]\n[[Return to ruins->to_ruins]]",
+      "tags": [
+        "ruins",
+        "combat",
+        "victory",
+        "crypt"
+      ]
+    },
+    {
+      "pid": "p036b",
+      "name": "crypt_fight_aggressive",
+      "text": "You attack with fury, smashing through bone and sinew! The skeletons fight back viciously.\n\n**Victory!**\n\nYou take 14 damage but crush the undead quickly.{{#if companion_name != \"none\" and companion_ability == \"protective\"}}\n{{companion_name}} intercepted several skeleton attacks!{{/if}}\n\n**Gained 80 XP**\n**Gained 70 gold from ancient coins**\n\n{{lua: \n  local damage = 14;\n  if game_state:get(\"companion_name\") ~= \"none\" and game_state:get(\"companion_ability\") == \"protective\" then\n    damage = math.ceil(damage / 2);\n  end\n  game_state:set(\"health\", math.max(1, game_state:get(\"health\") - damage));\n  game_state:set(\"experience\", game_state:get(\"experience\") + 80);\n  game_state:set(\"gold\", game_state:get(\"gold\") + 70);\n  game_state:set(\"undead_defeated\", true);\n  game_state:set(\"explored_ancient_crypt\", true);\n  game_state:set(\"quest_clear_ruins\", game_state:get(\"quest_clear_ruins\") + 1);\n  game_state:set(\"monsters_killed\", game_state:get(\"monsters_killed\") + 6)\n}}\n\n[[Search the crypt->crypt_loot]]\n[[Return to ruins->to_ruins]]",
+      "tags": [
+        "ruins",
+        "combat",
+        "victory",
+        "crypt"
+      ]
+    },
+    {
+      "pid": "p036c",
+      "name": "crypt_fight_power",
+      "text": "You deliver crushing Power Strikes that shatter bone! Each blow reduces skeletons to fragments!\n\n**POWER STRIKE!**\n\nYour overwhelming strength demolishes the undead guardians!\n\n**Victory!**\n\nYou take only 5 damage through raw power.{{#if companion_name != \"none\"}}\n{{companion_name}} fought bravely alongside you!{{/if}}\n\n**Gained 80 XP**\n**Gained 70 gold from ancient coins**\n\n{{lua: \n  game_state:set(\"stamina\", game_state:get(\"stamina\") - 3);\n  local damage = 5;\n  if game_state:get(\"companion_name\") ~= \"none\" and game_state:get(\"companion_ability\") == \"protective\" then\n    damage = math.ceil(damage / 2);\n  end\n  game_state:set(\"health\", math.max(1, game_state:get(\"health\") - damage));\n  game_state:set(\"experience\", game_state:get(\"experience\") + 80);\n  game_state:set(\"gold\", game_state:get(\"gold\") + 70);\n  game_state:set(\"undead_defeated\", true);\n  game_state:set(\"explored_ancient_crypt\", true);\n  game_state:set(\"quest_clear_ruins\", game_state:get(\"quest_clear_ruins\") + 1);\n  game_state:set(\"monsters_killed\", game_state:get(\"monsters_killed\") + 6)\n}}\n\n[[Search the crypt->crypt_loot]]\n[[Return to ruins->to_ruins]]",
+      "tags": [
+        "ruins",
+        "combat",
+        "victory",
+        "fighter",
+        "crypt"
+      ]
+    },
+    {
+      "pid": "p036d",
+      "name": "crypt_fight_sneak",
+      "text": "You use cunning to dismantle the skeletons! Precise strikes at joints and weak points!\n\n**SNEAK ATTACK!**\n\nYour surgical precision quickly dismantles the undead!\n\n**Victory!**\n\nYou take only 4 damage through tactical brilliance.{{#if companion_name != \"none\"}}\n{{companion_name}} provided excellent distraction!{{/if}}\n\n**Gained 80 XP**\n**Gained 70 gold from ancient coins**\n\n{{lua: \n  game_state:set(\"stamina\", game_state:get(\"stamina\") - 2);\n  local damage = 4;\n  if game_state:get(\"companion_name\") ~= \"none\" and game_state:get(\"companion_ability\") == \"protective\" then\n    damage = math.ceil(damage / 2);\n  end\n  game_state:set(\"health\", math.max(1, game_state:get(\"health\") - damage));\n  game_state:set(\"experience\", game_state:get(\"experience\") + 80);\n  game_state:set(\"gold\", game_state:get(\"gold\") + 70);\n  game_state:set(\"undead_defeated\", true);\n  game_state:set(\"explored_ancient_crypt\", true);\n  game_state:set(\"quest_clear_ruins\", game_state:get(\"quest_clear_ruins\") + 1);\n  game_state:set(\"monsters_killed\", game_state:get(\"monsters_killed\") + 6)\n}}\n\n[[Search the crypt->crypt_loot]]\n[[Return to ruins->to_ruins]]",
+      "tags": [
+        "ruins",
+        "combat",
+        "victory",
+        "rogue",
+        "crypt"
+      ]
+    },
+    {
+      "pid": "p036e",
+      "name": "crypt_fight_turn",
+      "text": "You raise your holy symbol! \"By the power of light, return to rest!\"\n\n**TURN UNDEAD!**\n\nYour divine power is overwhelming! The skeletons collapse instantly, their dark magic shattered!\n\n**Victory!**\n\nYou take only 2 damage - a trivial fight for your faith!{{#if companion_name != \"none\"}}\n{{companion_name}} marvels at your divine power!{{/if}}\n\n**Gained 80 XP**\n**Gained 70 gold from ancient coins**\n\n{{lua: \n  game_state:set(\"stamina\", game_state:get(\"stamina\") - 4);\n  local damage = 2;\n  if game_state:get(\"companion_name\") ~= \"none\" and game_state:get(\"companion_ability\") == \"protective\" then\n    damage = math.ceil(damage / 2);\n  end\n  game_state:set(\"health\", math.max(1, game_state:get(\"health\") - damage));\n  game_state:set(\"experience\", game_state:get(\"experience\") + 80);\n  game_state:set(\"gold\", game_state:get(\"gold\") + 70);\n  game_state:set(\"undead_defeated\", true);\n  game_state:set(\"explored_ancient_crypt\", true);\n  game_state:set(\"quest_clear_ruins\", game_state:get(\"quest_clear_ruins\") + 1);\n  game_state:set(\"monsters_killed\", game_state:get(\"monsters_killed\") + 6)\n}}\n\n[[Search the crypt->crypt_loot]]\n[[Return to ruins->to_ruins]]",
+      "tags": [
+        "ruins",
+        "combat",
+        "victory",
+        "cleric",
+        "crypt"
+      ]
+    },
+    {
+      "pid": "p036f",
+      "name": "crypt_fight_magic",
+      "text": "You launch Magic Missiles at the skeletons! The arcane projectiles blast through bone!\n\n**MAGIC MISSILE!**\n\nYour spell shatters the skeletons from a safe distance!\n\n**Victory!**\n\nYou take only 4 damage, staying well clear.{{#if companion_name != \"none\"}}\n{{companion_name}} kept the skeletons away from you!{{/if}}\n\n**Gained 80 XP**\n**Gained 70 gold from ancient coins**\n\n{{lua: \n  game_state:set(\"stamina\", game_state:get(\"stamina\") - 3);\n  local damage = 4;\n  if game_state:get(\"companion_name\") ~= \"none\" and game_state:get(\"companion_ability\") == \"protective\" then\n    damage = math.ceil(damage / 2);\n  end\n  game_state:set(\"health\", math.max(1, game_state:get(\"health\") - damage));\n  game_state:set(\"experience\", game_state:get(\"experience\") + 80);\n  game_state:set(\"gold\", game_state:get(\"gold\") + 70);\n  game_state:set(\"undead_defeated\", true);\n  game_state:set(\"explored_ancient_crypt\", true);\n  game_state:set(\"quest_clear_ruins\", game_state:get(\"quest_clear_ruins\") + 1);\n  game_state:set(\"monsters_killed\", game_state:get(\"monsters_killed\") + 6)\n}}\n\n[[Search the crypt->crypt_loot]]\n[[Return to ruins->to_ruins]]",
+      "tags": [
+        "ruins",
+        "combat",
+        "victory",
+        "mage",
         "crypt"
       ]
     },
