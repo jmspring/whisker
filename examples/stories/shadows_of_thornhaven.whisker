@@ -190,7 +190,7 @@
     {
       "pid": "p008",
       "name": "tavern",
-      "text": "The Copper Mug Tavern is warm and welcoming. The aroma of stew and fresh bread mingles with pipe smoke. You find a spot at the bar.\n\nThe innkeeper, a portly woman named Marta, leans in. \"First time in Thornhaven? If you're planning to investigate those ruins, listen well...\"\n\n\"The wolf den is closest - the pack has grown bold lately. The bandits camp further in the forest - nasty bunch. But the worst are the shadow creatures near the old temple. They're not natural, if you ask me.\"\n\n{{#if warned_by_merchant}}A traveling peddler in the corner waves at you.{{/if}}\n\n**Health:** {{health}}/{{max_health}} | **Gold:** {{gold}}\n\n{{lua: if not game_state:get(\"heard_rumors\") then game_state:set(\"heard_rumors\", true) end }}\n\n{{#if not warned_by_merchant}}[[Talk to the peddler->merchant]]{{/if}}\n{{#if gold >= 5}}[[Buy a drink and listen for more rumors (5 gold)->tavern_rumors]]{{/if}}\n[[Leave the tavern->village_center]]",
+      "text": "The Copper Mug Tavern is warm and welcoming. The aroma of stew and fresh bread mingles with pipe smoke. You find a spot at the bar.\n\nThe innkeeper, a portly woman named Marta, leans in. \"First time in Thornhaven? If you're planning to investigate those ruins, listen well...\"\n\n\"The wolf den is closest - the pack has grown bold lately. The bandits camp further in the forest - nasty bunch. But the worst are the shadow creatures near the old temple. They're not natural, if you ask me.\"\n\n{{#if warned_by_merchant}}A traveling peddler in the corner waves at you.{{/if}}\n{{#if has_lockbox}}Finn the merchant spots you and rushes over! \"You found it! My lockbox!\"{{/if}}\n\n**Health:** {{health}}/{{max_health}} | **Gold:** {{gold}}\n\n{{lua: if not game_state:get(\"heard_rumors\") then game_state:set(\"heard_rumors\", true) end }}\n\n{{#if not warned_by_merchant}}[[Talk to the peddler->merchant]]{{/if}}\n{{#if has_lockbox}}[[Return the lockbox to Finn->return_lockbox_choice]]{{/if}}\n{{#if gold >= 5}}[[Buy a drink and listen for more rumors (5 gold)->tavern_rumors]]{{/if}}\n[[Leave the tavern->village_center]]",
       "tags": [
         "village",
         "info"
@@ -212,6 +212,37 @@
       "tags": [
         "village",
         "quest"
+      ]
+    },
+    {
+      "pid": "p010a",
+      "name": "return_lockbox_choice",
+      "text": "Finn examines the lockbox, his eyes lighting up. \"My savings! All 200 gold pieces, exactly as I left it! And I promised you 50 gold as a reward.\"\n\nHe opens the box, revealing the gold inside. You notice there's exactly 200 gold pieces in there - he wasn't lying.\n\nWhat do you do?\n\n[[Return it honorably and take only the 50 gold reward->return_lockbox_honest]]\n[[Keep the entire lockbox and all 200 gold->return_lockbox_steal]]",
+      "tags": [
+        "village",
+        "choice",
+        "quest"
+      ]
+    },
+    {
+      "pid": "p010b",
+      "name": "return_lockbox_honest",
+      "text": "\"Here's your lockbox, Finn. A deal is a deal - I'm glad I could help.\"\n\nFinn's face lights up with genuine gratitude. \"You're a person of honor! May your adventures bring you fortune.\"\n\nHe counts out 50 gold pieces and hands them to you.\n\n**Alignment Shift:** +1 Lawful (Kept your word)\n**Quest Complete:** Finn's Lockbox\n**Gained 50 gold**\n**Gained 50 XP**\n\n{{lua: \n  game_state:set(\"has_lockbox\", false);\n  game_state:set(\"quest_merchant_treasure\", false);\n  game_state:set(\"quest_merchant_complete\", true);\n  game_state:set(\"alignment_lawful_chaotic\", game_state:get(\"alignment_lawful_chaotic\") + 1);\n  game_state:set(\"gold\", game_state:get(\"gold\") + 50);\n  game_state:set(\"experience\", game_state:get(\"experience\") + 50)\n}}\n\n[[Leave->tavern]]",
+      "tags": [
+        "village",
+        "quest",
+        "lawful"
+      ]
+    },
+    {
+      "pid": "p010c",
+      "name": "return_lockbox_steal",
+      "text": "\"Actually, Finn... I think I'll keep this. You shouldn't have been so careless.\"\n\nFinn's face falls. \"But... that's all I have! You promised!\"\n\nYou ignore his pleas and pocket the entire 200 gold. He sits down, defeated.\n\n**Alignment Shift:** -2 Chaotic (Broke your word)\n**Alignment Shift:** -1 Evil (Stole from someone who trusted you)\n**Quest Failed:** Finn's Lockbox  \n**Gained 200 gold**\n\n{{lua: \n  game_state:set(\"has_lockbox\", false);\n  game_state:set(\"quest_merchant_treasure\", false);\n  game_state:set(\"quest_merchant_failed\", true);\n  game_state:set(\"alignment_lawful_chaotic\", game_state:get(\"alignment_lawful_chaotic\") - 2);\n  game_state:set(\"alignment_good_evil\", game_state:get(\"alignment_good_evil\") - 1);\n  game_state:set(\"gold\", game_state:get(\"gold\") + 200)\n}}\n\n[[Leave->tavern]]",
+      "tags": [
+        "village",
+        "quest",
+        "chaotic",
+        "evil"
       ]
     },
     {
