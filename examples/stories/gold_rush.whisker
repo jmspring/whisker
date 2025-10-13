@@ -1,0 +1,1191 @@
+{  "assets": [
+
+  ],  "format": "whisker",  "formatVersion": "1.0",  "metadata": {
+    "author": "whisker",
+    "created": "2025-10-10T23:57:48",
+    "description": "",
+    "format": "whisker",
+    "format_version": "1.0",
+    "ifid": "GOLD-RUSH-001",
+    "modified": "2025-10-10T23:57:48",
+    "name": "Gold Rush Fever",
+    "title": "Gold Rush Fever",
+    "version": "1.0"
+  },  "passages": [
+    {
+      "choices": [
+        {
+          "metadata": [
+
+          ],
+          "target_passage": "victory_order",
+          "text": "Order Blackwood off your claim immediately"
+        },
+        {
+          "metadata": [
+
+          ],
+          "target_passage": "merciful_victory",
+          "text": "Offer to forget this if he leaves quietly"
+        },
+        {
+          "metadata": [
+
+          ],
+          "target_passage": "citizens_arrest",
+          "text": "Detain him until the real law arrives"
+        }
+      ],
+      "content": "\"Are you threatening me, Sheriff? Because if you are, I'd remind you that\nclaim jumping is a hanging offense, even for lawmen who think they're above\nthe law.\"\n\nThe Sheriff's face flushes red. \"Why you—\"\n\n\"He's not here legally!\" Ruby suddenly shouts. \"Sheriff Blackwood was suspended\nlast week for extortion! The judge is coming to Deadwood tomorrow to investigate.\nHe's not even a real sheriff anymore!\"\n\nBlackwood wheels on her. \"You little—\"\n\n\"It's true,\" she continues, backing away from him. \"I heard it from the\ntelegraph operator. You're finished, Blackwood. Leave this man alone.\"\n    ",
+      "id": "confront_threat",
+      "metadata": [
+
+      ],
+      "name": "confront_threat",
+      "pid": "p1",
+      "position": {
+        "x": 0,
+        "y": 0
+      },
+      "size": {
+        "height": 100,
+        "width": 100
+      },
+      "tags": [
+
+      ],
+      "text": "\"Are you threatening me, Sheriff? Because if you are, I'd remind you that\nclaim jumping is a hanging offense, even for lawmen who think they're above\nthe law.\"\n\nThe Sheriff's face flushes red. \"Why you—\"\n\n\"He's not here legally!\" Ruby suddenly shouts. \"Sheriff Blackwood was suspended\nlast week for extortion! The judge is coming to Deadwood tomorrow to investigate.\nHe's not even a real sheriff anymore!\"\n\nBlackwood wheels on her. \"You little—\"\n\n\"It's true,\" she continues, backing away from him. \"I heard it from the\ntelegraph operator. You're finished, Blackwood. Leave this man alone.\"\n    "
+    },
+    {
+      "choices": [
+        {
+          "metadata": [
+
+          ],
+          "target_passage": "confront_sheriff",
+          "text": "Refuse and ask them to leave"
+        },
+        {
+          "metadata": [
+
+          ],
+          "target_passage": "ruby_distraction",
+          "text": "Agree to show Ruby around"
+        },
+        {
+          "metadata": [
+
+          ],
+          "target_passage": "talk_to_sheriff",
+          "text": "Suggest they all leave together"
+        }
+      ],
+      "content": "You decide to be methodical. You spend the morning examining both locations,\ntaking careful notes. The creek shows consistent gold flakes - a steady income\nif you're patient. The rocky outcrop could contain a major vein, but it would\nrequire hard labor to extract.\n\nAs you're comparing your options, Sheriff Blackwood rides up with a woman in\na striking red dress. You know Ruby from the saloon - she's smart and has\nturned down more men than most.\n\n\"Well, well,\" the Sheriff says with a crooked smile. \"Planning out your fortune,\nMcCready? Ruby here was just saying she'd never seen your claim. Thought maybe\nyou could show her around while I... inspect the area for claim jumping.\"\n    ",
+      "id": "scouting",
+      "metadata": [
+
+      ],
+      "name": "scouting",
+      "pid": "p2",
+      "position": {
+        "x": 0,
+        "y": 0
+      },
+      "size": {
+        "height": 100,
+        "width": 100
+      },
+      "tags": [
+
+      ],
+      "text": "You decide to be methodical. You spend the morning examining both locations,\ntaking careful notes. The creek shows consistent gold flakes - a steady income\nif you're patient. The rocky outcrop could contain a major vein, but it would\nrequire hard labor to extract.\n\nAs you're comparing your options, Sheriff Blackwood rides up with a woman in\na striking red dress. You know Ruby from the saloon - she's smart and has\nturned down more men than most.\n\n\"Well, well,\" the Sheriff says with a crooked smile. \"Planning out your fortune,\nMcCready? Ruby here was just saying she'd never seen your claim. Thought maybe\nyou could show her around while I... inspect the area for claim jumping.\"\n    "
+    },
+    {
+      "choices": [
+
+      ],
+      "content": "\"Ruby, help me secure him. As a citizen of this territory, I'm placing this\nman under arrest for attempted fraud and corruption.\"\n\nBlackwood struggles, but without his authority and with Ruby helping you, you\nmanage to restrain him.\n\n\"You can't do this!\" he shouts.\n\n\"I just did. Ruby, ride to town and bring back the territorial marshal.\"\n\nRuby gallops off while you guard Blackwood at gunpoint. It's a tense wait, but\nshe returns within hours with the marshal and two deputies.\n\nThe marshal is impressed by your citizen's arrest. \"Not many men would have the\ncourage to arrest a corrupt lawman, even a suspended one.\"\n\nBlackwood is taken away to face trial. Your claim is fully validated, and the\nterritorial government offers you a reward for exposing corruption.\n\nThe gold you mine makes you comfortable, but the reward and Ruby's testimony\nmake you both heroes in the territory. You're eventually elected as a territorial\nrepresentative, bringing honest governance to the region.\n\n**EXCELLENT ENDING - Justice, gold, and civic honor!**\n\n*THE END*\n    ",
+      "id": "citizens_arrest",
+      "metadata": [
+
+      ],
+      "name": "citizens_arrest",
+      "pid": "p3",
+      "position": {
+        "x": 0,
+        "y": 0
+      },
+      "size": {
+        "height": 100,
+        "width": 100
+      },
+      "tags": [
+
+      ],
+      "text": "\"Ruby, help me secure him. As a citizen of this territory, I'm placing this\nman under arrest for attempted fraud and corruption.\"\n\nBlackwood struggles, but without his authority and with Ruby helping you, you\nmanage to restrain him.\n\n\"You can't do this!\" he shouts.\n\n\"I just did. Ruby, ride to town and bring back the territorial marshal.\"\n\nRuby gallops off while you guard Blackwood at gunpoint. It's a tense wait, but\nshe returns within hours with the marshal and two deputies.\n\nThe marshal is impressed by your citizen's arrest. \"Not many men would have the\ncourage to arrest a corrupt lawman, even a suspended one.\"\n\nBlackwood is taken away to face trial. Your claim is fully validated, and the\nterritorial government offers you a reward for exposing corruption.\n\nThe gold you mine makes you comfortable, but the reward and Ruby's testimony\nmake you both heroes in the territory. You're eventually elected as a territorial\nrepresentative, bringing honest governance to the region.\n\n**EXCELLENT ENDING - Justice, gold, and civic honor!**\n\n*THE END*\n    "
+    },
+    {
+      "choices": [
+
+      ],
+      "content": "\"Ruby's right,\" you say firmly. \"And I'm grateful she chose honesty over your\nblood money, Sheriff. Now get off my claim before I report you to the territorial\nmarshal.\"\n\nBlackwood realizes he's cornered. With Ruby as a witness to his attempted fraud,\nhe can't risk violence. He mounts his horse in fury.\n\n\"You'll both regret this,\" he snarls before riding off.\n\nRuby looks at you with relief. \"Thank you for believing me, Silas.\"\n\nOver the following weeks, you and Ruby work the claim together. She proves to be\na quick learner and hard worker. The gold you extract is enough to buy a proper\nmining operation.\n\nWhen the territorial judge arrives and arrests Blackwood on multiple charges,\nRuby's testimony is crucial. As a reward, the judge validates your claim boundaries.\n\nTwo years later, the McCready-Ruby Mining Company is one of the most successful\noperations in the territory, and your partnership has become something more...\n\n**THE BEST ENDING - You found gold and true partnership!**\n\n*THE END*\n    ",
+      "id": "ally_with_ruby",
+      "metadata": [
+
+      ],
+      "name": "ally_with_ruby",
+      "pid": "p4",
+      "position": {
+        "x": 0,
+        "y": 0
+      },
+      "size": {
+        "height": 100,
+        "width": 100
+      },
+      "tags": [
+
+      ],
+      "text": "\"Ruby's right,\" you say firmly. \"And I'm grateful she chose honesty over your\nblood money, Sheriff. Now get off my claim before I report you to the territorial\nmarshal.\"\n\nBlackwood realizes he's cornered. With Ruby as a witness to his attempted fraud,\nhe can't risk violence. He mounts his horse in fury.\n\n\"You'll both regret this,\" he snarls before riding off.\n\nRuby looks at you with relief. \"Thank you for believing me, Silas.\"\n\nOver the following weeks, you and Ruby work the claim together. She proves to be\na quick learner and hard worker. The gold you extract is enough to buy a proper\nmining operation.\n\nWhen the territorial judge arrives and arrests Blackwood on multiple charges,\nRuby's testimony is crucial. As a reward, the judge validates your claim boundaries.\n\nTwo years later, the McCready-Ruby Mining Company is one of the most successful\noperations in the territory, and your partnership has become something more...\n\n**THE BEST ENDING - You found gold and true partnership!**\n\n*THE END*\n    "
+    },
+    {
+      "choices": [
+
+      ],
+      "content": "\"This is my claim, legally filed and registered. Neither of you have any right\nto be here. Sheriff, that includes you. Now get off my land.\"\n\nBlackwood's face darkens. \"You're making a mistake, McCready.\"\n\n\"The only mistake would be letting a corrupt lawman steal my claim. Ruby, you're\nwelcome to stay if you want to learn honest prospecting. Blackwood, you're not.\"\n\nThe Sheriff realizes he can't do anything with Ruby as a witness. He rides off\nin fury.\n\nRuby stays and helps you work the claim. The vein you discovered is incredibly\nrich - one of the biggest strikes in the territory's history.\n\nWith Ruby as your business partner, you establish a legitimate mining operation.\nWhen Blackwood tries to cause trouble later, Ruby's testimony to the territorial\nmarshal gets him arrested.\n\nYou both become wealthy and respected members of the community.\n\n**BEST ENDING - You stood your ground and won everything!**\n\n*THE END*\n    ",
+      "id": "defend_claim",
+      "metadata": [
+
+      ],
+      "name": "defend_claim",
+      "pid": "p5",
+      "position": {
+        "x": 0,
+        "y": 0
+      },
+      "size": {
+        "height": 100,
+        "width": 100
+      },
+      "tags": [
+
+      ],
+      "text": "\"This is my claim, legally filed and registered. Neither of you have any right\nto be here. Sheriff, that includes you. Now get off my land.\"\n\nBlackwood's face darkens. \"You're making a mistake, McCready.\"\n\n\"The only mistake would be letting a corrupt lawman steal my claim. Ruby, you're\nwelcome to stay if you want to learn honest prospecting. Blackwood, you're not.\"\n\nThe Sheriff realizes he can't do anything with Ruby as a witness. He rides off\nin fury.\n\nRuby stays and helps you work the claim. The vein you discovered is incredibly\nrich - one of the biggest strikes in the territory's history.\n\nWith Ruby as your business partner, you establish a legitimate mining operation.\nWhen Blackwood tries to cause trouble later, Ruby's testimony to the territorial\nmarshal gets him arrested.\n\nYou both become wealthy and respected members of the community.\n\n**BEST ENDING - You stood your ground and won everything!**\n\n*THE END*\n    "
+    },
+    {
+      "choices": [
+        {
+          "metadata": [
+
+          ],
+          "target_passage": "stop_sheriff",
+          "text": "Run back and stop the Sheriff"
+        },
+        {
+          "metadata": [
+
+          ],
+          "target_passage": "witness_crime",
+          "text": "Thank Ruby and witness what the Sheriff is doing"
+        },
+        {
+          "metadata": [
+
+          ],
+          "target_passage": "gather_evidence",
+          "text": "Let him plant the marker and document it as evidence"
+        }
+      ],
+      "content": "You walk Ruby toward the creek, explaining how to pan for gold. She's surprisingly\nattentive, asking good questions. But you keep glancing back at the Sheriff,\nwho is examining your dig site very carefully - too carefully.\n\n\"Silas,\" Ruby whispers urgently, \"he's planning to plant fake boundary markers\nto claim part of your land. I tried to refuse to help him, but he threatened\nto run me out of town. You need to stop him NOW.\"\n\nYou turn to see the Sheriff hammering something into the ground near your\nrichest vein of rock.\n    ",
+      "id": "ruby_distraction",
+      "metadata": [
+
+      ],
+      "name": "ruby_distraction",
+      "pid": "p6",
+      "position": {
+        "x": 0,
+        "y": 0
+      },
+      "size": {
+        "height": 100,
+        "width": 100
+      },
+      "tags": [
+
+      ],
+      "text": "You walk Ruby toward the creek, explaining how to pan for gold. She's surprisingly\nattentive, asking good questions. But you keep glancing back at the Sheriff,\nwho is examining your dig site very carefully - too carefully.\n\n\"Silas,\" Ruby whispers urgently, \"he's planning to plant fake boundary markers\nto claim part of your land. I tried to refuse to help him, but he threatened\nto run me out of town. You need to stop him NOW.\"\n\nYou turn to see the Sheriff hammering something into the ground near your\nrichest vein of rock.\n    "
+    },
+    {
+      "choices": [
+
+      ],
+      "content": "\"Thank you for the warning, Ruby, and for the... insurance,\" you say quietly,\nleaving the gun in the basket. \"But I handle my problems my own way. You should\nboth leave before this gets uglier.\"\n\nRuby looks hurt. \"I was trying to help...\"\n\n\"I know, and I appreciate it. But I work alone.\"\n\nShe nods sadly and remounts her horse. The Sheriff, sensing his plan has failed,\nfollows her back to town.\n\nYou return to your work with renewed vigor. Over the following months, you\nsuccessfully extract a good amount of gold - not a fortune, but enough to be\ncomfortable.\n\nHowever, you always wonder what might have been if you'd trusted Ruby and let\nher help. You hear she started her own successful business in town, and you\noccasionally regret being so independent.\n\n**DECENT ENDING - You succeeded alone, but missed out on something more.**\n\n*THE END*\n    ",
+      "id": "dismiss_both",
+      "metadata": [
+
+      ],
+      "name": "dismiss_both",
+      "pid": "p7",
+      "position": {
+        "x": 0,
+        "y": 0
+      },
+      "size": {
+        "height": 100,
+        "width": 100
+      },
+      "tags": [
+
+      ],
+      "text": "\"Thank you for the warning, Ruby, and for the... insurance,\" you say quietly,\nleaving the gun in the basket. \"But I handle my problems my own way. You should\nboth leave before this gets uglier.\"\n\nRuby looks hurt. \"I was trying to help...\"\n\n\"I know, and I appreciate it. But I work alone.\"\n\nShe nods sadly and remounts her horse. The Sheriff, sensing his plan has failed,\nfollows her back to town.\n\nYou return to your work with renewed vigor. Over the following months, you\nsuccessfully extract a good amount of gold - not a fortune, but enough to be\ncomfortable.\n\nHowever, you always wonder what might have been if you'd trusted Ruby and let\nher help. You hear she started her own successful business in town, and you\noccasionally regret being so independent.\n\n**DECENT ENDING - You succeeded alone, but missed out on something more.**\n\n*THE END*\n    "
+    },
+    {
+      "choices": [
+
+      ],
+      "content": "\"Ruby, it's not safe for you to walk back alone. Let me saddle up and escort\nyou to town. I need to file some papers anyway.\"\n\nShe smiles gratefully. \"Thank you, Silas.\"\n\nOn the ride to town, you learn more about Ruby. She's smart, ambitious, and\ntired of working in the saloon. She dreams of opening a legitimate business.\n\n\"What if,\" you propose, \"you became my business partner? I need someone to\nhandle the town side of things - registrations, supplies, selling the gold.\nI'd give you a percentage.\"\n\nRuby's eyes widen. \"You'd trust me with that?\"\n\n\"You stood up to Blackwood for me. Yes, I trust you.\"\n\nShe accepts. Your partnership thrives. Ruby handles all the town business with\nsharp negotiating skills, while you work the claim. The gold you find makes\nyou both prosperous.\n\nWithin a year, Ruby has opened her own assay office in town, with your mining\noperation as her primary client. You've both achieved your dreams.\n\n**EXCELLENT ENDING - Partnership and mutual support bring success to both!**\n\n*THE END*\n    ",
+      "id": "escort_ruby",
+      "metadata": [
+
+      ],
+      "name": "escort_ruby",
+      "pid": "p8",
+      "position": {
+        "x": 0,
+        "y": 0
+      },
+      "size": {
+        "height": 100,
+        "width": 100
+      },
+      "tags": [
+
+      ],
+      "text": "\"Ruby, it's not safe for you to walk back alone. Let me saddle up and escort\nyou to town. I need to file some papers anyway.\"\n\nShe smiles gratefully. \"Thank you, Silas.\"\n\nOn the ride to town, you learn more about Ruby. She's smart, ambitious, and\ntired of working in the saloon. She dreams of opening a legitimate business.\n\n\"What if,\" you propose, \"you became my business partner? I need someone to\nhandle the town side of things - registrations, supplies, selling the gold.\nI'd give you a percentage.\"\n\nRuby's eyes widen. \"You'd trust me with that?\"\n\n\"You stood up to Blackwood for me. Yes, I trust you.\"\n\nShe accepts. Your partnership thrives. Ruby handles all the town business with\nsharp negotiating skills, while you work the claim. The gold you find makes\nyou both prosperous.\n\nWithin a year, Ruby has opened her own assay office in town, with your mining\noperation as her primary client. You've both achieved your dreams.\n\n**EXCELLENT ENDING - Partnership and mutual support bring success to both!**\n\n*THE END*\n    "
+    },
+    {
+      "choices": [
+
+      ],
+      "content": "\"You heard the lady, Blackwood - or should I just call you Mister Blackwood now?\nYou're not a sheriff anymore. You're just a criminal trespassing on my claim.\nGet out before I exercise my legal right to defend my property.\"\n\nBlackwood's bluster deflates. Without his badge, he's just another crook, and\nRuby's revelation has stripped away his authority.\n\n\"You'll pay for this,\" he mutters, but he mounts his horse and rides away.\n\nRuby stays to help you. \"I couldn't stand by and watch him steal from honest\npeople anymore.\"\n\nTogether, you work the claim and strike a significant amount of gold. When the\nterritorial judge arrives, Ruby's testimony not only gets Blackwood arrested but\nalso earns you both a reputation for integrity.\n\nYour mining operation flourishes, and you become respected pillars of the community.\n\n**EXCELLENT ENDING - Justice and fortune both achieved!**\n\n*THE END*\n    ",
+      "id": "victory_order",
+      "metadata": [
+
+      ],
+      "name": "victory_order",
+      "pid": "p9",
+      "position": {
+        "x": 0,
+        "y": 0
+      },
+      "size": {
+        "height": 100,
+        "width": 100
+      },
+      "tags": [
+
+      ],
+      "text": "\"You heard the lady, Blackwood - or should I just call you Mister Blackwood now?\nYou're not a sheriff anymore. You're just a criminal trespassing on my claim.\nGet out before I exercise my legal right to defend my property.\"\n\nBlackwood's bluster deflates. Without his badge, he's just another crook, and\nRuby's revelation has stripped away his authority.\n\n\"You'll pay for this,\" he mutters, but he mounts his horse and rides away.\n\nRuby stays to help you. \"I couldn't stand by and watch him steal from honest\npeople anymore.\"\n\nTogether, you work the claim and strike a significant amount of gold. When the\nterritorial judge arrives, Ruby's testimony not only gets Blackwood arrested but\nalso earns you both a reputation for integrity.\n\nYour mining operation flourishes, and you become respected pillars of the community.\n\n**EXCELLENT ENDING - Justice and fortune both achieved!**\n\n*THE END*\n    "
+    },
+    {
+      "choices": [
+        {
+          "metadata": [
+
+          ],
+          "target_passage": "stay_focused_dig",
+          "text": "Keep digging - you're close to something big"
+        },
+        {
+          "metadata": [
+
+          ],
+          "target_passage": "ruby_warning",
+          "text": "Accept Ruby's offer and talk to her"
+        },
+        {
+          "metadata": [
+
+          ],
+          "target_passage": "confront_threat",
+          "text": "Challenge the Sheriff's claim about your land"
+        }
+      ],
+      "content": "\"Not interested, Sheriff!\" you shout, swinging your pickaxe again. The clang\nof metal on stone echoes across the hillside.\n\nThe Sheriff's expression hardens. \"You know, McCready, I've been hearing\nconcerns about your claim. Some folks say you might be on land that belongs\nto the mining company.\"\n\nRuby slides off her horse gracefully. \"Silas,\" she calls sweetly, \"why don't\nyou take a break? You look exhausted. I brought some fresh water and food\nfrom town.\"\n\nSomething about this feels wrong. The Sheriff is smirking, and Ruby's smile\ndoesn't reach her eyes.\n    ",
+      "id": "ignore_sheriff_dig",
+      "metadata": [
+
+      ],
+      "name": "ignore_sheriff_dig",
+      "pid": "p10",
+      "position": {
+        "x": 0,
+        "y": 0
+      },
+      "size": {
+        "height": 100,
+        "width": 100
+      },
+      "tags": [
+
+      ],
+      "text": "\"Not interested, Sheriff!\" you shout, swinging your pickaxe again. The clang\nof metal on stone echoes across the hillside.\n\nThe Sheriff's expression hardens. \"You know, McCready, I've been hearing\nconcerns about your claim. Some folks say you might be on land that belongs\nto the mining company.\"\n\nRuby slides off her horse gracefully. \"Silas,\" she calls sweetly, \"why don't\nyou take a break? You look exhausted. I brought some fresh water and food\nfrom town.\"\n\nSomething about this feels wrong. The Sheriff is smirking, and Ruby's smile\ndoesn't reach her eyes.\n    "
+    },
+    {
+      "choices": [
+        {
+          "metadata": [
+
+          ],
+          "target_passage": "show_boundaries",
+          "text": "Show him the boundaries, you know they're correct"
+        },
+        {
+          "metadata": [
+
+          ],
+          "target_passage": "stand_ground",
+          "text": "Refuse until he gets a proper warrant"
+        },
+        {
+          "metadata": [
+
+          ],
+          "target_passage": "teach_ruby",
+          "text": "Offer to show Ruby how to pan instead"
+        }
+      ],
+      "content": "\"Ruby, I appreciate the visit, but I need to keep an eye on my equipment.\nSheriff, I'll come with you while you check those papers.\"\n\nThe Sheriff frowns but can't refuse without revealing his true intentions.\nYou stay close as he makes a show of examining your claim documents.\n\nMeanwhile, Ruby quietly scoops up a pan of creek sediment and swirls it. Her\neyes widen - she's found gold on her first try!\n\n\"Silas,\" she says excitedly, \"is this...?\"\n\nThe Sheriff sees it too, and his expression darkens. \"McCready, I'm going to\nneed to see your claim boundaries. There might be... irregularities.\"\n    ",
+      "id": "watch_sheriff",
+      "metadata": [
+
+      ],
+      "name": "watch_sheriff",
+      "pid": "p11",
+      "position": {
+        "x": 0,
+        "y": 0
+      },
+      "size": {
+        "height": 100,
+        "width": 100
+      },
+      "tags": [
+
+      ],
+      "text": "\"Ruby, I appreciate the visit, but I need to keep an eye on my equipment.\nSheriff, I'll come with you while you check those papers.\"\n\nThe Sheriff frowns but can't refuse without revealing his true intentions.\nYou stay close as he makes a show of examining your claim documents.\n\nMeanwhile, Ruby quietly scoops up a pan of creek sediment and swirls it. Her\neyes widen - she's found gold on her first try!\n\n\"Silas,\" she says excitedly, \"is this...?\"\n\nThe Sheriff sees it too, and his expression darkens. \"McCready, I'm going to\nneed to see your claim boundaries. There might be... irregularities.\"\n    "
+    },
+    {
+      "choices": [
+        {
+          "metadata": [
+
+          ],
+          "target_passage": "ally_with_ruby",
+          "text": "Stand with Ruby against the Sheriff"
+        },
+        {
+          "metadata": [
+
+          ],
+          "target_passage": "shootout",
+          "text": "Draw your weapon and defend your claim"
+        },
+        {
+          "metadata": [
+
+          ],
+          "target_passage": "negotiate",
+          "text": "Propose a deal with the Sheriff"
+        }
+      ],
+      "content": "\"I know your game, Blackwood,\" you say firmly. \"You're trying to distract me\nso you can stake a claim to my find. Ruby, I don't know what he's promised you,\nbut you're better than being his pawn.\"\n\nThe Sheriff's hand moves to his gun. \"Careful, McCready. That sounds like you're\naccusing a lawman of corruption.\"\n\nRuby steps between you both. \"Stop! Silas, you're right. He offered me money\nto keep you busy while he... while he does something to your claim. But I couldn't\ndo it. I tried to warn you with my eyes.\"\n\n\"Ruby!\" the Sheriff snarls. \"You just cost yourself a month's wages!\"\n    ",
+      "id": "confront_sheriff",
+      "metadata": [
+
+      ],
+      "name": "confront_sheriff",
+      "pid": "p12",
+      "position": {
+        "x": 0,
+        "y": 0
+      },
+      "size": {
+        "height": 100,
+        "width": 100
+      },
+      "tags": [
+
+      ],
+      "text": "\"I know your game, Blackwood,\" you say firmly. \"You're trying to distract me\nso you can stake a claim to my find. Ruby, I don't know what he's promised you,\nbut you're better than being his pawn.\"\n\nThe Sheriff's hand moves to his gun. \"Careful, McCready. That sounds like you're\naccusing a lawman of corruption.\"\n\nRuby steps between you both. \"Stop! Silas, you're right. He offered me money\nto keep you busy while he... while he does something to your claim. But I couldn't\ndo it. I tried to warn you with my eyes.\"\n\n\"Ruby!\" the Sheriff snarls. \"You just cost yourself a month's wages!\"\n    "
+    },
+    {
+      "choices": [
+        {
+          "metadata": [
+
+          ],
+          "target_passage": "ruby_distraction",
+          "text": "Show Ruby around while the Sheriff checks papers"
+        },
+        {
+          "metadata": [
+
+          ],
+          "target_passage": "watch_sheriff",
+          "text": "Keep an eye on the Sheriff instead"
+        },
+        {
+          "metadata": [
+
+          ],
+          "target_passage": "stand_ground",
+          "text": "Refuse to let him search without proper authority"
+        }
+      ],
+      "content": "You set down your tools and approach them. \"What's this about, Sheriff?\"\n\nBlackwood grins. \"Just being neighborly, McCready. Ruby here mentioned she'd\nnever seen a real mining operation. Thought maybe you could show her the ropes\nwhile I... make sure everything's legal with your claim.\"\n\nRuby gives you an apologetic look. \"I really am curious about prospecting,\nSilas. The Sheriff was kind enough to offer me a ride out here.\"\n\nThe Sheriff dismounts and starts walking toward your equipment. \"Mind if I\ntake a look at your papers? Just routine, you understand.\"\n    ",
+      "id": "talk_to_sheriff",
+      "metadata": [
+
+      ],
+      "name": "talk_to_sheriff",
+      "pid": "p13",
+      "position": {
+        "x": 0,
+        "y": 0
+      },
+      "size": {
+        "height": 100,
+        "width": 100
+      },
+      "tags": [
+
+      ],
+      "text": "You set down your tools and approach them. \"What's this about, Sheriff?\"\n\nBlackwood grins. \"Just being neighborly, McCready. Ruby here mentioned she'd\nnever seen a real mining operation. Thought maybe you could show her the ropes\nwhile I... make sure everything's legal with your claim.\"\n\nRuby gives you an apologetic look. \"I really am curious about prospecting,\nSilas. The Sheriff was kind enough to offer me a ride out here.\"\n\nThe Sheriff dismounts and starts walking toward your equipment. \"Mind if I\ntake a look at your papers? Just routine, you understand.\"\n    "
+    },
+    {
+      "choices": [
+        {
+          "metadata": [
+
+          ],
+          "target_passage": "stay_focused_creek",
+          "text": "Stay focused on panning, be respectful but firm"
+        },
+        {
+          "metadata": [
+
+          ],
+          "target_passage": "ruby_warning",
+          "text": "Talk to Ruby and see what she really wants"
+        },
+        {
+          "metadata": [
+
+          ],
+          "target_passage": "confront_threat",
+          "text": "Confront the Sheriff's veiled threat"
+        }
+      ],
+      "content": "\"I'm busy, Sheriff,\" you call out, continuing to pan. \"Got no time for socializing.\"\n\nThe Sheriff's face darkens. \"Now that's mighty unfriendly, McCready. Here I am,\ntrying to ensure your claim is properly registered and protected, and you're\ntoo busy to show respect?\"\n\nRuby dismounts and walks to the creek's edge. \"Silas,\" she says softly, using\nyour first name. \"The Sheriff just wants to help. And I... I wanted to see you.\"\n\nThere's something in her eyes - a warning, perhaps? You notice the Sheriff's\nhand resting on his pistol.\n    ",
+      "id": "ignore_sheriff_creek",
+      "metadata": [
+
+      ],
+      "name": "ignore_sheriff_creek",
+      "pid": "p14",
+      "position": {
+        "x": 0,
+        "y": 0
+      },
+      "size": {
+        "height": 100,
+        "width": 100
+      },
+      "tags": [
+
+      ],
+      "text": "\"I'm busy, Sheriff,\" you call out, continuing to pan. \"Got no time for socializing.\"\n\nThe Sheriff's face darkens. \"Now that's mighty unfriendly, McCready. Here I am,\ntrying to ensure your claim is properly registered and protected, and you're\ntoo busy to show respect?\"\n\nRuby dismounts and walks to the creek's edge. \"Silas,\" she says softly, using\nyour first name. \"The Sheriff just wants to help. And I... I wanted to see you.\"\n\nThere's something in her eyes - a warning, perhaps? You notice the Sheriff's\nhand resting on his pistol.\n    "
+    },
+    {
+      "choices": [
+        {
+          "metadata": [
+
+          ],
+          "target_passage": "ignore_sheriff_creek",
+          "text": "Keep working and ignore them"
+        },
+        {
+          "metadata": [
+
+          ],
+          "target_passage": "talk_to_sheriff",
+          "text": "Stop and talk to the Sheriff"
+        },
+        {
+          "metadata": [
+
+          ],
+          "target_passage": "confront_sheriff",
+          "text": "Ask what this is about"
+        }
+      ],
+      "content": "You wade into the cold creek, your pan in hand. The icy water numbs your legs\nas you scoop up sediment and begin the rhythmic swirling motion. After an hour,\nyou've found several small flakes of gold - not a fortune, but promising.\n\nAs you work, you notice a rider approaching from town. It's Sheriff Blackwood,\na man known more for his greed than his justice. Behind him rides a woman in\na crimson dress - you recognize her as Ruby, one of the girls from the saloon.\n\n\"McCready!\" the Sheriff calls out. \"Working hard, I see. Mind if we have a word?\"\n    ",
+      "id": "creek_panning",
+      "metadata": [
+
+      ],
+      "name": "creek_panning",
+      "pid": "p15",
+      "position": {
+        "x": 0,
+        "y": 0
+      },
+      "size": {
+        "height": 100,
+        "width": 100
+      },
+      "tags": [
+
+      ],
+      "text": "You wade into the cold creek, your pan in hand. The icy water numbs your legs\nas you scoop up sediment and begin the rhythmic swirling motion. After an hour,\nyou've found several small flakes of gold - not a fortune, but promising.\n\nAs you work, you notice a rider approaching from town. It's Sheriff Blackwood,\na man known more for his greed than his justice. Behind him rides a woman in\na crimson dress - you recognize her as Ruby, one of the girls from the saloon.\n\n\"McCready!\" the Sheriff calls out. \"Working hard, I see. Mind if we have a word?\"\n    "
+    },
+    {
+      "choices": [
+
+      ],
+      "content": "You decide the best evidence is gold itself. You work the creek with intense\nfocus for the next three days, collecting nuggets and flakes.\n\nOn the third day, a gang of claim jumpers arrives - clearly sent by Blackwood.\nBut your camp is well-prepared, and you defend it successfully.\n\nWhen you finally ride to town with a pouch full of gold, Blackwood's fraud is\nobvious - no abandoned claim produces this much wealth!\n\nHowever, the delay costs you. The claim jumpers damaged some of your equipment,\nand legal fees to prosecute Blackwood eat into your profits.\n\nYou end up with a moderate fortune - comfortable but not wealthy.\n\n**GOOD ENDING - You got gold, but timing matters.**\n\n*THE END*\n    ",
+      "id": "gather_gold",
+      "metadata": [
+
+      ],
+      "name": "gather_gold",
+      "pid": "p16",
+      "position": {
+        "x": 0,
+        "y": 0
+      },
+      "size": {
+        "height": 100,
+        "width": 100
+      },
+      "tags": [
+
+      ],
+      "text": "You decide the best evidence is gold itself. You work the creek with intense\nfocus for the next three days, collecting nuggets and flakes.\n\nOn the third day, a gang of claim jumpers arrives - clearly sent by Blackwood.\nBut your camp is well-prepared, and you defend it successfully.\n\nWhen you finally ride to town with a pouch full of gold, Blackwood's fraud is\nobvious - no abandoned claim produces this much wealth!\n\nHowever, the delay costs you. The claim jumpers damaged some of your equipment,\nand legal fees to prosecute Blackwood eat into your profits.\n\nYou end up with a moderate fortune - comfortable but not wealthy.\n\n**GOOD ENDING - You got gold, but timing matters.**\n\n*THE END*\n    "
+    },
+    {
+      "choices": [
+        {
+          "metadata": [
+
+          ],
+          "target_passage": "file_claim",
+          "text": "Ride to town immediately to protect your claim"
+        },
+        {
+          "metadata": [
+
+          ],
+          "target_passage": "gather_gold",
+          "text": "Keep working and gather more gold as evidence"
+        },
+        {
+          "metadata": [
+
+          ],
+          "target_passage": "set_trap",
+          "text": "Set a trap for claim jumpers"
+        }
+      ],
+      "content": "\"Sheriff, I mean no disrespect, but this claim is legally mine and I'm working\nit. If you have official business, come back with proper documentation.\"\n\nYou continue panning, and your persistence pays off. Your next pan contains\na nugget the size of your thumb! You carefully pocket it while trying to look\ncasual.\n\nThe Sheriff, seeing he's not making progress, grows angry. \"Fine, McCready.\nBut don't come crying to me when claim jumpers show up. Ruby, we're leaving.\"\n\nAs they ride away, Ruby drops a small piece of paper. You retrieve it:\n\"He plans to report your claim as abandoned. File in town today! - R\"\n    ",
+      "id": "stay_focused_creek",
+      "metadata": [
+
+      ],
+      "name": "stay_focused_creek",
+      "pid": "p17",
+      "position": {
+        "x": 0,
+        "y": 0
+      },
+      "size": {
+        "height": 100,
+        "width": 100
+      },
+      "tags": [
+
+      ],
+      "text": "\"Sheriff, I mean no disrespect, but this claim is legally mine and I'm working\nit. If you have official business, come back with proper documentation.\"\n\nYou continue panning, and your persistence pays off. Your next pan contains\na nugget the size of your thumb! You carefully pocket it while trying to look\ncasual.\n\nThe Sheriff, seeing he's not making progress, grows angry. \"Fine, McCready.\nBut don't come crying to me when claim jumpers show up. Ruby, we're leaving.\"\n\nAs they ride away, Ruby drops a small piece of paper. You retrieve it:\n\"He plans to report your claim as abandoned. File in town today! - R\"\n    "
+    },
+    {
+      "choices": [
+
+      ],
+      "content": "You shrug. \"Looks better than it is. Probably just gold plate, not a true vein.\nI've been fooled before.\"\n\nBlackwood squints at the rock. \"Let me be the judge of that.\"\n\nHe dismounts and approaches your excavation. As he does, you notice Ruby\nsubtly shaking her head at you - trying to warn you of something.\n\nThe Sheriff examines the vein and realizes you're lying. \"This is pure gold,\nMcCready. And you're a fool if you think I'll let you keep it.\"\n\nHe draws his gun. Ruby screams.\n\nYou have no choice but to fight. The struggle is desperate, and while you\neventually overcome Blackwood, the violence attracts attention from other\nprospectors who swarm the area.\n\nYour claim becomes contested by dozens of parties. The legal mess takes years\nto resolve, and by the time you win, the gold is largely gone.\n\n**BAD ENDING - Deception backfired.**\n\n*THE END*\n    ",
+      "id": "downplay_find",
+      "metadata": [
+
+      ],
+      "name": "downplay_find",
+      "pid": "p18",
+      "position": {
+        "x": 0,
+        "y": 0
+      },
+      "size": {
+        "height": 100,
+        "width": 100
+      },
+      "tags": [
+
+      ],
+      "text": "You shrug. \"Looks better than it is. Probably just gold plate, not a true vein.\nI've been fooled before.\"\n\nBlackwood squints at the rock. \"Let me be the judge of that.\"\n\nHe dismounts and approaches your excavation. As he does, you notice Ruby\nsubtly shaking her head at you - trying to warn you of something.\n\nThe Sheriff examines the vein and realizes you're lying. \"This is pure gold,\nMcCready. And you're a fool if you think I'll let you keep it.\"\n\nHe draws his gun. Ruby screams.\n\nYou have no choice but to fight. The struggle is desperate, and while you\neventually overcome Blackwood, the violence attracts attention from other\nprospectors who swarm the area.\n\nYour claim becomes contested by dozens of parties. The legal mess takes years\nto resolve, and by the time you win, the gold is largely gone.\n\n**BAD ENDING - Deception backfired.**\n\n*THE END*\n    "
+    },
+    {
+      "choices": [
+
+      ],
+      "content": "\"Blackwood, I don't want trouble. If you ride out now and never come back to my\nclaim, I'll forget this happened. Ruby and I won't testify about what you tried\nto do here. You can leave the territory with your reputation intact.\"\n\nThe former sheriff glares at you, then at Ruby. \"You're letting me go?\"\n\n\"I'm giving you a chance to start over somewhere else. Take it.\"\n\nAfter a long moment, Blackwood nods curtly and rides away.\n\nRuby watches him go. \"That was generous of you, Silas. Maybe too generous.\"\n\n\"Maybe. But I'd rather mine gold than fight legal battles.\"\n\nYou and Ruby work the claim together. The gold you find is substantial, and\nwithout Blackwood's interference, you can focus on honest work.\n\nYour mercy proves wise - Blackwood never returns, and the territorial judge never\ninvestigates your claim. You and Ruby build a prosperous mining operation in peace.\n\n**VERY GOOD ENDING - Mercy and wisdom bring lasting success.**\n\n*THE END*\n    ",
+      "id": "merciful_victory",
+      "metadata": [
+
+      ],
+      "name": "merciful_victory",
+      "pid": "p19",
+      "position": {
+        "x": 0,
+        "y": 0
+      },
+      "size": {
+        "height": 100,
+        "width": 100
+      },
+      "tags": [
+
+      ],
+      "text": "\"Blackwood, I don't want trouble. If you ride out now and never come back to my\nclaim, I'll forget this happened. Ruby and I won't testify about what you tried\nto do here. You can leave the territory with your reputation intact.\"\n\nThe former sheriff glares at you, then at Ruby. \"You're letting me go?\"\n\n\"I'm giving you a chance to start over somewhere else. Take it.\"\n\nAfter a long moment, Blackwood nods curtly and rides away.\n\nRuby watches him go. \"That was generous of you, Silas. Maybe too generous.\"\n\n\"Maybe. But I'd rather mine gold than fight legal battles.\"\n\nYou and Ruby work the claim together. The gold you find is substantial, and\nwithout Blackwood's interference, you can focus on honest work.\n\nYour mercy proves wise - Blackwood never returns, and the territorial judge never\ninvestigates your claim. You and Ruby build a prosperous mining operation in peace.\n\n**VERY GOOD ENDING - Mercy and wisdom bring lasting success.**\n\n*THE END*\n    "
+    },
+    {
+      "choices": [
+
+      ],
+      "content": "You reach for your pistol, but Blackwood is faster. The corrupt sheriff has\ndrawn his gun before your hand touches the grip.\n\n\"Don't be a fool, McCready,\" he warns.\n\nRuby screams and tackles the Sheriff's arm just as he fires. The shot goes wide,\ngiving you time to dive behind a rock. Return fire echoes across the hills.\n\nThe gunfight is brief but intense. In the end, you manage to wound Blackwood in\nthe shoulder. He drops his gun and surrenders.\n\nWhen the territorial marshal arrives to investigate the gunshots, Ruby testifies\nto Blackwood's corruption. The former sheriff is arrested and you keep your claim.\n\nHowever, the violence attracts unwanted attention. Other prospectors and mining\ncompanies take interest in your claim, and you spend years fighting legal battles\ninstead of mining gold.\n\n**ENDING - Justice served, but at a cost.**\n\n*THE END*\n    ",
+      "id": "shootout",
+      "metadata": [
+
+      ],
+      "name": "shootout",
+      "pid": "p20",
+      "position": {
+        "x": 0,
+        "y": 0
+      },
+      "size": {
+        "height": 100,
+        "width": 100
+      },
+      "tags": [
+
+      ],
+      "text": "You reach for your pistol, but Blackwood is faster. The corrupt sheriff has\ndrawn his gun before your hand touches the grip.\n\n\"Don't be a fool, McCready,\" he warns.\n\nRuby screams and tackles the Sheriff's arm just as he fires. The shot goes wide,\ngiving you time to dive behind a rock. Return fire echoes across the hills.\n\nThe gunfight is brief but intense. In the end, you manage to wound Blackwood in\nthe shoulder. He drops his gun and surrenders.\n\nWhen the territorial marshal arrives to investigate the gunshots, Ruby testifies\nto Blackwood's corruption. The former sheriff is arrested and you keep your claim.\n\nHowever, the violence attracts unwanted attention. Other prospectors and mining\ncompanies take interest in your claim, and you spend years fighting legal battles\ninstead of mining gold.\n\n**ENDING - Justice served, but at a cost.**\n\n*THE END*\n    "
+    },
+    {
+      "choices": [
+
+      ],
+      "content": "You prepare for claim jumpers by setting up camp in a more defensible position\nand rigging some warning systems with bells and tripwires.\n\nSure enough, three nights later, a gang of men arrives to \"claim\" your abandoned\nsite. Your warning bells give you time to prepare.\n\nYou fire warning shots and shout that you're defending your legal claim. The\njumpers, realizing you're not absent, retreat.\n\nHowever, in your focus on defense, you don't realize Blackwood has filed false\npaperwork in town. When you finally return to Deadwood, your claim has been\nawarded to a mining company that paid Blackwood a bribe.\n\nLegal battles ensue. You eventually win, but years have passed and much of the\ngold has been extracted by others.\n\n**MIXED ENDING - You protected your claim but lost your fortune.**\n\n*THE END*\n    ",
+      "id": "set_trap",
+      "metadata": [
+
+      ],
+      "name": "set_trap",
+      "pid": "p21",
+      "position": {
+        "x": 0,
+        "y": 0
+      },
+      "size": {
+        "height": 100,
+        "width": 100
+      },
+      "tags": [
+
+      ],
+      "text": "You prepare for claim jumpers by setting up camp in a more defensible position\nand rigging some warning systems with bells and tripwires.\n\nSure enough, three nights later, a gang of men arrives to \"claim\" your abandoned\nsite. Your warning bells give you time to prepare.\n\nYou fire warning shots and shout that you're defending your legal claim. The\njumpers, realizing you're not absent, retreat.\n\nHowever, in your focus on defense, you don't realize Blackwood has filed false\npaperwork in town. When you finally return to Deadwood, your claim has been\nawarded to a mining company that paid Blackwood a bribe.\n\nLegal battles ensue. You eventually win, but years have passed and much of the\ngold has been extracted by others.\n\n**MIXED ENDING - You protected your claim but lost your fortune.**\n\n*THE END*\n    "
+    },
+    {
+      "choices": [
+
+      ],
+      "content": "Ruby walks back to town alone while you return to your work. You're a solitary\nman by nature, and you prefer it that way.\n\nOver the following months, you work the claim diligently. The gold you find is\ndecent - enough to live comfortably, though not enough to be truly wealthy.\n\nYou hear news from town occasionally. Ruby left the saloon and started a\nboarding house, which is doing well. Blackwood was eventually arrested for\nother crimes and run out of the territory.\n\nYou sometimes wonder if you should have taken Ruby up on her offer of friendship\nor partnership. But you have your independence, your claim, and enough gold to\nbe content.\n\nIt's a solitary life, but it's yours.\n\n**DECENT ENDING - Independence brings modest success and solitude.**\n\n*THE END*\n    ",
+      "id": "work_alone",
+      "metadata": [
+
+      ],
+      "name": "work_alone",
+      "pid": "p22",
+      "position": {
+        "x": 0,
+        "y": 0
+      },
+      "size": {
+        "height": 100,
+        "width": 100
+      },
+      "tags": [
+
+      ],
+      "text": "Ruby walks back to town alone while you return to your work. You're a solitary\nman by nature, and you prefer it that way.\n\nOver the following months, you work the claim diligently. The gold you find is\ndecent - enough to live comfortably, though not enough to be truly wealthy.\n\nYou hear news from town occasionally. Ruby left the saloon and started a\nboarding house, which is doing well. Blackwood was eventually arrested for\nother crimes and run out of the territory.\n\nYou sometimes wonder if you should have taken Ruby up on her offer of friendship\nor partnership. But you have your independence, your claim, and enough gold to\nbe content.\n\nIt's a solitary life, but it's yours.\n\n**DECENT ENDING - Independence brings modest success and solitude.**\n\n*THE END*\n    "
+    },
+    {
+      "choices": [
+        {
+          "metadata": [
+
+          ],
+          "target_passage": "escort_ruby",
+          "text": "Offer to escort Ruby back to town safely"
+        },
+        {
+          "metadata": [
+
+          ],
+          "target_passage": "teach_ruby",
+          "text": "Invite Ruby to stay and learn prospecting"
+        },
+        {
+          "metadata": [
+
+          ],
+          "target_passage": "work_alone",
+          "text": "Return to work, let Ruby make her own way"
+        }
+      ],
+      "content": "\"Sheriff, unless you have a warrant or a court order, you're going to have to\nleave my claim. This is private property, legally registered and properly marked.\"\n\nBlackwood's hand hovers over his pistol. \"You refusing a lawful order, boy?\"\n\n\"I'm refusing an illegal search,\" you reply calmly. \"Ruby is witness to this\nconversation. If anything happens to me or my claim, she knows exactly what\nyou threatened.\"\n\nRuby nods nervously. \"It's true, Sheriff. Maybe we should just go.\"\n\nThe Sheriff glares at both of you, calculating his options. After a long moment,\nhe spits on the ground.\n\n\"This ain't over, McCready. Not by a long shot.\" He mounts his horse.\n\nRuby starts to follow, then turns back. \"I'm not going with you, Blackwood.\nI'll walk back to town.\"\n    ",
+      "id": "stand_ground",
+      "metadata": [
+
+      ],
+      "name": "stand_ground",
+      "pid": "p23",
+      "position": {
+        "x": 0,
+        "y": 0
+      },
+      "size": {
+        "height": 100,
+        "width": 100
+      },
+      "tags": [
+
+      ],
+      "text": "\"Sheriff, unless you have a warrant or a court order, you're going to have to\nleave my claim. This is private property, legally registered and properly marked.\"\n\nBlackwood's hand hovers over his pistol. \"You refusing a lawful order, boy?\"\n\n\"I'm refusing an illegal search,\" you reply calmly. \"Ruby is witness to this\nconversation. If anything happens to me or my claim, she knows exactly what\nyou threatened.\"\n\nRuby nods nervously. \"It's true, Sheriff. Maybe we should just go.\"\n\nThe Sheriff glares at both of you, calculating his options. After a long moment,\nhe spits on the ground.\n\n\"This ain't over, McCready. Not by a long shot.\" He mounts his horse.\n\nRuby starts to follow, then turns back. \"I'm not going with you, Blackwood.\nI'll walk back to town.\"\n    "
+    },
+    {
+      "choices": [
+
+      ],
+      "content": "\"Sheriff, your 'inspection' can wait. Ruby, would you like to learn how to\nactually pan for gold instead of just watching?\"\n\nRuby's face lights up. \"I'd love to!\"\n\nYou show her the proper technique - how to swirl the pan, how to identify\ngold versus pyrite, how to read the creek bed. She's a natural student.\n\nBlackwood, seeing his plan failing, grows impatient. \"I don't have time for\nthis nonsense!\"\n\n\"Then leave,\" you suggest. \"Your 'inspection' was never official anyway.\"\n\nFrustrated and outmaneuvered, the Sheriff rides off alone.\n\nRuby stays for several hours, learning and finding small amounts of gold. \"This\nis wonderful! I've never done anything like this.\"\n\nYou see an opportunity. \"How would you like a job? I could use a partner who's\nsmart and trustworthy.\"\n\nRuby accepts enthusiastically. Together, you build a successful mining operation.\nShe proves to be excellent at the business side, while you handle the prospecting.\n\n**VERY GOOD ENDING - Teaching and trust create lasting partnership.**\n\n*THE END*\n    ",
+      "id": "teach_ruby",
+      "metadata": [
+
+      ],
+      "name": "teach_ruby",
+      "pid": "p24",
+      "position": {
+        "x": 0,
+        "y": 0
+      },
+      "size": {
+        "height": 100,
+        "width": 100
+      },
+      "tags": [
+
+      ],
+      "text": "\"Sheriff, your 'inspection' can wait. Ruby, would you like to learn how to\nactually pan for gold instead of just watching?\"\n\nRuby's face lights up. \"I'd love to!\"\n\nYou show her the proper technique - how to swirl the pan, how to identify\ngold versus pyrite, how to read the creek bed. She's a natural student.\n\nBlackwood, seeing his plan failing, grows impatient. \"I don't have time for\nthis nonsense!\"\n\n\"Then leave,\" you suggest. \"Your 'inspection' was never official anyway.\"\n\nFrustrated and outmaneuvered, the Sheriff rides off alone.\n\nRuby stays for several hours, learning and finding small amounts of gold. \"This\nis wonderful! I've never done anything like this.\"\n\nYou see an opportunity. \"How would you like a job? I could use a partner who's\nsmart and trustworthy.\"\n\nRuby accepts enthusiastically. Together, you build a successful mining operation.\nShe proves to be excellent at the business side, while you handle the prospecting.\n\n**VERY GOOD ENDING - Teaching and trust create lasting partnership.**\n\n*THE END*\n    "
+    },
+    {
+      "choices": [
+        {
+          "metadata": [
+
+          ],
+          "target_passage": "defend_claim",
+          "text": "Refuse and order them off your claim"
+        },
+        {
+          "metadata": [
+
+          ],
+          "target_passage": "downplay_find",
+          "text": "Pretend the gold is less impressive than it is"
+        },
+        {
+          "metadata": [
+
+          ],
+          "target_passage": "partner_with_ruby",
+          "text": "Offer Ruby a share, not the Sheriff"
+        }
+      ],
+      "content": "You ignore them both and swing your pickaxe with renewed vigor. CRACK! The\nrock face splits open, revealing a thick vein of gold-bearing quartz that\nruns deep into the hillside.\n\n\"Holy Moses...\" you breathe.\n\nThe Sheriff sees it too. His eyes widen with greed. \"Now, McCready, let's talk\npartnership. That's too much gold for one man to work. I could provide...\nprotection.\"\n\nRuby grabs the Sheriff's arm. \"We should go, Sheriff. The man's clearly busy.\"\n\n\"Quiet!\" he snaps at her, not taking his eyes off the gold.\n    ",
+      "id": "stay_focused_dig",
+      "metadata": [
+
+      ],
+      "name": "stay_focused_dig",
+      "pid": "p25",
+      "position": {
+        "x": 0,
+        "y": 0
+      },
+      "size": {
+        "height": 100,
+        "width": 100
+      },
+      "tags": [
+
+      ],
+      "text": "You ignore them both and swing your pickaxe with renewed vigor. CRACK! The\nrock face splits open, revealing a thick vein of gold-bearing quartz that\nruns deep into the hillside.\n\n\"Holy Moses...\" you breathe.\n\nThe Sheriff sees it too. His eyes widen with greed. \"Now, McCready, let's talk\npartnership. That's too much gold for one man to work. I could provide...\nprotection.\"\n\nRuby grabs the Sheriff's arm. \"We should go, Sheriff. The man's clearly busy.\"\n\n\"Quiet!\" he snaps at her, not taking his eyes off the gold.\n    "
+    },
+    {
+      "choices": [
+
+      ],
+      "content": "\"Come on, Sheriff. I'll show you every boundary marker. They're all legal and\nproperly placed.\"\n\nYou walk him around the claim, pointing out each registered marker. As you do,\nRuby quietly pans the creek and collects several small nuggets as evidence.\n\nThe Sheriff can't find any fault with your boundaries - they're perfect. He\ngrows increasingly frustrated.\n\n\"Seems like everything's in order,\" you say pleasantly. \"Anything else?\"\n\nBlackwood glares at you, knowing he's been outmaneuvered. \"No. I suppose not.\"\n\nAs they prepare to leave, Ruby shows you her pan. \"I found these in just a\nfew minutes, Silas. This is a rich claim!\"\n\nThe Sheriff overhears and his face darkens, but there's nothing he can do.\n\nAfter they leave, you find that Ruby dropped her nuggets on purpose - to show\nyou and frustrate Blackwood simultaneously.\n\nYou work the claim successfully and strike modest riches. Ruby visits often,\nand eventually you offer her a partnership in the operation.\n\n**GOOD ENDING - Preparation and cleverness win the day.**\n\n*THE END*\n    ",
+      "id": "show_boundaries",
+      "metadata": [
+
+      ],
+      "name": "show_boundaries",
+      "pid": "p26",
+      "position": {
+        "x": 0,
+        "y": 0
+      },
+      "size": {
+        "height": 100,
+        "width": 100
+      },
+      "tags": [
+
+      ],
+      "text": "\"Come on, Sheriff. I'll show you every boundary marker. They're all legal and\nproperly placed.\"\n\nYou walk him around the claim, pointing out each registered marker. As you do,\nRuby quietly pans the creek and collects several small nuggets as evidence.\n\nThe Sheriff can't find any fault with your boundaries - they're perfect. He\ngrows increasingly frustrated.\n\n\"Seems like everything's in order,\" you say pleasantly. \"Anything else?\"\n\nBlackwood glares at you, knowing he's been outmaneuvered. \"No. I suppose not.\"\n\nAs they prepare to leave, Ruby shows you her pan. \"I found these in just a\nfew minutes, Silas. This is a rich claim!\"\n\nThe Sheriff overhears and his face darkens, but there's nothing he can do.\n\nAfter they leave, you find that Ruby dropped her nuggets on purpose - to show\nyou and frustrate Blackwood simultaneously.\n\nYou work the claim successfully and strike modest riches. Ruby visits often,\nand eventually you offer her a partnership in the operation.\n\n**GOOD ENDING - Preparation and cleverness win the day.**\n\n*THE END*\n    "
+    },
+    {
+      "choices": [
+
+      ],
+      "content": "You immediately pack up your most valuable tools and the gold you've found,\nthen ride hard to Deadwood.\n\nAt the claims office, you find that Blackwood has indeed tried to file a false\nreport of abandonment - dated for tomorrow. You're just in time to prevent it!\n\nYou file a formal complaint and show your gold samples as proof of active mining.\nThe clerk validates your claim and notes Blackwood's attempted fraud.\n\nWhen the territorial marshal hears about this, Blackwood is arrested. Your claim\nis secure.\n\nYou return to find your camp untouched - Ruby apparently warned off any claim\njumpers Blackwood might have sent.\n\nThe gold deposit proves to be excellent. You strike it rich and eventually thank\nRuby by funding her own business - a respectable boarding house in town.\n\n**EXCELLENT ENDING - Quick action saves your fortune!**\n\n*THE END*\n    ",
+      "id": "file_claim",
+      "metadata": [
+
+      ],
+      "name": "file_claim",
+      "pid": "p27",
+      "position": {
+        "x": 0,
+        "y": 0
+      },
+      "size": {
+        "height": 100,
+        "width": 100
+      },
+      "tags": [
+
+      ],
+      "text": "You immediately pack up your most valuable tools and the gold you've found,\nthen ride hard to Deadwood.\n\nAt the claims office, you find that Blackwood has indeed tried to file a false\nreport of abandonment - dated for tomorrow. You're just in time to prevent it!\n\nYou file a formal complaint and show your gold samples as proof of active mining.\nThe clerk validates your claim and notes Blackwood's attempted fraud.\n\nWhen the territorial marshal hears about this, Blackwood is arrested. Your claim\nis secure.\n\nYou return to find your camp untouched - Ruby apparently warned off any claim\njumpers Blackwood might have sent.\n\nThe gold deposit proves to be excellent. You strike it rich and eventually thank\nRuby by funding her own business - a respectable boarding house in town.\n\n**EXCELLENT ENDING - Quick action saves your fortune!**\n\n*THE END*\n    "
+    },
+    {
+      "choices": [
+        {
+          "metadata": [
+
+          ],
+          "target_passage": "creek_panning",
+          "text": "Start panning in the creek"
+        },
+        {
+          "metadata": [
+
+          ],
+          "target_passage": "rock_digging",
+          "text": "Begin digging at the rocky outcrop"
+        },
+        {
+          "metadata": [
+
+          ],
+          "target_passage": "scouting",
+          "text": "Scout both locations first"
+        }
+      ],
+      "content": "You're Silas McCready, a weathered prospector who's spent three long months\nsearching for gold in the rugged hills outside Deadwood. Your supplies are running\nlow, but you've finally found a promising claim - a creek bed that sparkles with\ngolden flecks and a rocky outcrop that might contain a rich vein.\n\nToday, you need to decide where to focus your efforts.\n    ",
+      "id": "start",
+      "metadata": [
+
+      ],
+      "name": "start",
+      "pid": "p28",
+      "position": {
+        "x": 0,
+        "y": 0
+      },
+      "size": {
+        "height": 100,
+        "width": 100
+      },
+      "tags": [
+
+      ],
+      "text": "You're Silas McCready, a weathered prospector who's spent three long months\nsearching for gold in the rugged hills outside Deadwood. Your supplies are running\nlow, but you've finally found a promising claim - a creek bed that sparkles with\ngolden flecks and a rocky outcrop that might contain a rich vein.\n\nToday, you need to decide where to focus your efforts.\n    "
+    },
+    {
+      "choices": [
+
+      ],
+      "content": "You look at Ruby. \"You tried to warn me. You came here to help when you could\nhave just gone along with his scheme. Ruby, how would you like to be my partner?\nFifty-fifty split of whatever we find.\"\n\nRuby's eyes widen. \"Are you serious?\"\n\n\"Dead serious. I need someone I can trust, and you've proven you're honest.\"\n\nThe Sheriff sputters. \"Now wait just a minute—\"\n\n\"You have no claim here, Blackwood. Ruby does. She helped me see through your\nscheme, and she'll help me work this claim. Now leave.\"\n\nFaced with two witnesses who know his plans, Blackwood has no choice but to\nretreat.\n\nYou and Ruby work the claim together. Her sharp mind and your prospecting skills\nmake a formidable team. The gold you find makes you both wealthy.\n\nYou establish the town's first woman-owned mining company, with Ruby as president.\nIt becomes a model for fair labor practices and community investment.\n\nYears later, your partnership becomes a marriage, and you build a life together\nbuilt on mutual respect and honesty.\n\n**BEST ENDING - Partnership, prosperity, and true love!**\n\n*THE END*\n    ",
+      "id": "partner_with_ruby",
+      "metadata": [
+
+      ],
+      "name": "partner_with_ruby",
+      "pid": "p29",
+      "position": {
+        "x": 0,
+        "y": 0
+      },
+      "size": {
+        "height": 100,
+        "width": 100
+      },
+      "tags": [
+
+      ],
+      "text": "You look at Ruby. \"You tried to warn me. You came here to help when you could\nhave just gone along with his scheme. Ruby, how would you like to be my partner?\nFifty-fifty split of whatever we find.\"\n\nRuby's eyes widen. \"Are you serious?\"\n\n\"Dead serious. I need someone I can trust, and you've proven you're honest.\"\n\nThe Sheriff sputters. \"Now wait just a minute—\"\n\n\"You have no claim here, Blackwood. Ruby does. She helped me see through your\nscheme, and she'll help me work this claim. Now leave.\"\n\nFaced with two witnesses who know his plans, Blackwood has no choice but to\nretreat.\n\nYou and Ruby work the claim together. Her sharp mind and your prospecting skills\nmake a formidable team. The gold you find makes you both wealthy.\n\nYou establish the town's first woman-owned mining company, with Ruby as president.\nIt becomes a model for fair labor practices and community investment.\n\nYears later, your partnership becomes a marriage, and you build a life together\nbuilt on mutual respect and honesty.\n\n**BEST ENDING - Partnership, prosperity, and true love!**\n\n*THE END*\n    "
+    },
+    {
+      "choices": [
+        {
+          "metadata": [
+
+          ],
+          "target_passage": "armed_confrontation",
+          "text": "Take the gun and confront the Sheriff"
+        },
+        {
+          "metadata": [
+
+          ],
+          "target_passage": "dismiss_both",
+          "text": "Thank Ruby and send them both away"
+        },
+        {
+          "metadata": [
+
+          ],
+          "target_passage": "partner_with_ruby",
+          "text": "Propose that Ruby stay and help you work the claim"
+        }
+      ],
+      "content": "You climb out of the creek (or step away from your dig) and approach Ruby,\naccepting the water she offers.\n\n\"Thank you, Ruby,\" you say quietly. \"What's really going on here?\"\n\nShe glances at the Sheriff, who's pretending to study the horizon. \"He knows\nyou've found something valuable. He wants me to distract you while he tampers\nwith your claim markers or your equipment. Silas, I don't want any part of\nhis schemes. I came to warn you.\"\n\nThe Sheriff calls out, \"Ruby! Stop boring the man with gossip and show him\nthat picnic basket!\"\n\nRuby whispers, \"There's a gun in the basket. I thought you might need it.\"\n    ",
+      "id": "ruby_warning",
+      "metadata": [
+
+      ],
+      "name": "ruby_warning",
+      "pid": "p30",
+      "position": {
+        "x": 0,
+        "y": 0
+      },
+      "size": {
+        "height": 100,
+        "width": 100
+      },
+      "tags": [
+
+      ],
+      "text": "You climb out of the creek (or step away from your dig) and approach Ruby,\naccepting the water she offers.\n\n\"Thank you, Ruby,\" you say quietly. \"What's really going on here?\"\n\nShe glances at the Sheriff, who's pretending to study the horizon. \"He knows\nyou've found something valuable. He wants me to distract you while he tampers\nwith your claim markers or your equipment. Silas, I don't want any part of\nhis schemes. I came to warn you.\"\n\nThe Sheriff calls out, \"Ruby! Stop boring the man with gossip and show him\nthat picnic basket!\"\n\nRuby whispers, \"There's a gun in the basket. I thought you might need it.\"\n    "
+    },
+    {
+      "choices": [
+
+      ],
+      "content": "\"Sheriff, let's be reasonable men. I'll give you 10% of what I find if you\nprovide legitimate protection and keep claim jumpers away.\"\n\nBlackwood considers this, his greed warring with his pride. \"Twenty percent.\"\n\n\"Fifteen, and that's my final offer.\"\n\n\"Deal,\" he agrees.\n\nRuby looks disappointed. \"Silas, you can't trust him...\"\n\nOver the next few months, the arrangement works - barely. Blackwood does keep\nother thieves away, but he constantly tries to renegotiate for a bigger share.\nThe gold you find is substantial, but you're always looking over your shoulder.\n\nEventually, you sell the claim to a mining company and leave the territory,\nreasonably wealthy but without peace of mind.\n\n**ENDING - Compromise brings gold but not satisfaction.**\n\n*THE END*\n    ",
+      "id": "negotiate",
+      "metadata": [
+
+      ],
+      "name": "negotiate",
+      "pid": "p31",
+      "position": {
+        "x": 0,
+        "y": 0
+      },
+      "size": {
+        "height": 100,
+        "width": 100
+      },
+      "tags": [
+
+      ],
+      "text": "\"Sheriff, let's be reasonable men. I'll give you 10% of what I find if you\nprovide legitimate protection and keep claim jumpers away.\"\n\nBlackwood considers this, his greed warring with his pride. \"Twenty percent.\"\n\n\"Fifteen, and that's my final offer.\"\n\n\"Deal,\" he agrees.\n\nRuby looks disappointed. \"Silas, you can't trust him...\"\n\nOver the next few months, the arrangement works - barely. Blackwood does keep\nother thieves away, but he constantly tries to renegotiate for a bigger share.\nThe gold you find is substantial, but you're always looking over your shoulder.\n\nEventually, you sell the claim to a mining company and leave the territory,\nreasonably wealthy but without peace of mind.\n\n**ENDING - Compromise brings gold but not satisfaction.**\n\n*THE END*\n    "
+    },
+    {
+      "choices": [
+
+      ],
+      "content": "You sprint back to the dig site, Ruby running beside you.\n\n\"Blackwood! Step away from my claim!\"\n\nThe Sheriff whirls around, a stake in his hand. \"Just marking some boundaries,\nMcCready. Nothing illegal about that.\"\n\n\"Those aren't the real boundaries and you know it!\"\n\nRuby points at the stake. \"I can testify to exactly where he's placing that\nmarker. That's fraud, Sheriff!\"\n\nCaught in the act with a witness, Blackwood has no choice but to drop the stake\nand leave. He rides off cursing, but his plan is foiled.\n\nYou thank Ruby profusely and offer her a job as your partner. Together, you work\nthe claim properly and file all the correct documentation in town.\n\nThe gold deposit proves to be modestly profitable - enough to set you both up\nwith a comfortable life, if not spectacular riches.\n\n**GOOD ENDING - Honesty and vigilance pay off.**\n\n*THE END*\n    ",
+      "id": "stop_sheriff",
+      "metadata": [
+
+      ],
+      "name": "stop_sheriff",
+      "pid": "p32",
+      "position": {
+        "x": 0,
+        "y": 0
+      },
+      "size": {
+        "height": 100,
+        "width": 100
+      },
+      "tags": [
+
+      ],
+      "text": "You sprint back to the dig site, Ruby running beside you.\n\n\"Blackwood! Step away from my claim!\"\n\nThe Sheriff whirls around, a stake in his hand. \"Just marking some boundaries,\nMcCready. Nothing illegal about that.\"\n\n\"Those aren't the real boundaries and you know it!\"\n\nRuby points at the stake. \"I can testify to exactly where he's placing that\nmarker. That's fraud, Sheriff!\"\n\nCaught in the act with a witness, Blackwood has no choice but to drop the stake\nand leave. He rides off cursing, but his plan is foiled.\n\nYou thank Ruby profusely and offer her a job as your partner. Together, you work\nthe claim properly and file all the correct documentation in town.\n\nThe gold deposit proves to be modestly profitable - enough to set you both up\nwith a comfortable life, if not spectacular riches.\n\n**GOOD ENDING - Honesty and vigilance pay off.**\n\n*THE END*\n    "
+    },
+    {
+      "choices": [
+
+      ],
+      "content": "\"Ruby, watch carefully and remember exactly what you see.\"\n\nTogether, you observe as Blackwood hammers in a false boundary marker, placing\nit deliberately within your claimed territory to create a dispute he can exploit.\n\n\"Got it,\" Ruby whispers. \"I can testify to this.\"\n\nWhen Blackwood finishes and turns around smugly, you're both standing there\nwith arms crossed.\n\n\"Enjoy your little project, Sheriff?\" you ask.\n\nHis face pales when he realizes you both watched everything.\n\nYou ride to town that same day and report his actions to the territorial marshal.\nWith Ruby's testimony and the physical evidence of the fraudulent marker, Blackwood\nis arrested.\n\nYour claim is fully validated, and you find enough gold to live comfortably. You\noffer Ruby a share of the profits for her help, which she gratefully accepts.\n\n**VERY GOOD ENDING - Justice triumphs through smart planning.**\n\n*THE END*\n    ",
+      "id": "witness_crime",
+      "metadata": [
+
+      ],
+      "name": "witness_crime",
+      "pid": "p33",
+      "position": {
+        "x": 0,
+        "y": 0
+      },
+      "size": {
+        "height": 100,
+        "width": 100
+      },
+      "tags": [
+
+      ],
+      "text": "\"Ruby, watch carefully and remember exactly what you see.\"\n\nTogether, you observe as Blackwood hammers in a false boundary marker, placing\nit deliberately within your claimed territory to create a dispute he can exploit.\n\n\"Got it,\" Ruby whispers. \"I can testify to this.\"\n\nWhen Blackwood finishes and turns around smugly, you're both standing there\nwith arms crossed.\n\n\"Enjoy your little project, Sheriff?\" you ask.\n\nHis face pales when he realizes you both watched everything.\n\nYou ride to town that same day and report his actions to the territorial marshal.\nWith Ruby's testimony and the physical evidence of the fraudulent marker, Blackwood\nis arrested.\n\nYour claim is fully validated, and you find enough gold to live comfortably. You\noffer Ruby a share of the profits for her help, which she gratefully accepts.\n\n**VERY GOOD ENDING - Justice triumphs through smart planning.**\n\n*THE END*\n    "
+    },
+    {
+      "choices": [
+
+      ],
+      "content": "\"Let him do it,\" you whisper to Ruby. \"But you're my witness to exactly what\nhe's doing and where.\"\n\nRuby nods, understanding your plan.\n\nThe Sheriff plants his false marker and even takes a moment to rough it up so\nit looks old. You both watch silently from a distance.\n\nLater that day, you ride to town and file a formal complaint with detailed\nmeasurements and Ruby's sworn testimony. When the territorial judge investigates,\nhe finds Blackwood's marker is brand new and in the wrong location.\n\nBlackwood is arrested for fraud and attempted claim jumping. The judge is so\nimpressed by your careful evidence gathering that he offers you a position as\na mining claims inspector.\n\nYou accept, and Ruby becomes your assistant. You both earn steady income while\nstill working your claim in your spare time.\n\n**EXCELLENT ENDING - Patience and evidence collection win the day.**\n\n*THE END*\n    ",
+      "id": "gather_evidence",
+      "metadata": [
+
+      ],
+      "name": "gather_evidence",
+      "pid": "p34",
+      "position": {
+        "x": 0,
+        "y": 0
+      },
+      "size": {
+        "height": 100,
+        "width": 100
+      },
+      "tags": [
+
+      ],
+      "text": "\"Let him do it,\" you whisper to Ruby. \"But you're my witness to exactly what\nhe's doing and where.\"\n\nRuby nods, understanding your plan.\n\nThe Sheriff plants his false marker and even takes a moment to rough it up so\nit looks old. You both watch silently from a distance.\n\nLater that day, you ride to town and file a formal complaint with detailed\nmeasurements and Ruby's sworn testimony. When the territorial judge investigates,\nhe finds Blackwood's marker is brand new and in the wrong location.\n\nBlackwood is arrested for fraud and attempted claim jumping. The judge is so\nimpressed by your careful evidence gathering that he offers you a position as\na mining claims inspector.\n\nYou accept, and Ruby becomes your assistant. You both earn steady income while\nstill working your claim in your spare time.\n\n**EXCELLENT ENDING - Patience and evidence collection win the day.**\n\n*THE END*\n    "
+    },
+    {
+      "choices": [
+
+      ],
+      "content": "You discreetly take the gun from the basket and tuck it into your belt.\n\n\"Sheriff,\" you say loudly, \"I know what you're planning. Ruby's told me everything.\nYou need to leave now.\"\n\nBlackwood's eyes narrow as he notices the gun. \"So it's like that, is it?\"\n\n\"It is. I'm defending my legal claim. If you try anything, Ruby's my witness.\"\n\nThe Sheriff calculates his odds. With Ruby clearly on your side and you now armed,\nhe can't risk violence. He'd lose either way.\n\n\"Fine,\" he spits. \"But this territory ain't big enough for both of us, McCready.\"\n\nHe rides off, leaving Ruby behind.\n\nYou thank Ruby and offer her a job helping with the claim. She accepts. Together\nyou work the site and find substantial gold.\n\nBlackwood eventually gets arrested for other crimes. You and Ruby remain friends\nand business partners for years, both prospering from the honest work.\n\n**VERY GOOD ENDING - Strength and allies secure your future.**\n\n*THE END*\n    ",
+      "id": "armed_confrontation",
+      "metadata": [
+
+      ],
+      "name": "armed_confrontation",
+      "pid": "p35",
+      "position": {
+        "x": 0,
+        "y": 0
+      },
+      "size": {
+        "height": 100,
+        "width": 100
+      },
+      "tags": [
+
+      ],
+      "text": "You discreetly take the gun from the basket and tuck it into your belt.\n\n\"Sheriff,\" you say loudly, \"I know what you're planning. Ruby's told me everything.\nYou need to leave now.\"\n\nBlackwood's eyes narrow as he notices the gun. \"So it's like that, is it?\"\n\n\"It is. I'm defending my legal claim. If you try anything, Ruby's my witness.\"\n\nThe Sheriff calculates his odds. With Ruby clearly on your side and you now armed,\nhe can't risk violence. He'd lose either way.\n\n\"Fine,\" he spits. \"But this territory ain't big enough for both of us, McCready.\"\n\nHe rides off, leaving Ruby behind.\n\nYou thank Ruby and offer her a job helping with the claim. She accepts. Together\nyou work the site and find substantial gold.\n\nBlackwood eventually gets arrested for other crimes. You and Ruby remain friends\nand business partners for years, both prospering from the honest work.\n\n**VERY GOOD ENDING - Strength and allies secure your future.**\n\n*THE END*\n    "
+    },
+    {
+      "choices": [
+        {
+          "metadata": [
+
+          ],
+          "target_passage": "ignore_sheriff_dig",
+          "text": "Keep digging and wave them off"
+        },
+        {
+          "metadata": [
+
+          ],
+          "target_passage": "talk_to_sheriff",
+          "text": "Take a break and talk to them"
+        },
+        {
+          "metadata": [
+
+          ],
+          "target_passage": "confront_sheriff",
+          "text": "Demand to know what they want"
+        }
+      ],
+      "content": "You grab your pickaxe and head to the rocky outcrop. The stone here is hard\nand unforgiving, but there's something about the quartz veining that suggests\ngold might be trapped within.\n\nAfter two hours of hard labor, you've made a promising excavation. You can see\nflecks of gold embedded in the exposed rock face. This could be the motherlode!\n\nAs you swing your pickaxe for another strike, you hear horses approaching.\nSheriff Blackwood rides up with a beautiful woman in a red dress beside him.\nYou recognize her as Ruby from the Dusty Rose Saloon.\n\n\"McCready!\" the Sheriff shouts. \"That's mighty hard work you're doing. Ruby here\nwas just saying how she'd love some company. What say you take a break?\"\n    ",
+      "id": "rock_digging",
+      "metadata": [
+
+      ],
+      "name": "rock_digging",
+      "pid": "p36",
+      "position": {
+        "x": 0,
+        "y": 0
+      },
+      "size": {
+        "height": 100,
+        "width": 100
+      },
+      "tags": [
+
+      ],
+      "text": "You grab your pickaxe and head to the rocky outcrop. The stone here is hard\nand unforgiving, but there's something about the quartz veining that suggests\ngold might be trapped within.\n\nAfter two hours of hard labor, you've made a promising excavation. You can see\nflecks of gold embedded in the exposed rock face. This could be the motherlode!\n\nAs you swing your pickaxe for another strike, you hear horses approaching.\nSheriff Blackwood rides up with a beautiful woman in a red dress beside him.\nYou recognize her as Ruby from the Dusty Rose Saloon.\n\n\"McCready!\" the Sheriff shouts. \"That's mighty hard work you're doing. Ruby here\nwas just saying how she'd love some company. What say you take a break?\"\n    "
+    }
+  ],  "scripts": [
+
+  ],  "settings": {
+    "autoSave": true,
+    "scriptingLanguage": "lua",
+    "startPassage": "start",
+    "theme": "default",
+    "undoLimit": 50
+  },  "stylesheets": [
+
+  ],  "variables": [
+
+  ]}
