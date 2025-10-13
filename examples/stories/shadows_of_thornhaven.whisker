@@ -109,7 +109,7 @@
     {
       "pid": "p003",
       "name": "general_store",
-      "text": "Harven's General Store is well-stocked with adventuring supplies. Old Harven, a gruff but fair merchant, nods at you.\n\n\"Looking to head north, are you? You'll need proper gear.\"\n\nAvailable items:\n- Shield ({{#if skill_persuasion >= 3}}16{{else}}20{{/if}} gold) {{#if has_shield}}- OWNED{{/if}} {{#if skill_persuasion >= 3}}- *Discounted!*{{/if}}\n- Healing Potion ({{#if skill_persuasion >= 3}}24{{else}}30{{/if}} gold) {{#if has_healing_potion}}- OWNED{{/if}} {{#if skill_persuasion >= 3}}- *Discounted!*{{/if}}\n- Rope ({{#if skill_persuasion >= 3}}12{{else}}15{{/if}} gold) {{#if has_rope}}- OWNED{{/if}} {{#if skill_persuasion >= 3}}- *Discounted!*{{/if}}\n- Lantern ({{#if skill_persuasion >= 3}}20{{else}}25{{/if}} gold) {{#if has_lantern}}- OWNED{{/if}} {{#if skill_persuasion >= 3}}- *Discounted!*{{/if}}\n\n{{#if skill_persuasion >= 3}}\"You drive a hard bargain, friend. I'll give you 20% off.\"{{/if}}\n\n**Your gold:** {{gold}}\n\n{{#if skill_persuasion >= 3}}\n  {{#if gold >= 16 and not has_shield}}[[Buy a shield (16 gold)->buy_shield_discount]]{{/if}}\n  {{#if gold >= 24 and not has_healing_potion}}[[Buy a healing potion (24 gold)->buy_potion_discount]]{{/if}}\n  {{#if gold >= 12 and not has_rope}}[[Buy rope (12 gold)->buy_rope_discount]]{{/if}}\n  {{#if gold >= 20 and not has_lantern}}[[Buy a lantern (20 gold)->buy_lantern_discount]]{{/if}}\n{{else}}\n  {{#if gold >= 20 and not has_shield}}[[Buy a shield (20 gold)->buy_shield]]{{/if}}\n  {{#if gold >= 30 and not has_healing_potion}}[[Buy a healing potion (30 gold)->buy_potion]]{{/if}}\n  {{#if gold >= 15 and not has_rope}}[[Buy rope (15 gold)->buy_rope]]{{/if}}\n  {{#if gold >= 25 and not has_lantern}}[[Buy a lantern (25 gold)->buy_lantern]]{{/if}}\n{{/if}}\n[[Leave the store->village_center]]",
+      "text": "Harven's General Store is well-stocked with adventuring supplies. Old Harven, a gruff but fair merchant, nods at you.\n\n\"Looking to head north, are you? You'll need proper gear.\"\n\n**Basic Supplies:**\n- Shield ({{#if skill_persuasion >= 3}}16{{else}}20{{/if}} gold, AC +2) {{#if has_shield}}- OWNED{{/if}}\n- Healing Potion ({{#if skill_persuasion >= 3}}24{{else}}30{{/if}} gold) {{#if has_healing_potion}}- OWNED{{/if}}\n- Rope ({{#if skill_persuasion >= 3}}12{{else}}15{{/if}} gold) {{#if has_rope}}- OWNED{{/if}}\n- Lantern ({{#if skill_persuasion >= 3}}20{{else}}25{{/if}} gold) {{#if has_lantern}}- OWNED{{/if}}\n\n{{#if level >= 2}}\n**Advanced Equipment** (Unlocked at Level 2+):\n- Steel Longsword (80 gold, +2 damage) {{#if has_steel_longsword}}- OWNED{{/if}}\n- Masterwork Bow (100 gold, +3 damage) {{#if has_masterwork_bow}}- OWNED{{/if}}\n- Chainmail Armor (120 gold, AC 16) {{#if has_chainmail}}- OWNED{{/if}}\n- Plate Armor (200 gold, AC 18) {{#if has_plate_armor}}- OWNED{{/if}}\n{{/if}}\n\n{{#if skill_persuasion >= 3}}\"You drive a hard bargain, friend. I'll give you 20% off basic items.\"{{/if}}\n\n**Your gold:** {{gold}}\n\n**Basic Items:**\n{{#if skill_persuasion >= 3}}\n  {{#if gold >= 16 and not has_shield}}[[Buy a shield (16 gold)->buy_shield_discount]]{{/if}}\n  {{#if gold >= 24 and not has_healing_potion}}[[Buy a healing potion (24 gold)->buy_potion_discount]]{{/if}}\n  {{#if gold >= 12 and not has_rope}}[[Buy rope (12 gold)->buy_rope_discount]]{{/if}}\n  {{#if gold >= 20 and not has_lantern}}[[Buy a lantern (20 gold)->buy_lantern_discount]]{{/if}}\n{{else}}\n  {{#if gold >= 20 and not has_shield}}[[Buy a shield (20 gold)->buy_shield]]{{/if}}\n  {{#if gold >= 30 and not has_healing_potion}}[[Buy a healing potion (30 gold)->buy_potion]]{{/if}}\n  {{#if gold >= 15 and not has_rope}}[[Buy rope (15 gold)->buy_rope]]{{/if}}\n  {{#if gold >= 25 and not has_lantern}}[[Buy a lantern (25 gold)->buy_lantern]]{{/if}}\n{{/if}}\n\n{{#if level >= 2}}\n**Advanced Equipment:**\n{{#if gold >= 80 and not has_steel_longsword}}[[Buy Steel Longsword (80 gold, +2 dmg)->buy_steel_sword]]{{/if}}\n{{#if gold >= 100 and not has_masterwork_bow}}[[Buy Masterwork Bow (100 gold, +3 dmg)->buy_masterwork_bow]]{{/if}}\n{{#if gold >= 120 and not has_chainmail}}[[Buy Chainmail (120 gold, AC 16)->buy_chainmail]]{{/if}}\n{{#if gold >= 200 and not has_plate_armor}}[[Buy Plate Armor (200 gold, AC 18)->buy_plate_armor]]{{/if}}\n{{/if}}\n\n[[Leave the store->village_center]]",
       "tags": [
         "village",
         "shop"
@@ -185,6 +185,46 @@
       "tags": [
         "village",
         "shop"
+      ]
+    },
+    {
+      "pid": "p007e",
+      "name": "buy_steel_sword",
+      "text": "Harven brings out a magnificent steel longsword from his back room. The blade gleams with perfect craftsmanship.\n\n\"Finest steel in the region. This'll cut through anything.\"\n\n**Steel Longsword acquired! (+2 damage bonus)**\n**Gold remaining:** {{gold - 80}}\n\n{{lua: \n  game_state:set(\"gold\", game_state:get(\"gold\") - 80);\n  game_state:set(\"has_steel_longsword\", true);\n  game_state:set(\"damage_bonus\", game_state:get(\"damage_bonus\") + 2)\n}}\n\n[[Continue shopping->general_store]]\n[[Leave->village_center]]",
+      "tags": [
+        "village",
+        "shop",
+        "equipment"
+      ]
+    },
+    {
+      "pid": "p007f",
+      "name": "buy_masterwork_bow",
+      "text": "Harven shows you a beautifully crafted bow, perfectly balanced with exquisite detail work.\n\n\"Made by elven craftsmen. You'll never find a better bow.\"\n\n**Masterwork Bow acquired! (+3 damage bonus)**\n**Gold remaining:** {{gold - 100}}\n\n{{lua: \n  game_state:set(\"gold\", game_state:get(\"gold\") - 100);\n  game_state:set(\"has_masterwork_bow\", true);\n  game_state:set(\"damage_bonus\", game_state:get(\"damage_bonus\") + 3)\n}}\n\n[[Continue shopping->general_store]]\n[[Leave->village_center]]",
+      "tags": [
+        "village",
+        "shop",
+        "equipment"
+      ]
+    },
+    {
+      "pid": "p007g",
+      "name": "buy_chainmail",
+      "text": "Harven helps you try on a suit of chainmail armor. The interlocking rings provide excellent protection.\n\n\"This'll save your life more than once, mark my words.\"\n\n**Chainmail Armor acquired! (AC 16)**\n**Gold remaining:** {{gold - 120}}\n\n{{lua: \n  game_state:set(\"gold\", game_state:get(\"gold\") - 120);\n  game_state:set(\"has_chainmail\", true);\n  game_state:set(\"armor_class\", 16)\n}}\n\n[[Continue shopping->general_store]]\n[[Leave->village_center]]",
+      "tags": [
+        "village",
+        "shop",
+        "equipment"
+      ]
+    },
+    {
+      "pid": "p007h",
+      "name": "buy_plate_armor",
+      "text": "Harven unveils a magnificent suit of plate armor, polished to a mirror shine.\n\n\"This is knight's armor, friend. The finest protection money can buy. You'll be practically invincible.\"\n\n**Plate Armor acquired! (AC 18)**\n**Gold remaining:** {{gold - 200}}\n\n{{lua: \n  game_state:set(\"gold\", game_state:get(\"gold\") - 200);\n  game_state:set(\"has_plate_armor\", true);\n  game_state:set(\"armor_class\", 18)\n}}\n\n[[Continue shopping->general_store]]\n[[Leave->village_center]]",
+      "tags": [
+        "village",
+        "shop",
+        "equipment"
       ]
     },
     {
