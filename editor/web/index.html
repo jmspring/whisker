@@ -122,10 +122,13 @@
                         <div class="form-group">
                             <label>
                                 Content
-                                <button class="btn-small btn-secondary" 
+                                <button class="btn-small btn-secondary"
+                                        onclick="passageTemplates.showDialog()"
+                                        style="margin-left: 10px;">📋 Insert Template</button>
+                                <button class="btn-small btn-secondary"
                                         onclick="variablesManager.showInsertPopup(event)"
-                                        style="margin-left: 10px;">Insert Variable</button>
-                                <button class="btn-small btn-secondary" 
+                                        style="margin-left: 4px;">Insert Variable</button>
+                                <button class="btn-small btn-secondary"
                                         onclick="assetManager.togglePanel()"
                                         style="margin-left: 4px;">📎 Assets</button>
                             </label>
@@ -308,6 +311,7 @@ Formatting tips:
     <script src="js/validation.js"></script>
     <script src="js/history.js"></script>
     <script src="js/templates.js"></script>
+    <script src="js/passage-templates.js"></script>
     <script src="js/export.js"></script>
     <script src="js/theme.js"></script>
     <script src="js/assets.js"></script>
@@ -333,7 +337,10 @@ Formatting tips:
             historySystem.initialize();
             
             templateSystem = new TemplateSystem(editor);
-            
+
+            passageTemplates = new PassageTemplateSystem(editor);
+            passageTemplates.initialize();
+
             // Phase 4 systems
             exportSystem = new ExportSystem(editor);
             exportSystem.initialize();
