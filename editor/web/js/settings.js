@@ -42,10 +42,45 @@ class SettingsManager {
     initialize() {
         this.loadSettings();
         this.applySettings();
-        
+
+        // Check for auto-saved project
+        this.checkAutoSave();
+
         // Start autosave if enabled
         if (this.settings.autoSave) {
             this.startAutoSave();
+        }
+    }
+
+    /**
+     * Check if there's an auto-saved project to recover
+     */
+    checkAutoSave() {
+        const autosave = localStorage.getItem('whisker_autosave');
+        const autosaveTime = localStorage.getItem('whisker_autosave_time');
+
+        if (autosave && autosaveTime && !this.editor.project) {
+            const time = new Date(autosaveTime);
+            const now = new Date();
+            const hoursSince = (now - time) / (1000 * 60 * 60);
+
+            // Only offer recovery if auto-save is less than 24 hours old
+            if (hoursSince < 24) {
+                const timeStr = time.toLocaleString();
+                if (confirm(`Found auto-saved project from ${timeStr}. Would you like to recover it?`)) {
+                    try {
+                        this.editor.project = JSON.parse(autosave);
+                        this.editor.currentPassageId = this.editor.project.passages[0]?.id || null;
+                        this.editor.previewPassageId = this.editor.project.settings.startPassage;
+                        this.editor.initializeGraph();
+                        this.editor.render();
+                        this.editor.updateStatus('Project recovered from auto-save');
+                    } catch (e) {
+                        console.error('Failed to recover auto-save:', e);
+                        alert('Failed to recover auto-saved project');
+                    }
+                }
+            }
         }
     }
 
@@ -387,10 +422,37 @@ class SettingsManager {
 
         this.settings.autosaveTimer = setInterval(() => {
             if (this.editor.project) {
-                this.editor.saveProject();
-                console.log('Auto-saved project');
+                this.autoSaveToStorage();
+                if (this.settings.debugMode) {
+                    console.log('Auto-saved project to localStorage');
+                }
             }
         }, this.settings.autoSaveInterval);
+    }
+
+    /**
+     * Auto-save project to localStorage (not download)
+     */
+    autoSaveToStorage() {
+        if (!this.editor.project) return;
+
+        try {
+            const json = JSON.stringify(this.editor.project);
+            localStorage.setItem('whisker_autosave', json);
+            localStorage.setItem('whisker_autosave_time', new Date().toISOString());
+
+            // Update status briefly
+            const statusEl = document.getElementById('statusText');
+            const oldText = statusEl.textContent;
+            statusEl.textContent = 'Auto-saved';
+            setTimeout(() => {
+                if (statusEl.textContent === 'Auto-saved') {
+                    statusEl.textContent = oldText === 'Auto-saved' ? 'Ready' : oldText;
+                }
+            }, 2000);
+        } catch (e) {
+            console.error('Auto-save failed:', e);
+        }
     }
 
     /**

@@ -4,7 +4,7 @@
 local Engine = {}
 Engine.__index = Engine
 
-function Engine:new(story, game_state, config)
+function Engine.new(story, game_state, config)
     local instance = {
         config = config or {},
         current_story = nil,

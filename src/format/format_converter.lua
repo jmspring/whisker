@@ -4,6 +4,9 @@
 
 local FormatConverter = {}
 
+-- Load required modules
+local story_to_whisker = require("src.format.story_to_whisker")
+
 -- Supported format types
 FormatConverter.FormatType = {
     WHISKER = "whisker",
@@ -80,16 +83,44 @@ function FormatConverter:from_whisker(whisker_doc, output_format, options)
         return whisker_doc, nil
 
     elseif output_format == FormatConverter.FormatType.JSON then
+        -- Check if whisker_doc is a Story object or already a Whisker document
+        if whisker_doc.passages and type(whisker_doc.passages) == "table" then
+            -- Check if it's a Story object (has methods) or Whisker document (plain table)
+            local is_story_object = (getmetatable(whisker_doc) ~= nil) or whisker_doc.add_passage ~= nil
+
+            if is_story_object then
+                -- Convert Story object to Whisker document first
+                return story_to_whisker.to_json(whisker_doc)
+            else
+                -- Already a Whisker document, just serialize
+                return self.format.to_json(whisker_doc), nil
+            end
+        end
         return self.format.to_json(whisker_doc), nil
 
     elseif output_format == FormatConverter.FormatType.TWINE_HTML then
-        return self:to_twine_html(whisker_doc, options)
+        -- Convert Story to Whisker document if needed
+        local doc = whisker_doc
+        if getmetatable(whisker_doc) then
+            doc = story_to_whisker.convert(whisker_doc)
+        end
+        return self:to_twine_html(doc, options)
 
     elseif output_format == FormatConverter.FormatType.TWEE then
-        return self:to_twee(whisker_doc, options)
+        -- Convert Story to Whisker document if needed
+        local doc = whisker_doc
+        if getmetatable(whisker_doc) then
+            doc = story_to_whisker.convert(whisker_doc)
+        end
+        return self:to_twee(doc, options)
 
     elseif output_format == FormatConverter.FormatType.MARKDOWN then
-        return self:to_markdown(whisker_doc, options)
+        -- Convert Story to Whisker document if needed
+        local doc = whisker_doc
+        if getmetatable(whisker_doc) then
+            doc = story_to_whisker.convert(whisker_doc)
+        end
+        return self:to_markdown(doc, options)
 
     else
         return nil, "Unsupported output format: " .. tostring(output_format)

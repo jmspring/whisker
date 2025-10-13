@@ -16,13 +16,14 @@ local Choice = require("src.core.choice")
 local Engine = require("src.core.engine")
 local GameState = require("src.core.game_state")
 
--- UI and platform
+-- UI and infrastructure
 local UIFramework = require("src.ui.ui_framework")
-local InputHandler = require("src.platform.input_handler")
+local InputHandler = require("src.infrastructure.input_handler")
 
 -- Format support
 local TwineImporter = require("src.format.twine_importer")
 local FormatConverter = require("src.format.format_converter")
+local WhiskerLoader = require("src.format.whisker_loader")
 
 -- Tools (optional)
 local Validator = require("src.tools.validator")
@@ -30,7 +31,7 @@ local Profiler = require("src.tools.profiler")
 local Debugger = require("src.tools.debugger")
 
 -- Save system
-local SaveSystem = require("src.system.save_system")
+local SaveSystem = require("src.infrastructure.save_system")
 
 -- Version info
 local VERSION = "1.0.0"
@@ -82,10 +83,11 @@ EXAMPLES:
 
 STORY FORMATS:
     Supported input formats:
-        - .lua (whisker native)
+        - .lua (whisker Lua native)
+        - .whisker (whisker JSON format)
+        - .json (whisker JSON format)
         - .html (Twine HTML)
         - .twee (Twee notation)
-        - .json (whisker JSON)
 
     Supported output formats:
         - json, twee, html, md (markdown)
@@ -222,26 +224,14 @@ local function load_story(filename)
 
         return story, nil
 
-    elseif ext == "json" then
-        -- Load JSON
-        local file = io.open(filename, "r")
-        if not file then
-            return nil, "Failed to open file"
+    elseif ext == "json" or ext == "whisker" then
+        -- Load Whisker JSON format
+        local story, err = WhiskerLoader.load_from_file(filename)
+        if not story then
+            return nil, "Failed to load Whisker file: " .. (err or "unknown error")
         end
 
-        local json_text = file:read("*all")
-        file:close()
-
-        local json = require("src.utils.json")
-        local data = json.decode(json_text)
-
-        if not data then
-            return nil, "Failed to parse JSON"
-        end
-
-        -- Convert JSON to Story object
-        -- (Implementation would depend on JSON structure)
-        return nil, "JSON import not yet fully implemented"
+        return story, nil
 
     else
         return nil, "Unsupported file format: " .. (ext or "unknown")
@@ -294,10 +284,14 @@ end
 
 -- Play story (main game loop)
 local function play_story(story)
+    -- Get title and author from metadata or direct properties
+    local title = story.title or (story.metadata and story.metadata.name) or (story.metadata and story.metadata.title) or "Untitled Story"
+    local author = story.author or (story.metadata and story.metadata.author)
+
     print("\n" .. string.rep("=", 60))
-    print("  " .. (story.title or "Untitled Story"))
-    if story.author then
-        print("  by " .. story.author)
+    print("  " .. title)
+    if author then
+        print("  by " .. author)
     end
     print(string.rep("=", 60) .. "\n")
 
@@ -330,7 +324,7 @@ local function play_story(story)
     -- Main game loop
     while running do
         -- Display current passage
-        ui:display_passage(content.passage, game_state)
+        ui:display_passage(content, game_state)
 
         -- Check for game end
         if not content.choices or #content.choices == 0 then
