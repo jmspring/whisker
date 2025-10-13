@@ -244,7 +244,7 @@
     {
       "pid": "p014",
       "name": "healing_house",
-      "text": "The Healing House is filled with the scent of herbs and medicinal plants. The herbalist, an elderly woman named Elara, greets you warmly.\n\n\"Welcome, child. I can tend to your wounds for 15 gold, or if you have time, I need help gathering rare moonflower herbs that grow near the ancient crypt. They're essential for my healing potions.\"\n\n**Health:** {{health}}/{{max_health}}\n**Gold:** {{gold}}\n\n{{#if gold >= 15 and health < max_health}}[[Pay for healing (15 gold)->pay_healing]]{{/if}}\n{{#if not quest_healer_herbs}}[[Accept herb gathering quest->healer_quest]]{{/if}}\n[[Leave->village_center]]",
+      "text": "The Healing House is filled with the scent of herbs and medicinal plants. The herbalist, an elderly woman named Elara, greets you warmly.\n\n\"Welcome, child. I can tend to your wounds for 15 gold, or if you have time, I need help gathering rare moonflower herbs that grow near the ancient crypt. They're essential for my healing potions.\"\n\n{{#if skill_medicine >= 3}}\n*Your Medicine knowledge impresses Elara!*\n\"I see you know your herbs! Let me give you a discount, healer to healer.\"\n{{/if}}\n\n**Health:** {{health}}/{{max_health}}\n**Gold:** {{gold}}\n\n{{#if skill_medicine >= 3}}\n  {{#if gold >= 10 and health < max_health}}[[Pay for discounted healing (10 gold)->pay_healing_discount]]{{/if}}\n  {{#if health < max_health}}[[Assist Elara with healing (free, Medicine)->assist_healing]]{{/if}}\n{{else}}\n  {{#if gold >= 15 and health < max_health}}[[Pay for healing (15 gold)->pay_healing]]{{/if}}\n{{/if}}\n{{#if not quest_healer_herbs}}[[Accept herb gathering quest->healer_quest]]{{/if}}\n[[Leave->village_center]]",
       "tags": [
         "village",
         "healing"
@@ -257,6 +257,26 @@
       "tags": [
         "village",
         "healing"
+      ]
+    },
+    {
+      "pid": "p015a",
+      "name": "pay_healing_discount",
+      "text": "Elara appreciates your knowledge of healing arts. She tends to your wounds skillfully, and you learn from observing her technique.\n\n\"It's nice to work with someone who understands the craft,\" she says warmly.\n\n**Restored 10 HP**\n**Gold remaining:** {{gold - 10}}\n\n{{lua: local new_health = math.min(game_state:get(\"health\") + 10, game_state:get(\"max_health\")); game_state:set(\"health\", new_health); game_state:set(\"gold\", game_state:get(\"gold\") - 10) }}\n\n[[Continue->healing_house]]",
+      "tags": [
+        "village",
+        "healing",
+        "medicine_check"
+      ]
+    },
+    {
+      "pid": "p015b",
+      "name": "assist_healing",
+      "text": "Elara is delighted to work with a fellow healer. She guides you through the proper preparation of healing salves, and you apply your knowledge to tend to your own wounds.\n\n\"Your Medicine skill is impressive,\" she notes. \"You've treated yourself well!\"\n\nYou work together, grinding herbs and mixing remedies. It takes longer than paying for treatment, but you save your gold and learn something new.\n\n**Restored 8 HP (free)**\n*Your Medicine knowledge allowed you to heal yourself!*\n\n{{lua: local new_health = math.min(game_state:get(\"health\") + 8, game_state:get(\"max_health\")); game_state:set(\"health\", new_health) }}\n\n[[Continue->healing_house]]",
+      "tags": [
+        "village",
+        "healing",
+        "medicine_check"
       ]
     },
     {
@@ -365,7 +385,7 @@
     {
       "pid": "p027",
       "name": "wolf_den_loot",
-      "text": "You search the wolf den thoroughly. In the back, you find the remains of previous victims - a small cache of supplies and coins.\n\n**Found:**\n- 20 additional gold\n- A silver dagger (better weapon!)\n\n{{lua: game_state:set(\"gold\", game_state:get(\"gold\") + 20) }}\n\n[[Return to ruins->to_ruins]]",
+      "text": "You search the wolf den thoroughly. In the back, you find the remains of previous victims - a small cache of supplies and coins.\n\n**Found:**\n- 20 additional gold\n- A silver dagger (better weapon!)\n{{#if skill_perception >= 3}}\n- A hidden alcove with a potion! (+1 Healing Potion)\n{{/if}}\n\n{{#if skill_perception >= 3}}\n*Your keen Perception revealed a hidden alcove!*\n\n{{lua: game_state:set(\"gold\", game_state:get(\"gold\") + 20); game_state:set(\"has_healing_potion\", true) }}\n{{else}}\n{{lua: game_state:set(\"gold\", game_state:get(\"gold\") + 20) }}\n{{/if}}\n\n[[Return to ruins->to_ruins]]",
       "tags": [
         "ruins",
         "loot"
@@ -402,7 +422,7 @@
     {
       "pid": "p031",
       "name": "shadow_temple_entrance",
-      "text": "You approach the dark temple. Strange symbols are carved into the stone walls, and an unnatural chill emanates from within. This place reeks of dark magic.\n\n{{#if shadows_defeated}}\n  The temple is cleansed now. The shadows have been banished.\n  [[Return to ruins->to_ruins]]\n{{else}}\n  Dark shapes move in the shadows.\n  [[Enter the temple->shadow_fight]]\n  [[Return to ruins->to_ruins]]\n{{/if}}",
+      "text": "You approach the dark temple. Strange symbols are carved into the stone walls, and an unnatural chill emanates from within. This place reeks of dark magic.\n\n{{#if skill_arcana >= 3}}\n*Your Arcana knowledge reveals these are necromantic ward symbols. You recognize a weakness!*\n{{/if}}\n\n{{#if shadows_defeated}}\n  The temple is cleansed now. The shadows have been banished.\n  [[Return to ruins->to_ruins]]\n{{else}}\n  Dark shapes move in the shadows.\n  [[Enter the temple->shadow_fight]]\n  [[Return to ruins->to_ruins]]\n{{/if}}",
       "tags": [
         "ruins",
         "shadow_temple"
@@ -421,7 +441,7 @@
     {
       "pid": "p033",
       "name": "shadow_normal_fight",
-      "text": "You battle the shadow wraiths with all your might. It's a harrowing fight - their touch drains your life force. But eventually, you prevail!\n\n**Victory!**\n\nYou take 20 damage but banish the shadows!\n\n**Gained 100 XP**\n**Gained 60 gold from temple offerings**\n\n{{lua: \n  game_state:set(\"health\", math.max(1, game_state:get(\"health\") - 20));\n  game_state:set(\"experience\", game_state:get(\"experience\") + 100);\n  game_state:set(\"gold\", game_state:get(\"gold\") + 60);\n  game_state:set(\"shadows_defeated\", true);\n  game_state:set(\"explored_shadow_temple\", true);\n  game_state:set(\"quest_clear_ruins\", game_state:get(\"quest_clear_ruins\") + 1);\n  game_state:set(\"monsters_killed\", game_state:get(\"monsters_killed\") + 4);\n  game_state:set(\"alignment_good_evil\", game_state:get(\"alignment_good_evil\") + 3)\n}}\n\n[[Search the temple->shadow_loot]]\n[[Return to ruins->to_ruins]]",
+      "text": "You battle the shadow wraiths with all your might. It's a harrowing fight - their touch drains your life force. {{#if skill_arcana >= 3}}Your Arcana knowledge helps you exploit their weakness!{{/if}} But eventually, you prevail!\n\n**Victory!**\n\n{{#if skill_arcana >= 3}}\nYour understanding of dark magic reduced the damage!\n\nYou take 12 damage but banish the shadows!\n{{else}}\nYou take 20 damage but banish the shadows!\n{{/if}}\n\n**Gained 100 XP**\n**Gained 60 gold from temple offerings**\n\n{{#if skill_arcana >= 3}}\n{{lua: \n  game_state:set(\"health\", math.max(1, game_state:get(\"health\") - 12));\n  game_state:set(\"experience\", game_state:get(\"experience\") + 100);\n  game_state:set(\"gold\", game_state:get(\"gold\") + 60);\n  game_state:set(\"shadows_defeated\", true);\n  game_state:set(\"explored_shadow_temple\", true);\n  game_state:set(\"quest_clear_ruins\", game_state:get(\"quest_clear_ruins\") + 1);\n  game_state:set(\"monsters_killed\", game_state:get(\"monsters_killed\") + 4);\n  game_state:set(\"alignment_good_evil\", game_state:get(\"alignment_good_evil\") + 3)\n}}\n{{else}}\n{{lua: \n  game_state:set(\"health\", math.max(1, game_state:get(\"health\") - 20));\n  game_state:set(\"experience\", game_state:get(\"experience\") + 100);\n  game_state:set(\"gold\", game_state:get(\"gold\") + 60);\n  game_state:set(\"shadows_defeated\", true);\n  game_state:set(\"explored_shadow_temple\", true);\n  game_state:set(\"quest_clear_ruins\", game_state:get(\"quest_clear_ruins\") + 1);\n  game_state:set(\"monsters_killed\", game_state:get(\"monsters_killed\") + 4);\n  game_state:set(\"alignment_good_evil\", game_state:get(\"alignment_good_evil\") + 3)\n}}\n{{/if}}\n\n[[Search the temple->shadow_loot]]\n[[Return to ruins->to_ruins]]",
       "tags": [
         "ruins",
         "combat",
@@ -477,7 +497,7 @@
     {
       "pid": "p039",
       "name": "tower_search",
-      "text": "You search the rubble around the tower's base carefully.\n\n{{#if quest_merchant_treasure}}\n  You find Finn's brass lockbox with the fox emblem! It's partially buried under fallen stones.\n  \n  **Quest Item Found: Finn's Lockbox**\n  \n  You should return this to him in Thornhaven.\n  \n  {{lua: game_state:set(\"has_lockbox\", true) }}\n{{else}}\n  You find some old coins and debris, but nothing of value.\n  \n  **Found: 15 gold**\n  \n  {{lua: game_state:set(\"gold\", game_state:get(\"gold\") + 15) }}\n{{/if}}\n\n[[Continue->tower_entrance]]",
+      "text": "You search the rubble around the tower's base carefully.\n\n{{#if quest_merchant_treasure}}\n  {{#if skill_perception >= 2}}\n  Your sharp eyes quickly spot Finn's brass lockbox with the fox emblem! It's partially buried under fallen stones.\n  \n  *Perception check success! You also found extra gold nearby.*\n  \n  **Quest Item Found: Finn's Lockbox**\n  **Bonus Found: 25 extra gold**\n  \n  You should return this to him in Thornhaven.\n  \n  {{lua: game_state:set(\"has_lockbox\", true); game_state:set(\"gold\", game_state:get(\"gold\") + 25) }}\n  {{else}}\n  After some searching, you find Finn's brass lockbox with the fox emblem! It's partially buried under fallen stones.\n  \n  **Quest Item Found: Finn's Lockbox**\n  \n  You should return this to him in Thornhaven.\n  \n  {{lua: game_state:set(\"has_lockbox\", true) }}\n  {{/if}}\n{{else}}\n  You find some old coins and debris, but nothing of value.\n  \n  **Found: 15 gold**\n  \n  {{lua: game_state:set(\"gold\", game_state:get(\"gold\") + 15) }}\n{{/if}}\n\n[[Continue->tower_entrance]]",
       "tags": [
         "ruins",
         "tower",
