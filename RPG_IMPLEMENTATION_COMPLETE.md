@@ -488,7 +488,7 @@ All core RPG systems are **fully implemented, tested, and functional**. The stor
 
 The integration framework is in place for combat abilities, skill checks, and alignment tracking - these can be added to any passage using the provided formulas.
 
-**The Keep on the Borderlands is now a fully-featured tabletop RPG experience!** 🎲
+**The Shadows of Thornhaven is now a fully-featured tabletop RPG experience!** 🎲
 
 ---
 
