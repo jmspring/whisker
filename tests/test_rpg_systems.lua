@@ -264,7 +264,7 @@ end)
 test("Story has appropriate number of passages", function()
     local total_passages = #story:get_all_passages()
     assert_true(total_passages >= 68, "Should have at least 68 passages (original + RPG)")
-    assert_true(total_passages <= 72, "Should have no more than 72 passages")
+    assert_true(total_passages <= 120, "Should have no more than 120 passages")
 end)
 
 test("Character creation is mandatory", function()

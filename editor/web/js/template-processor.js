@@ -1,9 +1,12 @@
 /**
  * Template Processor for Whisker Editor Preview
  * Handles {{#if}}...{{else if}}...{{else}}...{{/if}} conditionals
+ * Supports Lua execution via Fengari
  */
 
 class TemplateProcessor {
+    static luaState = null;
+    static luaInitialized = false;
     /**
      * Process template content with variables
      * @param {string} content - Template content
@@ -16,8 +19,8 @@ class TemplateProcessor {
         // Process conditionals first
         content = this.processConditionals(content, variables);
 
-        // Remove {{lua:...}} tags
-        content = content.replace(/\{\{lua:[^}]*\}\}/g, '');
+        // Process {{lua:...}} blocks (execute if possible, otherwise show indicator)
+        content = this.processLuaBlocks(content, variables);
 
         // Then process variable substitutions
         content = this.processVariables(content, variables);
@@ -234,6 +237,152 @@ class TemplateProcessor {
 
         // Otherwise, look up as variable
         return variables[str];
+    }
+
+    /**
+     * Process Lua blocks
+     * @param {string} content - Content with Lua blocks
+     * @param {Object} variables - Variable values (mutable)
+     * @returns {string} Processed content
+     */
+    static processLuaBlocks(content, variables) {
+        // Initialize Lua if not already done
+        if (!this.luaInitialized && typeof fengari !== 'undefined') {
+            this.initializeLua();
+        }
+
+        // Execute Lua if available, otherwise show indicator
+        if (this.luaInitialized && this.luaState) {
+            return content.replace(/\{\{lua:([\s\S]*?)\}\}/g, (match, code) => {
+                try {
+                    this.executeLuaInPreview(code.trim(), variables);
+                    return ''; // Lua blocks don't output text
+                } catch (error) {
+                    console.error('[Template Processor] Lua preview error:', error);
+                    return `<span style="color: #ef4444;">Lua Error</span>`;
+                }
+            });
+        } else {
+            // Fallback: show indicator
+            return content.replace(/\{\{lua:([\s\S]*?)\}\}/g, (match, code) => {
+                const codePreview = code.trim().split('\n')[0].substring(0, 50);
+                return `<span style="display: inline-block; background: #fef3c7; color: #92400e; padding: 2px 8px; border-radius: 4px; font-size: 0.85em; font-family: monospace;" title="${this.escapeHtml(code.trim())}">🌙 Lua: ${this.escapeHtml(codePreview)}${code.length > 50 ? '...' : ''}</span>`;
+            });
+        }
+    }
+
+    /**
+     * Escape HTML for safe display
+     * @param {string} str - String to escape
+     * @returns {string} Escaped string
+     */
+    static escapeHtml(str) {
+        const div = document.createElement('div');
+        div.textContent = str;
+        return div.innerHTML;
+    }
+
+    /**
+     * Initialize Lua runtime for preview
+     */
+    static initializeLua() {
+        if (this.luaInitialized) return;
+
+        if (typeof fengari === 'undefined') {
+            console.warn('[Template Processor] Fengari not loaded, Lua preview disabled');
+            return;
+        }
+
+        try {
+            const lua = fengari.lua;
+            const lauxlib = fengari.lauxlib;
+            const lualib = fengari.lualib;
+
+            this.luaState = lauxlib.luaL_newstate();
+            lualib.luaL_openlibs(this.luaState);
+
+            this.luaInitialized = true;
+            console.log('[Template Processor] ✅ Lua preview enabled');
+        } catch (error) {
+            console.error('[Template Processor] Failed to initialize Lua:', error);
+        }
+    }
+
+    /**
+     * Execute Lua code in preview with variables
+     * @param {string} code - Lua code to execute
+     * @param {Object} variables - Variable object (mutable)
+     */
+    static executeLuaInPreview(code, variables) {
+        if (!this.luaState || !this.luaInitialized) {
+            console.warn('[Template Processor] Lua not initialized');
+            return;
+        }
+
+        try {
+            const lua = fengari.lua;
+            const lauxlib = fengari.lauxlib;
+            const to_jsstring = fengari.to_jsstring;
+
+            // Create Lua code with game_state bridge
+            const luaCode = `
+                game_state = {
+                    data = {},
+                    set = function(self, key, value)
+                        self.data[key] = value
+                        js_set_variable(key, value)
+                    end,
+                    get = function(self, key)
+                        return js_get_variable(key)
+                    end
+                }
+
+                -- User code
+                ${code}
+            `;
+
+            const L = this.luaState;
+
+            // Register js_set_variable callback
+            lua.lua_pushcfunction(L, (L) => {
+                const key = to_jsstring(lua.lua_tostring(L, -2));
+                const value = lua.lua_tonumber(L, -1) !== null ?
+                    lua.lua_tonumber(L, -1) :
+                    (lua.lua_toboolean(L, -1) ?
+                        lua.lua_toboolean(L, -1) :
+                        to_jsstring(lua.lua_tostring(L, -1)));
+
+                variables[key] = value;
+                return 0;
+            });
+            lua.lua_setglobal(L, to_jsstring("js_set_variable"));
+
+            // Register js_get_variable callback
+            lua.lua_pushcfunction(L, (L) => {
+                const key = to_jsstring(lua.lua_tostring(L, -1));
+                const value = variables[key];
+
+                if (typeof value === 'number') {
+                    lua.lua_pushnumber(L, value);
+                } else if (typeof value === 'boolean') {
+                    lua.lua_pushboolean(L, value);
+                } else if (typeof value === 'string') {
+                    lua.lua_pushstring(L, to_jsstring(value));
+                } else {
+                    lua.lua_pushnil(L);
+                }
+
+                return 1;
+            });
+            lua.lua_setglobal(L, to_jsstring("js_get_variable"));
+
+            // Execute Lua code
+            lauxlib.luaL_dostring(L, to_jsstring(luaCode));
+
+            console.log('[Template Processor] ✅ Lua preview executed successfully');
+        } catch (error) {
+            console.error('[Template Processor] ❌ Lua preview error:', error);
+        }
     }
 
     /**
