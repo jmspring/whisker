@@ -7,6 +7,7 @@ CLIRuntime.__index = CLIRuntime
 -- Dependencies
 local Engine = require('src.core.engine')
 local json = require('src.utils.json')
+local template_processor = require('src.utils.template_processor')
 
 -- ANSI color codes for terminal formatting
 local COLORS = {
@@ -338,11 +339,11 @@ end
 
 -- Content Processing
 function CLIRuntime:process_content(content)
-    -- Replace variable tags
-    content = content:gsub("{{([%w_]+)}}", function(var_name)
-        local value = self.engine:get_variable(var_name)
-        return value ~= nil and tostring(value) or ""
-    end)
+    -- Get all variables from the engine
+    local variables = self.engine:get_all_variables() or {}
+
+    -- Process template with conditionals and variables
+    content = template_processor.process(content, variables)
 
     -- Process markdown-style formatting
     if self.use_colors then

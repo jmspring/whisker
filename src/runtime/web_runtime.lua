@@ -7,6 +7,7 @@ WebRuntime.__index = WebRuntime
 -- Dependencies
 local Engine = require('engine')
 local json = require('json') -- Assuming JSON library available
+local template_processor = require('src.utils.template_processor')
 
 -- Constructor
 function WebRuntime:new(container_id, config)
@@ -429,11 +430,11 @@ function WebRuntime:render_choices(choices)
 end
 
 function WebRuntime:process_content(content)
-    -- Replace variable tags {{var}}
-    content = content:gsub("{{([%w_]+)}}", function(var_name)
-        local value = self.engine:get_variable(var_name)
-        return value ~= nil and tostring(value) or ""
-    end)
+    -- Get all variables from the engine
+    local variables = self.engine:get_all_variables() or {}
+
+    -- Process template with conditionals and variables
+    content = template_processor.process(content, variables)
 
     -- Process markdown-style formatting
     content = content:gsub("%*%*(.-)%*%*", "<strong>%1</strong>")
@@ -453,11 +454,12 @@ end
 
 function WebRuntime:process_inline(content)
     -- Same as process_content but without paragraph wrapping
-    content = content:gsub("{{([%w_]+)}}", function(var_name)
-        local value = self.engine:get_variable(var_name)
-        return value ~= nil and tostring(value) or ""
-    end)
+    local variables = self.engine:get_all_variables() or {}
 
+    -- Process template with conditionals and variables
+    content = template_processor.process(content, variables)
+
+    -- Process markdown-style formatting
     content = content:gsub("%*%*(.-)%*%*", "<strong>%1</strong>")
     content = content:gsub("%*(.-)%*", "<em>%1</em>")
 

@@ -305,8 +305,9 @@ class WhiskerEditor {
                 (passage.id === this.currentPassageId ? ' active' : '');
             item.onclick = () => this.selectPassage(passage.id);
 
-            const preview = passage.content.substring(0, 50) + 
-                (passage.content.length > 50 ? '...' : '');
+            const content = passage.content || '';
+            const preview = content.substring(0, 50) +
+                (content.length > 50 ? '...' : '');
 
             item.innerHTML = `
                 <div class="passage-name">${passage.title}</div>
@@ -383,11 +384,47 @@ class WhiskerEditor {
         const passage = this.getPassage(this.previewPassageId);
         if (!passage) return;
 
+        // Process the content
+        let displayContent = passage.content;
+
+        // Remove link syntax [[text->target]] and [[target]]
+        displayContent = displayContent.replace(/\[\[([^\]]+)\]\]/g, '');
+
+        // Get variables with their initial values
+        const variables = {};
+        if (this.project.variables) {
+            for (const [key, value] of Object.entries(this.project.variables)) {
+                // Handle both simple values and variable definitions with initial values
+                if (typeof value === 'object' && value.initial !== undefined) {
+                    variables[key] = value.initial;
+                } else {
+                    variables[key] = value;
+                }
+            }
+        }
+
+        // Use template processor to handle conditionals and variables
+        if (typeof TemplateProcessor !== 'undefined') {
+            displayContent = TemplateProcessor.process(displayContent, variables);
+        } else {
+            // Fallback to old behavior if template processor not loaded
+            console.warn('TemplateProcessor not loaded');
+            displayContent = displayContent.replace(/\{\{#if[^}]*\}\}/g, '');
+            displayContent = displayContent.replace(/\{\{\/if\}\}/g, '');
+            displayContent = displayContent.replace(/\{\{lua:[^}]*\}\}/g, '');
+        }
+
+        // Clean up extra whitespace and line breaks
+        displayContent = displayContent.replace(/\n\n+/g, '\n\n').trim();
+
+        // Apply basic Markdown formatting
+        displayContent = this.renderMarkdown(displayContent);
+
         const content = document.getElementById('previewContent');
         content.innerHTML = `
             <div class="preview-passage">
                 <h3>${passage.title}</h3>
-                <div class="preview-text">${passage.content.replace(/\n/g, '<br>')}</div>
+                <div class="preview-text">${displayContent}</div>
                 <div class="preview-choices">
                     ${passage.choices.map((choice, i) => `
                         <div class="preview-choice" onclick="editor.previewChoice(${i})">
@@ -397,6 +434,42 @@ class WhiskerEditor {
                 </div>
             </div>
         `;
+    }
+
+    /**
+     * Render basic Markdown to HTML
+     * @param {string} text - Markdown text
+     * @returns {string} HTML
+     */
+    renderMarkdown(text) {
+        // Escape HTML first to prevent XSS
+        text = text.replace(/&/g, '&amp;')
+                   .replace(/</g, '&lt;')
+                   .replace(/>/g, '&gt;');
+
+        // Headers
+        text = text.replace(/^### (.+)$/gm, '<h3>$1</h3>');
+        text = text.replace(/^## (.+)$/gm, '<h2>$1</h2>');
+        text = text.replace(/^# (.+)$/gm, '<h1>$1</h1>');
+
+        // Bold
+        text = text.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+
+        // Italic (handle both * and _)
+        text = text.replace(/\*(.+?)\*/g, '<em>$1</em>');
+        text = text.replace(/_(.+?)_/g, '<em>$1</em>');
+
+        // Code
+        text = text.replace(/`(.+?)`/g, '<code>$1</code>');
+
+        // Lists
+        text = text.replace(/^- (.+)$/gm, '<li>$1</li>');
+        text = text.replace(/(<li>.*<\/li>)/s, '<ul>$1</ul>');
+
+        // Line breaks
+        text = text.replace(/\n/g, '<br>');
+
+        return text;
     }
 
     /**
@@ -453,14 +526,31 @@ class WhiskerEditor {
             reader.onload = (e) => {
                 try {
                     this.project = JSON.parse(e.target.result);
+
+                    // Normalize passages - ensure all passages have required fields
+                    if (this.project.passages) {
+                        this.project.passages.forEach(passage => {
+                            // Handle both Whisker format (name, text) and editor format (id, content)
+                            passage.id = passage.id || passage.name || 'untitled';
+                            passage.title = passage.title || passage.name || 'Untitled';
+                            passage.content = passage.content || passage.text || '';
+                            passage.position = passage.position || { x: 100, y: 100 };
+
+                            // Extract choices from text if not already present
+                            if (!passage.choices || passage.choices.length === 0) {
+                                passage.choices = this.extractChoicesFromText(passage.content);
+                            }
+                        });
+                    }
+
                     this.currentPassageId = this.project.passages[0]?.id || null;
                     this.previewPassageId = this.project.settings.startPassage;
-                    
+
                     if (historySystem) {
                         historySystem.clear();
                         historySystem.save('Project opened');
                     }
-                    
+
                     this.initializeGraph();
                     this.render();
                     this.updateStatus("Project opened");
@@ -489,6 +579,48 @@ class WhiskerEditor {
         URL.revokeObjectURL(url);
 
         this.updateStatus("Exported to JSON");
+    }
+
+    /**
+     * Extract choices from passage text
+     * Supports [[text->target]] and [[target]] syntax
+     * @param {string} text - The passage text
+     * @returns {Array} Array of choice objects
+     */
+    extractChoicesFromText(text) {
+        if (!text) return [];
+
+        const choices = [];
+        const seen = new Set();
+
+        // Match [[text->target]] or [[target]]
+        const linkPattern = /\[\[([^\]]+)\]\]/g;
+        let match;
+
+        while ((match = linkPattern.exec(text)) !== null) {
+            const content = match[1];
+            let displayText, target;
+
+            if (content.includes('->')) {
+                // [[text->target]] format
+                const parts = content.split('->');
+                displayText = parts[0].trim();
+                target = parts[1].trim();
+            } else {
+                // [[target]] format
+                target = content.trim();
+                displayText = target;
+            }
+
+            // Avoid duplicates
+            const key = `${displayText}|${target}`;
+            if (!seen.has(key)) {
+                choices.push({ text: displayText, target: target });
+                seen.add(key);
+            }
+        }
+
+        return choices;
     }
 
     /**
