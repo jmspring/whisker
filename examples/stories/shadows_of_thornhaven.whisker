@@ -447,10 +447,80 @@
     {
       "pid": "p029",
       "name": "bandit_fight",
-      "text": "You charge the gate! The bandits rush to meet you with weapons drawn.\n\n\"Get them!\" shouts the bandit leader, Krell.\n\n**Combat: Bandit Raiders**\n**Your Health:** {{health}}/{{max_health}}\n\nA fierce battle erupts! The bandits are skilled fighters.\n\nYou take 15 damage but prevail, driving off the survivors!\n\n**Victory!**\n**Gained 75 XP**\n**Gained 80 gold**\n\n{{lua: \n  game_state:set(\"health\", math.max(1, game_state:get(\"health\") - 15));\n  game_state:set(\"experience\", game_state:get(\"experience\") + 75);\n  game_state:set(\"gold\", game_state:get(\"gold\") + 80);\n  game_state:set(\"bandits_defeated\", true);\n  game_state:set(\"explored_bandit_camp\", true);\n  game_state:set(\"quest_clear_ruins\", game_state:get(\"quest_clear_ruins\") + 1);\n  game_state:set(\"monsters_killed\", game_state:get(\"monsters_killed\") + 8);\n  game_state:set(\"alignment_good_evil\", game_state:get(\"alignment_good_evil\") + 1)\n}}\n\n[[Search the camp->bandit_loot]]\n[[Return to ruins->to_ruins]]",
+      "text": "You charge the gate! The bandits rush to meet you with weapons drawn.\n\n\"Get them!\" shouts the bandit leader, Krell.\n\n**Combat: Bandit Raiders**\n**Enemy Strength:** Skilled (8 bandits)\n**Your Health:** {{health}}/{{max_health}}\n**Your Stamina:** {{stamina}}/{{max_stamina}}\n{{#if companion_name != \"none\"}}**{{companion_name}}:** {{companion_health}}/{{companion_max_health}} HP{{/if}}\n\nThe bandits are experienced fighters! Choose your approach:\n\n[[Fight defensively->bandit_fight_defensive]]\n[[Attack aggressively->bandit_fight_aggressive]]\n\n**Class Abilities:**\n{{#if stamina >= 3 and class == \"Fighter\"}}[[Power Strike (3 stamina) - Devastating blow->bandit_fight_power]]{{/if}}\n{{#if stamina >= 2 and class == \"Rogue\"}}[[Sneak Attack (2 stamina) - Strike from shadows->bandit_fight_sneak]]{{/if}}\n{{#if stamina >= 4 and class == \"Cleric\"}}[[Divine Strike (4 stamina) - Holy wrath->bandit_fight_divine]]{{/if}}\n{{#if stamina >= 3 and class == \"Mage\"}}[[Magic Missile (3 stamina) - Arcane barrage->bandit_fight_magic]]{{/if}}\n\n{{#if has_healing_potion and health < max_health}}[[Drink healing potion->bandit_fight_heal]]{{/if}}",
       "tags": [
         "ruins",
         "combat",
+        "bandit_camp"
+      ]
+    },
+    {
+      "pid": "p029a",
+      "name": "bandit_fight_defensive",
+      "text": "You fight carefully, keeping your guard up against the multiple attackers. It's a tough fight, but you prevail!\n\n**Victory!**\n\nYou take 10 damage but drive off the survivors.{{#if companion_name != \"none\" and companion_ability == \"protective\"}}\n{{companion_name}} shielded you from multiple attacks!{{/if}}\n\n**Gained 75 XP**\n**Gained 80 gold**\n\n{{lua: \n  local damage = 10;\n  if game_state:get(\"companion_name\") ~= \"none\" and game_state:get(\"companion_ability\") == \"protective\" then\n    damage = math.ceil(damage / 2);\n  end\n  game_state:set(\"health\", math.max(1, game_state:get(\"health\") - damage));\n  game_state:set(\"experience\", game_state:get(\"experience\") + 75);\n  game_state:set(\"gold\", game_state:get(\"gold\") + 80);\n  game_state:set(\"bandits_defeated\", true);\n  game_state:set(\"explored_bandit_camp\", true);\n  game_state:set(\"quest_clear_ruins\", game_state:get(\"quest_clear_ruins\") + 1);\n  game_state:set(\"monsters_killed\", game_state:get(\"monsters_killed\") + 8);\n  game_state:set(\"alignment_good_evil\", game_state:get(\"alignment_good_evil\") + 1)\n}}\n\n[[Search the camp->bandit_loot]]\n[[Return to ruins->to_ruins]]",
+      "tags": [
+        "ruins",
+        "combat",
+        "victory",
+        "bandit_camp"
+      ]
+    },
+    {
+      "pid": "p029b",
+      "name": "bandit_fight_aggressive",
+      "text": "You throw caution to the wind, attacking with fury! You overwhelm the bandits but take significant hits.\n\n**Victory!**\n\nYou take 15 damage but the battle is won quickly.{{#if companion_name != \"none\" and companion_ability == \"protective\"}}\n{{companion_name}} intercepted some attacks meant for you!{{/if}}\n\n**Gained 75 XP**\n**Gained 80 gold**\n\n{{lua: \n  local damage = 15;\n  if game_state:get(\"companion_name\") ~= \"none\" and game_state:get(\"companion_ability\") == \"protective\" then\n    damage = math.ceil(damage / 2);\n  end\n  game_state:set(\"health\", math.max(1, game_state:get(\"health\") - damage));\n  game_state:set(\"experience\", game_state:get(\"experience\") + 75);\n  game_state:set(\"gold\", game_state:get(\"gold\") + 80);\n  game_state:set(\"bandits_defeated\", true);\n  game_state:set(\"explored_bandit_camp\", true);\n  game_state:set(\"quest_clear_ruins\", game_state:get(\"quest_clear_ruins\") + 1);\n  game_state:set(\"monsters_killed\", game_state:get(\"monsters_killed\") + 8);\n  game_state:set(\"alignment_good_evil\", game_state:get(\"alignment_good_evil\") + 1)\n}}\n\n[[Search the camp->bandit_loot]]\n[[Return to ruins->to_ruins]]",
+      "tags": [
+        "ruins",
+        "combat",
+        "victory",
+        "bandit_camp"
+      ]
+    },
+    {
+      "pid": "p029c",
+      "name": "bandit_fight_power",
+      "text": "You unleash a mighty Power Strike on the bandit leader! He crumples, and the others lose heart!\n\n**POWER STRIKE!**\n\nYour devastating attack breaks the bandits' will to fight!\n\n**Victory!**\n\nYou take only 6 damage thanks to your decisive strike.{{#if companion_name != \"none\"}}\n{{companion_name}} kept the other bandits at bay!{{/if}}\n\n**Gained 75 XP**\n**Gained 80 gold**\n\n{{lua: \n  game_state:set(\"stamina\", game_state:get(\"stamina\") - 3);\n  local damage = 6;\n  if game_state:get(\"companion_name\") ~= \"none\" and game_state:get(\"companion_ability\") == \"protective\" then\n    damage = math.ceil(damage / 2);\n  end\n  game_state:set(\"health\", math.max(1, game_state:get(\"health\") - damage));\n  game_state:set(\"experience\", game_state:get(\"experience\") + 75);\n  game_state:set(\"gold\", game_state:get(\"gold\") + 80);\n  game_state:set(\"bandits_defeated\", true);\n  game_state:set(\"explored_bandit_camp\", true);\n  game_state:set(\"quest_clear_ruins\", game_state:get(\"quest_clear_ruins\") + 1);\n  game_state:set(\"monsters_killed\", game_state:get(\"monsters_killed\") + 8);\n  game_state:set(\"alignment_good_evil\", game_state:get(\"alignment_good_evil\") + 1)\n}}\n\n[[Search the camp->bandit_loot]]\n[[Return to ruins->to_ruins]]",
+      "tags": [
+        "ruins",
+        "combat",
+        "victory",
+        "fighter",
+        "bandit_camp"
+      ]
+    },
+    {
+      "pid": "p029d",
+      "name": "bandit_fight_sneak",
+      "text": "You use the chaos to your advantage! Your Sneak Attack takes down the bandit leader before he can react!\n\n**SNEAK ATTACK!**\n\nWith their leader fallen, the rest flee in disarray!\n\n**Victory!**\n\nYou take only 5 damage through clever positioning.{{#if companion_name != \"none\"}}\n{{companion_name}} created the perfect distraction!{{/if}}\n\n**Gained 75 XP**\n**Gained 80 gold**\n\n{{lua: \n  game_state:set(\"stamina\", game_state:get(\"stamina\") - 2);\n  local damage = 5;\n  if game_state:get(\"companion_name\") ~= \"none\" and game_state:get(\"companion_ability\") == \"protective\" then\n    damage = math.ceil(damage / 2);\n  end\n  game_state:set(\"health\", math.max(1, game_state:get(\"health\") - damage));\n  game_state:set(\"experience\", game_state:get(\"experience\") + 75);\n  game_state:set(\"gold\", game_state:get(\"gold\") + 80);\n  game_state:set(\"bandits_defeated\", true);\n  game_state:set(\"explored_bandit_camp\", true);\n  game_state:set(\"quest_clear_ruins\", game_state:get(\"quest_clear_ruins\") + 1);\n  game_state:set(\"monsters_killed\", game_state:get(\"monsters_killed\") + 8);\n  game_state:set(\"alignment_good_evil\", game_state:get(\"alignment_good_evil\") + 1)\n}}\n\n[[Search the camp->bandit_loot]]\n[[Return to ruins->to_ruins]]",
+      "tags": [
+        "ruins",
+        "combat",
+        "victory",
+        "rogue",
+        "bandit_camp"
+      ]
+    },
+    {
+      "pid": "p029e",
+      "name": "bandit_fight_divine",
+      "text": "You channel divine wrath against these lawbreakers! Your Divine Strike shines with holy light!\n\n**DIVINE STRIKE!**\n\nYour righteous fury punishes the wicked bandits!\n\n**Victory!**\n\nYou take only 5 damage, protected by your faith.{{#if companion_name != \"none\"}}\n{{companion_name}} fought righteously at your side!{{/if}}\n\n**Gained 75 XP**\n**Gained 80 gold**\n\n{{lua: \n  game_state:set(\"stamina\", game_state:get(\"stamina\") - 4);\n  local damage = 5;\n  if game_state:get(\"companion_name\") ~= \"none\" and game_state:get(\"companion_ability\") == \"protective\" then\n    damage = math.ceil(damage / 2);\n  end\n  game_state:set(\"health\", math.max(1, game_state:get(\"health\") - damage));\n  game_state:set(\"experience\", game_state:get(\"experience\") + 75);\n  game_state:set(\"gold\", game_state:get(\"gold\") + 80);\n  game_state:set(\"bandits_defeated\", true);\n  game_state:set(\"explored_bandit_camp\", true);\n  game_state:set(\"quest_clear_ruins\", game_state:get(\"quest_clear_ruins\") + 1);\n  game_state:set(\"monsters_killed\", game_state:get(\"monsters_killed\") + 8);\n  game_state:set(\"alignment_good_evil\", game_state:get(\"alignment_good_evil\") + 1)\n}}\n\n[[Search the camp->bandit_loot]]\n[[Return to ruins->to_ruins]]",
+      "tags": [
+        "ruins",
+        "combat",
+        "victory",
+        "cleric",
+        "bandit_camp"
+      ]
+    },
+    {
+      "pid": "p029f",
+      "name": "bandit_fight_magic",
+      "text": "You unleash a barrage of Magic Missiles! The glowing projectiles strike with perfect accuracy!\n\n**MAGIC MISSILE!**\n\nYour spells devastate the bandits before they can close the distance!\n\n**Victory!**\n\nYou take only 4 damage, staying out of melee range.{{#if companion_name != \"none\"}}\n{{companion_name}} kept the bandits from reaching you!{{/if}}\n\n**Gained 75 XP**\n**Gained 80 gold**\n\n{{lua: \n  game_state:set(\"stamina\", game_state:get(\"stamina\") - 3);\n  local damage = 4;\n  if game_state:get(\"companion_name\") ~= \"none\" and game_state:get(\"companion_ability\") == \"protective\" then\n    damage = math.ceil(damage / 2);\n  end\n  game_state:set(\"health\", math.max(1, game_state:get(\"health\") - damage));\n  game_state:set(\"experience\", game_state:get(\"experience\") + 75);\n  game_state:set(\"gold\", game_state:get(\"gold\") + 80);\n  game_state:set(\"bandits_defeated\", true);\n  game_state:set(\"explored_bandit_camp\", true);\n  game_state:set(\"quest_clear_ruins\", game_state:get(\"quest_clear_ruins\") + 1);\n  game_state:set(\"monsters_killed\", game_state:get(\"monsters_killed\") + 8);\n  game_state:set(\"alignment_good_evil\", game_state:get(\"alignment_good_evil\") + 1)\n}}\n\n[[Search the camp->bandit_loot]]\n[[Return to ruins->to_ruins]]",
+      "tags": [
+        "ruins",
+        "combat",
+        "victory",
+        "mage",
         "bandit_camp"
       ]
     },
