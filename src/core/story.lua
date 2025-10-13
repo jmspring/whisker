@@ -4,7 +4,7 @@
 local Story = {}
 Story.__index = Story
 
-function Story:new(options)
+function Story.new(options)
     options = options or {}
     local instance = {
         metadata = {

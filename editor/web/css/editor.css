@@ -300,6 +300,7 @@ body {
     flex: 1;
     overflow-y: auto;
     padding: 20px;
+    color: #e0e0e0;
 }
 
 .preview-passage {
@@ -317,6 +318,7 @@ body {
 .preview-text {
     line-height: 1.6;
     margin-bottom: 16px;
+    color: #e0e0e0;
 }
 
 .preview-choices {

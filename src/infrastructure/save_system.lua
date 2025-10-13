@@ -4,9 +4,10 @@
 local SaveSystem = {}
 SaveSystem.__index = SaveSystem
 
-function SaveSystem:new(config)
+function SaveSystem.new(config)
+    config = config or {}
     local instance = {
-        config = config or {},
+        config = config,
         save_dir = config.save_dir or "saves",
         max_save_slots = config.max_save_slots or 5,
         auto_save_slot = "autosave",

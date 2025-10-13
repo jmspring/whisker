@@ -114,8 +114,10 @@ class GraphView {
         this.setNodePosition(node, pos.x, pos.y);
         
         // Content
-        const preview = passage.content.substring(0, 100);
-        const choicesHtml = passage.choices.map(choice => `
+        const content = passage.content || '';
+        const preview = content.substring(0, 100);
+        const choices = passage.choices || [];
+        const choicesHtml = choices.map(choice => `
             <div class="node-choice">
                 <span class="choice-arrow">→</span>
                 <span>${choice.text}</span>

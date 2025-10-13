@@ -4,7 +4,7 @@
 local Passage = {}
 Passage.__index = Passage
 
-function Passage:new(id_or_options, name)
+function Passage.new(id_or_options, name)
     -- Support both old table-based and new parameter patterns
     local options = {}
     if type(id_or_options) == "table" then

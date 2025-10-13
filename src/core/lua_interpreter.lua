@@ -4,7 +4,7 @@
 local LuaInterpreter = {}
 LuaInterpreter.__index = LuaInterpreter
 
-function LuaInterpreter:new(config)
+function LuaInterpreter.new(config)
     config = config or {}
     local instance = {
         config = config,

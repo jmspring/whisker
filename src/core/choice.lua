@@ -4,7 +4,7 @@
 local Choice = {}
 Choice.__index = Choice
 
-function Choice:new(text_or_options, target)
+function Choice.new(text_or_options, target)
     -- Support both old table-based and new parameter patterns
     local options = {}
     if type(text_or_options) == "table" then

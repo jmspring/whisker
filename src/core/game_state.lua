@@ -4,7 +4,7 @@
 local GameState = {}
 GameState.__index = GameState
 
-function GameState:new()
+function GameState.new()
     local instance = {
         -- Core state
         variables = {},
