@@ -57,8 +57,7 @@ jobs:
       - name: Run test suite
         run: |
           echo "Running Whisker test suite..."
-          NO_COLOR=1 lua tests/test_all.lua || true
-        continue-on-error: true
+          NO_COLOR=1 lua tests/test_all.lua
       
       - name: Upload test report
         if: always()
