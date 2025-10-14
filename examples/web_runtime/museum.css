@@ -1,0 +1,869 @@
+/* Museum Tour - Mobile-First Responsive Styles */
+/* Optimized for touch devices with 44px minimum touch targets */
+
+:root {
+    --primary-color: #667eea;
+    --primary-dark: #5568d3;
+    --secondary-color: #764ba2;
+    --bg-primary: #ffffff;
+    --bg-secondary: #f8f9fa;
+    --text-primary: #333333;
+    --text-secondary: #666666;
+    --border-color: #dee2e6;
+    --success-color: #28a745;
+    --error-color: #dc3545;
+    --warning-color: #ffc107;
+    --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
+    --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.15);
+    --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.2);
+    --transition-fast: 0.2s ease;
+    --transition-normal: 0.3s ease;
+}
+
+/* ============================================
+   RESET & BASE
+   ============================================ */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    -webkit-tap-highlight-color: transparent;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+                 'Ubuntu', 'Cantarell', 'Helvetica Neue', sans-serif;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background: var(--bg-secondary);
+    overflow: hidden;
+}
+
+/* ============================================
+   MAIN APP CONTAINER
+   ============================================ */
+
+.museum-app {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    height: 100dvh; /* Dynamic viewport height for mobile */
+    max-width: 100%;
+    margin: 0 auto;
+    background: var(--bg-primary);
+}
+
+/* ============================================
+   HEADER
+   ============================================ */
+
+.museum-header {
+    flex-shrink: 0;
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+    color: white;
+    box-shadow: var(--shadow-md);
+    position: relative;
+    z-index: 100;
+}
+
+.museum-header-content {
+    display: flex;
+    align-items: center;
+    padding: 12px 16px;
+    gap: 12px;
+}
+
+.museum-title-section {
+    flex: 1;
+    min-width: 0;
+}
+
+.museum-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.museum-subtitle {
+    font-size: 0.85rem;
+    opacity: 0.9;
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Progress Bar */
+.museum-progress {
+    position: relative;
+    height: 32px;
+    background: rgba(0, 0, 0, 0.15);
+    overflow: hidden;
+}
+
+.museum-progress-bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.3);
+    transition: width 0.5s ease;
+    width: 0%;
+}
+
+.museum-progress-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: white;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+    z-index: 1;
+}
+
+/* ============================================
+   BUTTONS (44px minimum touch target)
+   ============================================ */
+
+.museum-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 44px;
+    min-height: 44px;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+.museum-btn:active {
+    transform: scale(0.95);
+}
+
+.museum-btn-icon {
+    padding: 8px;
+}
+
+.museum-btn-icon .icon {
+    font-size: 1.5rem;
+    line-height: 1;
+}
+
+.museum-btn-primary {
+    background: var(--primary-color);
+    color: white;
+    width: 100%;
+    justify-content: center;
+}
+
+.museum-btn-primary:active {
+    background: var(--primary-dark);
+}
+
+/* ============================================
+   MAIN CONTENT
+   ============================================ */
+
+.museum-main {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+    padding: 20px 16px 80px 16px; /* Extra bottom padding for nav */
+}
+
+.museum-passage {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* Passage Title */
+.passage-title {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin-bottom: 16px;
+    line-height: 1.3;
+}
+
+/* Passage Metadata */
+.passage-metadata {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 20px;
+}
+
+.metadata-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 12px;
+    background: var(--bg-secondary);
+    border-radius: 6px;
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+}
+
+.metadata-badge .icon {
+    font-size: 1.1rem;
+}
+
+/* Passage Content */
+.passage-content {
+    font-size: 1.125rem;
+    line-height: 1.8;
+    color: var(--text-primary);
+    margin-bottom: 24px;
+}
+
+.passage-content p {
+    margin-bottom: 16px;
+}
+
+.passage-content strong {
+    color: var(--primary-color);
+    font-weight: 600;
+}
+
+.passage-content em {
+    font-style: italic;
+}
+
+.passage-content ul, .passage-content ol {
+    margin-left: 24px;
+    margin-bottom: 16px;
+}
+
+.passage-content li {
+    margin-bottom: 8px;
+}
+
+/* Passage Choices */
+.passage-choices {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 24px;
+}
+
+.choice-btn {
+    display: flex;
+    align-items: center;
+    min-height: 56px; /* Larger than 44px for easier tapping */
+    padding: 16px 20px;
+    background: white;
+    border: 2px solid var(--primary-color);
+    border-radius: 12px;
+    color: var(--primary-color);
+    font-size: 1.0625rem;
+    font-weight: 600;
+    text-align: left;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    box-shadow: var(--shadow-sm);
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+.choice-btn:active {
+    background: var(--primary-color);
+    color: white;
+    transform: scale(0.98);
+}
+
+/* ============================================
+   BOTTOM NAVIGATION (Fixed)
+   ============================================ */
+
+.museum-bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    background: white;
+    border-top: 1px solid var(--border-color);
+    padding: 8px;
+    gap: 8px;
+    box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);
+    z-index: 200;
+    /* Safe area for iOS notch */
+    padding-bottom: calc(8px + env(safe-area-inset-bottom));
+}
+
+.nav-btn {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 56px;
+    padding: 8px;
+    background: transparent;
+    border: none;
+    border-radius: 8px;
+    color: var(--text-secondary);
+    font-size: 0.75rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+.nav-btn:active {
+    background: var(--bg-secondary);
+    transform: scale(0.95);
+}
+
+.nav-btn .nav-icon {
+    font-size: 1.5rem;
+    line-height: 1;
+    margin-bottom: 4px;
+}
+
+.nav-btn .nav-label {
+    font-size: 0.75rem;
+    line-height: 1;
+}
+
+.nav-btn.active {
+    color: var(--primary-color);
+    background: rgba(102, 126, 234, 0.1);
+}
+
+/* ============================================
+   AUDIO PLAYER (Bottom Sheet)
+   ============================================ */
+
+.audio-player {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: white;
+    border-top: 1px solid var(--border-color);
+    box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.15);
+    z-index: 300;
+    transform: translateY(100%);
+    transition: transform var(--transition-normal);
+    /* Safe area for iOS notch */
+    padding-bottom: env(safe-area-inset-bottom);
+}
+
+.audio-player.visible {
+    transform: translateY(0);
+}
+
+.audio-player-content {
+    padding: 16px;
+}
+
+.audio-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.audio-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.audio-duration {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+}
+
+.audio-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    margin-bottom: 12px;
+}
+
+.audio-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 44px;
+    min-height: 44px;
+    padding: 8px;
+    background: var(--bg-secondary);
+    border: none;
+    border-radius: 50%;
+    font-size: 1.25rem;
+    color: var(--primary-color);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.audio-btn:active {
+    transform: scale(0.9);
+    background: var(--primary-color);
+    color: white;
+}
+
+.audio-btn-large {
+    min-width: 56px;
+    min-height: 56px;
+    font-size: 1.5rem;
+}
+
+.audio-seek {
+    width: 100%;
+}
+
+.audio-seek input[type="range"] {
+    width: 100%;
+    height: 8px;
+    -webkit-appearance: none;
+    appearance: none;
+    background: var(--bg-secondary);
+    border-radius: 4px;
+    outline: none;
+}
+
+.audio-seek input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    background: var(--primary-color);
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.audio-seek input[type="range"]::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    background: var(--primary-color);
+    border-radius: 50%;
+    cursor: pointer;
+    border: none;
+}
+
+/* ============================================
+   MODALS
+   ============================================ */
+
+.museum-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1000;
+    display: none;
+    animation: fadeIn var(--transition-normal);
+}
+
+.museum-modal.visible {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.modal-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
+}
+
+.modal-content {
+    position: relative;
+    width: 90%;
+    max-width: 600px;
+    max-height: 85vh;
+    background: white;
+    border-radius: 16px;
+    box-shadow: var(--shadow-lg);
+    display: flex;
+    flex-direction: column;
+    animation: slideUp var(--transition-normal);
+    margin: 20px;
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px;
+    border-bottom: 1px solid var(--border-color);
+    flex-shrink: 0;
+}
+
+.modal-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin: 0;
+}
+
+.modal-close {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 44px;
+    min-height: 44px;
+    background: transparent;
+    border: none;
+    font-size: 1.5rem;
+    color: var(--text-secondary);
+    cursor: pointer;
+    border-radius: 8px;
+    transition: all var(--transition-fast);
+}
+
+.modal-close:active {
+    background: var(--bg-secondary);
+    transform: scale(0.9);
+}
+
+.modal-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* ============================================
+   MAP
+   ============================================ */
+
+.map-exhibit-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.map-exhibit {
+    display: flex;
+    align-items: center;
+    padding: 16px;
+    background: var(--bg-secondary);
+    border-radius: 12px;
+    border-left: 4px solid var(--primary-color);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.map-exhibit:active {
+    transform: translateX(8px);
+    background: rgba(102, 126, 234, 0.1);
+}
+
+.map-exhibit.visited {
+    border-left-color: var(--success-color);
+}
+
+.map-exhibit .exhibit-status {
+    font-size: 1.5rem;
+    margin-right: 12px;
+}
+
+.map-exhibit .exhibit-info {
+    flex: 1;
+}
+
+.map-exhibit .exhibit-name {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+}
+
+.map-exhibit .exhibit-details {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+}
+
+/* ============================================
+   QR SCANNER
+   ============================================ */
+
+.qr-scanner-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+#qr-reader {
+    width: 100%;
+    border-radius: 12px;
+    overflow: hidden;
+    background: var(--bg-secondary);
+}
+
+.qr-manual-entry {
+    text-align: center;
+}
+
+.qr-manual-entry p {
+    margin-bottom: 12px;
+    color: var(--text-secondary);
+}
+
+.qr-input {
+    width: 100%;
+    min-height: 48px;
+    padding: 12px 16px;
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 1rem;
+    margin-bottom: 12px;
+    transition: border-color var(--transition-fast);
+}
+
+.qr-input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+}
+
+/* ============================================
+   STATISTICS
+   ============================================ */
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+.stat-card {
+    padding: 20px;
+    background: var(--bg-secondary);
+    border-radius: 12px;
+    text-align: center;
+}
+
+.stat-value {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin-bottom: 4px;
+}
+
+.stat-label {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+}
+
+/* ============================================
+   HELP
+   ============================================ */
+
+.help-section {
+    margin-bottom: 24px;
+}
+
+.help-section:last-child {
+    margin-bottom: 0;
+}
+
+.help-section h3 {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--primary-color);
+    margin-bottom: 8px;
+}
+
+.help-section p {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: var(--text-secondary);
+}
+
+/* ============================================
+   MENU
+   ============================================ */
+
+.menu-options {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.menu-option {
+    display: flex;
+    align-items: center;
+    min-height: 56px;
+    padding: 16px;
+    background: var(--bg-secondary);
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+.menu-option:active {
+    transform: translateX(8px);
+    background: rgba(102, 126, 234, 0.1);
+}
+
+.menu-icon {
+    font-size: 1.5rem;
+    margin-right: 16px;
+}
+
+.menu-text {
+    flex: 1;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    text-align: left;
+}
+
+/* ============================================
+   TABLET & DESKTOP
+   ============================================ */
+
+@media (min-width: 768px) {
+    .museum-app {
+        max-width: 1200px;
+        margin: 0 auto;
+        border-radius: 0;
+        box-shadow: var(--shadow-lg);
+    }
+
+    .museum-title {
+        font-size: 1.5rem;
+    }
+
+    .passage-title {
+        font-size: 2.25rem;
+    }
+
+    .passage-content {
+        font-size: 1.25rem;
+    }
+
+    .choice-btn {
+        font-size: 1.125rem;
+    }
+
+    .museum-bottom-nav {
+        position: static;
+        border-top: none;
+        border-bottom: 1px solid var(--border-color);
+        order: -1; /* Move to top on desktop */
+    }
+
+    .museum-main {
+        padding-bottom: 40px; /* Less bottom padding on desktop */
+    }
+
+    .modal-content {
+        width: 70%;
+        max-width: 800px;
+    }
+
+    .stats-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+/* ============================================
+   LANDSCAPE MODE (Mobile)
+   ============================================ */
+
+@media (max-height: 500px) and (orientation: landscape) {
+    .museum-header-content {
+        padding: 8px 16px;
+    }
+
+    .museum-title {
+        font-size: 1.125rem;
+    }
+
+    .museum-progress {
+        height: 24px;
+    }
+
+    .passage-title {
+        font-size: 1.5rem;
+    }
+
+    .museum-bottom-nav {
+        padding: 4px;
+    }
+
+    .nav-btn {
+        min-height: 48px;
+    }
+}
+
+/* ============================================
+   ACCESSIBILITY
+   ============================================ */
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* High contrast mode */
+@media (prefers-contrast: high) {
+    .choice-btn,
+    .nav-btn,
+    .museum-btn {
+        border-width: 3px;
+    }
+}
+
+/* Focus visible for keyboard navigation */
+.choice-btn:focus-visible,
+.nav-btn:focus-visible,
+.museum-btn:focus-visible,
+.audio-btn:focus-visible,
+.modal-close:focus-visible {
+    outline: 3px solid var(--primary-color);
+    outline-offset: 2px;
+}
