@@ -489,8 +489,15 @@ class WhiskerEditor {
      */
     restartPreview() {
         if (!this.project) return;
-        this.previewPassageId = this.project.settings.startPassage;
-        this.updatePreview();
+
+        // Use PreviewRuntime if available
+        if (typeof previewRuntime !== 'undefined' && previewRuntime) {
+            previewRuntime.start();
+        } else {
+            // Fallback to simple preview
+            this.previewPassageId = this.project.settings.startPassage;
+            this.updatePreview();
+        }
     }
 
     /**

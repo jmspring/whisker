@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="css/graph.css">
     <link rel="stylesheet" href="css/variables.css">
     <link rel="stylesheet" href="css/theme.css">
+    <link rel="stylesheet" href="css/preview.css">
 </head>
 <body>
     <div class="editor-container">
@@ -303,6 +304,7 @@ Formatting tips:
 
     <!-- Scripts -->
     <script src="js/template-processor.js"></script>
+    <script src="js/preview-runtime.js"></script>
     <script src="js/editor.js"></script>
     <script src="js/graph.js"></script>
     <script src="js/variables.js"></script>
@@ -353,6 +355,10 @@ Formatting tips:
             // Phase 5 systems (Twine import)
             twineImporter = new TwineImporter(editor);
             twineImporter.initialize();
+
+            // Phase 7 systems (Preview runtime)
+            previewRuntime = new PreviewRuntime(editor);
+            previewRuntime.initialize();
 
             console.log('[Init] All systems initialized');
             console.log('[Init] Export modal classes:', exportModal ? exportModal.classList.value : 'NOT FOUND');
