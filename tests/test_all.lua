@@ -173,6 +173,12 @@ run_test(
     "Tests exporting stories to Twine HTML, Twee, and Markdown formats"
 )
 
+run_test(
+    "Compact Format Test",
+    "tests/test_compact_format.lua",
+    "Tests compact format conversion (1.0 ↔ 2.0) and file size optimization"
+)
+
 -- Note: The following converter tests are disabled because they require:
 -- 1. BDD testing framework (describe/it/assert) which is not available
 -- 2. Parser modules (whisker.parsers.*) which haven't been implemented yet
