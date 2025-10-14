@@ -1,0 +1,86 @@
+name: Test Suite
+
+on:
+  push:
+    branches: [ main, feature/* ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  lua-tests:
+    name: Lua Backend Tests
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Install Lua
+      uses: leafo/gh-actions-lua@v10
+      with:
+        luaVersion: "5.4"
+
+    - name: Install LuaRocks
+      uses: leafo/gh-actions-luarocks@v4
+
+    - name: Run Lua Test Suite
+      run: lua tests/test_all.lua
+
+    - name: Upload test results
+      if: always()
+      uses: actions/upload-artifact@v3
+      with:
+        name: lua-test-results
+        path: /tmp/test_output.txt
+        if-no-files-found: ignore
+
+  javascript-tests:
+    name: JavaScript Editor Tests
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Run Jest tests
+      run: npm test
+
+    - name: Run Jest with coverage
+      run: npm run test:coverage
+
+    - name: Upload coverage reports
+      if: always()
+      uses: actions/upload-artifact@v3
+      with:
+        name: coverage-reports
+        path: coverage/
+        if-no-files-found: ignore
+
+  lint:
+    name: Code Quality Checks
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Install Lua
+      uses: leafo/gh-actions-lua@v10
+      with:
+        luaVersion: "5.4"
+
+    - name: Install LuaRocks
+      uses: leafo/gh-actions-luarocks@v4
+
+    - name: Install luacheck
+      run: luarocks install luacheck
+
+    - name: Run luacheck
+      run: luacheck src/ tests/ --config .luacheckrc || echo "Luacheck completed with warnings"
+      continue-on-error: true
