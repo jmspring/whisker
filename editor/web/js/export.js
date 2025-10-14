@@ -383,10 +383,10 @@ class ExportSystem {
     }
 
     /**
-     * Export as standalone HTML
+     * Export as standalone HTML with full runtime
      */
-    exportHTML() {
-        console.log('[Export] Generating HTML...');
+    async exportHTML() {
+        console.log('[Export] Generating full-featured HTML export...');
         const needsLua = this.detectLuaUsage();
         console.log('[Export] Needs Lua runtime:', needsLua);
 
@@ -399,15 +399,47 @@ class ExportSystem {
                 title: p.title,
                 content: p.content,
                 choices: p.choices
-            }))
+            })),
+            title: this.editor.project.metadata.title,
+            author: this.editor.project.metadata.author,
+            start: this.editor.project.settings.startPassage
         };
+
+        try {
+            // Generate full runtime HTML with embedded player
+            const html = await RuntimeTemplate.generateFullHTML(storyData, {
+                needsLua: needsLua,
+                includeStats: this.options.includeVariables,
+                theme: 'light'
+            });
+
+            this.downloadFile(
+                html,
+                this.getFilename('.html'),
+                'text/html'
+            );
+
+            console.log('[Export] Full HTML export complete');
+            return true;
+        } catch (error) {
+            console.error('[Export] HTML generation failed:', error);
+            // Fallback to basic HTML
+            return this.exportBasicHTML(storyData, needsLua);
+        }
+    }
+
+    /**
+     * Export basic HTML (fallback if RuntimeTemplate fails)
+     */
+    exportBasicHTML(storyData, needsLua) {
+        console.log('[Export] Generating fallback basic HTML...');
 
         const html = `<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>${this.escapeHTML(this.editor.project.metadata.title)}</title>
+    <title>${this.escapeHTML(storyData.metadata.title)}</title>
     ${needsLua ? '<!-- Fengari: Lua VM for JavaScript -->\n    <script src="https://cdn.jsdelivr.net/npm/fengari-web@0.1.4/dist/fengari-web.js"></script>' : ''}
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
