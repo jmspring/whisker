@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Whisker - The Enchanted Forest (Web Demo)</title>
+    <title>Whisker - Lua-Enabled Runtime</title>
     <!-- Fengari: Lua VM for JavaScript -->
     <script src="https://cdn.jsdelivr.net/npm/fengari-web@0.1.4/dist/fengari-web.js"></script>
     <link rel="stylesheet" href="../../src/runtime/web_runtime.css">
@@ -71,233 +71,240 @@
     <!-- Loading indicator -->
     <div id="loading" class="loading">
         <div class="loading-spinner"></div>
-        <div class="loading-text">Loading Whisker Interactive Fiction...</div>
+        <div class="loading-text">Loading Whisker with Lua Support...</div>
     </div>
 
     <!-- Whisker container (hidden until loaded) -->
     <div id="whisker-container" style="display: none;"></div>
 
     <script>
-        // Example story - The Enchanted Forest
+        // Test story with Lua code
         const STORY_DATA = {
-            title: "The Enchanted Forest",
-            author: "Whisker Web Demo",
+            title: "Lua Runtime Test Story",
+            author: "Whisker Lua Runtime",
             variables: {
-                player_name: "Adventurer",
-                gold: 0,
+                player_name: "Hero",
                 health: 100,
-                magic: 50,
-                has_key: false,
-                forest_level: 1,
-                discoveries: 0
+                max_health: 100,
+                gold: 50,
+                level: 1,
+                experience: 0,
+                skill_perception: 2
             },
-            start: "forest_entrance",
+            start: "test_start",
             passages: [
                 {
-                    id: "forest_entrance",
-                    title: "The Forest Entrance",
-                    content: "Welcome, **{{player_name}}**!\n\nYou stand before an ancient, mystical forest. Towering trees seem to whisper secrets, and magical lights dance between the branches. A worn path leads deeper into the woods.\n\n**Your Status:**\n• Health: {{health}}\n• Magic: {{magic}}\n• Gold: {{gold}} coins\n• Discoveries: {{discoveries}}\n\nWhat will you do?",
+                    id: "test_start",
+                    title: "Lua Runtime Test",
+                    content: `Welcome to the **Lua-Enabled Whisker Runtime**, {{player_name}}!
+
+**Your Stats:**
+• Health: {{health}}/{{max_health}}
+• Gold: {{gold}}
+• Level: {{level}}
+• Experience: {{experience}}
+
+This runtime can execute Lua code in {{lua:}} blocks!`,
                     choices: [
                         {
-                            text: "🌲 Enter the forest",
-                            target: "deep_forest"
+                            text: "🎲 Test Lua dice roll",
+                            target: "test_dice"
                         },
                         {
-                            text: "🔍 Search the entrance area",
-                            target: "search_entrance"
+                            text: "💰 Test Lua variable modification",
+                            target: "test_variables"
                         },
                         {
-                            text: "🧘 Meditate and restore magic",
-                            target: "meditate"
+                            text: "⚔️ Test combat simulation",
+                            target: "test_combat"
+                        },
+                        {
+                            text: "📊 Test skill check (D20)",
+                            target: "test_skill_check"
                         }
                     ]
                 },
                 {
-                    id: "search_entrance",
-                    title: "Searching the Entrance",
-                    content: "You carefully search around the forest entrance. Your thorough exploration reveals:\n\n• **30 gold coins** hidden under a moss-covered rock\n• **Healing herbs** that restore 15 health\n• **A mysterious glowing mushroom** that increases your magic by 10\n\n*Discovery made! Total discoveries: {{discoveries}}*",
-                    script: "set('gold', get('gold') + 30); set('health', Math.min(100, get('health') + 15)); set('magic', Math.min(100, get('magic') + 10)); set('discoveries', get('discoveries') + 1)",
+                    id: "test_dice",
+                    title: "Dice Roll Test",
+                    content: `Rolling a 20-sided die using Lua...
+
+{{lua:
+    math.randomseed(os.time())
+    local roll = math.random(1, 20)
+    game_state:set("last_roll", roll)
+}}
+
+**Result:** You rolled a {{last_roll}}!
+
+{{#if last_roll >= 15}}
+🎉 **Critical success!** (15-20)
+{{else if last_roll >= 10}}
+✅ **Success!** (10-14)
+{{else if last_roll >= 5}}
+⚠️ **Partial success** (5-9)
+{{else}}
+❌ **Failure** (1-4)
+{{/if}}`,
                     choices: [
                         {
-                            text: "Continue exploring",
-                            target: "forest_entrance"
-                        }
-                    ]
-                },
-                {
-                    id: "meditate",
-                    title: "Peaceful Meditation",
-                    content: "You sit cross-legged and enter a meditative state. The forest's ambient magic flows through you, restoring your inner power.\n\n**Magic fully restored to 100!**\n\nYou also gain clarity and feel healthier. **+20 Health**",
-                    script: "set('magic', 100); set('health', Math.min(100, get('health') + 20))",
-                    choices: [
-                        {
-                            text: "Continue your journey",
-                            target: "forest_entrance"
-                        }
-                    ]
-                },
-                {
-                    id: "deep_forest",
-                    title: "Deep in the Forest",
-                    content: "The forest path winds through ancient trees. You hear mysterious sounds—rustling leaves, distant chimes, and ethereal whispers.\n\nAhead, you see:\n• A glowing **fairy circle** to the left\n• A massive **ancient tree** with a door straight ahead\n• A shimmering **magic fountain** to the right",
-                    choices: [
-                        {
-                            text: "✨ Approach the fairy circle",
-                            target: "fairy_circle"
+                            text: "Roll again",
+                            target: "test_dice"
                         },
                         {
-                            text: "🌳 Examine the ancient tree",
-                            target: "ancient_tree"
-                        },
-                        {
-                            text: "⛲ Visit the magic fountain",
-                            target: "magic_fountain"
-                        },
-                        {
-                            text: "↩️ Return to entrance",
-                            target: "forest_entrance"
+                            text: "Back to menu",
+                            target: "test_start"
                         }
                     ]
                 },
                 {
-                    id: "magic_fountain",
-                    title: "The Magic Fountain",
-                    content: "You approach a beautiful fountain made of crystal that pulses with magical energy. The water sparkles with an otherworldly glow.\n\nYou drink from the fountain and feel power surge through you!\n\n**+30 Magic Power**\n**+25 Health**\n**+1 Discovery**\n\nA voice whispers: *'The pure of heart shall be rewarded.'*",
-                    script: "set('magic', Math.min(100, get('magic') + 30)); set('health', Math.min(100, get('health') + 25)); set('discoveries', get('discoveries') + 1)",
+                    id: "test_variables",
+                    title: "Variable Modification Test",
+                    content: `Testing Lua variable modification...
+
+**Before:** Gold = {{gold}}
+
+{{lua:
+    local current_gold = game_state:get("gold")
+    local found_gold = math.random(10, 50)
+    game_state:set("gold", current_gold + found_gold)
+    game_state:set("found_amount", found_gold)
+}}
+
+**After:** Gold = {{gold}}
+
+You found **{{found_amount}} gold coins**! 💰`,
                     choices: [
                         {
-                            text: "Continue exploring",
-                            target: "deep_forest"
-                        }
-                    ]
-                },
-                {
-                    id: "fairy_circle",
-                    title: "The Fairy Circle",
-                    content: "You step into a ring of luminous mushrooms. The air shimmers and a beautiful fairy materializes before you.\n\n*'Greetings, brave one!'* she says in a voice like bells. *'I offer you a **Golden Key** that opens the Ancient Tree. The price is **25 gold coins**.'*\n\n**Your gold: {{gold}} coins**",
-                    choices: [
-                        {
-                            text: "💰 Buy the Golden Key (25 gold)",
-                            target: "bought_key",
-                            condition: "gold >= 25",
-                            script: "set('gold', get('gold') - 25); set('has_key', true)"
+                            text: "Find more gold",
+                            target: "test_variables"
                         },
                         {
-                            text: "🔮 Offer magic instead (40 magic)",
-                            target: "magic_trade",
-                            condition: "magic >= 40 && has_key === false",
-                            script: "set('magic', get('magic') - 40); set('has_key', true)"
+                            text: "Back to menu",
+                            target: "test_start"
+                        }
+                    ]
+                },
+                {
+                    id: "test_combat",
+                    title: "Combat Simulation",
+                    content: `**Combat Encounter!**
+
+You face a goblin!
+
+{{lua:
+    -- Player attack
+    local player_damage = math.random(5, 15)
+    game_state:set("player_damage", player_damage)
+
+    -- Enemy attack
+    local enemy_damage = math.random(3, 12)
+    local current_health = game_state:get("health")
+    local new_health = math.max(0, current_health - enemy_damage)
+    game_state:set("health", new_health)
+    game_state:set("enemy_damage", enemy_damage)
+
+    -- Experience gain
+    local current_xp = game_state:get("experience")
+    game_state:set("experience", current_xp + 25)
+}}
+
+**Combat Results:**
+• You dealt **{{player_damage}} damage** to the goblin! ⚔️
+• The goblin hit you for **{{enemy_damage}} damage**! 💥
+• Your health: **{{health}}/{{max_health}}**
+• You gained **25 XP**! Current XP: {{experience}}
+
+{{#if health <= 0}}
+💀 **You were defeated!** Health restored to test more.
+{{lua: game_state:set("health", 100) }}
+{{else if health < 30}}
+⚠️ **Warning: Low health!**
+{{else}}
+✅ **You survived!**
+{{/if}}`,
+                    choices: [
+                        {
+                            text: "Fight another goblin",
+                            target: "test_combat"
                         },
                         {
-                            text: "😊 Politely decline",
-                            target: "deep_forest"
+                            text: "Heal to full (Lua test)",
+                            target: "test_heal"
                         },
                         {
-                            text: "💸 Not enough gold...",
-                            target: "deep_forest",
-                            condition: "gold < 25"
+                            text: "Back to menu",
+                            target: "test_start"
                         }
                     ]
                 },
                 {
-                    id: "bought_key",
-                    title: "The Golden Key",
-                    content: "The fairy hands you an ornate golden key that glows with inner light.\n\n*'Use it wisely, brave one,'* she whispers before vanishing in a shower of sparkles.\n\n**Golden Key obtained!**",
+                    id: "test_heal",
+                    title: "Healing Test",
+                    content: `**Before:** Health = {{health}}/{{max_health}}
+
+{{lua:
+    local max_hp = game_state:get("max_health")
+    game_state:set("health", max_hp)
+}}
+
+**After:** Health = {{health}}/{{max_health}}
+
+✨ **Fully healed with Lua magic!**`,
                     choices: [
                         {
-                            text: "Continue your quest",
-                            target: "ancient_tree"
+                            text: "Back to menu",
+                            target: "test_start"
                         }
                     ]
                 },
                 {
-                    id: "magic_trade",
-                    title: "A Magical Exchange",
-                    content: "The fairy's eyes light up with interest.\n\n*'Your magical essence! How generous! This is worth far more than gold to us.'*\n\nShe hands you the **Golden Key** and touches your forehead. You feel a surge of magical knowledge!\n\n**Golden Key obtained!**\n**+15 Magic (knowledge gift)**",
-                    script: "set('magic', Math.min(100, get('magic') + 15))",
+                    id: "test_skill_check",
+                    title: "Skill Check (D20 + Modifier)",
+                    content: `You attempt to spot a hidden treasure...
+
+**Perception Check (DC 15):**
+
+{{lua:
+    math.randomseed(os.time())
+    local roll = math.random(1, 20)
+    local skill = game_state:get("skill_perception") or 0
+    local total = roll + skill
+    local dc = 15
+
+    game_state:set("check_roll", roll)
+    game_state:set("check_total", total)
+    game_state:set("check_passed", total >= dc)
+}}
+
+• **Roll:** {{check_roll}}
+• **Skill Bonus:** +{{skill_perception}}
+• **Total:** {{check_total}}
+
+{{#if check_passed}}
+✅ **SUCCESS!** (Total: {{check_total}} vs DC 15)
+
+You spot a hidden chest and find **100 gold**!
+
+{{lua:
+    local current_gold = game_state:get("gold")
+    game_state:set("gold", current_gold + 100)
+}}
+
+**New gold total:** {{gold}}
+{{else}}
+❌ **FAILURE** (Total: {{check_total}} vs DC 15)
+
+You don't notice anything unusual.
+{{/if}}`,
                     choices: [
                         {
-                            text: "Continue your quest",
-                            target: "ancient_tree"
-                        }
-                    ]
-                },
-                {
-                    id: "ancient_tree",
-                    title: "The Ancient Tree",
-                    content: "You stand before a colossal oak tree with a mysterious door carved into its trunk. The door has a golden keyhole and is covered in glowing runes.\n\nPowerful magic emanates from within.",
-                    choices: [
-                        {
-                            text: "🔑 Use the Golden Key",
-                            target: "treasure_room",
-                            condition: "has_key === true"
+                            text: "Try again",
+                            target: "test_skill_check"
                         },
                         {
-                            text: "🔮 Cast opening spell (60 magic)",
-                            target: "magic_open",
-                            condition: "magic >= 60 && has_key === false",
-                            script: "set('magic', get('magic') - 60)"
-                        },
-                        {
-                            text: "💪 Try to force the door",
-                            target: "force_door",
-                            condition: "has_key === false"
-                        },
-                        {
-                            text: "📖 Study the runes",
-                            target: "study_runes"
-                        },
-                        {
-                            text: "↩️ Leave",
-                            target: "deep_forest"
-                        }
-                    ]
-                },
-                {
-                    id: "study_runes",
-                    title: "Ancient Knowledge",
-                    content: "You study the glowing runes carefully. Though written in an ancient language, their meaning becomes clear:\n\n**'Seek the guardians of the mushroom ring,\nTrade gold or magic for the key they bring.\nOnly with the key or powerful spell,\nMay one enter where the treasures dwell.'**\n\nYou've learned the secret! **+1 Discovery**",
-                    script: "set('discoveries', get('discoveries') + 1)",
-                    choices: [
-                        {
-                            text: "Continue exploring",
-                            target: "deep_forest"
-                        }
-                    ]
-                },
-                {
-                    id: "magic_open",
-                    title: "Magical Prowess",
-                    content: "You channel your magical energy into a powerful opening spell. The runes flare brilliantly and the ancient door slowly swings open!\n\n*'Impressive, young mage,'* the tree whispers.\n\n**-60 Magic used**\n**+2 Discoveries for magical skill**",
-                    script: "set('discoveries', get('discoveries') + 2)",
-                    choices: [
-                        {
-                            text: "Enter the treasure room",
-                            target: "treasure_room"
-                        }
-                    ]
-                },
-                {
-                    id: "force_door",
-                    title: "A Futile Attempt",
-                    content: "You push, pull, and strike the door with all your might, but it doesn't budge even slightly. The ancient wood is harder than steel.\n\nYour efforts exhaust you:\n• **-15 Health**\n• **-20 Magic**\n\nThe tree whispers: *'Brute force will not prevail. Seek the key or master magic.'*",
-                    script: "set('health', Math.max(0, get('health') - 15)); set('magic', Math.max(0, get('magic') - 20))",
-                    choices: [
-                        {
-                            text: "Search for another way",
-                            target: "deep_forest"
-                        }
-                    ]
-                },
-                {
-                    id: "treasure_room",
-                    title: "The Legendary Treasure!",
-                    content: "The door opens to reveal a chamber filled with wonders!\n\n**🏆 TREASURE FOUND:**\n• 💰 **300 gold coins**\n• 💎 **Eternal Crystal** (+50 permanent magic)\n• ❤️ **Heart of the Forest** (full health)\n• 👑 **Crown of Champions**\n\n**🎉 VICTORY! 🎉**\n\n**Final Statistics:**\n• Health: 100\n• Magic: 100\n• Gold: {{gold}} coins\n• Discoveries: {{discoveries}}\n\nThe forest will remember your bravery, **{{player_name}}**!",
-                    script: "set('gold', get('gold') + 300); set('magic', 100); set('health', 100); set('discoveries', get('discoveries') + 1)",
-                    choices: [
-                        {
-                            text: "🎮 Start New Adventure",
-                            target: "forest_entrance"
+                            text: "Back to menu",
+                            target: "test_start"
                         }
                     ]
                 }
@@ -713,12 +720,12 @@
                     timestamp: new Date().toISOString()
                 };
 
-                localStorage.setItem('whisker_save', JSON.stringify(saveData));
+                localStorage.setItem('whisker_lua_save', JSON.stringify(saveData));
                 this.showNotification('Game saved', 'success');
             }
 
             showLoadModal() {
-                const saveData = localStorage.getItem('whisker_save');
+                const saveData = localStorage.getItem('whisker_lua_save');
 
                 if (!saveData) {
                     this.showNotification('No save found', 'error');

@@ -364,10 +364,32 @@ class ExportSystem {
     }
 
     /**
-     * Export as standalone HTML
+     * Detect if any passage contains Lua code
      */
-    exportHTML() {
-        console.log('[Export] Generating HTML...');
+    detectLuaUsage() {
+        if (!this.editor || !this.editor.project || !this.editor.project.passages) {
+            return false;
+        }
+
+        for (const passage of this.editor.project.passages) {
+            if (passage.content && passage.content.includes('{{lua:')) {
+                console.log('[Export] Lua usage detected in passage:', passage.id);
+                return true;
+            }
+        }
+
+        console.log('[Export] No Lua usage detected');
+        return false;
+    }
+
+    /**
+     * Export as standalone HTML with full runtime
+     */
+    async exportHTML() {
+        console.log('[Export] Generating full-featured HTML export...');
+        const needsLua = this.detectLuaUsage();
+        console.log('[Export] Needs Lua runtime:', needsLua);
+
         const storyData = {
             metadata: this.editor.project.metadata,
             settings: this.editor.project.settings,
@@ -377,15 +399,48 @@ class ExportSystem {
                 title: p.title,
                 content: p.content,
                 choices: p.choices
-            }))
+            })),
+            title: this.editor.project.metadata.title,
+            author: this.editor.project.metadata.author,
+            start: this.editor.project.settings.startPassage
         };
+
+        try {
+            // Generate full runtime HTML with embedded player
+            const html = await RuntimeTemplate.generateFullHTML(storyData, {
+                needsLua: needsLua,
+                includeStats: this.options.includeVariables,
+                theme: 'light'
+            });
+
+            this.downloadFile(
+                html,
+                this.getFilename('.html'),
+                'text/html'
+            );
+
+            console.log('[Export] Full HTML export complete');
+            return true;
+        } catch (error) {
+            console.error('[Export] HTML generation failed:', error);
+            // Fallback to basic HTML
+            return this.exportBasicHTML(storyData, needsLua);
+        }
+    }
+
+    /**
+     * Export basic HTML (fallback if RuntimeTemplate fails)
+     */
+    exportBasicHTML(storyData, needsLua) {
+        console.log('[Export] Generating fallback basic HTML...');
 
         const html = `<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>${this.escapeHTML(this.editor.project.metadata.title)}</title>
+    <title>${this.escapeHTML(storyData.metadata.title)}</title>
+    ${needsLua ? '<!-- Fengari: Lua VM for JavaScript -->\n    <script src="https://cdn.jsdelivr.net/npm/fengari-web@0.1.4/dist/fengari-web.js"></script>' : ''}
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -454,6 +509,8 @@ class ExportSystem {
     </div>
 
     <script>
+        ${needsLua ? '// NOTE: This story contains Lua code ({{lua:}} blocks)\n        // Fengari is loaded for Lua support\n        // Future versions will include full LuaWhiskerPlayer for complete functionality\n        if (typeof fengari !== "undefined") {\n            console.log("✅ Fengari Lua runtime loaded");\n        } else {\n            console.warn("⚠️ Fengari failed to load - Lua blocks will not execute");\n        }' : ''}
+
         const story = ${JSON.stringify(storyData)};
         let currentPassageId = story.settings.startPassage;
         let variables = {};

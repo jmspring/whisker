@@ -181,7 +181,13 @@ function Engine:render_passage_content(passage)
     local content = passage:get_content()
 
     -- Process embedded Lua expressions {{...}}
-    content = content:gsub("{{(.-)}}",  function(code)
+    -- But skip template directives ({{#if}}, {{else}}, {{/if}}, etc.)
+    content = content:gsub("{{%s*([^#/%s].-)}}", function(code)
+        -- Skip template keywords
+        if code:match("^%s*else%s*$") or code:match("^%s*each%s") then
+            return "{{" .. code .. "}}"
+        end
+
         local success, result = self.interpreter:evaluate_expression(code, self.game_state)
         if success then
             return tostring(result)
@@ -267,6 +273,10 @@ end
 
 function Engine:get_game_state()
     return self.game_state
+end
+
+function Engine:get_all_variables()
+    return self.game_state:get_all_variables()
 end
 
 function Engine:get_performance_stats()
