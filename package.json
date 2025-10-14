@@ -1,0 +1,36 @@
+{
+  "name": "whisker",
+  "version": "0.1.0",
+  "description": "Interactive fiction engine with web-based editor",
+  "scripts": {
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "test:editor": "jest editor/web/js/__tests__"
+  },
+  "jest": {
+    "testEnvironment": "jsdom",
+    "testMatch": [
+      "**/__tests__/**/*.test.js"
+    ],
+    "collectCoverageFrom": [
+      "editor/web/js/**/*.js",
+      "!editor/web/js/**/__tests__/**",
+      "!editor/web/js/**/*.test.js"
+    ],
+    "coverageDirectory": "coverage",
+    "verbose": true
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "jest-environment-jsdom": "^29.7.0"
+  },
+  "keywords": [
+    "interactive-fiction",
+    "twine",
+    "game-engine",
+    "storytelling"
+  ],
+  "author": "Whisker Team",
+  "license": "MIT"
+}
