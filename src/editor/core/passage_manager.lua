@@ -4,7 +4,7 @@
 local PassageManager = {}
 PassageManager.__index = PassageManager
 
-function PassageManager:new(project)
+function PassageManager.new(project)
     local instance = {
         project = project,
         idCounter = 0

@@ -111,7 +111,7 @@ end
 
 function SaveSystem:deserialize_game_state(data)
     local GameState = require("src.core.game_state")
-    local game_state = GameState:new()
+    local game_state = GameState.new()
 
     game_state.current_passage = data.current_passage
     game_state.variables = data.variables or {}

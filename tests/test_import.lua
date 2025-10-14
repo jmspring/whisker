@@ -446,9 +446,8 @@ print(string.format("Tests failed: %d ❌", tests_failed))
 if tests_failed == 0 then
     print("\n🎉 ALL TESTS PASSED! 🎉")
     print("The Twine importer is working correctly.")
-    os.exit(0)
 else
     print("\n⚠️  SOME TESTS FAILED")
     print("Please review the errors above.")
-    os.exit(1)
+    error("Test failures detected")
 end

@@ -4,7 +4,7 @@
 local FileStorage = {}
 FileStorage.__index = FileStorage
 
-function FileStorage:new(base_directory)
+function FileStorage.new(base_directory)
     local instance = {
         base_directory = base_directory or "",
         platform = nil,

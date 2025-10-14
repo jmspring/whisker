@@ -50,6 +50,11 @@ tmp/
 temp/
 *.tmp
 
+# Session and phase documentation
+PHASE*.md
+SESSION*.md
+RPG*.md
+
 # Package files
 *.tar.gz
 *.zip

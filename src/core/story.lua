@@ -192,7 +192,7 @@ function Story.from_table(data)
     end
 
     -- Create a new instance
-    local instance = Story:new({
+    local instance = Story.new({
         uuid = data.metadata and data.metadata.uuid,
         title = data.metadata and data.metadata.name,
         author = data.metadata and data.metadata.author,

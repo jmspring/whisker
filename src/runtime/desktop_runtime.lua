@@ -10,7 +10,7 @@ local Engine = require('src.core.engine')
 local json = require('src.utils.json')
 
 -- Constructor
-function DesktopRuntime:new(config)
+function DesktopRuntime.new(config)
     local instance = {
         engine = nil,
         config = config or {},
@@ -75,7 +75,7 @@ function DesktopRuntime:load()
     self:apply_theme(self.current_theme)
 
     -- Initialize engine
-    self.engine = Engine:new()
+    self.engine = Engine.new()
     local success, err = self.engine:initialize({
         debug = self.config.debug or false
     })

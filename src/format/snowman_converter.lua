@@ -4,8 +4,8 @@
 local SnowmanConverter = {}
 SnowmanConverter.__index = SnowmanConverter
 
-function SnowmanConverter:new()
-    local instance = setmetatable({}, self)
+function SnowmanConverter.new()
+    local instance = setmetatable({}, SnowmanConverter)
     return instance
 end
 
@@ -213,21 +213,24 @@ function SnowmanConverter:convert_whisker_passage_to_snowman(passage, index)
 end
 
 function SnowmanConverter:create_snowman_link(choice)
-    local text = choice.text or choice.target
-    local target = choice.target
+    local text = choice.text or choice.target or "Unknown"
+    local target = choice.target or "Unknown"
+
+    -- Ensure they're strings
+    text = tostring(text)
+    target = tostring(target)
 
     -- If there's a condition, wrap in conditional
     if choice.condition then
         local js_condition = self:lua_expression_to_javascript(choice.condition)
-        return string.format("<% if (%s) { %>[[%s|%s]]<% } %>",
-            js_condition, text, target)
+        return "<% if (" .. js_condition .. ") { %>[[" .. text .. "|" .. target .. "]]<% } %>"
     end
 
     -- Standard link
     if text == target then
-        return string.format("[[%s]]", target)
+        return "[[" .. target .. "]]"
     else
-        return string.format("[[%s|%s]]", text, target)
+        return "[[" .. text .. "|" .. target .. "]]"
     end
 end
 

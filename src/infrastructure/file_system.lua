@@ -4,7 +4,7 @@
 local FileSystem = {}
 FileSystem.__index = FileSystem
 
-function FileSystem:new()
+function FileSystem.new()
     local instance = {
         path_separator = package.config:sub(1, 1)
     }

@@ -3,7 +3,7 @@
 
 local Exporter = {}
 
-function Exporter:new(project)
+function Exporter.new(project)
     return {
         project = project
     }

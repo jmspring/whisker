@@ -128,7 +128,7 @@ function Choice.from_table(data)
     end
 
     -- Create a new instance with the data
-    return Choice:new({
+    return Choice.new({
         text = data.text,
         target = data.target_passage,
         condition = data.condition,

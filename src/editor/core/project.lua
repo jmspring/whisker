@@ -4,7 +4,7 @@
 local Project = {}
 Project.__index = Project
 
-function Project:new()
+function Project.new()
     local instance = {
         metadata = {
             title = "Untitled Story",

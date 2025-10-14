@@ -52,7 +52,7 @@ local BOX = {
 }
 
 -- Constructor
-function CLIRuntime:new(config)
+function CLIRuntime.new(config)
     local instance = {
         engine = nil,
         config = config or {},
@@ -71,7 +71,7 @@ end
 -- Initialization
 function CLIRuntime:initialize()
     -- Initialize engine
-    self.engine = Engine:new()
+    self.engine = Engine.new()
     local success, err = self.engine:initialize({
         debug = self.config.debug or false
     })

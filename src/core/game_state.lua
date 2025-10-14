@@ -115,6 +115,15 @@ function GameState:get_all_variables()
     return self.variables
 end
 
+-- Aliases for compatibility with debugger
+function GameState:get_variable(key, default_value)
+    return self:get(key, default_value)
+end
+
+function GameState:set_variable(key, value)
+    return self:set(key, value)
+end
+
 function GameState:push_to_history()
     -- Create snapshot of current state
     local snapshot = {

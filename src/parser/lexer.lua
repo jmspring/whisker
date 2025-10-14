@@ -4,7 +4,7 @@
 local Lexer = {}
 Lexer.__index = Lexer
 
-function Lexer:new()
+function Lexer.new()
     local instance = {
         -- Input processing
         input = "",

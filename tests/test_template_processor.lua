@@ -321,8 +321,7 @@ print(string.format("Total:  %d", tests_passed + tests_failed))
 
 if tests_failed == 0 then
     print("\n✓ All tests passed!")
-    os.exit(0)
 else
     print("\n✗ Some tests failed")
-    os.exit(1)
+    error("Test failures detected")
 end

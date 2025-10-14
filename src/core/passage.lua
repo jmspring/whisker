@@ -186,7 +186,7 @@ function Passage.from_table(data)
     end
 
     -- Create a new instance
-    local instance = Passage:new({
+    local instance = Passage.new({
         id = data.id,
         name = data.name,
         tags = data.tags,

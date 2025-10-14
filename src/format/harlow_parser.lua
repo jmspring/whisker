@@ -4,7 +4,7 @@
 local HarloweParser = {}
 HarloweParser.__index = HarloweParser
 
-function HarloweParser:new()
+function HarloweParser.new()
     local instance = setmetatable({}, self)
     return instance
 end
