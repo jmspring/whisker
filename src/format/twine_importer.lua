@@ -177,26 +177,35 @@ function TwineImporter:parse_twee(twee_content)
     end
 
     -- Extract passages - improved approach
-    -- Split by :: to get passage blocks
-    for passage_block in twee_content:gmatch("::%s*([^\n]+)[^\n]*\n(.-)\n\n") do
-        local header = passage_block
-        -- Skip special passages
-        if not header:match("^StoryTitle") and not header:match("^StoryData") then
-            local passage = self:parse_passage_twee(header, "")
-            if passage and passage.name then
-                table.insert(story_data.passages, passage)
-            end
-        end
+    -- Split content by :: to find all passages
+    local passage_sections = {}
+    local current_pos = 1
+
+    -- Find all passage starts
+    while true do
+        local start_pos, end_pos, header = twee_content:find("::%s*([^\n]+)\n", current_pos)
+        if not start_pos then break end
+
+        -- Get content until next :: or end of string
+        local content_start = end_pos + 1
+        local next_passage = twee_content:find("\n::", content_start)
+        local content_end = next_passage and (next_passage - 1) or #twee_content
+        local content = twee_content:sub(content_start, content_end)
+
+        table.insert(passage_sections, {header = header, content = content})
+        current_pos = end_pos + 1
     end
 
-    -- Fallback: if no passages found, try simpler pattern
-    if #story_data.passages == 0 then
-        for header in twee_content:gmatch("::%s*([^\n]+)") do
-            if not header:match("^StoryTitle") and not header:match("^StoryData") then
-                local passage = self:parse_passage_twee(header, "")
-                if passage and passage.name then
-                    table.insert(story_data.passages, passage)
-                end
+    -- Parse each passage section
+    for _, section in ipairs(passage_sections) do
+        local header = section.header
+        local content = section.content:match("^%s*(.-)%s*$") -- Trim whitespace
+
+        -- Skip special passages
+        if not header:match("^StoryTitle") and not header:match("^StoryData") then
+            local passage = self:parse_passage_twee(header, content)
+            if passage and passage.name then
+                table.insert(story_data.passages, passage)
             end
         end
     end

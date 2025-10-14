@@ -167,6 +167,12 @@ run_test(
     "Tests importing stories from Twine HTML and Twee formats"
 )
 
+run_test(
+    "Twine Export Test",
+    "tests/test_export.lua",
+    "Tests exporting stories to Twine HTML, Twee, and Markdown formats"
+)
+
 -- Note: The following converter tests are disabled because they require:
 -- 1. BDD testing framework (describe/it/assert) which is not available
 -- 2. Parser modules (whisker.parsers.*) which haven't been implemented yet

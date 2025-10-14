@@ -54,6 +54,14 @@ temp/
 PHASE*.md
 SESSION*.md
 RPG*.md
+*_GUIDE.md
+*_SUMMARY.md
+*_PLAN.md
+*_RESULTS.md
+*_APPLIED.md
+*_FIX_SUMMARY.md
+*_COMPONENTS.md
+*_TASKS_GUIDE.md
 
 # Package files
 *.tar.gz
