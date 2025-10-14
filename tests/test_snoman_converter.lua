@@ -1,8 +1,8 @@
 -- Test Suite for Snowman Converter
 -- Tests conversion between Snowman and whisker formats
 
-local FormatConverter = require("format.format_converter")
-local SnowmanConverter = require("format.snowman_converter")
+local FormatConverter = require("src.format.format_converter")
+local SnowmanConverter = require("src.format.snowman_converter")
 
 -- Test framework
 local Tests = {}
