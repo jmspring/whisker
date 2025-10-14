@@ -119,6 +119,18 @@ run_test(
     "Tests metatable preservation across save/load cycles"
 )
 
+run_test(
+    "String Utils Test",
+    "tests/test_string_utils.lua",
+    "Tests string manipulation, formatting, and template functions"
+)
+
+run_test(
+    "Event System Test",
+    "tests/test_event_system.lua",
+    "Tests event registration, emission, and listener management"
+)
+
 print(colorize("\n" .. string.rep("━", 70), "bold"))
 print(colorize("PHASE 2: VALIDATION & ANALYSIS", "bold"))
 print(colorize(string.rep("━", 70), "bold"))
