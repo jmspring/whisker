@@ -19,8 +19,9 @@
             <button class="btn" onclick="templateSystem.showDialog()">New from Template</button>
             <button class="btn" onclick="editor.newProject()">New Project</button>
             <button class="btn-secondary btn" onclick="editor.openProject()">Open</button>
+            <button class="btn-secondary btn" onclick="twineImporter.showImportDialog()" title="Import from Twine 2">📥 Import Twine</button>
             <button class="btn-secondary btn" onclick="editor.saveProject()">Save</button>
-            
+
             <!-- Export Menu -->
             <div class="theme-selector" style="position: relative;">
                 <button class="btn-secondary btn" id="exportButton" onclick="console.log('Export button clicked!'); console.log('exportSystem:', exportSystem); console.log('editor.project:', editor.project); exportSystem.showDialog()">Export ▾</button>
@@ -320,7 +321,9 @@ Formatting tips:
     <script src="js/theme.js"></script>
     <script src="js/assets.js"></script>
     <script src="js/settings.js"></script>
-    
+    <script src="js/twine-parser.js"></script>
+    <script src="js/twine-importer.js"></script>
+
     <script>
         // Initialize all systems when page loads
         document.addEventListener('DOMContentLoaded', () => {
@@ -362,7 +365,11 @@ Formatting tips:
             
             settingsManager = new SettingsManager(editor);
             settingsManager.initialize();
-            
+
+            // Phase 5 systems (Twine import)
+            twineImporter = new TwineImporter(editor);
+            twineImporter.initialize();
+
             console.log('[Init] All systems initialized');
             console.log('[Init] Export modal classes:', exportModal ? exportModal.classList.value : 'NOT FOUND');
         });
