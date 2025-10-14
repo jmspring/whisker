@@ -352,7 +352,5 @@ Tests:summary()
 
 -- Return exit code
 if failed > 0 then
-    os.exit(1)
-else
-    os.exit(0)
+    error("Test failures detected")
 end

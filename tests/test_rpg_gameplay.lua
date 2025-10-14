@@ -23,8 +23,7 @@ print()
 -- Load story
 local story, err = WhiskerLoader.load_from_file('examples/stories/shadows_of_thornhaven.whisker')
 if not story then
-    print("✗ FATAL: Could not load story")
-    os.exit(1)
+    error("FATAL: Could not load story: " .. tostring(err))
 end
 
 print("✓ Story loaded: " .. #story:get_all_passages() .. " passages")
@@ -261,10 +260,9 @@ if all_checks_passed then
     print("  ✓ ALL INTEGRATION TESTS PASSED!")
     print("  ✓ RPG SYSTEMS WORKING TOGETHER CORRECTLY!")
     print("="..string.rep("=", 70))
-    os.exit(0)
 else
     print("="..string.rep("=", 70))
     print("  ✗ SOME INTEGRATION CHECKS FAILED")
     print("="..string.rep("=", 70))
-    os.exit(1)
+    error("Integration test failures detected")
 end

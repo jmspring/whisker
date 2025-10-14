@@ -1,0 +1,417 @@
+whisker Test Suite Report
+======================================================================
+Date: 2025-10-13 19:08:28
+Total Tests: 32
+Passed: 9
+Failed: 23
+Skipped: 0
+Duration: 0.010s
+Pass Rate: 28.1%
+
+Detailed Results:
+----------------------------------------------------------------------
+
+Basic Engine Test: PASSED
+  Duration: 0.001s
+
+Renderer Test: PASSED
+  Duration: 0.000s
+
+Metatable Preservation Test: PASSED
+  Duration: 0.001s
+
+String Utils Test: PASSED
+  Duration: 0.000s
+
+Event System Test: PASSED
+  Duration: 0.001s
+
+Validator Test: PASSED
+  Duration: 0.000s
+
+Profiler Test: PASSED
+  Duration: 0.000s
+
+Debugger Test: PASSED
+  Duration: 0.000s
+
+Twine Import Test: PASSED
+  Duration: 0.003s
+
+Harlowe Converter Test: FAILED
+  Duration: 0.000s
+  Error: tests/test_harlowe_converter.lua:2: module 'whisker.parsers.harlowe' not found:
+	no field package.preload['whisker.parsers.harlowe']
+	no file '/opt/homebrew/share/lua/5.4/whisker/parsers/harlowe.lua'
+	no file '/opt/homebrew/share/lua/5.4/whisker/parsers/harlowe/init.lua'
+	no file '/opt/homebrew/lib/lua/5.4/whisker/parsers/harlowe.lua'
+	no file '/opt/homebrew/lib/lua/5.4/whisker/parsers/harlowe/init.lua'
+	no file './whisker/parsers/harlowe.lua'
+	no file './whisker/parsers/harlowe/init.lua'
+	no file '/opt/homebrew/lib/lua/5.4/whisker/parsers/harlowe.so'
+	no file '/opt/homebrew/lib/lua/5.4/loadall.so'
+	no file './whisker/parsers/harlowe.so'
+	no file '/opt/homebrew/lib/lua/5.4/whisker.so'
+	no file '/opt/homebrew/lib/lua/5.4/loadall.so'
+	no file './whisker.so'
+
+SugarCube Converter Test: FAILED
+  Duration: 0.000s
+  Error: tests/test_sugarcube_converter.lua:2: module 'whisker.parsers.sugarcube' not found:
+	no field package.preload['whisker.parsers.sugarcube']
+	no file '/opt/homebrew/share/lua/5.4/whisker/parsers/sugarcube.lua'
+	no file '/opt/homebrew/share/lua/5.4/whisker/parsers/sugarcube/init.lua'
+	no file '/opt/homebrew/lib/lua/5.4/whisker/parsers/sugarcube.lua'
+	no file '/opt/homebrew/lib/lua/5.4/whisker/parsers/sugarcube/init.lua'
+	no file './whisker/parsers/sugarcube.lua'
+	no file './whisker/parsers/sugarcube/init.lua'
+	no file '/opt/homebrew/lib/lua/5.4/whisker/parsers/sugarcube.so'
+	no file '/opt/homebrew/lib/lua/5.4/loadall.so'
+	no file './whisker/parsers/sugarcube.so'
+	no file '/opt/homebrew/lib/lua/5.4/whisker.so'
+	no file '/opt/homebrew/lib/lua/5.4/loadall.so'
+	no file './whisker.so'
+
+Chapbook Converter Test: FAILED
+  Duration: 0.000s
+  Error: tests/test_chapbook_converter.lua:2: module 'whisker.parsers.chapbook' not found:
+	no field package.preload['whisker.parsers.chapbook']
+	no file '/opt/homebrew/share/lua/5.4/whisker/parsers/chapbook.lua'
+	no file '/opt/homebrew/share/lua/5.4/whisker/parsers/chapbook/init.lua'
+	no file '/opt/homebrew/lib/lua/5.4/whisker/parsers/chapbook.lua'
+	no file '/opt/homebrew/lib/lua/5.4/whisker/parsers/chapbook/init.lua'
+	no file './whisker/parsers/chapbook.lua'
+	no file './whisker/parsers/chapbook/init.lua'
+	no file '/opt/homebrew/lib/lua/5.4/whisker/parsers/chapbook.so'
+	no file '/opt/homebrew/lib/lua/5.4/loadall.so'
+	no file './whisker/parsers/chapbook.so'
+	no file '/opt/homebrew/lib/lua/5.4/whisker.so'
+	no file '/opt/homebrew/lib/lua/5.4/loadall.so'
+	no file './whisker.so'
+
+Snowman Converter Test: FAILED
+  Duration: 0.000s
+  Error: tests/test_snoman_converter.lua:4: module 'format.format_converter' not found:
+	no field package.preload['format.format_converter']
+	no file '/opt/homebrew/share/lua/5.4/format/format_converter.lua'
+	no file '/opt/homebrew/share/lua/5.4/format/format_converter/init.lua'
+	no file '/opt/homebrew/lib/lua/5.4/format/format_converter.lua'
+	no file '/opt/homebrew/lib/lua/5.4/format/format_converter/init.lua'
+	no file './format/format_converter.lua'
+	no file './format/format_converter/init.lua'
+	no file '/opt/homebrew/lib/lua/5.4/format/format_converter.so'
+	no file '/opt/homebrew/lib/lua/5.4/loadall.so'
+	no file './format/format_converter.so'
+	no file '/opt/homebrew/lib/lua/5.4/format.so'
+	no file '/opt/homebrew/lib/lua/5.4/loadall.so'
+	no file './format.so'
+
+Converter Roundtrip Test: FAILED
+  Duration: 0.000s
+  Error: tests/test_converter_roundtrip.lua:2: module 'whisker.parsers.harlowe' not found:
+	no field package.preload['whisker.parsers.harlowe']
+	no file '/opt/homebrew/share/lua/5.4/whisker/parsers/harlowe.lua'
+	no file '/opt/homebrew/share/lua/5.4/whisker/parsers/harlowe/init.lua'
+	no file '/opt/homebrew/lib/lua/5.4/whisker/parsers/harlowe.lua'
+	no file '/opt/homebrew/lib/lua/5.4/whisker/parsers/harlowe/init.lua'
+	no file './whisker/parsers/harlowe.lua'
+	no file './whisker/parsers/harlowe/init.lua'
+	no file '/opt/homebrew/lib/lua/5.4/whisker/parsers/harlowe.so'
+	no file '/opt/homebrew/lib/lua/5.4/loadall.so'
+	no file './whisker/parsers/harlowe.so'
+	no file '/opt/homebrew/lib/lua/5.4/whisker.so'
+	no file '/opt/homebrew/lib/lua/5.4/loadall.so'
+	no file './whisker.so'
+
+Save System Test: FAILED
+  Duration: 0.000s
+  Error: ./src/infrastructure/save_system.lua:42: attempt to index a number value (local 'story_data')
+
+Harlowe Combat Test: FAILED
+  Duration: 0.000s
+  Error: tests/harlowe/test_combat.lua:2: module 'whisker.parsers.harlowe' not found:
+	no field package.preload['whisker.parsers.harlowe']
+	no file '/opt/homebrew/share/lua/5.4/whisker/parsers/harlowe.lua'
+	no file '/opt/homebrew/share/lua/5.4/whisker/parsers/harlowe/init.lua'
+	no file '/opt/homebrew/lib/lua/5.4/whisker/parsers/harlowe.lua'
+	no file '/opt/homebrew/lib/lua/5.4/whisker/parsers/harlowe/init.lua'
+	no file './whisker/parsers/harlowe.lua'
+	no file './whisker/parsers/harlowe/init.lua'
+	no file '/opt/homebrew/lib/lua/5.4/whisker/parsers/harlowe.so'
+	no file '/opt/homebrew/lib/lua/5.4/loadall.so'
+	no file './whisker/parsers/harlowe.so'
+	no file '/opt/homebrew/lib/lua/5.4/whisker.so'
+	no file '/opt/homebrew/lib/lua/5.4/loadall.so'
+	no file './whisker.so'
+
+Harlowe Data Structures Test: FAILED
+  Duration: 0.000s
+  Error: tests/harlowe/test_datastructures.lua:2: module 'whisker.parsers.harlowe' not found:
+	no field package.preload['whisker.parsers.harlowe']
+	no file '/opt/homebrew/share/lua/5.4/whisker/parsers/harlowe.lua'
+	no file '/opt/homebrew/share/lua/5.4/whisker/parsers/harlowe/init.lua'
+	no file '/opt/homebrew/lib/lua/5.4/whisker/parsers/harlowe.lua'
+	no file '/opt/homebrew/lib/lua/5.4/whisker/parsers/harlowe/init.lua'
+	no file './whisker/parsers/harlowe.lua'
+	no file './whisker/parsers/harlowe/init.lua'
+	no file '/opt/homebrew/lib/lua/5.4/whisker/parsers/harlowe.so'
+	no file '/opt/homebrew/lib/lua/5.4/loadall.so'
+	no file './whisker/parsers/harlowe.so'
+	no file '/opt/homebrew/lib/lua/5.4/whisker.so'
+	no file '/opt/homebrew/lib/lua/5.4/loadall.so'
+	no file './whisker.so'
+
+Harlowe Inventory Test: FAILED
+  Duration: 0.000s
+  Error: tests/harlowe/test_inventory.lua:2: module 'whisker.parsers.harlowe' not found:
+	no field package.preload['whisker.parsers.harlowe']
+	no file '/opt/homebrew/share/lua/5.4/whisker/parsers/harlowe.lua'
+	no file '/opt/homebrew/share/lua/5.4/whisker/parsers/harlowe/init.lua'
+	no file '/opt/homebrew/lib/lua/5.4/whisker/parsers/harlowe.lua'
+	no file '/opt/homebrew/lib/lua/5.4/whisker/parsers/harlowe/init.lua'
+	no file './whisker/parsers/harlowe.lua'
+	no file './whisker/parsers/harlowe/init.lua'
+	no file '/opt/homebrew/lib/lua/5.4/whisker/parsers/harlowe.so'
+	no file '/opt/homebrew/lib/lua/5.4/loadall.so'
+	no file './whisker/parsers/harlowe.so'
+	no file '/opt/homebrew/lib/lua/5.4/whisker.so'
+	no file '/opt/homebrew/lib/lua/5.4/loadall.so'
+	no file './whisker.so'
+
+Harlowe Storylets Test: FAILED
+  Duration: 0.000s
+  Error: tests/harlowe/test_storylets.lua:2: module 'whisker.parsers.harlowe' not found:
+	no field package.preload['whisker.parsers.harlowe']
+	no file '/opt/homebrew/share/lua/5.4/whisker/parsers/harlowe.lua'
+	no file '/opt/homebrew/share/lua/5.4/whisker/parsers/harlowe/init.lua'
+	no file '/opt/homebrew/lib/lua/5.4/whisker/parsers/harlowe.lua'
+	no file '/opt/homebrew/lib/lua/5.4/whisker/parsers/harlowe/init.lua'
+	no file './whisker/parsers/harlowe.lua'
+	no file './whisker/parsers/harlowe/init.lua'
+	no file '/opt/homebrew/lib/lua/5.4/whisker/parsers/harlowe.so'
+	no file '/opt/homebrew/lib/lua/5.4/loadall.so'
+	no file './whisker/parsers/harlowe.so'
+	no file '/opt/homebrew/lib/lua/5.4/whisker.so'
+	no file '/opt/homebrew/lib/lua/5.4/loadall.so'
+	no file './whisker.so'
+
+SugarCube Combat Test: FAILED
+  Duration: 0.000s
+  Error: tests/sugarcube/test_combat.lua:2: module 'whisker.parsers.sugarcube' not found:
+	no field package.preload['whisker.parsers.sugarcube']
+	no file '/opt/homebrew/share/lua/5.4/whisker/parsers/sugarcube.lua'
+	no file '/opt/homebrew/share/lua/5.4/whisker/parsers/sugarcube/init.lua'
+	no file '/opt/homebrew/lib/lua/5.4/whisker/parsers/sugarcube.lua'
+	no file '/opt/homebrew/lib/lua/5.4/whisker/parsers/sugarcube/init.lua'
+	no file './whisker/parsers/sugarcube.lua'
+	no file './whisker/parsers/sugarcube/init.lua'
+	no file '/opt/homebrew/lib/lua/5.4/whisker/parsers/sugarcube.so'
+	no file '/opt/homebrew/lib/lua/5.4/loadall.so'
+	no file './whisker/parsers/sugarcube.so'
+	no file '/opt/homebrew/lib/lua/5.4/whisker.so'
+	no file '/opt/homebrew/lib/lua/5.4/loadall.so'
+	no file './whisker.so'
+
+SugarCube Inventory Test: FAILED
+  Duration: 0.000s
+  Error: tests/sugarcube/test_inventory.lua:2: module 'whisker.parsers.sugarcube' not found:
+	no field package.preload['whisker.parsers.sugarcube']
+	no file '/opt/homebrew/share/lua/5.4/whisker/parsers/sugarcube.lua'
+	no file '/opt/homebrew/share/lua/5.4/whisker/parsers/sugarcube/init.lua'
+	no file '/opt/homebrew/lib/lua/5.4/whisker/parsers/sugarcube.lua'
+	no file '/opt/homebrew/lib/lua/5.4/whisker/parsers/sugarcube/init.lua'
+	no file './whisker/parsers/sugarcube.lua'
+	no file './whisker/parsers/sugarcube/init.lua'
+	no file '/opt/homebrew/lib/lua/5.4/whisker/parsers/sugarcube.so'
+	no file '/opt/homebrew/lib/lua/5.4/loadall.so'
+	no file './whisker/parsers/sugarcube.so'
+	no file '/opt/homebrew/lib/lua/5.4/whisker.so'
+	no file '/opt/homebrew/lib/lua/5.4/loadall.so'
+	no file './whisker.so'
+
+SugarCube Save Test: FAILED
+  Duration: 0.000s
+  Error: tests/sugarcube/test_save.lua:2: module 'whisker.parsers.sugarcube' not found:
+	no field package.preload['whisker.parsers.sugarcube']
+	no file '/opt/homebrew/share/lua/5.4/whisker/parsers/sugarcube.lua'
+	no file '/opt/homebrew/share/lua/5.4/whisker/parsers/sugarcube/init.lua'
+	no file '/opt/homebrew/lib/lua/5.4/whisker/parsers/sugarcube.lua'
+	no file '/opt/homebrew/lib/lua/5.4/whisker/parsers/sugarcube/init.lua'
+	no file './whisker/parsers/sugarcube.lua'
+	no file './whisker/parsers/sugarcube/init.lua'
+	no file '/opt/homebrew/lib/lua/5.4/whisker/parsers/sugarcube.so'
+	no file '/opt/homebrew/lib/lua/5.4/loadall.so'
+	no file './whisker/parsers/sugarcube.so'
+	no file '/opt/homebrew/lib/lua/5.4/whisker.so'
+	no file '/opt/homebrew/lib/lua/5.4/loadall.so'
+	no file './whisker.so'
+
+SugarCube Shop Test: FAILED
+  Duration: 0.000s
+  Error: tests/sugarcube/test_shop.lua:2: module 'whisker.parsers.sugarcube' not found:
+	no field package.preload['whisker.parsers.sugarcube']
+	no file '/opt/homebrew/share/lua/5.4/whisker/parsers/sugarcube.lua'
+	no file '/opt/homebrew/share/lua/5.4/whisker/parsers/sugarcube/init.lua'
+	no file '/opt/homebrew/lib/lua/5.4/whisker/parsers/sugarcube.lua'
+	no file '/opt/homebrew/lib/lua/5.4/whisker/parsers/sugarcube/init.lua'
+	no file './whisker/parsers/sugarcube.lua'
+	no file './whisker/parsers/sugarcube/init.lua'
+	no file '/opt/homebrew/lib/lua/5.4/whisker/parsers/sugarcube.so'
+	no file '/opt/homebrew/lib/lua/5.4/loadall.so'
+	no file './whisker/parsers/sugarcube.so'
+	no file '/opt/homebrew/lib/lua/5.4/whisker.so'
+	no file '/opt/homebrew/lib/lua/5.4/loadall.so'
+	no file './whisker.so'
+
+SugarCube Time Test: FAILED
+  Duration: 0.000s
+  Error: tests/sugarcube/test_time.lua:2: module 'whisker.parsers.sugarcube' not found:
+	no field package.preload['whisker.parsers.sugarcube']
+	no file '/opt/homebrew/share/lua/5.4/whisker/parsers/sugarcube.lua'
+	no file '/opt/homebrew/share/lua/5.4/whisker/parsers/sugarcube/init.lua'
+	no file '/opt/homebrew/lib/lua/5.4/whisker/parsers/sugarcube.lua'
+	no file '/opt/homebrew/lib/lua/5.4/whisker/parsers/sugarcube/init.lua'
+	no file './whisker/parsers/sugarcube.lua'
+	no file './whisker/parsers/sugarcube/init.lua'
+	no file '/opt/homebrew/lib/lua/5.4/whisker/parsers/sugarcube.so'
+	no file '/opt/homebrew/lib/lua/5.4/loadall.so'
+	no file './whisker/parsers/sugarcube.so'
+	no file '/opt/homebrew/lib/lua/5.4/whisker.so'
+	no file '/opt/homebrew/lib/lua/5.4/loadall.so'
+	no file './whisker.so'
+
+Snowman Basic Test: FAILED
+  Duration: 0.000s
+  Error: tests/snowman/test_basic.lua:2: module 'whisker.parsers.snowman' not found:
+	no field package.preload['whisker.parsers.snowman']
+	no file '/opt/homebrew/share/lua/5.4/whisker/parsers/snowman.lua'
+	no file '/opt/homebrew/share/lua/5.4/whisker/parsers/snowman/init.lua'
+	no file '/opt/homebrew/lib/lua/5.4/whisker/parsers/snowman.lua'
+	no file '/opt/homebrew/lib/lua/5.4/whisker/parsers/snowman/init.lua'
+	no file './whisker/parsers/snowman.lua'
+	no file './whisker/parsers/snowman/init.lua'
+	no file '/opt/homebrew/lib/lua/5.4/whisker/parsers/snowman.so'
+	no file '/opt/homebrew/lib/lua/5.4/loadall.so'
+	no file './whisker/parsers/snowman.so'
+	no file '/opt/homebrew/lib/lua/5.4/whisker.so'
+	no file '/opt/homebrew/lib/lua/5.4/loadall.so'
+	no file './whisker.so'
+
+Snowman Combat Test: FAILED
+  Duration: 0.000s
+  Error: tests/snowman/test_combat.lua:2: module 'whisker.parsers.snowman' not found:
+	no field package.preload['whisker.parsers.snowman']
+	no file '/opt/homebrew/share/lua/5.4/whisker/parsers/snowman.lua'
+	no file '/opt/homebrew/share/lua/5.4/whisker/parsers/snowman/init.lua'
+	no file '/opt/homebrew/lib/lua/5.4/whisker/parsers/snowman.lua'
+	no file '/opt/homebrew/lib/lua/5.4/whisker/parsers/snowman/init.lua'
+	no file './whisker/parsers/snowman.lua'
+	no file './whisker/parsers/snowman/init.lua'
+	no file '/opt/homebrew/lib/lua/5.4/whisker/parsers/snowman.so'
+	no file '/opt/homebrew/lib/lua/5.4/loadall.so'
+	no file './whisker/parsers/snowman.so'
+	no file '/opt/homebrew/lib/lua/5.4/whisker.so'
+	no file '/opt/homebrew/lib/lua/5.4/loadall.so'
+	no file './whisker.so'
+
+Snowman Quest Test: FAILED
+  Duration: 0.000s
+  Error: tests/snowman/test_quest.lua:2: module 'whisker.parsers.snowman' not found:
+	no field package.preload['whisker.parsers.snowman']
+	no file '/opt/homebrew/share/lua/5.4/whisker/parsers/snowman.lua'
+	no file '/opt/homebrew/share/lua/5.4/whisker/parsers/snowman/init.lua'
+	no file '/opt/homebrew/lib/lua/5.4/whisker/parsers/snowman.lua'
+	no file '/opt/homebrew/lib/lua/5.4/whisker/parsers/snowman/init.lua'
+	no file './whisker/parsers/snowman.lua'
+	no file './whisker/parsers/snowman/init.lua'
+	no file '/opt/homebrew/lib/lua/5.4/whisker/parsers/snowman.so'
+	no file '/opt/homebrew/lib/lua/5.4/loadall.so'
+	no file './whisker/parsers/snowman.so'
+	no file '/opt/homebrew/lib/lua/5.4/whisker.so'
+	no file '/opt/homebrew/lib/lua/5.4/loadall.so'
+	no file './whisker.so'
+
+Snowman Shop Test: FAILED
+  Duration: 0.000s
+  Error: tests/snowman/test_shop.lua:2: module 'whisker.parsers.snowman' not found:
+	no field package.preload['whisker.parsers.snowman']
+	no file '/opt/homebrew/share/lua/5.4/whisker/parsers/snowman.lua'
+	no file '/opt/homebrew/share/lua/5.4/whisker/parsers/snowman/init.lua'
+	no file '/opt/homebrew/lib/lua/5.4/whisker/parsers/snowman.lua'
+	no file '/opt/homebrew/lib/lua/5.4/whisker/parsers/snowman/init.lua'
+	no file './whisker/parsers/snowman.lua'
+	no file './whisker/parsers/snowman/init.lua'
+	no file '/opt/homebrew/lib/lua/5.4/whisker/parsers/snowman.so'
+	no file '/opt/homebrew/lib/lua/5.4/loadall.so'
+	no file './whisker/parsers/snowman.so'
+	no file '/opt/homebrew/lib/lua/5.4/whisker.so'
+	no file '/opt/homebrew/lib/lua/5.4/loadall.so'
+	no file './whisker.so'
+
+Chapbook Conditionals Test: FAILED
+  Duration: 0.000s
+  Error: tests/chapbook/test_confitionals.lua:2: module 'whisker.parsers.chapbook' not found:
+	no field package.preload['whisker.parsers.chapbook']
+	no file '/opt/homebrew/share/lua/5.4/whisker/parsers/chapbook.lua'
+	no file '/opt/homebrew/share/lua/5.4/whisker/parsers/chapbook/init.lua'
+	no file '/opt/homebrew/lib/lua/5.4/whisker/parsers/chapbook.lua'
+	no file '/opt/homebrew/lib/lua/5.4/whisker/parsers/chapbook/init.lua'
+	no file './whisker/parsers/chapbook.lua'
+	no file './whisker/parsers/chapbook/init.lua'
+	no file '/opt/homebrew/lib/lua/5.4/whisker/parsers/chapbook.so'
+	no file '/opt/homebrew/lib/lua/5.4/loadall.so'
+	no file './whisker/parsers/chapbook.so'
+	no file '/opt/homebrew/lib/lua/5.4/whisker.so'
+	no file '/opt/homebrew/lib/lua/5.4/loadall.so'
+	no file './whisker.so'
+
+Chapbook Inserts Test: FAILED
+  Duration: 0.000s
+  Error: tests/chapbook/test_inserts.lua:2: module 'whisker.parsers.chapbook' not found:
+	no field package.preload['whisker.parsers.chapbook']
+	no file '/opt/homebrew/share/lua/5.4/whisker/parsers/chapbook.lua'
+	no file '/opt/homebrew/share/lua/5.4/whisker/parsers/chapbook/init.lua'
+	no file '/opt/homebrew/lib/lua/5.4/whisker/parsers/chapbook.lua'
+	no file '/opt/homebrew/lib/lua/5.4/whisker/parsers/chapbook/init.lua'
+	no file './whisker/parsers/chapbook.lua'
+	no file './whisker/parsers/chapbook/init.lua'
+	no file '/opt/homebrew/lib/lua/5.4/whisker/parsers/chapbook.so'
+	no file '/opt/homebrew/lib/lua/5.4/loadall.so'
+	no file './whisker/parsers/chapbook.so'
+	no file '/opt/homebrew/lib/lua/5.4/whisker.so'
+	no file '/opt/homebrew/lib/lua/5.4/loadall.so'
+	no file './whisker.so'
+
+Chapbook Modifiers Test: FAILED
+  Duration: 0.000s
+  Error: tests/chapbook/test_modifiers.lua:2: module 'whisker.parsers.chapbook' not found:
+	no field package.preload['whisker.parsers.chapbook']
+	no file '/opt/homebrew/share/lua/5.4/whisker/parsers/chapbook.lua'
+	no file '/opt/homebrew/share/lua/5.4/whisker/parsers/chapbook/init.lua'
+	no file '/opt/homebrew/lib/lua/5.4/whisker/parsers/chapbook.lua'
+	no file '/opt/homebrew/lib/lua/5.4/whisker/parsers/chapbook/init.lua'
+	no file './whisker/parsers/chapbook.lua'
+	no file './whisker/parsers/chapbook/init.lua'
+	no file '/opt/homebrew/lib/lua/5.4/whisker/parsers/chapbook.so'
+	no file '/opt/homebrew/lib/lua/5.4/loadall.so'
+	no file './whisker/parsers/chapbook.so'
+	no file '/opt/homebrew/lib/lua/5.4/whisker.so'
+	no file '/opt/homebrew/lib/lua/5.4/loadall.so'
+	no file './whisker.so'
+
+Chapbook Variables Test: FAILED
+  Duration: 0.000s
+  Error: tests/chapbook/test_variables.lua:2: module 'whisker.parsers.chapbook' not found:
+	no field package.preload['whisker.parsers.chapbook']
+	no file '/opt/homebrew/share/lua/5.4/whisker/parsers/chapbook.lua'
+	no file '/opt/homebrew/share/lua/5.4/whisker/parsers/chapbook/init.lua'
+	no file '/opt/homebrew/lib/lua/5.4/whisker/parsers/chapbook.lua'
+	no file '/opt/homebrew/lib/lua/5.4/whisker/parsers/chapbook/init.lua'
+	no file './whisker/parsers/chapbook.lua'
+	no file './whisker/parsers/chapbook/init.lua'
+	no file '/opt/homebrew/lib/lua/5.4/whisker/parsers/chapbook.so'
+	no file '/opt/homebrew/lib/lua/5.4/loadall.so'
+	no file './whisker/parsers/chapbook.so'
+	no file '/opt/homebrew/lib/lua/5.4/whisker.so'
+	no file '/opt/homebrew/lib/lua/5.4/loadall.so'
+	no file './whisker.so'

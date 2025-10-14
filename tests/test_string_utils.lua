@@ -240,5 +240,5 @@ print(string.format("Tests Failed: %d %s", tests_failed, tests_failed > 0 and "â
 print(string.rep("=", 60))
 
 if tests_failed > 0 then
-    os.exit(1)
+    error("Test failures detected")
 end
