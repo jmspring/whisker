@@ -53,7 +53,7 @@ print("✅ Word wrapping works\n")
 
 -- Test 4: Complete passage rendering
 print("Test 4: Complete Passage Rendering")
-local passage = Passage:new("test", "test")
+local passage = Passage.new("test", "test")
 passage:set_content("Welcome **{{player_name}}**! You have {{health}} HP.\n\nWhat will you do?")
 
 local full_render = renderer:render_passage(passage, game_state)

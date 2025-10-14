@@ -4,7 +4,7 @@
 local ChapbookParser = {}
 ChapbookParser.__index = ChapbookParser
 
-function ChapbookParser:new()
+function ChapbookParser.new()
     local instance = setmetatable({}, self)
     return instance
 end

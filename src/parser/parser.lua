@@ -4,7 +4,7 @@
 local Parser = {}
 Parser.__index = Parser
 
-function Parser:new()
+function Parser.new()
     local instance = {
         tokens = {},
         current = 1,

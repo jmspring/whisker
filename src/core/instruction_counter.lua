@@ -4,7 +4,7 @@
 local AdvancedInstructionCounter = {}
 AdvancedInstructionCounter.__index = AdvancedInstructionCounter
 
-function AdvancedInstructionCounter:new(config)
+function AdvancedInstructionCounter.new(config)
     config = config or {}
 
     local instance = {

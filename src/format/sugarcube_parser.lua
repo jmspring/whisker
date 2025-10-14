@@ -4,7 +4,7 @@
 local SugarCubeParser = {}
 SugarCubeParser.__index = SugarCubeParser
 
-function SugarCubeParser:new()
+function SugarCubeParser.new()
     local instance = setmetatable({}, self)
     return instance
 end

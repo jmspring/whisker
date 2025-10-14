@@ -38,13 +38,13 @@ function Engine.new(story, game_state, config)
     -- Initialize game state if not provided
     if not instance.game_state then
         local GameState = require("src.core.game_state")
-        instance.game_state = GameState:new()
+        instance.game_state = GameState.new()
     end
 
     -- Initialize interpreter
     if not instance.interpreter then
         local LuaInterpreter = require("src.core.lua_interpreter")
-        instance.interpreter = LuaInterpreter:new()
+        instance.interpreter = LuaInterpreter.new()
     end
 
     return instance
@@ -68,13 +68,13 @@ function Engine:load_story(story)
     -- Initialize game state if not provided
     if not self.game_state then
         local GameState = require("src.core.game_state")
-        self.game_state = GameState:new()
+        self.game_state = GameState.new()
     end
 
     -- Initialize interpreter if not provided
     if not self.interpreter then
         local LuaInterpreter = require("src.core.lua_interpreter")
-        self.interpreter = LuaInterpreter:new()
+        self.interpreter = LuaInterpreter.new()
     end
 
     return true

@@ -10,7 +10,7 @@ local json = require('json') -- Assuming JSON library available
 local template_processor = require('src.utils.template_processor')
 
 -- Constructor
-function WebRuntime:new(container_id, config)
+function WebRuntime.new(container_id, config)
     local instance = {
         engine = nil,
         container_id = container_id or "whisker-container",
@@ -36,7 +36,7 @@ end
 -- Initialization
 function WebRuntime:initialize()
     -- Initialize engine
-    self.engine = Engine:new()
+    self.engine = Engine.new()
     local success, err = self.engine:initialize({
         debug = self.config.debug or false
     })

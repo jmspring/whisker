@@ -3,7 +3,7 @@
 
 local Validator = {}
 
-function Validator:new(project)
+function Validator.new(project)
     return {
         project = project,
         errors = {},

@@ -4,7 +4,7 @@
 local SnowmanParser = {}
 SnowmanParser.__index = SnowmanParser
 
-function SnowmanParser:new()
+function SnowmanParser.new()
     local instance = setmetatable({}, self)
     return instance
 end

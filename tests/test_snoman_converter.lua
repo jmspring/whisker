@@ -156,7 +156,7 @@ print(string.rep("=", 50) .. "\n")
 
 -- Test 1: Initialize converter
 print("Test 1: Initialize Snowman Converter")
-local converter = SnowmanConverter:new()
+local converter = SnowmanConverter.new()
 Tests:assert_not_nil(converter, "Converter created")
 
 -- Test 2: Snowman to whisker conversion
@@ -233,7 +233,7 @@ print(string.rep("=", 50) .. "\n")
 
 -- Test 11: Format detection
 print("Test 11: Format Detection")
-local format_converter = FormatConverter:new()
+local format_converter = FormatConverter.new()
 local detected = format_converter:detect_format(sample_snowman)
 Tests:assert_equal(detected, "snowman", "Snowman format detected")
 

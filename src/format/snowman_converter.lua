@@ -4,7 +4,7 @@
 local SnowmanConverter = {}
 SnowmanConverter.__index = SnowmanConverter
 
-function SnowmanConverter:new()
+function SnowmanConverter.new()
     local instance = setmetatable({}, self)
     return instance
 end

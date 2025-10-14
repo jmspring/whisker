@@ -20,19 +20,19 @@ end
 
 -- Test 1: Story metatable preservation
 print("Test 1: Story metatable preservation")
-local story1 = Story:new({
+local story1 = Story.new({
     title = "Test Story",
     author = "Test Author"
 })
 
 -- Add a passage with choices
-local passage1 = Passage:new({
+local passage1 = Passage.new({
     id = "start",
     name = "Start",
     content = "Welcome to the test story!"
 })
 
-local choice1 = Choice:new({
+local choice1 = Choice.new({
     text = "Continue",
     target = "next"
 })
@@ -113,7 +113,7 @@ print("  ✓ All methods work after JSON round-trip")
 
 -- Test 5: Engine integration
 print("\nTest 5: Engine integration with deserialized story")
-local engine = Engine:new()
+local engine = Engine.new()
 
 -- Load a deserialized story (simulating loading from save)
 engine:load_story(from_json)  -- Load plain table without metatable
@@ -179,20 +179,20 @@ print("  ✓ Choice.from_table works")
 
 -- Test 7: Deep nesting verification
 print("\nTest 7: Deep nesting verification")
-local complex_story = Story:new({
+local complex_story = Story.new({
     title = "Complex Story"
 })
 
 -- Create multiple passages with multiple choices
 for i = 1, 3 do
-    local passage = Passage:new({
+    local passage = Passage.new({
         id = "passage" .. i,
         name = "Passage " .. i,
         content = "Content " .. i
     })
 
     for j = 1, 2 do
-        local choice = Choice:new({
+        local choice = Choice.new({
             text = "Choice " .. j,
             target = "passage" .. ((i % 3) + 1)
         })
@@ -225,7 +225,7 @@ print("  ✓ All nested objects preserve methods through serialization")
 
 -- Test 8: Metatable idempotency
 print("\nTest 8: Metatable restoration is idempotent")
-local story_with_metatable = Story:new({title = "Test"})
+local story_with_metatable = Story.new({title = "Test"})
 local restored_again = Story.restore_metatable(story_with_metatable)
 
 -- Should return the same object since it already has the right metatable
