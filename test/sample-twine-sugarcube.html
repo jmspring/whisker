@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Space Adventure</title>
+<meta charset="UTF-8">
+</head>
+<body>
+<tw-storydata name="Space Adventure" startnode="1" creator="Test Creator" creator-version="2.3.14" ifid="87654321-4321-4321-4321-CBA987654321" zoom="1" format="SugarCube" format-version="2.36.1" options="" hidden>
+
+<style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css"></style>
+
+<script role="script" id="twine-user-script" type="text/twine-javascript"></script>
+
+<tw-passagedata pid="1" name="Launch" tags="" position="400,200" size="100,100">**Space Station Alpha**
+
+You are the captain of a small spacecraft. Your ship has $fuel fuel units remaining.
+
+&lt;&lt;set $fuel to 100&gt;&gt;
+&lt;&lt;set $crew to 5&gt;&gt;
+&lt;&lt;set $hasShield to false&gt;&gt;
+
+Mission Control gives you two options:
+
+[[Explore the asteroid field|Asteroids]]
+[[Visit the space station|Station]]
+[[Check ship status|Status]]</tw-passagedata>
+
+<tw-passagedata pid="2" name="Asteroids" tags="danger" position="200,350" size="100,100">**Asteroid Field**
+
+You navigate through the dangerous asteroid field.
+
+&lt;&lt;set $fuel to $fuel - 20&gt;&gt;
+
+&lt;&lt;if $hasShield&gt;&gt;
+  Your shields protect you from the asteroids!
+  [[Continue exploring|Discovery]]
+&lt;&lt;else&gt;&gt;
+  Without shields, it&#39;s too dangerous!
+  &lt;&lt;set $crew to $crew - 1&gt;&gt;
+  One crew member is injured.
+  [[Return to base|Launch]]
+&lt;&lt;endif&gt;&gt;</tw-passagedata>
+
+<tw-passagedata pid="3" name="Station" tags="" position="600,350" size="100,100">**Space Station Omega**
+
+You dock at the space station. The station offers:
+
+1. Fuel refill (50 units) - Free
+2. Shield upgrade - 1 crew member
+
+What do you do?
+
+[[Refuel only|Refuel]]
+[[Get shields (costs 1 crew)|Get Shields]]
+[[Leave station|Launch]]</tw-passagedata>
+
+<tw-passagedata pid="4" name="Refuel" tags="" position="600,500" size="100,100">&lt;&lt;set $fuel to $fuel + 50&gt;&gt;
+
+**Refueled**
+
+Your ship is refueled. Current fuel: $fuel
+
+Crew: $crew
+Shields: &lt;&lt;if $hasShield&gt;&gt;Active&lt;&lt;else&gt;&gt;None&lt;&lt;endif&gt;&gt;
+
+[[Return to ship|Launch]]</tw-passagedata>
+
+<tw-passagedata pid="5" name="Get Shields" tags="" position="700,500" size="100,100">&lt;&lt;if $crew &gt; 1&gt;&gt;
+  &lt;&lt;set $hasShield to true&gt;&gt;
+  &lt;&lt;set $crew to $crew - 1&gt;&gt;
+
+  **Shield Installed**
+
+  One crew member stays behind to work on the station.
+  Your ship now has shields!
+
+  Remaining crew: $crew
+
+  [[Continue|Launch]]
+&lt;&lt;else&gt;&gt;
+  **Insufficient Crew**
+
+  You need at least 2 crew members. You can&#39;t leave yourself alone!
+
+  [[Go back|Station]]
+&lt;&lt;endif&gt;&gt;</tw-passagedata>
+
+<tw-passagedata pid="6" name="Discovery" tags="" position="200,500" size="100,100">**Ancient Artifact Found!**
+
+In the asteroid field, you discover an ancient alien artifact!
+
+&lt;&lt;set $fuel to $fuel - 10&gt;&gt;
+
+This is a major discovery! Mission accomplished!
+
+Final Status:
+- Fuel: $fuel
+- Crew: $crew
+- Has Shields: &lt;&lt;if $hasShield&gt;&gt;Yes&lt;&lt;else&gt;&gt;No&lt;&lt;endif&gt;&gt;
+
+[[Mission Complete!|Victory]]</tw-passagedata>
+
+<tw-passagedata pid="7" name="Status" tags="menu" position="400,350" size="100,100">**Ship Status**
+
+Fuel: $fuel units
+Crew: $crew members
+Shields: &lt;&lt;if $hasShield&gt;&gt;✓ Active&lt;&lt;else&gt;&gt;✗ Not installed&lt;&lt;endif&gt;&gt;
+
+&lt;&lt;if $fuel &lt; 30&gt;&gt;
+  **WARNING**: Low fuel!
+&lt;&lt;endif&gt;&gt;
+
+&lt;&lt;if $crew &lt; 3&gt;&gt;
+  **WARNING**: Low crew count!
+&lt;&lt;endif&gt;&gt;
+
+[[Back to ship|Launch]]</tw-passagedata>
+
+<tw-passagedata pid="8" name="Victory" tags="ending" position="200,650" size="100,100">**MISSION SUCCESSFUL**
+
+You have completed your mission and made a historic discovery!
+
+Final Report:
+- Remaining Fuel: $fuel
+- Surviving Crew: $crew
+- Shield Status: &lt;&lt;if $hasShield&gt;&gt;Equipped&lt;&lt;else&gt;&gt;None&lt;&lt;endif&gt;&gt;
+
+&lt;&lt;print &quot;Mission rating: &quot; + ($crew * 10) + &quot; points&quot;&gt;&gt;
+
+[[Play again?|Launch]]</tw-passagedata>
+
+</tw-storydata>
+</body>
+</html>
