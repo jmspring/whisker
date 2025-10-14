@@ -1,0 +1,427 @@
+{
+  "format": "whisker",
+  "formatVersion": "2.0",
+  "metadata": {
+    "title": "Natural History Museum Tour",
+    "author": "Whisker Museums",
+    "ifid": "MUSEUM-NAT-HIST-001",
+    "created": "2025-10-14T00:00:00Z",
+    "modified": "2025-10-14T00:00:00Z",
+    "description": "A self-guided tour through natural history, featuring 10 exhibits with audio guides, images, and interactive content.",
+    "language": "en",
+    "estimatedTime": "45 minutes",
+    "exhibitCount": 10,
+    "tourType": "self-guided"
+  },
+  "settings": {
+    "startPassage": "welcome",
+    "autoSave": true,
+    "scriptingLanguage": "lua",
+    "theme": "museum",
+    "features": {
+      "audio": true,
+      "images": true,
+      "qrCodes": true,
+      "maps": true,
+      "offline": true,
+      "multiLanguage": true,
+      "analytics": true
+    }
+  },
+  "passages": [
+    {
+      "id": "welcome",
+      "name": "Welcome",
+      "pid": "1",
+      "text": "# Welcome to the Natural History Museum\n\n![Museum Entrance](assets/images/entrance.jpg)\n\nWelcome! You're about to embark on a fascinating journey through 4.5 billion years of natural history.\n\n**Tour Details:**\n- 10 exhibits\n- Estimated time: 45 minutes\n- Audio guides available at each stop\n- Feel free to explore at your own pace\n\n**Audio Guide Available** 🔊\n[audio](assets/audio/welcome.mp3)\n\n**How to Use This Tour:**\n1. Tap choices to navigate\n2. Scan QR codes at exhibits for direct access\n3. Use the map to see your location\n4. Audio guides play automatically (optional)\n\n**Choose your tour route:**",
+      "choices": [
+        {
+          "text": "Start with Dinosaurs 🦕",
+          "target": "dinosaurs"
+        },
+        {
+          "text": "Begin at Ancient Egypt 🏺",
+          "target": "ancient_egypt"
+        },
+        {
+          "text": "View Museum Map 🗺️",
+          "target": "museum_map"
+        },
+        {
+          "text": "Tour Guidelines & Info ℹ️",
+          "target": "tour_info"
+        }
+      ],
+      "tags": ["start", "welcome"],
+      "metadata": {
+        "exhibitId": "entrance",
+        "floor": 1,
+        "qrCode": "MUSEUM-ENTRANCE",
+        "hasAudio": true,
+        "audioLength": "2:30"
+      }
+    },
+    {
+      "id": "museum_map",
+      "name": "Museum Map",
+      "pid": "2",
+      "text": "# Museum Floor Plan\n\n![Museum Map](assets/images/floor_plan.svg)\n\n**Ground Floor:**\n- 🦕 Dinosaurs (Hall A)\n- 🏺 Ancient Egypt (Hall B)\n- 🐳 Ocean Life (Hall C)\n\n**Second Floor:**\n- 💎 Gems & Minerals (Hall D)\n- 🦁 Mammals (Hall E)\n- 🦅 Birds (Hall F)\n\n**Third Floor:**\n- 🧬 Human Origins (Hall G)\n- 🦋 Butterflies (Hall H - Live Exhibit)\n\n**You are here:** 📍 Entrance\n\n**Navigation:**",
+      "choices": [
+        {
+          "text": "Go to Dinosaurs (Hall A)",
+          "target": "dinosaurs"
+        },
+        {
+          "text": "Go to Ancient Egypt (Hall B)",
+          "target": "ancient_egypt"
+        },
+        {
+          "text": "Return to Welcome",
+          "target": "welcome"
+        }
+      ],
+      "tags": ["map", "navigation"],
+      "metadata": {
+        "exhibitId": "map",
+        "hasMap": true
+      }
+    },
+    {
+      "id": "tour_info",
+      "name": "Tour Information",
+      "pid": "3",
+      "text": "# Tour Guidelines\n\n**Audio Guides:**\n- Each exhibit has a 2-3 minute audio guide\n- Tap 🔊 to play\n- Works with headphones or speaker\n- Available in: English, Spanish, French\n\n**QR Codes:**\n- Scan codes at exhibits to jump directly\n- Located on exhibit plaques\n- Works offline\n\n**Navigation:**\n- Use choices to move between exhibits\n- View map anytime\n- Your progress is automatically saved\n\n**Accessibility:**\n- Text size adjustable\n- Audio descriptions available\n- Wheelchair accessible routes marked\n- Screen reader compatible\n\n**Facilities:**\n- Restrooms on each floor\n- Café on ground floor\n- Gift shop at exit\n- Free WiFi throughout\n\n**Museum Rules:**\n- Photography allowed (no flash)\n- Please don't touch exhibits\n- Food and drinks in café only\n- Speak quietly in exhibit halls\n\n**Ready to begin?**",
+      "choices": [
+        {
+          "text": "Start Tour at Dinosaurs",
+          "target": "dinosaurs"
+        },
+        {
+          "text": "Return to Welcome",
+          "target": "welcome"
+        }
+      ],
+      "tags": ["info", "guidelines"],
+      "metadata": {
+        "exhibitId": "info"
+      }
+    },
+    {
+      "id": "dinosaurs",
+      "name": "Dinosaurs - Age of Reptiles",
+      "pid": "4",
+      "text": "# Hall A: Dinosaurs\n## The Age of Reptiles (252-66 million years ago)\n\n![T-Rex Skeleton](assets/images/trex.jpg)\n\n**Featured Exhibit:** *Tyrannosaurus Rex*\n\nStanding before you is Sue, one of the most complete T-Rex skeletons ever discovered. At 40 feet long and 13 feet tall at the hip, this predator dominated the late Cretaceous period.\n\n**Fascinating Facts:**\n- T-Rex could bite with 12,800 pounds of force\n- Arms were small but incredibly strong\n- Could run up to 25 mph\n- Lived 68-66 million years ago\n- Discovered in South Dakota, 1990\n\n**Audio Guide Available** 🔊\n[audio](assets/audio/dinosaurs.mp3)\n\n**Also in this hall:**\n- Triceratops skeleton\n- Velociraptor fossils  \n- Pteranodon display\n- Fossil dig interactive\n- Dinosaur egg collection\n\n**Interactive:** Touch the fossil cast table!\n\n**Continue your tour:**",
+      "choices": [
+        {
+          "text": "Next: Ancient Egypt 🏺",
+          "target": "ancient_egypt"
+        },
+        {
+          "text": "Next: Ocean Life 🐳",
+          "target": "ocean_life"
+        },
+        {
+          "text": "View Museum Map",
+          "target": "museum_map"
+        }
+      ],
+      "tags": ["exhibit", "dinosaurs", "ground-floor"],
+      "position": {"x": 100, "y": 100},
+      "metadata": {
+        "exhibitId": "hall-a-dinosaurs",
+        "floor": 1,
+        "qrCode": "MUSEUM-DINO-001",
+        "hasAudio": true,
+        "audioLength": "3:15",
+        "hasInteractive": true,
+        "popularRating": 5
+      }
+    },
+    {
+      "id": "ancient_egypt",
+      "name": "Ancient Egypt",
+      "pid": "5",
+      "text": "# Hall B: Ancient Egypt\n## Secrets of the Pharaohs (3100-30 BCE)\n\n![Sarcophagus](assets/images/egypt.jpg)\n\n**Featured Exhibit:** *Royal Sarcophagus*\n\nThis ornately decorated sarcophagus housed a high-ranking official from the 18th Dynasty, during the reign of Tutankhamun. Notice the hieroglyphic inscriptions - these are spells from the Book of the Dead, meant to guide the deceased through the afterlife.\n\n**What You're Seeing:**\n- **Gold leaf** - Symbol of divine protection\n- **Lapis lazuli inlay** - Imported from Afghanistan\n- **Hieroglyphics** - Tell the story of the occupant's life\n- **Cartouche** - Contains the person's name\n\n**The Mummification Process:**\n1. Removal of internal organs (70 days)\n2. Desiccation with natron salt\n3. Wrapping in linen bandages\n4. Placement in nested coffins\n5. Burial with treasures for the afterlife\n\n**Audio Guide Available** 🔊\n[audio](assets/audio/egypt.mp3)\n\n**Also in this hall:**\n- Canopic jars (organs preserved separately)\n- Papyrus scrolls with hieroglyphics\n- Jewelry and amulets\n- Model of a pyramid complex\n- Interactive: Write your name in hieroglyphics!\n\n**Continue exploring:**",
+      "choices": [
+        {
+          "text": "Next: Ocean Life 🐳",
+          "target": "ocean_life"
+        },
+        {
+          "text": "Next: Gems & Minerals 💎",
+          "target": "gems_minerals"
+        },
+        {
+          "text": "Back to Dinosaurs 🦕",
+          "target": "dinosaurs"
+        }
+      ],
+      "tags": ["exhibit", "egypt", "ground-floor"],
+      "position": {"x": 200, "y": 100},
+      "metadata": {
+        "exhibitId": "hall-b-egypt",
+        "floor": 1,
+        "qrCode": "MUSEUM-EGYPT-001",
+        "hasAudio": true,
+        "audioLength": "2:50",
+        "hasInteractive": true,
+        "popularRating": 5
+      }
+    },
+    {
+      "id": "ocean_life",
+      "name": "Ocean Life",
+      "pid": "6",
+      "text": "# Hall C: Ocean Life\n## The Deep Blue (Present Day)\n\n![Blue Whale](assets/images/whale.jpg)\n\n**Featured Exhibit:** *Blue Whale Skeleton*\n\nHanging overhead is the skeleton of a blue whale - the largest animal ever to exist on Earth. At 89 feet long and weighing 200 tons when alive, this magnificent creature dwarfs even the largest dinosaurs.\n\n**Blue Whale Facts:**\n- Heart weighs 400 pounds (size of a small car)\n- Tongue weighs as much as an elephant\n- Can eat 4 tons of krill per day\n- Call can be heard 1,000 miles away\n- Lifespan: 80-90 years\n- Currently endangered (only 10,000-25,000 remain)\n\n**Ocean Zones:**\n- **Sunlight Zone** (0-200m): Most life, coral reefs\n- **Twilight Zone** (200-1,000m): Dim light, strange fish\n- **Midnight Zone** (1,000-4,000m): Total darkness\n- **Abyssal Zone** (4,000-6,000m): Near-freezing temperatures\n- **Hadal Zone** (6,000m+): Deepest trenches\n\n**Audio Guide Available** 🔊\n[audio](assets/audio/ocean.mp3)\n\n**Also in this hall:**\n- Giant squid specimen (rarely seen alive!)\n- Coral reef diorama\n- Shark jaw display\n- Bioluminescent creatures\n- Interactive: Touch tank with starfish and urchins\n\n**Where to next?**",
+      "choices": [
+        {
+          "text": "Next: Gems & Minerals 💎 (2nd Floor)",
+          "target": "gems_minerals"
+        },
+        {
+          "text": "Back to Ancient Egypt 🏺",
+          "target": "ancient_egypt"
+        },
+        {
+          "text": "View Museum Map",
+          "target": "museum_map"
+        }
+      ],
+      "tags": ["exhibit", "ocean", "ground-floor"],
+      "position": {"x": 300, "y": 100},
+      "metadata": {
+        "exhibitId": "hall-c-ocean",
+        "floor": 1,
+        "qrCode": "MUSEUM-OCEAN-001",
+        "hasAudio": true,
+        "audioLength": "3:00",
+        "hasInteractive": true,
+        "popularRating": 5
+      }
+    },
+    {
+      "id": "gems_minerals",
+      "name": "Gems & Minerals",
+      "pid": "7",
+      "text": "# Hall D: Gems & Minerals\n## Earth's Hidden Treasures (4.5 billion years)\n\n![Hope Diamond](assets/images/gems.jpg)\n\n**Featured Exhibit:** *The Hope Diamond (Replica)*\n\nThis 45.52-carat deep blue diamond is one of the most famous gems in the world. According to legend, it carries a curse - though scientists assure us the only curse is its extraordinary value!\n\n**How Gems Form:**\n- **Igneous**: Crystallize from molten rock (diamonds, garnets)\n- **Metamorphic**: Transform under heat/pressure (sapphires, rubies)\n- **Sedimentary**: Form from mineral-rich water (opals, turquoise)\n\n**The Mohs Hardness Scale:**\n1. Talc (softest - can scratch with fingernail)\n2. Gypsum\n3. Calcite\n4. Fluorite\n5. Apatite\n6. Orthoclase Feldspar\n7. Quartz\n8. Topaz\n9. Corundum (sapphire, ruby)\n10. Diamond (hardest - can only be scratched by another diamond)\n\n**Audio Guide Available** 🔊\n[audio](assets/audio/gems.mp3)\n\n**Rare Specimens in This Hall:**\n- 3-foot amethyst geode (you can walk inside!)\n- Meteorite with olivine crystals\n- Fluorescent minerals (UV light display)\n- Gold nuggets from California Gold Rush\n- Birth stones from around the world\n\n**Fun Fact:** Diamonds aren't actually rare - their high price is due to controlled supply!\n\n**Continue to:**",
+      "choices": [
+        {
+          "text": "Next: Mammals 🦁",
+          "target": "mammals"
+        },
+        {
+          "text": "Next: Birds 🦅",
+          "target": "birds"
+        },
+        {
+          "text": "Back to Ocean Life 🐳 (Ground Floor)",
+          "target": "ocean_life"
+        }
+      ],
+      "tags": ["exhibit", "gems", "second-floor"],
+      "position": {"x": 100, "y": 200},
+      "metadata": {
+        "exhibitId": "hall-d-gems",
+        "floor": 2,
+        "qrCode": "MUSEUM-GEMS-001",
+        "hasAudio": true,
+        "audioLength": "2:40",
+        "popularRating": 4
+      }
+    },
+    {
+      "id": "mammals",
+      "name": "Mammals",
+      "pid": "8",
+      "text": "# Hall E: Mammals\n## From Mice to Elephants (200 million years ago - Present)\n\n![African Elephant](assets/images/elephant.jpg)\n\n**Featured Exhibit:** *African Elephant Diorama*\n\nThis family group shows elephants in their natural habitat - the African savanna. These magnificent animals are the largest land mammals on Earth, weighing up to 14,000 pounds.\n\n**What Makes a Mammal?**\n- Warm-blooded\n- Have hair or fur\n- Give birth to live young (except platypus & echidna)\n- Produce milk for offspring\n- Have three middle ear bones\n\n**Elephant Intelligence:**\n- Self-aware (recognize themselves in mirrors)\n- Mourn their dead\n- Use tools\n- Communicate with infrasound (below human hearing)\n- Have excellent memory (\"an elephant never forgets\")\n- Live in matriarchal societies led by oldest female\n\n**Conservation Status:**\n- African elephants: Endangered (415,000 remain)\n- Main threats: Poaching for ivory, habitat loss\n- Tusks are actually elongated incisor teeth\n\n**Audio Guide Available** 🔊\n[audio](assets/audio/mammals.mp3)\n\n**Other Mammals in This Hall:**\n- Polar bear with cubs\n- Lion pride\n- Gorilla family\n- Giant panda\n- Kangaroo with joey\n- Bat cave display\n- Interactive: Compare animal skulls and teeth\n\n**Next exhibit:**",
+      "choices": [
+        {
+          "text": "Next: Birds 🦅",
+          "target": "birds"
+        },
+        {
+          "text": "Next: Human Origins 🧬 (3rd Floor)",
+          "target": "human_origins"
+        },
+        {
+          "text": "Back to Gems 💎",
+          "target": "gems_minerals"
+        }
+      ],
+      "tags": ["exhibit", "mammals", "second-floor"],
+      "position": {"x": 200, "y": 200},
+      "metadata": {
+        "exhibitId": "hall-e-mammals",
+        "floor": 2,
+        "qrCode": "MUSEUM-MAMMALS-001",
+        "hasAudio": true,
+        "audioLength": "3:10",
+        "popularRating": 5
+      }
+    },
+    {
+      "id": "birds",
+      "name": "Birds - Masters of Flight",
+      "pid": "9",
+      "text": "# Hall F: Birds\n## Masters of Flight (150 million years ago - Present)\n\n![Bald Eagle](assets/images/eagle.jpg)\n\n**Featured Exhibit:** *Bald Eagle in Flight*\n\nAmerica's national bird is shown mid-flight, capturing a fish. With a wingspan of 6-8 feet and eyesight 4 times sharper than humans, eagles are perfectly adapted predators.\n\n**Evolution of Flight:**\n- Birds evolved from theropod dinosaurs\n- Archaeopteryx: First known bird (150 million years ago)\n- Feathers originally evolved for warmth, later adapted for flight\n- Modern birds are technically living dinosaurs!\n\n**How Birds Fly:**\n- **Lightweight bones** (hollow, filled with air)\n- **Powerful chest muscles** (up to 35% of body weight)\n- **Aerodynamic feathers** (overlap to create smooth surface)\n- **Efficient lungs** (air flows one direction, unlike mammals)\n- **Streamlined body** (reduces drag)\n\n**Bird Records:**\n- **Fastest:** Peregrine falcon (240 mph diving)\n- **Largest:** Ostrich (9 feet tall, 350 pounds)\n- **Smallest:** Bee hummingbird (2 inches, 0.07 ounces)\n- **Longest migration:** Arctic tern (44,000 miles annually)\n- **Deepest dive:** Emperor penguin (1,850 feet)\n\n**Audio Guide Available** 🔊\n[audio](assets/audio/birds.mp3)\n\n**Also in this hall:**\n- Hummingbird garden (live!)\n- Owl collection (15 species)\n- Peacock with tail spread\n- Penguin colony diorama\n- Bird egg collection\n- Interactive: Match birds to their songs\n\n**Continue exploring:**",
+      "choices": [
+        {
+          "text": "Next: Human Origins 🧬 (3rd Floor)",
+          "target": "human_origins"
+        },
+        {
+          "text": "Back to Mammals 🦁",
+          "target": "mammals"
+        },
+        {
+          "text": "View Museum Map",
+          "target": "museum_map"
+        }
+      ],
+      "tags": ["exhibit", "birds", "second-floor"],
+      "position": {"x": 300, "y": 200},
+      "metadata": {
+        "exhibitId": "hall-f-birds",
+        "floor": 2,
+        "qrCode": "MUSEUM-BIRDS-001",
+        "hasAudio": true,
+        "audioLength": "2:55",
+        "popularRating": 4
+      }
+    },
+    {
+      "id": "human_origins",
+      "name": "Human Origins",
+      "pid": "10",
+      "text": "# Hall G: Human Origins\n## The Human Story (7 million years - Present)\n\n![Human Evolution](assets/images/evolution.jpg)\n\n**Featured Exhibit:** *Lucy - Australopithecus afarensis*\n\nThis is a cast of \"Lucy,\" one of the most important fossil discoveries in human evolution. At 3.2 million years old, she walked upright on two legs but had a brain only 1/3 the size of modern humans.\n\n**The Human Family Tree:**\n- **7 million years ago**: Last common ancestor with chimpanzees\n- **4 million years ago**: Australopithecus - upright walking\n- **2.5 million years ago**: Homo habilis - first stone tools\n- **1.9 million years ago**: Homo erectus - first to leave Africa\n- **300,000 years ago**: Homo sapiens - that's us!\n- **70,000 years ago**: Migration out of Africa\n- **40,000 years ago**: Cave paintings, art, complex language\n\n**What Makes Us Human?**\n- **Large brains** (3x larger than chimpanzees, relative to body size)\n- **Complex language** (unlimited ideas can be expressed)\n- **Tool making** (not just using, but planning and improving)\n- **Culture** (passing knowledge across generations)\n- **Cooking food** (changed our biology and social structure)\n\n**Surprising Facts:**\n- We share 98.8% of DNA with chimpanzees\n- Humans and Neanderthals interbred (2% Neanderthal DNA in non-Africans)\n- Our brains use 20% of body's energy (2% of body weight)\n- Language likely evolved 100,000+ years ago\n\n**Audio Guide Available** 🔊\n[audio](assets/audio/human_origins.mp3)\n\n**Also in this hall:**\n- Skull casts showing brain evolution\n- Stone tool progression (2.5 million years to present)\n- Ancient art reproductions (Lascaux, Chauvet caves)\n- DNA comparison display\n- Interactive: See how you compare to other hominins\n\n**Almost done!**",
+      "choices": [
+        {
+          "text": "Next: Butterflies 🦋 (Live Exhibit)",
+          "target": "butterflies"
+        },
+        {
+          "text": "Back to Birds 🦅 (2nd Floor)",
+          "target": "birds"
+        },
+        {
+          "text": "Skip to Conclusion",
+          "target": "conclusion"
+        }
+      ],
+      "tags": ["exhibit", "humans", "third-floor"],
+      "position": {"x": 100, "y": 300},
+      "metadata": {
+        "exhibitId": "hall-g-humans",
+        "floor": 3,
+        "qrCode": "MUSEUM-HUMANS-001",
+        "hasAudio": true,
+        "audioLength": "3:20",
+        "popularRating": 4
+      }
+    },
+    {
+      "id": "butterflies",
+      "name": "Butterfly Conservatory",
+      "pid": "11",
+      "text": "# Hall H: Butterfly Conservatory\n## Living Jewels (LIVE EXHIBIT)\n\n![Monarch Butterfly](assets/images/butterfly.jpg)\n\n**Featured Exhibit:** *Living Butterfly Habitat*\n\n**IMPORTANT: This is a LIVE exhibit!**\n- Temperature: 80°F, Humidity: 70%\n- Over 500 butterflies from 20+ species\n- Please walk slowly and watch where you step\n- Butterflies may land on you - stay still and enjoy!\n- Do not touch butterflies (oils from skin can damage wings)\n\n**The Butterfly Life Cycle:**\n1. **Egg** (3-5 days) - Tiny, laid on host plant\n2. **Larva/Caterpillar** (3-5 weeks) - Eating machine, molts 5 times\n3. **Pupa/Chrysalis** (8-15 days) - Transformation inside\n4. **Adult Butterfly** (2-6 weeks) - Emerges, mates, lays eggs\n\n**Butterfly Anatomy:**\n- **Four wings** covered in thousands of tiny scales\n- **Compound eyes** see UV light (flowers look different to them)\n- **Proboscis** (straw-like tongue) drinks nectar\n- **Six legs** (but some species only use four)\n- **Cold-blooded** (must warm up in sun to fly)\n\n**Species You Might See:**\n- **Monarch** (orange & black) - Migrates 3,000 miles\n- **Blue Morpho** (brilliant blue) - From rainforest\n- **Swallowtail** (yellow & black) - Tail looks like swallow bird\n- **Atlas Moth** (12-inch wingspan!) - One of largest insects\n\n**Audio Guide Available** 🔊\n[audio](assets/audio/butterflies.mp3)\n\n**Watch the Emergence Chamber:**\nSee butterflies emerge from chrysalises (11am & 2pm daily)\n\n**Feeding Station:**\nWatch butterflies feed on fresh fruit (bananas, oranges)\n\n**Conservation Message:**\nMany butterfly species are declining due to habitat loss and climate change. You can help by planting native flowers!\n\n**This is the final exhibit.**",
+      "choices": [
+        {
+          "text": "Finish Tour - See Summary 📊",
+          "target": "conclusion"
+        },
+        {
+          "text": "Back to Human Origins 🧬",
+          "target": "human_origins"
+        },
+        {
+          "text": "Return to Start",
+          "target": "welcome"
+        }
+      ],
+      "tags": ["exhibit", "butterflies", "third-floor", "live"],
+      "position": {"x": 200, "y": 300},
+      "metadata": {
+        "exhibitId": "hall-h-butterflies",
+        "floor": 3,
+        "qrCode": "MUSEUM-BUTTERFLY-001",
+        "hasAudio": true,
+        "audioLength": "2:45",
+        "popularRating": 5,
+        "isLive": true,
+        "requiresTicket": false
+      }
+    },
+    {
+      "id": "conclusion",
+      "name": "Tour Complete - Thank You!",
+      "pid": "12",
+      "text": "# Tour Complete! 🎉\n\n![Museum Logo](assets/images/logo.png)\n\n## Thank You for Visiting!\n\nYou've completed the Natural History Museum tour. We hope you enjoyed your journey through 4.5 billion years of history!\n\n**Your Visit Summary:**\n- Exhibits visited: {{visited_count}}/10\n- Time spent: {{tour_duration}}\n- Audio guides played: {{audio_count}}\n\n**What You Explored:**\n- 🦕 Dinosaurs - Age of Reptiles\n- 🏺 Ancient Egypt - Secrets of Pharaohs  \n- 🐳 Ocean Life - The Deep Blue\n- 💎 Gems & Minerals - Earth's Treasures\n- 🦁 Mammals - From Mice to Elephants\n- 🦅 Birds - Masters of Flight\n- 🧬 Human Origins - The Human Story\n- 🦋 Butterflies - Living Jewels\n\n**Did You Know?**\nOur collection includes over 35 million specimens, but only 2% are on display at any time!\n\n**Before You Leave:**\n\n**Gift Shop:**\n- Books and field guides\n- Toys and educational games\n- Jewelry and minerals\n- Dinosaur replicas\n- Butterfly garden kits\n\n**Café:**\n- Sandwiches and salads\n- Coffee and pastries\n- Kids meals\n- Open until 5pm\n\n**Membership:**\nBecome a member for unlimited visits, special events, and discounts!\n- Individual: $65/year\n- Family: $120/year\n- Student: $45/year\n\n**Plan Your Next Visit:**\n- Planetarium shows daily\n- IMAX films on natural wonders\n- Special exhibitions (check website)\n- Kids' workshops on weekends\n\n**Share Your Experience:**\n#NaturalHistoryMuseum #MuseumTour\n\n**Thank you for visiting!** 🏛️\n\n---\n\n**Audio Guide Available** 🔊\n[audio](assets/audio/conclusion.mp3)",
+      "choices": [
+        {
+          "text": "Start Tour Again 🔄",
+          "target": "welcome"
+        },
+        {
+          "text": "View Museum Map",
+          "target": "museum_map"
+        },
+        {
+          "text": "Download Visit Certificate 📜",
+          "target": "certificate"
+        }
+      ],
+      "tags": ["conclusion", "end"],
+      "metadata": {
+        "exhibitId": "conclusion",
+        "hasAudio": true,
+        "audioLength": "1:30"
+      }
+    },
+    {
+      "id": "certificate",
+      "name": "Visit Certificate",
+      "pid": "13",
+      "text": "# Certificate of Visit 📜\n\n---\n\n**Natural History Museum**\n\n*This certifies that*\n\n**Visitor**\n\nhas completed the self-guided tour\n\nDate: {{current_date}}\n\nExhibits Visited: {{visited_count}}/10\n\nDuration: {{tour_duration}}\n\n*Signed: Curator of Education*\n\n---\n\n**Share your achievement!**\n\n[Download PDF] [Share on Social Media] [Email to Me]\n\n**We hope to see you again soon!**",
+      "choices": [
+        {
+          "text": "Return to Summary",
+          "target": "conclusion"
+        },
+        {
+          "text": "Start New Tour",
+          "target": "welcome"
+        }
+      ],
+      "tags": ["certificate"],
+      "metadata": {
+        "exhibitId": "certificate"
+      }
+    }
+  ],
+  "variables": [
+    {
+      "name": "visited_count",
+      "type": "number",
+      "initial": 0,
+      "description": "Number of exhibits visited"
+    },
+    {
+      "name": "audio_count",
+      "type": "number",
+      "initial": 0,
+      "description": "Number of audio guides played"
+    },
+    {
+      "name": "tour_duration",
+      "type": "string",
+      "initial": "0 minutes",
+      "description": "Total time spent on tour"
+    },
+    {
+      "name": "current_date",
+      "type": "string",
+      "initial": "",
+      "description": "Current date for certificate"
+    }
+  ]
+}
