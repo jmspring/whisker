@@ -1,5 +1,6 @@
 -- src/format/whisker_loader.lua
 -- Loads native Whisker JSON format files and converts them to Story objects
+-- Supports both verbose (1.0) and compact (2.0) formats
 
 local whisker_loader = {}
 
@@ -10,6 +11,9 @@ local Choice = require("src.core.choice")
 
 -- Load JSON parser
 local json = require("src.utils.json")
+
+-- Load compact format converter
+local CompactConverter = require("src.format.compact_converter")
 
 -- Load a .whisker file and convert to Story object
 function whisker_loader.load_from_file(filename)
@@ -36,6 +40,16 @@ function whisker_loader.load_from_string(json_text)
     local format = data.format or (data.metadata and data.metadata.format)
     if format ~= "whisker" then
         return nil, "Invalid format: expected 'whisker', got '" .. tostring(format) .. "'"
+    end
+
+    -- Auto-convert compact format (2.0) to verbose format (1.0) for processing
+    if data.formatVersion == "2.0" then
+        local converter = CompactConverter.new()
+        local verbose_data, conv_err = converter:to_verbose(data)
+        if conv_err then
+            return nil, "Failed to convert compact format: " .. conv_err
+        end
+        data = verbose_data
     end
 
     -- Create Story object
@@ -104,8 +118,9 @@ end
 
 -- Convert a Whisker passage to a Passage object
 function whisker_loader.convert_passage(passage_data)
-    -- Support both formats: {name, text} and {id, content}
-    local passage_id = passage_data.name or passage_data.id
+    -- Support both formats: {id, text} and {name, content}
+    -- Prefer id over name (id is the linking key, name is display name)
+    local passage_id = passage_data.id or passage_data.name
     local passage_content = passage_data.text or passage_data.content
 
     if not passage_id then
@@ -216,24 +231,33 @@ function whisker_loader.validate(data)
         table.insert(errors, "Passages must be an array")
     else
         -- Validate each passage
+        local passage_ids = {}
         local passage_names = {}
         for i, passage in ipairs(data.passages) do
-            if not passage.name then
-                table.insert(errors, "Passage " .. i .. " missing name")
-            elseif passage_names[passage.name] then
-                table.insert(errors, "Duplicate passage name: " .. passage.name)
+            -- Check for id (preferred) or name
+            local passage_id = passage.id or passage.name
+            if not passage_id then
+                table.insert(errors, "Passage " .. i .. " missing id/name")
+            elseif passage_ids[passage_id] then
+                table.insert(errors, "Duplicate passage id: " .. passage_id)
             else
+                passage_ids[passage_id] = true
+            end
+
+            -- Also track names for legacy support
+            if passage.name then
                 passage_names[passage.name] = true
             end
 
-            if not passage.text then
-                table.insert(errors, "Passage '" .. (passage.name or i) .. "' missing text")
+            -- Check for text or content
+            if not passage.text and not passage.content then
+                table.insert(errors, "Passage '" .. (passage_id or i) .. "' missing text/content")
             end
         end
 
-        -- Check start passage exists
+        -- Check start passage exists (check both ids and names)
         if data.settings and data.settings.startPassage then
-            if not passage_names[data.settings.startPassage] then
+            if not passage_ids[data.settings.startPassage] and not passage_names[data.settings.startPassage] then
                 table.insert(errors, "Start passage not found: " .. data.settings.startPassage)
             end
         end

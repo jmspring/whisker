@@ -1,1418 +1,563 @@
-{  "assets": [
-
-  ],  "format": "whisker",  "formatVersion": "1.0",  "metadata": {
+{  "format": "whisker",  "formatVersion": "2.0",  "metadata": {
     "author": "whisker",
     "created": "2025-10-10T23:57:30",
-    "description": "",
-    "format": "whisker",
-    "format_version": "1.0",
     "ifid": "GOLD-RUSH-002",
     "modified": "2025-10-10T23:57:30",
-    "name": "Gold Rush Fever - Enhanced Edition",
     "title": "Gold Rush Fever - Enhanced Edition",
     "version": "2.0"
   },  "passages": [
     {
       "choices": [
         {
-          "metadata": [
-
-          ],
-          "target_passage": "afternoon_arrival",
+          "target": "afternoon_arrival",
           "text": "Ride quickly to your claim"
         }
       ],
-      "content": "Pemberton smiles. \"Wise decision, Mr. McCready. For a small additional fee, I can\nhave ironclad documentation ready by this afternoon. Stop by on your way back to\ntown and you'll be legally protected.\"\n\nHe hands you a receipt. \"Now, best you get to that claim. And McCready? Keep an\neye out. I saw some Lakota scouts passing through yesterday morning, heading north.\nThey're usually peaceful, but with all the prospecting pushing into their hunting\ngrounds, tensions are high.\"\n\nYou nod and head out, the morning already half gone.\n    ",
       "id": "legal_docs",
-      "metadata": [
-
-      ],
       "name": "legal_docs",
       "pid": "p1",
-      "position": {
-        "x": 0,
-        "y": 0
-      },
-      "size": {
-        "height": 100,
-        "width": 100
-      },
-      "tags": [
-
-      ],
       "text": "Pemberton smiles. \"Wise decision, Mr. McCready. For a small additional fee, I can\nhave ironclad documentation ready by this afternoon. Stop by on your way back to\ntown and you'll be legally protected.\"\n\nHe hands you a receipt. \"Now, best you get to that claim. And McCready? Keep an\neye out. I saw some Lakota scouts passing through yesterday morning, heading north.\nThey're usually peaceful, but with all the prospecting pushing into their hunting\ngrounds, tensions are high.\"\n\nYou nod and head out, the morning already half gone.\n    "
     },
     {
       "choices": [
         {
-          "metadata": [
-
-          ],
-          "target_passage": "lend_money",
+          "target": "lend_money",
           "text": "Lend Big Jack some money - he's always been decent to you"
         },
         {
-          "metadata": [
-
-          ],
-          "target_passage": "suit_store",
+          "target": "suit_store",
           "text": "Politely decline and head to Pemberton's store"
         },
         {
-          "metadata": [
-
-          ],
-          "target_passage": "quick_supplies",
+          "target": "quick_supplies",
           "text": "Decline and quickly get supplies before heading to your claim"
         }
       ],
-      "content": "You ride into Deadwood as the sun climbs over the hills. The main street is already\nbustling with activity. You tie your horse outside the general store.\n\nAs you step onto the boardwalk, \"Big Jack\" McKenzie stumbles out of the Dusty Rose\nSaloon, even though it's barely past breakfast time. The massive saloon owner has\nbleary eyes and whiskey on his breath.\n\n\"McCready!\" he calls out, grabbing your arm. \"Just the man I need! Listen, I had a\nbad night at the poker table - real bad. Word is you found color out at your claim.\nHow about you stake me a small loan? I'm good for it, I swear!\"\n\nAcross the street, you see Cornelius Pemberton arranging fancy suits in his shop\nwindow, his own suit pressed to perfection despite the dusty frontier town.\n    ",
       "id": "town_visit",
-      "metadata": [
-
-      ],
       "name": "town_visit",
       "pid": "p2",
-      "position": {
-        "x": 0,
-        "y": 0
-      },
-      "size": {
-        "height": 100,
-        "width": 100
-      },
-      "tags": [
-
-      ],
       "text": "You ride into Deadwood as the sun climbs over the hills. The main street is already\nbustling with activity. You tie your horse outside the general store.\n\nAs you step onto the boardwalk, \"Big Jack\" McKenzie stumbles out of the Dusty Rose\nSaloon, even though it's barely past breakfast time. The massive saloon owner has\nbleary eyes and whiskey on his breath.\n\n\"McCready!\" he calls out, grabbing your arm. \"Just the man I need! Listen, I had a\nbad night at the poker table - real bad. Word is you found color out at your claim.\nHow about you stake me a small loan? I'm good for it, I swear!\"\n\nAcross the street, you see Cornelius Pemberton arranging fancy suits in his shop\nwindow, his own suit pressed to perfection despite the dusty frontier town.\n    "
     },
     {
-      "choices": [
-
-      ],
-      "content": "You keep your eyes on Blackwood, who grows frustrated that he can't tamper with\nyour claim. Eventually he gives up and leaves.\n\nYour vigilance pays off, and you successfully work your claim.\n\n**GOOD ENDING - Vigilance protects what's yours.**\n\n*THE END*\n    ",
       "id": "watch_sheriff",
-      "metadata": [
-
-      ],
       "name": "watch_sheriff",
       "pid": "p3",
-      "position": {
-        "x": 0,
-        "y": 0
-      },
-      "size": {
-        "height": 100,
-        "width": 100
-      },
-      "tags": [
-
-      ],
       "text": "You keep your eyes on Blackwood, who grows frustrated that he can't tamper with\nyour claim. Eventually he gives up and leaves.\n\nYour vigilance pays off, and you successfully work your claim.\n\n**GOOD ENDING - Vigilance protects what's yours.**\n\n*THE END*\n    "
     },
     {
       "choices": [
         {
-          "metadata": [
-
-          ],
-          "target_passage": "confront_markers",
+          "target": "confront_markers",
           "text": "Confront them about the intrusion"
         },
         {
-          "metadata": [
-
-          ],
-          "target_passage": "talk_to_sheriff",
+          "target": "talk_to_sheriff",
           "text": "Act like nothing's wrong and see what they want"
         }
       ],
-      "content": "You arrive at your claim in early afternoon. The tracks you saw this morning are\nstill there, and now you notice someone has been inside your tent.\n\nAs you investigate, you hear horses approaching - it's Blackwood and Ruby.\n    ",
       "id": "afternoon_arrival",
-      "metadata": [
-
-      ],
       "name": "afternoon_arrival",
       "pid": "p4",
-      "position": {
-        "x": 0,
-        "y": 0
-      },
-      "size": {
-        "height": 100,
-        "width": 100
-      },
-      "tags": [
-
-      ],
       "text": "You arrive at your claim in early afternoon. The tracks you saw this morning are\nstill there, and now you notice someone has been inside your tent.\n\nAs you investigate, you hear horses approaching - it's Blackwood and Ruby.\n    "
     },
     {
       "choices": [
         {
-          "metadata": [
-
-          ],
-          "target_passage": "confront_markers",
+          "target": "confront_markers",
           "text": "Confront him immediately"
         },
         {
-          "metadata": [
-
-          ],
-          "target_passage": "native_intervention",
+          "target": "native_intervention",
           "text": "Signal for the Lakota witnesses"
         }
       ],
-      "content": "As you show Ruby the creek, she whispers urgently, \"He's planting false markers.\nStop him now!\"\n\nYou turn to see Blackwood hammering stakes into the ground.\n    ",
       "id": "ruby_distraction",
-      "metadata": [
-
-      ],
       "name": "ruby_distraction",
       "pid": "p5",
-      "position": {
-        "x": 0,
-        "y": 0
-      },
-      "size": {
-        "height": 100,
-        "width": 100
-      },
-      "tags": [
-
-      ],
       "text": "As you show Ruby the creek, she whispers urgently, \"He's planting false markers.\nStop him now!\"\n\nYou turn to see Blackwood hammering stakes into the ground.\n    "
     },
     {
-      "choices": [
-
-      ],
-      "content": "You negotiate a protection deal with Blackwood - 15% of your take. It works, barely,\nbut you're always looking over your shoulder.\n\nEventually you sell out and leave the territory with moderate wealth but no peace.\n\n**MIXED ENDING - Compromise brings gold but not satisfaction.**\n\n*THE END*\n    ",
       "id": "negotiate",
-      "metadata": [
-
-      ],
       "name": "negotiate",
       "pid": "p6",
-      "position": {
-        "x": 0,
-        "y": 0
-      },
-      "size": {
-        "height": 100,
-        "width": 100
-      },
-      "tags": [
-
-      ],
       "text": "You negotiate a protection deal with Blackwood - 15% of your take. It works, barely,\nbut you're always looking over your shoulder.\n\nEventually you sell out and leave the territory with moderate wealth but no peace.\n\n**MIXED ENDING - Compromise brings gold but not satisfaction.**\n\n*THE END*\n    "
     },
     {
       "choices": [
         {
-          "metadata": [
-
-          ],
-          "target_passage": "creek_panning",
+          "target": "creek_panning",
           "text": "Return to your claim with renewed confidence"
         }
       ],
-      "content": "\"If the Sheriff tries to steal my claim,\" you say carefully, \"would you be willing\nto testify to what you've seen? The false markers he placed?\"\n\nThe elder considers this. \"White man's courts do not value our words. But...\" he\nsmiles slightly, \"...the judge who comes to Deadwood next week is different. He\nlearned our language when he was young. He listens.\"\n\n\"If you protect this land as you promise, we will speak for you if needed. But\nremember - we will also speak against you if you break the earth carelessly.\"\n\nOne of the younger men adds, \"We will be near today. If there is trouble with\nthe star-man, signal with smoke. Three quick fires.\"\n\nYou nod, grateful for unexpected allies.\n    ",
       "id": "native_alliance",
-      "metadata": [
-
-      ],
       "name": "native_alliance",
       "pid": "p7",
-      "position": {
-        "x": 0,
-        "y": 0
-      },
-      "size": {
-        "height": 100,
-        "width": 100
-      },
-      "tags": [
-
-      ],
       "text": "\"If the Sheriff tries to steal my claim,\" you say carefully, \"would you be willing\nto testify to what you've seen? The false markers he placed?\"\n\nThe elder considers this. \"White man's courts do not value our words. But...\" he\nsmiles slightly, \"...the judge who comes to Deadwood next week is different. He\nlearned our language when he was young. He listens.\"\n\n\"If you protect this land as you promise, we will speak for you if needed. But\nremember - we will also speak against you if you break the earth carelessly.\"\n\nOne of the younger men adds, \"We will be near today. If there is trouble with\nthe star-man, signal with smoke. Three quick fires.\"\n\nYou nod, grateful for unexpected allies.\n    "
     },
     {
-      "choices": [
-
-      ],
-      "content": "\"Ruby,\" you say after the Lakota men leave, \"I need someone I can trust. Someone\nsmart, brave, and honest. How would you like to be my partner? Equal shares.\"\n\nRuby's eyes widen. \"Equal? Silas, I'm just a saloon girl—\"\n\n\"You're a woman who stood up to a corrupt sheriff when you could have looked the\nother way. That makes you the right kind of partner.\"\n\nShe accepts.\n\nTogether, you build a successful operation. Ruby proves brilliant at business,\nnegotiating with Big Jack to supply food and equipment, and even getting Cornelius\nPemberton to reduce his prices in exchange for first pick of any gold jewelry you\nproduce.\n\nWhen Big Jack hits another gambling low, Ruby helps him see he has a problem. With\nher encouragement, he stops gambling and focuses on making the Dusty Rose the finest\nsaloon in the territory. He never forgets her kindness.\n\nThe Lakota elder occasionally visits, and you always honor your promise to work\nrespectfully. Sometimes they guide you to good deposits; sometimes they ask you to\navoid certain areas for their hunts. You always agree.\n\nTwo years later, McCready-Ruby Mining Company is the most respected operation in the\nBlack Hills, known for fair dealing and ethical practices.\n\nAnd somewhere along the way, partnership became friendship, friendship became love,\nand love became marriage.\n\n**BEST ENDING - True partnership in business and life!**\n\n*THE END*\n    ",
       "id": "ruby_partnership",
-      "metadata": [
-
-      ],
       "name": "ruby_partnership",
       "pid": "p8",
-      "position": {
-        "x": 0,
-        "y": 0
-      },
-      "size": {
-        "height": 100,
-        "width": 100
-      },
-      "tags": [
-
-      ],
       "text": "\"Ruby,\" you say after the Lakota men leave, \"I need someone I can trust. Someone\nsmart, brave, and honest. How would you like to be my partner? Equal shares.\"\n\nRuby's eyes widen. \"Equal? Silas, I'm just a saloon girl—\"\n\n\"You're a woman who stood up to a corrupt sheriff when you could have looked the\nother way. That makes you the right kind of partner.\"\n\nShe accepts.\n\nTogether, you build a successful operation. Ruby proves brilliant at business,\nnegotiating with Big Jack to supply food and equipment, and even getting Cornelius\nPemberton to reduce his prices in exchange for first pick of any gold jewelry you\nproduce.\n\nWhen Big Jack hits another gambling low, Ruby helps him see he has a problem. With\nher encouragement, he stops gambling and focuses on making the Dusty Rose the finest\nsaloon in the territory. He never forgets her kindness.\n\nThe Lakota elder occasionally visits, and you always honor your promise to work\nrespectfully. Sometimes they guide you to good deposits; sometimes they ask you to\navoid certain areas for their hunts. You always agree.\n\nTwo years later, McCready-Ruby Mining Company is the most respected operation in the\nBlack Hills, known for fair dealing and ethical practices.\n\nAnd somewhere along the way, partnership became friendship, friendship became love,\nand love became marriage.\n\n**BEST ENDING - True partnership in business and life!**\n\n*THE END*\n    "
     },
     {
-      "choices": [
-
-      ],
-      "content": "You look at Ruby. \"You tried to warn me when you could have stayed silent. That\ntakes courage. Ruby, how would you like to be my partner? Fifty-fifty split.\"\n\nRuby's eyes widen. \"Are you serious?\"\n\n\"Dead serious. I need someone I can trust, and you've proven yourself.\"\n\nShe accepts. Together, you build something special. Ruby's connections to Big Jack\nand his saloon create a ready market for your gold. Pemberton becomes your attorney,\ndrawn by Ruby's charm and your fair dealing.\n\nThe Lakota elder, hearing of your partnership with Ruby and your respectful approach\nto the land, ensures no one disturbs your operation.\n\nWhen Blackwood tries to cause trouble, he finds himself opposed by the entire\ncommunity - even other miners respect how you do business.\n\nYears later, your partnership becomes a marriage, built on mutual respect and trust.\n\n**BEST ENDING - True partnership transforms everything!**\n\n*THE END*\n    ",
       "id": "partner_with_ruby",
-      "metadata": [
-
-      ],
       "name": "partner_with_ruby",
       "pid": "p9",
-      "position": {
-        "x": 0,
-        "y": 0
-      },
-      "size": {
-        "height": 100,
-        "width": 100
-      },
-      "tags": [
-
-      ],
       "text": "You look at Ruby. \"You tried to warn me when you could have stayed silent. That\ntakes courage. Ruby, how would you like to be my partner? Fifty-fifty split.\"\n\nRuby's eyes widen. \"Are you serious?\"\n\n\"Dead serious. I need someone I can trust, and you've proven yourself.\"\n\nShe accepts. Together, you build something special. Ruby's connections to Big Jack\nand his saloon create a ready market for your gold. Pemberton becomes your attorney,\ndrawn by Ruby's charm and your fair dealing.\n\nThe Lakota elder, hearing of your partnership with Ruby and your respectful approach\nto the land, ensures no one disturbs your operation.\n\nWhen Blackwood tries to cause trouble, he finds himself opposed by the entire\ncommunity - even other miners respect how you do business.\n\nYears later, your partnership becomes a marriage, built on mutual respect and trust.\n\n**BEST ENDING - True partnership transforms everything!**\n\n*THE END*\n    "
     },
     {
-      "choices": [
-
-      ],
-      "content": "\"Sheriff, unless you have a warrant, you need to leave. This is private property.\"\n\nBlackwood's hand hovers over his pistol, but Ruby steps between you. \"Maybe we\nshould just go, Sheriff.\"\n\nAfter a tense moment, he leaves. Your firm stand protects your claim.\n\n**GOOD ENDING - Standing firm works.**\n\n*THE END*\n    ",
       "id": "stand_ground",
-      "metadata": [
-
-      ],
       "name": "stand_ground",
       "pid": "p10",
-      "position": {
-        "x": 0,
-        "y": 0
-      },
-      "size": {
-        "height": 100,
-        "width": 100
-      },
-      "tags": [
-
-      ],
       "text": "\"Sheriff, unless you have a warrant, you need to leave. This is private property.\"\n\nBlackwood's hand hovers over his pistol, but Ruby steps between you. \"Maybe we\nshould just go, Sheriff.\"\n\nAfter a tense moment, he leaves. Your firm stand protects your claim.\n\n**GOOD ENDING - Standing firm works.**\n\n*THE END*\n    "
     },
     {
-      "choices": [
-
-      ],
-      "content": "You thank Ruby but send them both away. Working alone, you successfully mine\na moderate amount of gold over the next year.\n\nYou occasionally see Ruby in town - she opened her own boarding house with help\nfrom Big Jack. Blackwood eventually got arrested for other crimes.\n\nYou did well, but sometimes wonder what might have been if you'd trusted more.\n\n**DECENT ENDING - Independence brings modest success.**\n\n*THE END*\n    ",
       "id": "dismiss_both",
-      "metadata": [
-
-      ],
       "name": "dismiss_both",
       "pid": "p11",
-      "position": {
-        "x": 0,
-        "y": 0
-      },
-      "size": {
-        "height": 100,
-        "width": 100
-      },
-      "tags": [
-
-      ],
       "text": "You thank Ruby but send them both away. Working alone, you successfully mine\na moderate amount of gold over the next year.\n\nYou occasionally see Ruby in town - she opened her own boarding house with help\nfrom Big Jack. Blackwood eventually got arrested for other crimes.\n\nYou did well, but sometimes wonder what might have been if you'd trusted more.\n\n**DECENT ENDING - Independence brings modest success.**\n\n*THE END*\n    "
     },
     {
-      "choices": [
-
-      ],
-      "content": "You spend the morning at the land office, filing additional documentation. The\nclerk, a friend of Pemberton's, makes everything official and timestamped.\n\nWhen you finally reach your claim in the afternoon, you find evidence that\nBlackwood was here but couldn't do much without being caught.\n\nYour paperwork protects you, and you mine successfully.\n\n**GOOD ENDING - Preparation and documentation win.**\n\n*THE END*\n    ",
       "id": "land_office",
-      "metadata": [
-
-      ],
       "name": "land_office",
       "pid": "p12",
-      "position": {
-        "x": 0,
-        "y": 0
-      },
-      "size": {
-        "height": 100,
-        "width": 100
-      },
-      "tags": [
-
-      ],
       "text": "You spend the morning at the land office, filing additional documentation. The\nclerk, a friend of Pemberton's, makes everything official and timestamped.\n\nWhen you finally reach your claim in the afternoon, you find evidence that\nBlackwood was here but couldn't do much without being caught.\n\nYour paperwork protects you, and you mine successfully.\n\n**GOOD ENDING - Preparation and documentation win.**\n\n*THE END*\n    "
     },
     {
       "choices": [
         {
-          "metadata": [
-
-          ],
-          "target_passage": "native_encounter",
+          "target": "native_encounter",
           "text": "Approach the distant camp peacefully to introduce yourself"
         },
         {
-          "metadata": [
-
-          ],
-          "target_passage": "creek_panning",
+          "target": "creek_panning",
           "text": "Return to your claim and start working"
         },
         {
-          "metadata": [
-
-          ],
-          "target_passage": "investigate_tracks",
+          "target": "investigate_tracks",
           "text": "Investigate the horse tracks first"
         }
       ],
-      "content": "You decide to scout the area around your claim before starting work. Riding the\nperimeter, you notice fresh horse tracks that aren't yours - at least two horses,\nfrom yesterday evening.\n\nMore concerning, you find a small cairn of stones that wasn't there before. It's\nnear the boundary of your claim, and placed in a way that could mark territorial\nnotice. The arrangement looks like Lakota work - respectful but clear.\n\nIn the distance, you see thin smoke from what might be a camp, several miles north.\n    ",
       "id": "morning_scout",
-      "metadata": [
-
-      ],
       "name": "morning_scout",
       "pid": "p13",
-      "position": {
-        "x": 0,
-        "y": 0
-      },
-      "size": {
-        "height": 100,
-        "width": 100
-      },
-      "tags": [
-
-      ],
       "text": "You decide to scout the area around your claim before starting work. Riding the\nperimeter, you notice fresh horse tracks that aren't yours - at least two horses,\nfrom yesterday evening.\n\nMore concerning, you find a small cairn of stones that wasn't there before. It's\nnear the boundary of your claim, and placed in a way that could mark territorial\nnotice. The arrangement looks like Lakota work - respectful but clear.\n\nIn the distance, you see thin smoke from what might be a camp, several miles north.\n    "
     },
     {
       "choices": [
         {
-          "metadata": [
-
-          ],
-          "target_passage": "ally_with_ruby",
+          "target": "ally_with_ruby",
           "text": "Stand with Ruby against the Sheriff"
         },
         {
-          "metadata": [
-
-          ],
-          "target_passage": "native_intervention",
+          "target": "native_intervention",
           "text": "Signal the Lakota for help"
         },
         {
-          "metadata": [
-
-          ],
-          "target_passage": "negotiate",
+          "target": "negotiate",
           "text": "Propose a deal with the Sheriff"
         }
       ],
-      "content": "\"I know your game, Blackwood,\" you say firmly. \"You're trying to steal my claim.\nRuby already told me everything.\"\n\nThe Sheriff's hand moves to his gun. \"Careful, McCready. That sounds like you're\naccusing a lawman of corruption.\"\n\nRuby steps between you both. \"Stop! Silas, you're right. He threatened to run me\nout of town if I didn't help him. But I can't do it. I can't help steal from an\nhonest man.\"\n\n\"Ruby!\" the Sheriff snarls. \"You just cost yourself everything!\"\n\nFrom the tree line, you see movement - the Lakota scouts are watching, just as they\npromised.\n    ",
       "id": "confront_threat",
-      "metadata": [
-
-      ],
       "name": "confront_threat",
       "pid": "p14",
-      "position": {
-        "x": 0,
-        "y": 0
-      },
-      "size": {
-        "height": 100,
-        "width": 100
-      },
-      "tags": [
-
-      ],
       "text": "\"I know your game, Blackwood,\" you say firmly. \"You're trying to steal my claim.\nRuby already told me everything.\"\n\nThe Sheriff's hand moves to his gun. \"Careful, McCready. That sounds like you're\naccusing a lawman of corruption.\"\n\nRuby steps between you both. \"Stop! Silas, you're right. He threatened to run me\nout of town if I didn't help him. But I can't do it. I can't help steal from an\nhonest man.\"\n\n\"Ruby!\" the Sheriff snarls. \"You just cost yourself everything!\"\n\nFrom the tree line, you see movement - the Lakota scouts are watching, just as they\npromised.\n    "
     },
     {
       "choices": [
         {
-          "metadata": [
-
-          ],
-          "target_passage": "ruby_distraction",
+          "target": "ruby_distraction",
           "text": "Show Ruby around while the Sheriff checks papers"
         },
         {
-          "metadata": [
-
-          ],
-          "target_passage": "watch_sheriff",
+          "target": "watch_sheriff",
           "text": "Keep an eye on the Sheriff instead"
         },
         {
-          "metadata": [
-
-          ],
-          "target_passage": "stand_ground",
+          "target": "stand_ground",
           "text": "Refuse to let him search without proper authority"
         }
       ],
-      "content": "You set down your tools and approach them. \"What's this about, Sheriff?\"\n\nBlackwood grins. \"Just being neighborly, McCready. Ruby here mentioned she'd\nnever seen a real mining operation. Thought maybe you could show her the ropes\nwhile I... make sure everything's legal with your claim.\"\n\nRuby gives you an apologetic look, and you remember her warning if you spoke with\nher in town.\n\nThe Sheriff dismounts and starts walking toward your equipment. \"Mind if I\ntake a look at your papers? Just routine, you understand.\"\n    ",
       "id": "talk_to_sheriff",
-      "metadata": [
-
-      ],
       "name": "talk_to_sheriff",
       "pid": "p15",
-      "position": {
-        "x": 0,
-        "y": 0
-      },
-      "size": {
-        "height": 100,
-        "width": 100
-      },
-      "tags": [
-
-      ],
       "text": "You set down your tools and approach them. \"What's this about, Sheriff?\"\n\nBlackwood grins. \"Just being neighborly, McCready. Ruby here mentioned she'd\nnever seen a real mining operation. Thought maybe you could show her the ropes\nwhile I... make sure everything's legal with your claim.\"\n\nRuby gives you an apologetic look, and you remember her warning if you spoke with\nher in town.\n\nThe Sheriff dismounts and starts walking toward your equipment. \"Mind if I\ntake a look at your papers? Just routine, you understand.\"\n    "
     },
     {
       "choices": [
         {
-          "metadata": [
-
-          ],
-          "target_passage": "creek_panning",
+          "target": "creek_panning",
           "text": "Return to your claim and prepare for Blackwood"
         },
         {
-          "metadata": [
-
-          ],
-          "target_passage": "native_alliance",
+          "target": "native_alliance",
           "text": "Ask if they would witness what Blackwood does"
         }
       ],
-      "content": "\"I give you my word,\" you say sincerely. \"I'll take what I need to live well, but\nI won't scar this land. And...\" you hesitate, then continue, \"...if I do find gold,\nI'll remember who was here first. Perhaps there's a way we can help each other.\"\n\nThe elder regards you for a long moment, then nods slowly. \"Words are wind unless\nthey become actions. But your eyes are honest. We will watch, and we will remember\nyour promise.\"\n\nHe gestures to one of the younger men, who hands you a small leather pouch. \"Pemmican.\nThe work you do is hard. You will need strength.\"\n\nAs you turn to leave, the elder adds, \"The man with the star is coming to your claim\ntoday. He brings a woman in red. Be wise, Silas McCready.\"\n\nThe fact that he knows your name sends a chill down your spine, but not an unfriendly one.\n    ",
       "id": "respectful_promise",
-      "metadata": [
-
-      ],
       "name": "respectful_promise",
       "pid": "p16",
-      "position": {
-        "x": 0,
-        "y": 0
-      },
-      "size": {
-        "height": 100,
-        "width": 100
-      },
-      "tags": [
-
-      ],
       "text": "\"I give you my word,\" you say sincerely. \"I'll take what I need to live well, but\nI won't scar this land. And...\" you hesitate, then continue, \"...if I do find gold,\nI'll remember who was here first. Perhaps there's a way we can help each other.\"\n\nThe elder regards you for a long moment, then nods slowly. \"Words are wind unless\nthey become actions. But your eyes are honest. We will watch, and we will remember\nyour promise.\"\n\nHe gestures to one of the younger men, who hands you a small leather pouch. \"Pemmican.\nThe work you do is hard. You will need strength.\"\n\nAs you turn to leave, the elder adds, \"The man with the star is coming to your claim\ntoday. He brings a woman in red. Be wise, Silas McCready.\"\n\nThe fact that he knows your name sends a chill down your spine, but not an unfriendly one.\n    "
     },
     {
       "choices": [
         {
-          "metadata": [
-
-          ],
-          "target_passage": "find_markers",
+          "target": "find_markers",
           "text": "Ask them to show you where the false markers are"
         },
         {
-          "metadata": [
-
-          ],
-          "target_passage": "creek_panning",
+          "target": "creek_panning",
           "text": "Thank them and hurry to your claim"
         }
       ],
-      "content": "\"This man with the star - the Sheriff - what exactly was he doing?\"\n\nThe elder points toward your claim area. \"He was placing wooden sticks with markings,\nmoving your boundary stones. He thought no one watched, but the earth has many eyes.\"\n\nOne of the younger men speaks up in Lakota, and the elder translates: \"He also\ndropped a piece of paper. We did not touch it, but we saw it had drawings of the\nland and writing.\"\n\n\"We do not interfere in white man's disputes,\" the elder says. \"But we do not like\nthieves, whatever their color or star. What is stolen from you today may be stolen\nfrom us tomorrow.\"\n    ",
       "id": "ask_about_sheriff",
-      "metadata": [
-
-      ],
       "name": "ask_about_sheriff",
       "pid": "p17",
-      "position": {
-        "x": 0,
-        "y": 0
-      },
-      "size": {
-        "height": 100,
-        "width": 100
-      },
-      "tags": [
-
-      ],
       "text": "\"This man with the star - the Sheriff - what exactly was he doing?\"\n\nThe elder points toward your claim area. \"He was placing wooden sticks with markings,\nmoving your boundary stones. He thought no one watched, but the earth has many eyes.\"\n\nOne of the younger men speaks up in Lakota, and the elder translates: \"He also\ndropped a piece of paper. We did not touch it, but we saw it had drawings of the\nland and writing.\"\n\n\"We do not interfere in white man's disputes,\" the elder says. \"But we do not like\nthieves, whatever their color or star. What is stolen from you today may be stolen\nfrom us tomorrow.\"\n    "
     },
     {
       "choices": [
         {
-          "metadata": [
-
-          ],
-          "target_passage": "document_fraud",
+          "target": "document_fraud",
           "text": "Leave them as evidence and document their locations"
         },
         {
-          "metadata": [
-
-          ],
-          "target_passage": "remove_markers",
+          "target": "remove_markers",
           "text": "Remove them immediately"
         }
       ],
-      "content": "The younger Lakota man leads you to three new wooden stakes, each placed deliberately\ninside your legitimate claim boundary. They're weathered to look old, but you can\ntell they're recent.\n\n\"Smart,\" you mutter. \"He's creating evidence that my boundaries are wrong.\"\n\nThe Lakota scout nods. \"Do you remove them now, or leave them for others to see\nhis dishonesty?\"\n\nIt's a good question.\n    ",
       "id": "find_markers",
-      "metadata": [
-
-      ],
       "name": "find_markers",
       "pid": "p18",
-      "position": {
-        "x": 0,
-        "y": 0
-      },
-      "size": {
-        "height": 100,
-        "width": 100
-      },
-      "tags": [
-
-      ],
       "text": "The younger Lakota man leads you to three new wooden stakes, each placed deliberately\ninside your legitimate claim boundary. They're weathered to look old, but you can\ntell they're recent.\n\n\"Smart,\" you mutter. \"He's creating evidence that my boundaries are wrong.\"\n\nThe Lakota scout nods. \"Do you remove them now, or leave them for others to see\nhis dishonesty?\"\n\nIt's a good question.\n    "
     },
     {
       "choices": [
         {
-          "metadata": [
-
-          ],
-          "target_passage": "legal_docs",
+          "target": "legal_docs",
           "text": "Ask Pemberton to prepare protective documents for your claim"
         },
         {
-          "metadata": [
-
-          ],
-          "target_passage": "morning_work",
+          "target": "morning_work",
           "text": "Just take the suit order and head to your claim"
         }
       ],
-      "content": "\"You know what, Pemberton? You're right. I'll take that suit.\"\n\nThe tailor's eyes light up as he begins taking your measurements with practiced\nprecision. \"Excellent choice, sir! You'll be the talk of the territory. Though...\"\nhe pauses, \"...given the Sheriff's interest in your claim, you might want to have\nsome legal documentation handy. Looking prosperous is one thing, but protecting\nwhat's yours is another.\"\n\nHe lowers his voice. \"I also do a side business in document preparation - deeds,\ncontracts, that sort of thing. Very official looking. Could help if someone tries\nto dispute your claim...\"\n\nAs he finishes measuring, you see through the window that it's getting late morning.\nYour claim awaits.\n    ",
       "id": "buy_suit",
-      "metadata": [
-
-      ],
       "name": "buy_suit",
       "pid": "p19",
-      "position": {
-        "x": 0,
-        "y": 0
-      },
-      "size": {
-        "height": 100,
-        "width": 100
-      },
-      "tags": [
-
-      ],
       "text": "\"You know what, Pemberton? You're right. I'll take that suit.\"\n\nThe tailor's eyes light up as he begins taking your measurements with practiced\nprecision. \"Excellent choice, sir! You'll be the talk of the territory. Though...\"\nhe pauses, \"...given the Sheriff's interest in your claim, you might want to have\nsome legal documentation handy. Looking prosperous is one thing, but protecting\nwhat's yours is another.\"\n\nHe lowers his voice. \"I also do a side business in document preparation - deeds,\ncontracts, that sort of thing. Very official looking. Could help if someone tries\nto dispute your claim...\"\n\nAs he finishes measuring, you see through the window that it's getting late morning.\nYour claim awaits.\n    "
     },
     {
       "choices": [
         {
-          "metadata": [
-
-          ],
-          "target_passage": "land_office",
+          "target": "land_office",
           "text": "Go to the land office to secure your claim"
         },
         {
-          "metadata": [
-
-          ],
-          "target_passage": "morning_work",
+          "target": "morning_work",
           "text": "Head to your claim immediately"
         }
       ],
-      "content": "\"What exactly was Blackwood asking about?\" you press.\n\nPemberton adjusts his collar nervously. \"Well, he wanted to know about the legal\nrequirements for filing abandonment claims. Said he might know of some properties\nthat had been... neglected. Had a very particular interest in claims in the northern\nhills.\"\n\nHe glances out the window. \"Look, I shouldn't speak ill of a lawman, but Blackwood\nowes Big Jack five hundred dollars from a card game last month. And when Jack tried\nto collect, Blackwood threatened to shut down the Dusty Rose for 'illegal gambling.'\nThe man's as crooked as a dog's hind leg.\"\n\n\"I'd watch yourself, McCready. And maybe file some additional paperwork at the land\noffice, just to be safe.\"\n    ",
       "id": "pemberton_info",
-      "metadata": [
-
-      ],
       "name": "pemberton_info",
       "pid": "p20",
-      "position": {
-        "x": 0,
-        "y": 0
-      },
-      "size": {
-        "height": 100,
-        "width": 100
-      },
-      "tags": [
-
-      ],
       "text": "\"What exactly was Blackwood asking about?\" you press.\n\nPemberton adjusts his collar nervously. \"Well, he wanted to know about the legal\nrequirements for filing abandonment claims. Said he might know of some properties\nthat had been... neglected. Had a very particular interest in claims in the northern\nhills.\"\n\nHe glances out the window. \"Look, I shouldn't speak ill of a lawman, but Blackwood\nowes Big Jack five hundred dollars from a card game last month. And when Jack tried\nto collect, Blackwood threatened to shut down the Dusty Rose for 'illegal gambling.'\nThe man's as crooked as a dog's hind leg.\"\n\n\"I'd watch yourself, McCready. And maybe file some additional paperwork at the land\noffice, just to be safe.\"\n    "
     },
     {
       "choices": [
         {
-          "metadata": [
-
-          ],
-          "target_passage": "stay_focused_creek",
+          "target": "stay_focused_creek",
           "text": "Stay focused on panning, be respectful but firm"
         },
         {
-          "metadata": [
-
-          ],
-          "target_passage": "ruby_warning",
+          "target": "ruby_warning",
           "text": "Talk to Ruby and see what she really wants"
         },
         {
-          "metadata": [
-
-          ],
-          "target_passage": "confront_threat",
+          "target": "confront_threat",
           "text": "Confront the Sheriff's veiled threat"
         }
       ],
-      "content": "\"I'm busy, Sheriff,\" you call out, continuing to pan. \"Got no time for socializing.\"\n\nThe Sheriff's face darkens. \"Now that's mighty unfriendly, McCready. Here I am,\ntrying to ensure your claim is properly registered and protected, and you're\ntoo busy to show respect?\"\n\nRuby dismounts and walks to the creek's edge. \"Silas,\" she says softly, using\nyour first name. \"The Sheriff just wants to help. And I... I wanted to see you.\"\n\nThere's something in her eyes - a warning, perhaps? You notice the Sheriff's\nhand resting on his pistol.\n    ",
       "id": "ignore_sheriff_creek",
-      "metadata": [
-
-      ],
       "name": "ignore_sheriff_creek",
       "pid": "p21",
-      "position": {
-        "x": 0,
-        "y": 0
-      },
-      "size": {
-        "height": 100,
-        "width": 100
-      },
-      "tags": [
-
-      ],
       "text": "\"I'm busy, Sheriff,\" you call out, continuing to pan. \"Got no time for socializing.\"\n\nThe Sheriff's face darkens. \"Now that's mighty unfriendly, McCready. Here I am,\ntrying to ensure your claim is properly registered and protected, and you're\ntoo busy to show respect?\"\n\nRuby dismounts and walks to the creek's edge. \"Silas,\" she says softly, using\nyour first name. \"The Sheriff just wants to help. And I... I wanted to see you.\"\n\nThere's something in her eyes - a warning, perhaps? You notice the Sheriff's\nhand resting on his pistol.\n    "
     },
     {
       "choices": [
         {
-          "metadata": [
-
-          ],
-          "target_passage": "morning_work",
+          "target": "morning_work",
           "text": "Head straight to your claim and start working"
         },
         {
-          "metadata": [
-
-          ],
-          "target_passage": "town_visit",
+          "target": "town_visit",
           "text": "Stop by town first to gather supplies"
         },
         {
-          "metadata": [
-
-          ],
-          "target_passage": "morning_scout",
+          "target": "morning_scout",
           "text": "Scout the area around your claim for signs of trouble"
         }
       ],
-      "content": "You're Silas McCready, a weathered prospector who's spent three long months\nsearching for gold in the rugged hills outside Deadwood. Your supplies are running\nlow, but you've finally found a promising claim - a creek bed that sparkles with\ngolden flecks and a rocky outcrop that might contain a rich vein.\n\nBefore heading out this morning, you need to decide your priorities.\n    ",
       "id": "start",
-      "metadata": [
-
-      ],
       "name": "start",
       "pid": "p22",
-      "position": {
-        "x": 0,
-        "y": 0
-      },
-      "size": {
-        "height": 100,
-        "width": 100
-      },
-      "tags": [
-
-      ],
       "text": "You're Silas McCready, a weathered prospector who's spent three long months\nsearching for gold in the rugged hills outside Deadwood. Your supplies are running\nlow, but you've finally found a promising claim - a creek bed that sparkles with\ngolden flecks and a rocky outcrop that might contain a rich vein.\n\nBefore heading out this morning, you need to decide your priorities.\n    "
     },
     {
-      "choices": [
-
-      ],
-      "content": "\"Ruby's right,\" you say firmly. \"Now get off my claim, Blackwood, before I report\nyou to the territorial marshal.\"\n\nBlackwood realizes he's cornered. With Ruby as a witness, he can't risk violence.\nHe mounts his horse in fury and rides off.\n\nRuby looks at you with relief. \"Thank you for believing me, Silas.\"\n\nOver the following weeks, you work the claim together. Big Jack, grateful that you\nprotected Ruby, sends supplies at cost. Pemberton handles your legal documentation\nfor free, impressed by your integrity. The Lakota elder visits once, nods in approval\nat your respectful work, and leaves a deer carcass as a gift.\n\nWhen the territorial judge arrives and arrests Blackwood on multiple charges based\non Lakota testimony, Ruby's account is crucial. Your claim is validated, and the\ncommunity rallies around you both.\n\nTwo years later, the McCready-Ruby Mining Company is one of the most successful\noperations in the territory.\n\n**EXCELLENT ENDING - Integrity, courage, and community support!**\n\n*THE END*\n    ",
       "id": "ally_with_ruby",
-      "metadata": [
-
-      ],
       "name": "ally_with_ruby",
       "pid": "p23",
-      "position": {
-        "x": 0,
-        "y": 0
-      },
-      "size": {
-        "height": 100,
-        "width": 100
-      },
-      "tags": [
-
-      ],
       "text": "\"Ruby's right,\" you say firmly. \"Now get off my claim, Blackwood, before I report\nyou to the territorial marshal.\"\n\nBlackwood realizes he's cornered. With Ruby as a witness, he can't risk violence.\nHe mounts his horse in fury and rides off.\n\nRuby looks at you with relief. \"Thank you for believing me, Silas.\"\n\nOver the following weeks, you work the claim together. Big Jack, grateful that you\nprotected Ruby, sends supplies at cost. Pemberton handles your legal documentation\nfor free, impressed by your integrity. The Lakota elder visits once, nods in approval\nat your respectful work, and leaves a deer carcass as a gift.\n\nWhen the territorial judge arrives and arrests Blackwood on multiple charges based\non Lakota testimony, Ruby's account is crucial. Your claim is validated, and the\ncommunity rallies around you both.\n\nTwo years later, the McCready-Ruby Mining Company is one of the most successful\noperations in the territory.\n\n**EXCELLENT ENDING - Integrity, courage, and community support!**\n\n*THE END*\n    "
     },
     {
-      "choices": [
-
-      ],
-      "content": "You continue working, ignoring their attempts at distraction. Eventually they leave,\nand you find a large nugget in your next pan!\n\nYour focus and determination pay off with significant gold finds.\n\n**GOOD ENDING - Focus and hard work succeed.**\n\n*THE END*\n    ",
       "id": "stay_focused_creek",
-      "metadata": [
-
-      ],
       "name": "stay_focused_creek",
       "pid": "p24",
-      "position": {
-        "x": 0,
-        "y": 0
-      },
-      "size": {
-        "height": 100,
-        "width": 100
-      },
-      "tags": [
-
-      ],
       "text": "You continue working, ignoring their attempts at distraction. Eventually they leave,\nand you find a large nugget in your next pan!\n\nYour focus and determination pay off with significant gold finds.\n\n**GOOD ENDING - Focus and hard work succeed.**\n\n*THE END*\n    "
     },
     {
       "choices": [
         {
-          "metadata": [
-
-          ],
-          "target_passage": "morning_work",
+          "target": "morning_work",
           "text": "Head to your claim immediately - you need to check on it"
         },
         {
-          "metadata": [
-
-          ],
-          "target_passage": "suit_store",
+          "target": "suit_store",
           "text": "Visit Pemberton's store first"
         },
         {
-          "metadata": [
-
-          ],
-          "target_passage": "find_ruby",
+          "target": "find_ruby",
           "text": "Try to find Ruby and warn her"
         }
       ],
-      "content": "\"Alright, Jack,\" you sigh, pulling out a small pouch. \"But this is the last time.\nYou need to get that gambling under control.\"\n\nBig Jack's face lights up. \"Bless you, McCready! I'll pay you back double when my\nluck turns around. Say, you watch yourself out there. Sheriff Blackwood was asking\nabout you last night - seemed mighty interested in your claim.\"\n\nHe leans in closer, lowering his voice. \"Between you and me, I saw him trying to\nget Ruby involved in something. That girl's got a good heart, but Blackwood's been\npressuring her something fierce.\"\n\nBefore you can ask more, Jack hurries back toward the saloon, clutching your money.\n    ",
       "id": "lend_money",
-      "metadata": [
-
-      ],
       "name": "lend_money",
       "pid": "p25",
-      "position": {
-        "x": 0,
-        "y": 0
-      },
-      "size": {
-        "height": 100,
-        "width": 100
-      },
-      "tags": [
-
-      ],
       "text": "\"Alright, Jack,\" you sigh, pulling out a small pouch. \"But this is the last time.\nYou need to get that gambling under control.\"\n\nBig Jack's face lights up. \"Bless you, McCready! I'll pay you back double when my\nluck turns around. Say, you watch yourself out there. Sheriff Blackwood was asking\nabout you last night - seemed mighty interested in your claim.\"\n\nHe leans in closer, lowering his voice. \"Between you and me, I saw him trying to\nget Ruby involved in something. That girl's got a good heart, but Blackwood's been\npressuring her something fierce.\"\n\nBefore you can ask more, Jack hurries back toward the saloon, clutching your money.\n    "
     },
     {
       "choices": [
         {
-          "metadata": [
-
-          ],
-          "target_passage": "buy_suit",
+          "target": "buy_suit",
           "text": "Order a suit - it's good to look successful"
         },
         {
-          "metadata": [
-
-          ],
-          "target_passage": "pemberton_info",
+          "target": "pemberton_info",
           "text": "Decline politely and ask more about Blackwood"
         },
         {
-          "metadata": [
-
-          ],
-          "target_passage": "morning_work",
+          "target": "morning_work",
           "text": "Thank him and leave immediately for your claim"
         }
       ],
-      "content": "You enter Cornelius Pemberton's \"Fine Gentleman's Emporium.\" The fastidious\nproprietor looks up from steaming a waistcoat, his own three-piece suit immaculate\ndespite the frontier dust that coats everything else in town.\n\n\"Mr. McCready!\" Pemberton says, his Boston accent still strong after five years in\nDeadwood. \"I hear congratulations are in order. Found your color at last, have you?\"\n\nHe sets down his iron carefully. \"I hope you'll consider investing some of your\nnewfound wealth in proper attire. A successful businessman needs to look the part.\nWhy, I could fit you for a fine suit - only three hundred dollars.\"\n\nHe adjusts his spectacles. \"Though I should mention - purely as a concerned citizen -\nSheriff Blackwood was in here yesterday, asking about land deeds and claim boundaries.\nSeemed very interested in the northern hills. That's your area, isn't it?\"\n    ",
       "id": "suit_store",
-      "metadata": [
-
-      ],
       "name": "suit_store",
       "pid": "p26",
-      "position": {
-        "x": 0,
-        "y": 0
-      },
-      "size": {
-        "height": 100,
-        "width": 100
-      },
-      "tags": [
-
-      ],
       "text": "You enter Cornelius Pemberton's \"Fine Gentleman's Emporium.\" The fastidious\nproprietor looks up from steaming a waistcoat, his own three-piece suit immaculate\ndespite the frontier dust that coats everything else in town.\n\n\"Mr. McCready!\" Pemberton says, his Boston accent still strong after five years in\nDeadwood. \"I hear congratulations are in order. Found your color at last, have you?\"\n\nHe sets down his iron carefully. \"I hope you'll consider investing some of your\nnewfound wealth in proper attire. A successful businessman needs to look the part.\nWhy, I could fit you for a fine suit - only three hundred dollars.\"\n\nHe adjusts his spectacles. \"Though I should mention - purely as a concerned citizen -\nSheriff Blackwood was in here yesterday, asking about land deeds and claim boundaries.\nSeemed very interested in the northern hills. That's your area, isn't it?\"\n    "
     },
     {
       "choices": [
         {
-          "metadata": [
-
-          ],
-          "target_passage": "afternoon_arrival",
+          "target": "afternoon_arrival",
           "text": "Ride to your claim"
         }
       ],
-      "content": "\"Meet me at my claim at sunset,\" you whisper. \"We'll figure this out together.\"\n\nRuby nods. \"I'll try. But if Blackwood forces me to come earlier, I'll leave signs\n- a red ribbon on the trail. That means danger's coming.\"\n\nShe heads inside, and you mount your horse. The morning is spent, but you're forewarned.\n    ",
       "id": "plan_with_ruby",
-      "metadata": [
-
-      ],
       "name": "plan_with_ruby",
       "pid": "p27",
-      "position": {
-        "x": 0,
-        "y": 0
-      },
-      "size": {
-        "height": 100,
-        "width": 100
-      },
-      "tags": [
-
-      ],
       "text": "\"Meet me at my claim at sunset,\" you whisper. \"We'll figure this out together.\"\n\nRuby nods. \"I'll try. But if Blackwood forces me to come earlier, I'll leave signs\n- a red ribbon on the trail. That means danger's coming.\"\n\nShe heads inside, and you mount your horse. The morning is spent, but you're forewarned.\n    "
     },
     {
       "choices": [
         {
-          "metadata": [
-
-          ],
-          "target_passage": "morning_work",
+          "target": "morning_work",
           "text": "Ride to your claim"
         }
       ],
-      "content": "You avoid both Jack and Pemberton, quickly gathering supplies at the general store.\nAs you're loading your saddlebags, you overhear two miners talking.\n\n\"Heard tell some Lakota were spotted north of Deadwood yesterday. Probably just\npassing through, but with all the claim jumping lately, folks are nervous.\"\n\nYou head out, keeping alert.\n    ",
       "id": "quick_supplies",
-      "metadata": [
-
-      ],
       "name": "quick_supplies",
       "pid": "p28",
-      "position": {
-        "x": 0,
-        "y": 0
-      },
-      "size": {
-        "height": 100,
-        "width": 100
-      },
-      "tags": [
-
-      ],
       "text": "You avoid both Jack and Pemberton, quickly gathering supplies at the general store.\nAs you're loading your saddlebags, you overhear two miners talking.\n\n\"Heard tell some Lakota were spotted north of Deadwood yesterday. Probably just\npassing through, but with all the claim jumping lately, folks are nervous.\"\n\nYou head out, keeping alert.\n    "
     },
     {
-      "choices": [
-
-      ],
-      "content": "With the Lakota as witnesses, you carefully document the false marker locations,\ntake measurements, and note everything in your journal.\n\nThis evidence later proves crucial in getting Blackwood arrested. Your methodical\napproach impresses the judge, who validates your claim permanently.\n\n**EXCELLENT ENDING - Evidence and witnesses triumph!**\n\n*THE END*\n    ",
       "id": "document_fraud",
-      "metadata": [
-
-      ],
       "name": "document_fraud",
       "pid": "p29",
-      "position": {
-        "x": 0,
-        "y": 0
-      },
-      "size": {
-        "height": 100,
-        "width": 100
-      },
-      "tags": [
-
-      ],
       "text": "With the Lakota as witnesses, you carefully document the false marker locations,\ntake measurements, and note everything in your journal.\n\nThis evidence later proves crucial in getting Blackwood arrested. Your methodical\napproach impresses the judge, who validates your claim permanently.\n\n**EXCELLENT ENDING - Evidence and witnesses triumph!**\n\n*THE END*\n    "
     },
     {
       "choices": [
         {
-          "metadata": [
-
-          ],
-          "target_passage": "secure_boundaries",
+          "target": "secure_boundaries",
           "text": "Reset your boundary marker and reinforce all of them"
         },
         {
-          "metadata": [
-
-          ],
-          "target_passage": "creek_panning",
+          "target": "creek_panning",
           "text": "Leave everything as is and start panning - you'll deal with it later"
         }
       ],
-      "content": "You examine the tracks carefully. Two horses, one carrying a heavy rider, stopped\nhere yesterday evening. One set of prints circles your boundary markers. The other\nstays by the equipment.\n\nMore disturbing - one of your boundary stakes has been pulled up slightly and reset\nin a different spot, about three feet inward from where you placed it.\n\nSomeone's already started tampering with your claim.\n    ",
       "id": "investigate_tracks",
-      "metadata": [
-
-      ],
       "name": "investigate_tracks",
       "pid": "p30",
-      "position": {
-        "x": 0,
-        "y": 0
-      },
-      "size": {
-        "height": 100,
-        "width": 100
-      },
-      "tags": [
-
-      ],
       "text": "You examine the tracks carefully. Two horses, one carrying a heavy rider, stopped\nhere yesterday evening. One set of prints circles your boundary markers. The other\nstays by the equipment.\n\nMore disturbing - one of your boundary stakes has been pulled up slightly and reset\nin a different spot, about three feet inward from where you placed it.\n\nSomeone's already started tampering with your claim.\n    "
     },
     {
-      "choices": [
-
-      ],
-      "content": "You apologize and back down, but privately you note everything. Later, with proper\nlegal help from Pemberton and witness statements from the Lakota, you build an\nunassailable case.\n\nBlackwood gets arrested, and your claim is secured.\n\n**GOOD ENDING - Tactical patience wins.**\n\n*THE END*\n    ",
       "id": "tactical_retreat",
-      "metadata": [
-
-      ],
       "name": "tactical_retreat",
       "pid": "p31",
-      "position": {
-        "x": 0,
-        "y": 0
-      },
-      "size": {
-        "height": 100,
-        "width": 100
-      },
-      "tags": [
-
-      ],
       "text": "You apologize and back down, but privately you note everything. Later, with proper\nlegal help from Pemberton and witness statements from the Lakota, you build an\nunassailable case.\n\nBlackwood gets arrested, and your claim is secured.\n\n**GOOD ENDING - Tactical patience wins.**\n\n*THE END*\n    "
     },
     {
-      "choices": [
-
-      ],
-      "content": "You spend the morning carefully documenting and reinforcing all your boundary\nmarkers, using techniques Pemberton suggested.\n\nWhen Blackwood arrives later, he finds everything documented and can't make his\nscheme work. Frustrated, he leaves.\n\n**GOOD ENDING - Preparation prevents fraud.**\n\n*THE END*\n    ",
       "id": "secure_boundaries",
-      "metadata": [
-
-      ],
       "name": "secure_boundaries",
       "pid": "p32",
-      "position": {
-        "x": 0,
-        "y": 0
-      },
-      "size": {
-        "height": 100,
-        "width": 100
-      },
-      "tags": [
-
-      ],
       "text": "You spend the morning carefully documenting and reinforcing all your boundary\nmarkers, using techniques Pemberton suggested.\n\nWhen Blackwood arrives later, he finds everything documented and can't make his\nscheme work. Frustrated, he leaves.\n\n**GOOD ENDING - Preparation prevents fraud.**\n\n*THE END*\n    "
     },
     {
       "choices": [
         {
-          "metadata": [
-
-          ],
-          "target_passage": "morning_work",
+          "target": "morning_work",
           "text": "Thank Ruby and rush to your claim"
         },
         {
-          "metadata": [
-
-          ],
-          "target_passage": "plan_with_ruby",
+          "target": "plan_with_ruby",
           "text": "Ask Ruby to meet you later to plan a defense"
         }
       ],
-      "content": "You find Ruby sweeping the porch of the Dusty Rose Saloon. When she sees you, her\nface shows a mix of relief and worry.\n\n\"Silas,\" she says quietly, glancing around. \"You shouldn't be seen talking to me\nright now. Blackwood's watching. He... he wants me to do something. Something\ninvolving you and your claim.\"\n\nShe hands you the broom as if you're just a customer. \"He's planning to ride out\nthere today with me. Says I'm supposed to keep you distracted while he does\n'business.' But Silas, I don't want any part of cheating an honest man.\"\n\nBig Jack leans out from the saloon door. \"Ruby! Get in here! Got customers!\"\n\nShe whispers quickly, \"Be careful today. And if you see us coming, know that I'm\ntrying to help you, not hurt you.\"\n    ",
       "id": "find_ruby",
-      "metadata": [
-
-      ],
       "name": "find_ruby",
       "pid": "p33",
-      "position": {
-        "x": 0,
-        "y": 0
-      },
-      "size": {
-        "height": 100,
-        "width": 100
-      },
-      "tags": [
-
-      ],
       "text": "You find Ruby sweeping the porch of the Dusty Rose Saloon. When she sees you, her\nface shows a mix of relief and worry.\n\n\"Silas,\" she says quietly, glancing around. \"You shouldn't be seen talking to me\nright now. Blackwood's watching. He... he wants me to do something. Something\ninvolving you and your claim.\"\n\nShe hands you the broom as if you're just a customer. \"He's planning to ride out\nthere today with me. Says I'm supposed to keep you distracted while he does\n'business.' But Silas, I don't want any part of cheating an honest man.\"\n\nBig Jack leans out from the saloon door. \"Ruby! Get in here! Got customers!\"\n\nShe whispers quickly, \"Be careful today. And if you see us coming, know that I'm\ntrying to help you, not hurt you.\"\n    "
     },
     {
-      "choices": [
-
-      ],
-      "content": "You remove the false markers, but without witnesses to the original fraud, it\nbecomes he-said-she-said when Blackwood later claims you moved YOUR markers.\n\nLegal battles follow, eating up your time and gold.\n\n**MIXED ENDING - Acting too quickly causes problems.**\n\n*THE END*\n    ",
       "id": "remove_markers",
-      "metadata": [
-
-      ],
       "name": "remove_markers",
       "pid": "p34",
-      "position": {
-        "x": 0,
-        "y": 0
-      },
-      "size": {
-        "height": 100,
-        "width": 100
-      },
-      "tags": [
-
-      ],
       "text": "You remove the false markers, but without witnesses to the original fraud, it\nbecomes he-said-she-said when Blackwood later claims you moved YOUR markers.\n\nLegal battles follow, eating up your time and gold.\n\n**MIXED ENDING - Acting too quickly causes problems.**\n\n*THE END*\n    "
     },
     {
       "choices": [
         {
-          "metadata": [
-
-          ],
-          "target_passage": "respectful_promise",
+          "target": "respectful_promise",
           "text": "Promise to take only what you need and respect the land"
         },
         {
-          "metadata": [
-
-          ],
-          "target_passage": "ask_about_sheriff",
+          "target": "ask_about_sheriff",
           "text": "Ask them about the man with the star (Sheriff Blackwood)"
         },
         {
-          "metadata": [
-
-          ],
-          "target_passage": "creek_panning",
+          "target": "creek_panning",
           "text": "Thank them and return to your claim"
         }
       ],
-      "content": "You ride slowly toward the smoke, hands visible and relaxed on the reins. As you\napproach, three Lakota men step out from the trees. The eldest has gray in his hair\nand carries himself with quiet authority.\n\nHe speaks in accented but clear English. \"You are the one who digs in the earth by\nthe singing creek.\"\n\nIt's a statement, not a question. You nod carefully.\n\n\"This land...\" he gestures broadly, \"...was promised to us by treaty. The white\nfather in Washington said the Black Hills would be ours forever. But 'forever' is\na short time in white man's words.\"\n\nThe younger men behind him watch you carefully but without hostility.\n\n\"We do not stop you,\" the elder continues. \"We cannot stop the river of gold-seekers.\nBut we ask: when you find what you seek, will you take only what you need? Or will\nyou take everything, like the others?\"\n\nThere's a long pause. \"And there is something else. Yesterday, a white man with a\nstar on his chest was near here, placing markers. He did not ask permission. He did\nnot even see us, though we were close. Be careful of men who take without asking.\"\n    ",
       "id": "native_encounter",
-      "metadata": [
-
-      ],
       "name": "native_encounter",
       "pid": "p35",
-      "position": {
-        "x": 0,
-        "y": 0
-      },
-      "size": {
-        "height": 100,
-        "width": 100
-      },
-      "tags": [
-
-      ],
       "text": "You ride slowly toward the smoke, hands visible and relaxed on the reins. As you\napproach, three Lakota men step out from the trees. The eldest has gray in his hair\nand carries himself with quiet authority.\n\nHe speaks in accented but clear English. \"You are the one who digs in the earth by\nthe singing creek.\"\n\nIt's a statement, not a question. You nod carefully.\n\n\"This land...\" he gestures broadly, \"...was promised to us by treaty. The white\nfather in Washington said the Black Hills would be ours forever. But 'forever' is\na short time in white man's words.\"\n\nThe younger men behind him watch you carefully but without hostility.\n\n\"We do not stop you,\" the elder continues. \"We cannot stop the river of gold-seekers.\nBut we ask: when you find what you seek, will you take only what you need? Or will\nyou take everything, like the others?\"\n\nThere's a long pause. \"And there is something else. Yesterday, a white man with a\nstar on his chest was near here, placing markers. He did not ask permission. He did\nnot even see us, though we were close. Be careful of men who take without asking.\"\n    "
     },
     {
       "choices": [
         {
-          "metadata": [
-
-          ],
-          "target_passage": "creek_panning",
+          "target": "creek_panning",
           "text": "Continue panning despite the tracks"
         },
         {
-          "metadata": [
-
-          ],
-          "target_passage": "investigate_tracks",
+          "target": "investigate_tracks",
           "text": "Investigate the tracks thoroughly"
         }
       ],
-      "content": "You arrive at your claim and immediately get to work. The morning sun glints off\nthe creek as you wade in with your pan.\n\nAfter an hour of panning, you've found several promising flakes. But you also notice\nfresh horse tracks near your camp - someone was here recently.\n    ",
       "id": "morning_work",
-      "metadata": [
-
-      ],
       "name": "morning_work",
       "pid": "p36",
-      "position": {
-        "x": 0,
-        "y": 0
-      },
-      "size": {
-        "height": 100,
-        "width": 100
-      },
-      "tags": [
-
-      ],
       "text": "You arrive at your claim and immediately get to work. The morning sun glints off\nthe creek as you wade in with your pan.\n\nAfter an hour of panning, you've found several promising flakes. But you also notice\nfresh horse tracks near your camp - someone was here recently.\n    "
     },
     {
-      "choices": [
-
-      ],
-      "content": "The Lakota elder accepts your invitation, and the three men join you at your fire.\nRuby, nervous at first, relaxes as conversation flows.\n\nOver the following months, an unusual but powerful alliance forms. The Lakota help\nyou identify the richest mineral deposits using their knowledge of the land. You\nwork your claim carefully, taking only what you need and leaving the land as unmarked\nas possible.\n\nRuby becomes your business partner, handling sales in town. When Big Jack falls on\nhard times again, you help him restructure his saloon's business, and he becomes\nyour best customer for gold dust - paying miners always drink more.\n\nEven Cornelius Pemberton gets involved, handling your legal documentation and\nensuring everything is properly registered.\n\nWhen the territorial judge arrives, the Lakota's testimony not only clears you of\nany boundary disputes but also leads to Blackwood's arrest for fraud. The judge,\nimpressed by the peaceful cooperation, establishes your claim as a model for\nrespectful prospecting.\n\nYour mining operation becomes moderately successful, but more importantly, you've\nbuilt something rare in the frontier - a community based on mutual respect rather\nthan exploitation.\n\nYears later, when the gold runs out, you stay in the area. The land you protected\nbecomes valuable for other reasons, and the relationships you built prove worth\nfar more than gold.\n\n**BEST ENDING - Respect, cooperation, and lasting community!**\n\n*THE END*\n    ",
       "id": "alliance_ending",
-      "metadata": [
-
-      ],
       "name": "alliance_ending",
       "pid": "p37",
-      "position": {
-        "x": 0,
-        "y": 0
-      },
-      "size": {
-        "height": 100,
-        "width": 100
-      },
-      "tags": [
-
-      ],
       "text": "The Lakota elder accepts your invitation, and the three men join you at your fire.\nRuby, nervous at first, relaxes as conversation flows.\n\nOver the following months, an unusual but powerful alliance forms. The Lakota help\nyou identify the richest mineral deposits using their knowledge of the land. You\nwork your claim carefully, taking only what you need and leaving the land as unmarked\nas possible.\n\nRuby becomes your business partner, handling sales in town. When Big Jack falls on\nhard times again, you help him restructure his saloon's business, and he becomes\nyour best customer for gold dust - paying miners always drink more.\n\nEven Cornelius Pemberton gets involved, handling your legal documentation and\nensuring everything is properly registered.\n\nWhen the territorial judge arrives, the Lakota's testimony not only clears you of\nany boundary disputes but also leads to Blackwood's arrest for fraud. The judge,\nimpressed by the peaceful cooperation, establishes your claim as a model for\nrespectful prospecting.\n\nYour mining operation becomes moderately successful, but more importantly, you've\nbuilt something rare in the frontier - a community based on mutual respect rather\nthan exploitation.\n\nYears later, when the gold runs out, you stay in the area. The land you protected\nbecomes valuable for other reasons, and the relationships you built prove worth\nfar more than gold.\n\n**BEST ENDING - Respect, cooperation, and lasting community!**\n\n*THE END*\n    "
     },
     {
       "choices": [
         {
-          "metadata": [
-
-          ],
-          "target_passage": "tactical_retreat",
+          "target": "tactical_retreat",
           "text": "Back down and apologize - you may have been too aggressive"
         },
         {
-          "metadata": [
-
-          ],
-          "target_passage": "confront_threat",
+          "target": "confront_threat",
           "text": "Stand your ground and threaten to report him"
         },
         {
-          "metadata": [
-
-          ],
-          "target_passage": "native_intervention",
+          "target": "native_intervention",
           "text": "Signal for help - the Lakota said they'd be watching"
         }
       ],
-      "content": "You climb out of the creek and walk directly toward Blackwood, water dripping from\nyour boots.\n\n\"Interesting thing, Sheriff. I found some new boundary markers on my claim this\nmorning. Funny thing is, they weren't there two days ago, and they're weathered to\nlook old. Almost like someone's trying to create a false boundary dispute.\"\n\nBlackwood's eyes narrow. \"You accusing me of something, McCready?\"\n\n\"I'm saying I've got witnesses who saw a man with a star placing fake markers\nyesterday. The Lakota don't miss much in these hills.\"\n\nThe Sheriff's hand moves toward his gun, but Ruby quickly steps between you. \"Silas,\nthe Sheriff was just telling me about claim jumpers operating in the area. He's\ntrying to help you!\"\n\nBut her eyes are signaling you frantically - danger.\n    ",
       "id": "confront_markers",
-      "metadata": [
-
-      ],
       "name": "confront_markers",
       "pid": "p38",
-      "position": {
-        "x": 0,
-        "y": 0
-      },
-      "size": {
-        "height": 100,
-        "width": 100
-      },
-      "tags": [
-
-      ],
       "text": "You climb out of the creek and walk directly toward Blackwood, water dripping from\nyour boots.\n\n\"Interesting thing, Sheriff. I found some new boundary markers on my claim this\nmorning. Funny thing is, they weren't there two days ago, and they're weathered to\nlook old. Almost like someone's trying to create a false boundary dispute.\"\n\nBlackwood's eyes narrow. \"You accusing me of something, McCready?\"\n\n\"I'm saying I've got witnesses who saw a man with a star placing fake markers\nyesterday. The Lakota don't miss much in these hills.\"\n\nThe Sheriff's hand moves toward his gun, but Ruby quickly steps between you. \"Silas,\nthe Sheriff was just telling me about claim jumpers operating in the area. He's\ntrying to help you!\"\n\nBut her eyes are signaling you frantically - danger.\n    "
     },
     {
       "choices": [
         {
-          "metadata": [
-
-          ],
-          "target_passage": "ignore_sheriff_creek",
+          "target": "ignore_sheriff_creek",
           "text": "Keep working and ignore them"
         },
         {
-          "metadata": [
-
-          ],
-          "target_passage": "talk_to_sheriff",
+          "target": "talk_to_sheriff",
           "text": "Stop and talk to the Sheriff"
         },
         {
-          "metadata": [
-
-          ],
-          "target_passage": "confront_markers",
+          "target": "confront_markers",
           "text": "Confront him about the false markers you know he planted"
         }
       ],
-      "content": "You wade into the cold creek, your pan in hand. The icy water numbs your legs\nas you scoop up sediment and begin the rhythmic swirling motion. After an hour,\nyou've found several small flakes of gold - not a fortune, but promising.\n\nAs you work, you notice riders approaching from town. It's Sheriff Blackwood,\na man known more for his greed than his justice. Behind him rides a woman in\na crimson dress - Ruby, from the Dusty Rose Saloon.\n\nYou remember Big Jack's warning about Blackwood asking questions, and the Lakota\nelder's mention of a man with a star and a woman in red.\n\n\"McCready!\" the Sheriff calls out. \"Working hard, I see. Mind if we have a word?\"\n    ",
       "id": "creek_panning",
-      "metadata": [
-
-      ],
       "name": "creek_panning",
       "pid": "p39",
-      "position": {
-        "x": 0,
-        "y": 0
-      },
-      "size": {
-        "height": 100,
-        "width": 100
-      },
-      "tags": [
-
-      ],
       "text": "You wade into the cold creek, your pan in hand. The icy water numbs your legs\nas you scoop up sediment and begin the rhythmic swirling motion. After an hour,\nyou've found several small flakes of gold - not a fortune, but promising.\n\nAs you work, you notice riders approaching from town. It's Sheriff Blackwood,\na man known more for his greed than his justice. Behind him rides a woman in\na crimson dress - Ruby, from the Dusty Rose Saloon.\n\nYou remember Big Jack's warning about Blackwood asking questions, and the Lakota\nelder's mention of a man with a star and a woman in red.\n\n\"McCready!\" the Sheriff calls out. \"Working hard, I see. Mind if we have a word?\"\n    "
     },
     {
       "choices": [
         {
-          "metadata": [
-
-          ],
-          "target_passage": "dismiss_both",
+          "target": "dismiss_both",
           "text": "Thank Ruby and send them both away"
         },
         {
-          "metadata": [
-
-          ],
-          "target_passage": "partner_with_ruby",
+          "target": "partner_with_ruby",
           "text": "Propose that Ruby stay and help you work the claim"
         },
         {
-          "metadata": [
-
-          ],
-          "target_passage": "confront_threat",
+          "target": "confront_threat",
           "text": "Confront the Sheriff with Ruby's warning"
         }
       ],
-      "content": "You approach Ruby, accepting the water she offers.\n\n\"Thank you, Ruby,\" you say quietly. \"What's really going on here?\"\n\nShe glances at the Sheriff, who's pretending to study the horizon. \"He knows\nyou've found something valuable. He wants me to distract you while he tampers\nwith your claim markers or your equipment. Silas, I don't want any part of\nhis schemes. I came to warn you.\"\n\nThe Sheriff calls out, \"Ruby! Stop boring the man with gossip!\"\n\nRuby whispers, \"Big Jack told me to help you if I could. He says you're one of\nthe good ones. Be careful.\"\n    ",
       "id": "ruby_warning",
-      "metadata": [
-
-      ],
       "name": "ruby_warning",
       "pid": "p40",
-      "position": {
-        "x": 0,
-        "y": 0
-      },
-      "size": {
-        "height": 100,
-        "width": 100
-      },
-      "tags": [
-
-      ],
       "text": "You approach Ruby, accepting the water she offers.\n\n\"Thank you, Ruby,\" you say quietly. \"What's really going on here?\"\n\nShe glances at the Sheriff, who's pretending to study the horizon. \"He knows\nyou've found something valuable. He wants me to distract you while he tampers\nwith your claim markers or your equipment. Silas, I don't want any part of\nhis schemes. I came to warn you.\"\n\nThe Sheriff calls out, \"Ruby! Stop boring the man with gossip!\"\n\nRuby whispers, \"Big Jack told me to help you if I could. He says you're one of\nthe good ones. Be careful.\"\n    "
     },
     {
       "choices": [
         {
-          "metadata": [
-
-          ],
-          "target_passage": "alliance_ending",
+          "target": "alliance_ending",
           "text": "Thank the Lakota men and invite them to share your campfire"
         },
         {
-          "metadata": [
-
-          ],
-          "target_passage": "ruby_partnership",
+          "target": "ruby_partnership",
           "text": "Thank them and turn your attention to Ruby"
         }
       ],
-      "content": "You casually walk to your campfire and kick dirt over it three times in quick\nsuccession, making three separate smoke clouds rise.\n\nBlackwood watches, confused. \"What in tarnation are you doing?\"\n\nWithin minutes, the three Lakota men emerge from the tree line, walking calmly but\ndeliberately toward your group. The elder speaks clearly.\n\n\"Sheriff with the star. We have watched you. Yesterday you placed false markers on\nthis man's land. We saw. We remember. We will tell the judge who speaks our language.\"\n\nBlackwood's face goes pale, then red with anger. \"You got no authority here!\"\n\n\"No,\" the elder agrees. \"But we have eyes. And truth. Take your woman and leave this\nplace.\"\n\nThe Sheriff realizes he's outnumbered and outmaneuvered. He spits on the ground.\n\"This ain't over, McCready.\" He mounts his horse and rides off.\n\nRuby stays behind, looking at you with respect and relief.\n    ",
       "id": "native_intervention",
-      "metadata": [
-
-      ],
       "name": "native_intervention",
       "pid": "p41",
-      "position": {
-        "x": 0,
-        "y": 0
-      },
-      "size": {
-        "height": 100,
-        "width": 100
-      },
-      "tags": [
-
-      ],
       "text": "You casually walk to your campfire and kick dirt over it three times in quick\nsuccession, making three separate smoke clouds rise.\n\nBlackwood watches, confused. \"What in tarnation are you doing?\"\n\nWithin minutes, the three Lakota men emerge from the tree line, walking calmly but\ndeliberately toward your group. The elder speaks clearly.\n\n\"Sheriff with the star. We have watched you. Yesterday you placed false markers on\nthis man's land. We saw. We remember. We will tell the judge who speaks our language.\"\n\nBlackwood's face goes pale, then red with anger. \"You got no authority here!\"\n\n\"No,\" the elder agrees. \"But we have eyes. And truth. Take your woman and leave this\nplace.\"\n\nThe Sheriff realizes he's outnumbered and outmaneuvered. He spits on the ground.\n\"This ain't over, McCready.\" He mounts his horse and rides off.\n\nRuby stays behind, looking at you with respect and relief.\n    "
     }
-  ],  "scripts": [
-
   ],  "settings": {
     "autoSave": true,
     "scriptingLanguage": "lua",
     "startPassage": "start",
     "theme": "default",
     "undoLimit": 50
-  },  "stylesheets": [
-
-  ],  "variables": [
-
-  ]}
+  }}

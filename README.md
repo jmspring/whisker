@@ -20,6 +20,7 @@ Whisker is a complete interactive fiction engine that allows you to create choic
 - 📱 **Responsive Web UI** - Beautiful HTML5 player included
 - 🎨 **Highly Customizable** - Extensive configuration and theming options
 - 📦 **No Dependencies** - Pure Lua implementation, batteries included
+- ⚡ **Compact Format** - 20-40% smaller file sizes with full backward compatibility
 
 ## 🚀 Quick Start
 
@@ -83,6 +84,7 @@ lua main.lua my_story.lua
 - **[Getting Started](docs/GETTING_STARTED.md)** - Complete installation guide and first story tutorial
 - **[API Reference](docs/API_REFERENCE.md)** - Detailed API documentation
 - **[Documentation Overview](docs/README.md)** - Full feature list and architecture guide
+- **[Compact Format](docs/COMPACT_FORMAT.md)** - Optimized format with 20-40% size reduction
 - **[Snowman Converter](docs/SNOWMAN_CONVERTER.md)** - Converting Twine Snowman stories
 - **[Metatable Preservation](docs/METATABLE_PRESERVATION.md)** - Advanced Lua features
 
@@ -124,6 +126,7 @@ Or try the web demo by opening `examples/web_demo.html` in your browser!
 - Support for multiple formats: Harlowe, SugarCube, Chapbook, Snowman
 - Convert between formats
 - Export to JSON or whisker format
+- Compact format (2.0) for 20-40% size reduction
 
 ### Development Tools
 - **Validator** - Check story structure and find issues
@@ -223,6 +226,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - [x] Multiple runtime environments
 - [x] Development tools (debugger, profiler, validator)
 - [x] Comprehensive test suite
+- [x] Compact format (2.0) with size optimization
 - [ ] Visual story editor (planned)
 - [ ] Mobile runtime (planned)
 - [ ] Plugin system (planned)
