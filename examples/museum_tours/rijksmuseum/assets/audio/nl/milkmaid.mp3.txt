@@ -1,0 +1,3 @@
+PLACEHOLDER: Replace with actual 3:00 Dutch narration
+Duration: 180 seconds
+Format: MP3, 128kbps, mono, 44.1kHz

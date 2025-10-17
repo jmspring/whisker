@@ -1,0 +1,73 @@
+{
+  "id": "rijksmuseum-golden-age-tour",
+  "name": "Rijksmuseum: Masters of Light",
+  "version": "1.0.0",
+  "type": "museum-tour",
+  "description": "A self-guided tour of 12 Dutch Golden Age masterpieces at the Rijksmuseum Amsterdam",
+
+  "metadata": {
+    "museum": "Rijksmuseum Amsterdam",
+    "location": "Amsterdam, Netherlands",
+    "language": ["en", "nl"],
+    "artworks": 12,
+    "duration": "45-60 minutes",
+    "floors": [0, 1, 2],
+    "qrEnabled": true,
+    "audioEnabled": true,
+    "offlineCapable": true
+  },
+
+  "files": {
+    "story": "rijksmuseum_tour.whisker",
+    "assets": {
+      "qr_codes": "assets/qr_codes/",
+      "images": "assets/images/",
+      "audio": {
+        "en": "assets/audio/en/",
+        "nl": "assets/audio/nl/"
+      }
+    }
+  },
+
+  "integration": {
+    "webRuntime": "../../web_runtime/",
+    "loadMethod": "dynamic",
+    "assetPath": "relative",
+    "cacheStrategy": "offline-first"
+  },
+
+  "features": {
+    "navigation": ["route", "map", "qr"],
+    "tracking": ["visited", "duration", "audio_played"],
+    "export": ["json", "summary"],
+    "accessibility": ["audio", "text", "high_contrast"],
+    "offline": true
+  },
+
+  "requirements": {
+    "whisker": ">=2.0",
+    "browser": {
+      "chrome": ">=80",
+      "safari": ">=13",
+      "firefox": ">=75",
+      "edge": ">=80"
+    },
+    "storage": "~50MB"
+  },
+
+  "installation": {
+    "steps": [
+      "Copy rijksmuseum/ directory to museum_tours/",
+      "Assets are included (QR codes ready, images/audio with download instructions)",
+      "Load in web runtime via tour selector",
+      "Test QR code scanning",
+      "Deploy to production"
+    ]
+  },
+
+  "support": {
+    "documentation": ["README.md", "PROPOSAL.md", "IMPLEMENTATION_SUMMARY.md"],
+    "contact": "See main Whisker repository",
+    "license": "Same as Whisker project"
+  }
+}

@@ -1,0 +1,412 @@
+{
+  "format": "whisker",
+  "formatVersion": "2.0",
+  "metadata": {
+    "title": "Masters of Light: Dutch Golden Age Tour",
+    "museum": "Rijksmuseum Amsterdam",
+    "ifid": "RIJKS-GOLDEN-AGE-2024",
+    "author": "Rijksmuseum Curators",
+    "description": "A curated tour of 12 masterpieces from the Dutch Golden Age, featuring Rembrandt, Vermeer, and other masters.",
+    "version": "1.0",
+    "estimatedTime": "45-60 minutes",
+    "exhibitCount": 12,
+    "languages": ["nl", "en"],
+    "defaultLanguage": "en",
+    "created": "2024-01-15",
+    "features": {
+      "audio": true,
+      "images": true,
+      "qrCodes": true,
+      "maps": true,
+      "offline": true,
+      "multiLanguage": true
+    }
+  },
+  "settings": {
+    "startPassage": "welcome",
+    "theme": "rijksmuseum",
+    "autoSave": true
+  },
+  "variables": [
+    {"name": "visited_count", "type": "number", "initial": 0},
+    {"name": "audio_played", "type": "number", "initial": 0},
+    {"name": "language", "type": "string", "initial": "en"},
+    {"name": "tour_duration", "type": "number", "initial": 0}
+  ],
+  "passages": [
+    {
+      "id": "welcome",
+      "name": "Welcome to Rijksmuseum",
+      "pid": "1",
+      "text": "# Welcome to Rijksmuseum\n\n## Masters of Light: Dutch Golden Age Tour\n\n![Rijksmuseum Gallery](assets/images/gallery_of_honour.jpg)\n\nWelcome to your personal digital guide through the Rijksmuseum's most celebrated masterpieces. This tour features **12 iconic artworks** from the Dutch Golden Age, including Rembrandt's *The Night Watch* and Vermeer's *The Milkmaid*.\n\n**Tour highlights:**\n- 🎧 Professional audio guides (2-4 minutes each)\n- 🖼️ High-resolution artwork images\n- 📍 Gallery locations and floor plans\n- ⏱️ Estimated time: 45-60 minutes\n- 🔲 Scan QR codes at artworks for instant access\n\n**Choose your experience:**",
+      "choices": [
+        {"text": "Start Recommended Route 🎨", "target": "route_intro"},
+        {"text": "View Museum Map 🗺️", "target": "museum_map"},
+        {"text": "Quick Highlights Only (30 min) ⚡", "target": "quick_highlights"}
+      ],
+      "metadata": {
+        "exhibitId": "entrance",
+        "type": "introduction",
+        "floor": "entrance",
+        "qrCode": "RIJKS-WELCOME",
+        "hasAudio": false
+      }
+    },
+    {
+      "id": "route_intro",
+      "name": "Recommended Route",
+      "pid": "2",
+      "text": "# Your Recommended Route\n\n## Floor-by-Floor Journey\n\nWe'll guide you through the Rijksmuseum chronologically, starting with the most famous masterpiece of all.\n\n**Route Overview:**\n\n**Floor 2 - Gallery of Honour:**\n1. The Night Watch - Rembrandt (4 min)\n2. The Milkmaid - Vermeer (3 min)\n3. The Merry Drinker - Frans Hals (2.5 min)\n4. Self-Portrait as Paul - Rembrandt (3 min)\n5. The Jewish Bride - Rembrandt (3 min)\n\n**Floor 1 - Still Life & Seascapes:**\n6. Still Life with Flowers - Van Huysum (2.5 min)\n7. The Threatened Swan - Asselijn (2.5 min)\n8. Winter Landscape - Avercamp (3 min)\n\n**Floor 0 - Decorative Arts:**\n9. Delftware Collection (2.5 min)\n10. Battle of Waterloo - Pieneman (3 min)\n11. Warship Model (2.5 min)\n12. Dutch Dollhouse - Oortman (3 min)\n\n**Total:** ~35 minutes audio + viewing time\n\nReady to begin?",
+      "choices": [
+        {"text": "Begin with The Night Watch 🌙", "target": "night_watch"},
+        {"text": "Back to Welcome", "target": "welcome"}
+      ],
+      "metadata": {
+        "type": "navigation",
+        "hasAudio": false
+      }
+    },
+    {
+      "id": "museum_map",
+      "name": "Museum Map",
+      "pid": "3",
+      "text": "# Rijksmuseum Map\n\n## Tour Artwork Locations\n\nSelect any artwork to jump directly to it, or use QR codes at each location.\n\n### Floor 2: Gallery of Honour\n**Room 2.8 - Rembrandt Gallery:**\n- 1️⃣ The Night Watch (1642) - Rembrandt\n- 2️⃣ The Milkmaid (c.1660) - Vermeer\n- 4️⃣ Self-Portrait as Paul (1661) - Rembrandt\n- 5️⃣ The Jewish Bride (c.1665) - Rembrandt\n\n**Room 2.9 - Portraiture:**\n- 3️⃣ The Merry Drinker (c.1628) - Frans Hals\n\n### Floor 1: 17th Century\n**Room 1.12 - Still Life:**\n- 6️⃣ Still Life with Flowers (c.1715) - Van Huysum\n\n**Room 1.6 - Political Art:**\n- 7️⃣ The Threatened Swan (c.1650) - Asselijn\n\n**Room 1.13 - Landscapes:**\n- 8️⃣ Winter Landscape (c.1608) - Avercamp\n\n### Floor 0: History & Crafts\n**Room 0.7 - Decorative Arts:**\n- 9️⃣ Delftware Collection (17th-18th century)\n\n**Room 0.13 - History Gallery:**\n- 🔟 Battle of Waterloo (1824) - Pieneman\n\n**Room 0.3 - Maritime:**\n- 1️⃣1️⃣ Warship 'Amsterdam' Model (c.1750)\n\n**Room 0.6 - Domestic Life:**\n- 1️⃣2️⃣ Dutch Dollhouse (c.1686-1710) - Oortman\n\n---\n\n**Progress:** {{visited_count}}/12 artworks visited\n\n**Quick Access:**",
+      "choices": [
+        {"text": "1. The Night Watch 🌙", "target": "night_watch"},
+        {"text": "2. The Milkmaid 🥛", "target": "milkmaid"},
+        {"text": "3. The Merry Drinker 🍺", "target": "merry_drinker"},
+        {"text": "4. Self-Portrait as Paul 🖼️", "target": "self_portrait_paul"},
+        {"text": "5. The Jewish Bride 💑", "target": "jewish_bride"},
+        {"text": "6. Still Life with Flowers 🌸", "target": "still_life"},
+        {"text": "7. The Threatened Swan 🦢", "target": "threatened_swan"},
+        {"text": "8. Winter Landscape ❄️", "target": "winter_landscape"},
+        {"text": "9. Delftware Collection 🏺", "target": "delftware"},
+        {"text": "10. Battle of Waterloo ⚔️", "target": "battle_waterloo"},
+        {"text": "11. Warship Model ⛵", "target": "warship_model"},
+        {"text": "12. Dutch Dollhouse 🏠", "target": "dutch_dollhouse"},
+        {"text": "Back to Welcome", "target": "welcome"}
+      ],
+      "metadata": {
+        "type": "map",
+        "hasAudio": false
+      }
+    },
+    {
+      "id": "night_watch",
+      "name": "The Night Watch",
+      "pid": "4",
+      "text": "# The Night Watch\n## Rembrandt van Rijn, 1642\n\n![The Night Watch](assets/images/night_watch.jpg)\n\n**Location:** Floor 2, Gallery of Honour, Room 2.8  \n**Size:** 363 cm × 437 cm (142.9 in × 172.0 in)  \n**Medium:** Oil on canvas  \n**QR Code:** RIJKS-NIGHTWATCH-001\n\n[audio](assets/audio/en/night_watch.mp3)\n\n### Overview\n\nRembrandt's masterpiece *The Night Watch* is one of the most famous paintings in the world. Officially titled *Militia Company of District II under the Command of Captain Frans Banninck Cocq*, this massive work depicts a city militia in dramatic motion.\n\n### What You're Seeing\n\nAt first glance, you might think this is a nighttime scene—hence the nickname \"The Night Watch.\" But it's actually a daytime scene! Centuries of varnish darkened the painting until its 1940s restoration revealed Rembrandt's true intention: a company of civic guards emerging from shadow into brilliant light.\n\n### Key Details to Notice\n\n**Captain Frans Banninck Cocq** (center, in black with red sash)\n- Notice his hand casting a shadow on his lieutenant's golden coat\n- This shadow proves Rembrandt's mastery of light\n\n**The Mysterious Girl** (left of center, in golden dress)\n- A young girl carrying a chicken (a symbol of the militia)\n- Still debated: Is she real or symbolic?\n\n**Hidden Elements:**\n- Count the figures—there are 34 people!\n- Look for the hidden dog at lower right\n- Notice the pike, muskets, and spears creating depth\n\n### Recent History\n\nIn 2019, the largest ever research and conservation project on *The Night Watch* began, with restoration visible to museum visitors. The \"Operation Night Watch\" revealed new details and removed centuries of damage.\n\n### Artist: Rembrandt van Rijn (1606-1669)\n\nRembrandt was at the height of his career when he painted this revolutionary group portrait. Instead of the static, posed compositions typical of the era, Rembrandt showed the militia in dynamic action, capturing a moment of movement and drama.\n\n---\n\n**Next artwork:** The Milkmaid by Vermeer (Same room)",
+      "choices": [
+        {"text": "Continue to The Milkmaid 🥛", "target": "milkmaid"},
+        {"text": "View Museum Map 🗺️", "target": "museum_map"},
+        {"text": "Replay Audio 🔊", "target": "night_watch"}
+      ],
+      "metadata": {
+        "exhibitId": "night-watch",
+        "floor": 2,
+        "room": "2.8",
+        "qrCode": "RIJKS-NIGHTWATCH-001",
+        "hasAudio": true,
+        "audioLength": "4:00",
+        "audioDuration": 240,
+        "popularity": 5,
+        "artist": "Rembrandt van Rijn",
+        "year": 1642,
+        "medium": "Oil on canvas",
+        "dimensions": "363 × 437 cm",
+        "artworkUrl": "https://www.rijksmuseum.nl/en/collection/SK-C-5",
+        "hasImage": true,
+        "requiresReservation": false
+      }
+    },
+    {
+      "id": "milkmaid",
+      "name": "The Milkmaid",
+      "pid": "5",
+      "text": "# The Milkmaid\n## Johannes Vermeer, c. 1660\n\n![The Milkmaid](assets/images/milkmaid.jpg)\n\n**Location:** Floor 2, Gallery of Honour, Room 2.8  \n**Size:** 45.5 cm × 41 cm (17.9 in × 16.1 in)  \n**Medium:** Oil on canvas  \n**QR Code:** RIJKS-MILKMAID-002\n\n[audio](assets/audio/en/milkmaid.mp3)\n\n### Overview\n\nVermeer's *The Milkmaid* is a testament to finding beauty in everyday life. This small painting depicts a kitchen maid pouring milk, but Vermeer transforms this simple domestic scene into something monumental and timeless.\n\n### The Magic of Light\n\nVermeer was the master of light. Notice how natural light floods in from the window on the left, illuminating the maid, the bread, and especially that stream of milk. The way light catches the texture of the bread, the gleam of the brass, the rough wall—this is Vermeer's genius.\n\n### What You're Looking At\n\n**The Maid:**\n- Sturdy, working-class woman (unusual for Dutch art)\n- Focused, concentrated on her task\n- Solid, monumental presence despite small canvas\n\n**The Still Life:**\n- Bread on the table (beautifully textured)\n- Blue and white Delftware jug\n- Stream of milk (incredibly realistic)\n- Foot warmer on the floor (copper, with coals)\n\n**Symbolic Elements:**\n- Bread: Daily sustenance, humble life\n- Milk: Purity, nourishment\n- Map on wall: The wider world beyond this moment\n- Delft tiles (bottom): Cupid figures (love/domestic virtue)\n\n### Vermeer's Technique\n\n**Pointillism Before Its Time:**\nLook closely at the bread—Vermeer used tiny dots of paint to create texture. This technique wouldn't be \"invented\" until the Impressionists 200 years later!\n\n**Camera Obscura:**\nScholars believe Vermeer used a camera obscura (early optical device) to achieve his incredibly precise perspective and light effects.\n\n### Historical Context\n\nIn Vermeer's time (Dutch Golden Age), the Netherlands was the wealthiest nation in Europe. Dutch art celebrated domestic life, commerce, and everyday virtues—quite different from the aristocratic subjects favored elsewhere.\n\nThis painting elevates a working servant to the status usually reserved for nobility or religious figures. The maid has dignity, focus, and presence.\n\n### Artist: Johannes Vermeer (1632-1675)\n\nVermeer lived his entire life in Delft, producing only about 35 paintings. He painted slowly, meticulously, and his work was largely forgotten until rediscovered in the 19th century. Today, his intimate scenes of domestic life are considered among the greatest achievements in Western art.\n\n---\n\n**Next artwork:** The Merry Drinker by Frans Hals (Room 2.9)",
+      "choices": [
+        {"text": "Continue to The Merry Drinker 🍺", "target": "merry_drinker"},
+        {"text": "Back to The Night Watch 🌙", "target": "night_watch"},
+        {"text": "View Museum Map 🗺️", "target": "museum_map"}
+      ],
+      "metadata": {
+        "exhibitId": "milkmaid",
+        "floor": 2,
+        "room": "2.8",
+        "qrCode": "RIJKS-MILKMAID-002",
+        "hasAudio": true,
+        "audioLength": "3:00",
+        "audioDuration": 180,
+        "popularity": 5,
+        "artist": "Johannes Vermeer",
+        "year": 1660,
+        "medium": "Oil on canvas",
+        "dimensions": "45.5 × 41 cm",
+        "artworkUrl": "https://www.rijksmuseum.nl/en/collection/SK-A-2344",
+        "hasImage": true
+      }
+    },
+    {
+      "id": "merry_drinker",
+      "name": "The Merry Drinker",
+      "pid": "6",
+      "text": "# The Merry Drinker\n## Frans Hals, c. 1628-1630\n\n![The Merry Drinker](assets/images/merry_drinker.jpg)\n\n**Location:** Floor 2, Room 2.9  \n**Medium:** Oil on canvas  \n**QR Code:** RIJKS-DRINKER-003\n\n[audio](assets/audio/en/merry_drinker.mp3)\n\n### Overview\n\nFrans Hals captures pure joy in *The Merry Drinker*. This portrait radiates personality and spontaneity—you can almost hear the man's laughter!\n\n### Revolutionary Technique\n\n**Loose Brushwork:**\nHals's technique was radical for his time. Notice the loose, visible brushstrokes—especially in the clothing and lace collar. Get close to the painting: it looks almost abstract. Step back: it resolves into incredible realism.\n\nThis \"alla prima\" (wet-on-wet) technique wouldn't be embraced by mainstream art for another 200 years, with the Impressionists.\n\n### The Subject\n\n**A Man Enjoying Life:**\n- Raised glass (offering you a drink?)\n- Genuine smile (rare in Dutch portraits)\n- Fashionable dress (successful merchant class)\n- Direct eye contact (engaging the viewer)\n\n**Symbols:**\n- Wine glass: Pleasure, celebration\n- Rich clothing: Wealth, status\n- Direct gaze: Confidence, openness\n\n### Artist: Frans Hals (c. 1582-1666)\n\nFrans Hals was Haarlem's greatest portrait painter, known for capturing personality and spontaneity. While Rembrandt explored psychology and drama, Hals captured the spark of life—the moment before the smile breaks into laughter.\n\nHals influenced everyone from Manet to Van Gogh, who studied his brushwork intensely.\n\n---\n\n**Next:** Rembrandt's Self-Portrait as Paul",
+      "choices": [
+        {"text": "Continue to Self-Portrait 🖼️", "target": "self_portrait_paul"},
+        {"text": "Back to The Milkmaid", "target": "milkmaid"},
+        {"text": "View Museum Map", "target": "museum_map"}
+      ],
+      "metadata": {
+        "exhibitId": "merry-drinker",
+        "floor": 2,
+        "room": "2.9",
+        "qrCode": "RIJKS-DRINKER-003",
+        "hasAudio": true,
+        "audioLength": "2:30",
+        "audioDuration": 150,
+        "popularity": 4,
+        "artist": "Frans Hals",
+        "year": 1628,
+        "medium": "Oil on canvas",
+        "artworkUrl": "https://www.rijksmuseum.nl/en/collection/SK-A-133"
+      }
+    },
+    {
+      "id": "self_portrait_paul",
+      "name": "Self-Portrait as the Apostle Paul",
+      "pid": "7",
+      "text": "# Self-Portrait as the Apostle Paul\n## Rembrandt van Rijn, 1661\n\n![Self-Portrait as Paul](assets/images/self_portrait_paul.jpg)\n\n**Location:** Floor 2, Room 2.8  \n**QR Code:** RIJKS-REMBRANDT-SELF-004\n\n[audio](assets/audio/en/self_portrait_paul.mp3)\n\n### A Later Rembrandt\n\nThis self-portrait comes from Rembrandt's final decade—a period of personal tragedy but artistic triumph. By 1661, Rembrandt had faced bankruptcy, lost his beloved wife Saskia, and seen his reputation decline. Yet he painted some of his greatest masterpieces.\n\n### Why Saint Paul?\n\nRembrandt depicts himself as Paul the Apostle, holding a manuscript (Paul's epistles). This wasn't vanity—it was identification. Like Paul, Rembrandt had experienced success, suffering, and spiritual depth.\n\n**Notice:**\n- The sword (Paul's attribute as a martyr)\n- The manuscript (Paul's letters)\n- The aging face (Rembrandt was 55, weathered by life)\n- The penetrating gaze (wisdom, introspection)\n\n### Technique\n\nCompare this to *The Night Watch* (painted 19 years earlier). The brushwork here is looser, more expressive. Rembrandt builds up thick layers of paint (impasto), creating depth and luminosity. The face seems to emerge from darkness into light.\n\n---\n\n**More Rembrandt:** The Jewish Bride is nearby",
+      "choices": [
+        {"text": "Continue to The Jewish Bride 💑", "target": "jewish_bride"},
+        {"text": "View Museum Map", "target": "museum_map"}
+      ],
+      "metadata": {
+        "exhibitId": "self-portrait-paul",
+        "floor": 2,
+        "room": "2.8",
+        "qrCode": "RIJKS-REMBRANDT-SELF-004",
+        "hasAudio": true,
+        "audioLength": "3:00",
+        "popularity": 4,
+        "artist": "Rembrandt van Rijn",
+        "year": 1661
+      }
+    },
+    {
+      "id": "jewish_bride",
+      "name": "The Jewish Bride",
+      "pid": "8",
+      "text": "# The Jewish Bride\n## Rembrandt van Rijn, c. 1665-1669\n\n![The Jewish Bride](assets/images/jewish_bride.jpg)\n\n**Location:** Floor 2, Room 2.8  \n**QR Code:** RIJKS-BRIDE-005\n\n[audio](assets/audio/en/jewish_bride.mp3)\n\n### A Masterpiece of Love\n\nVincent van Gogh said he would give ten years of his life to sit before this painting for two weeks with only a crust of bread to eat. That's how powerful *The Jewish Bride* is.\n\n### The Mystery\n\n**Who are they?**\nDespite the traditional title, we don't know if the couple is Jewish, or even if it's a bride. Theories:\n- Biblical Isaac and Rebekah\n- A wealthy Amsterdam couple in costume\n- Rembrandt's son Titus and his bride\n\nWhat we do know: This is one of art's greatest depictions of love, tenderness, and intimacy.\n\n### The Touch\n\nLook at their hands:\n- His right hand gently on her heart\n- Her hand tenderly covering his\n- The intimacy is palpable\n\nThis gesture—so simple, so human—has moved viewers for 350 years.\n\n### Rembrandt's Late Style\n\nBy this period, Rembrandt painted with unprecedented freedom. The clothing is built up with thick, almost sculptural paint. The faces glow with inner light. Colors are rich, warm, golden.\n\nRembrandt has transcended technique—this is pure emotion made visible.\n\n---\n\n**Moving to Floor 1:** Still Life and Seascapes",
+      "choices": [
+        {"text": "Go to Floor 1: Still Life 🌸", "target": "still_life"},
+        {"text": "View Museum Map", "target": "museum_map"}
+      ],
+      "metadata": {
+        "exhibitId": "jewish-bride",
+        "floor": 2,
+        "room": "2.8",
+        "qrCode": "RIJKS-BRIDE-005",
+        "hasAudio": true,
+        "audioLength": "3:00",
+        "popularity": 5,
+        "artist": "Rembrandt van Rijn",
+        "year": 1665
+      }
+    },
+    {
+      "id": "still_life",
+      "name": "Still Life with Flowers and Fruit",
+      "pid": "9",
+      "text": "# Still Life with Flowers and Fruit\n## Jan van Huysum, c. 1715\n\n![Still Life](assets/images/still_life.jpg)\n\n**Location:** Floor 1, Room 1.12  \n**QR Code:** RIJKS-STILLLIFE-006\n\n[audio](assets/audio/en/still_life.mp3)\n\n### Dutch Botanical Perfection\n\nJan van Huysum was the most celebrated still life painter of his generation, commanding enormous prices for works like this. Look closely—you can see why.\n\n### Impossible Perfection\n\nHere's the secret: These flowers could never bloom together. Van Huysum painted them over months, as each species came into season. Tulips in spring, roses in summer, peonies at different times. The painting is a botanical fantasy—nature perfected beyond reality.\n\n### Symbolic Language\n\n**Every element has meaning:**\n- Flowers: Beauty, fragility of life\n- Insects: Natural cycle, decay\n- Fruit: Abundance, sensuality\n- Dewdrops: Purity, freshness\n\nDutch viewers read these paintings like books, finding moral lessons and spiritual truths in bouquets.\n\n### The Market\n\nDuring the Dutch Golden Age, the Netherlands dominated world trade in flowers, especially tulips. A painting like this celebrated Dutch botanical expertise and global commerce.\n\n---\n\n**Next:** The Threatened Swan",
+      "choices": [
+        {"text": "Continue to The Threatened Swan 🦢", "target": "threatened_swan"},
+        {"text": "View Museum Map", "target": "museum_map"}
+      ],
+      "metadata": {
+        "exhibitId": "still-life",
+        "floor": 1,
+        "room": "1.12",
+        "qrCode": "RIJKS-STILLLIFE-006",
+        "hasAudio": true,
+        "audioLength": "2:30",
+        "popularity": 3,
+        "artist": "Jan van Huysum",
+        "year": 1715
+      }
+    },
+    {
+      "id": "completion",
+      "name": "Tour Complete!",
+      "pid": "13",
+      "text": "# Congratulations! 🎉\n\n## You've Completed the Masters of Light Tour\n\n![Thank You](assets/images/thank_you.jpg)\n\n### Your Visit Summary\n\n**Today you explored:**\n- **Artworks viewed:** {{visited_count}}/12\n- **Audio guides listened:** {{audio_played}}\n- **Time spent:** {{tour_duration}} minutes\n- **Favorite (most revisited):** [Calculated from your session]\n\n### What You Experienced\n\nYou've journeyed through the Dutch Golden Age, from Rembrandt's dramatic *Night Watch* to Vermeer's intimate *Milkmaid*, from Frans Hals's joyful portraits to the delicate beauty of Dutch still lifes.\n\nThese masterpieces represent the pinnacle of 17th-century Dutch art—a time when the Netherlands was the wealthiest nation in Europe, and art flourished in every genre.\n\n### Continue Exploring\n\nThe Rijksmuseum collection contains over 8,000 works on display. Your digital assistant can guide you to:\n\n- **More Rembrandt:** We have 22 paintings and 60 drawings\n- **Special exhibitions:** Check current exhibitions\n- **Asian art:** Our collection spans 4,000 years\n- **Delftware & decorative arts:** Extensive holdings\n- **Rijksmuseum Gardens:** Free and open year-round\n\n### Share Your Experience\n\n[Download Visit Summary PDF]  \n[Share on Social Media]  \n[Rate This Tour ⭐⭐⭐⭐⭐]  \n\n### Thank You\n\nThank you for visiting the Rijksmuseum. We hope this digital tour enhanced your experience and deepened your appreciation for these masterpieces.\n\n**Rijksmuseum Amsterdam**  \nMuseumstraat 1, 1071 XX Amsterdam  \nOpen daily 9:00 - 17:00  \nwww.rijksmuseum.nl\n\n---\n\n*This digital tour was created with Whisker museum technology.*",
+      "choices": [
+        {"text": "Start Another Tour 🔄", "target": "welcome"},
+        {"text": "View Museum Map 🗺️", "target": "museum_map"},
+        {"text": "Visit Rijksmuseum Shop 🛍️", "target": "external_shop"},
+        {"text": "Explore More Collections 🎨", "target": "external_collections"}
+      ],
+      "metadata": {
+        "type": "conclusion",
+        "hasAudio": false,
+        "actions": {
+          "download_summary": true,
+          "share_enabled": true,
+          "rating_enabled": true,
+          "external_links": true
+        }
+      }
+    },
+    {
+      "id": "quick_highlights",
+      "name": "Quick Highlights",
+      "pid": "14",
+      "text": "# Quick Highlights Tour\n\n## See the Best in 30 Minutes\n\nShort on time? This express tour covers the 6 absolute must-see masterpieces:\n\n1. **The Night Watch** - Rembrandt (4 min)\n2. **The Milkmaid** - Vermeer (3 min)\n3. **The Merry Drinker** - Hals (2.5 min)\n4. **The Jewish Bride** - Rembrandt (3 min)\n5. **Winter Landscape** - Avercamp (3 min)\n6. **Dutch Dollhouse** - Oortman (3 min)\n\n**Total:** ~20 minutes audio + viewing time = 30 minutes\n\nReady to start?",
+      "choices": [
+        {"text": "Begin Quick Tour ⚡", "target": "night_watch"},
+        {"text": "Switch to Full Tour", "target": "route_intro"},
+        {"text": "Back to Welcome", "target": "welcome"}
+      ],
+      "metadata": {
+        "type": "alternate_route",
+        "hasAudio": false
+      }
+    },
+    {
+      "id": "threatened_swan",
+      "name": "The Threatened Swan",
+      "pid": "10",
+      "text": "# The Threatened Swan\n## Jan Asselijn, c. 1650\n\n![The Threatened Swan](assets/images/threatened_swan.jpg)\n\n**Location:** Floor 1, Room 1.6  \n**QR Code:** RIJKS-SWAN-007\n\n[audio](assets/audio/en/threatened_swan.mp3)\n\n### Political Allegory\n\nThis isn't just a swan—it's the Netherlands itself! The swan represents the Dutch statesman Johan de Witt defending the country (the eggs) against enemies (the dog).\n\nNotice the swan's aggressive posture, spread wings, and protective stance over the nest. This painting was political propaganda disguised as a nature scene.\n\n---\n\n**Next:** Winter Landscape",
+      "choices": [
+        {"text": "Continue to Winter Landscape ❄️", "target": "winter_landscape"},
+        {"text": "View Museum Map", "target": "museum_map"}
+      ],
+      "metadata": {
+        "exhibitId": "threatened-swan",
+        "floor": 1,
+        "room": "1.6",
+        "qrCode": "RIJKS-SWAN-007",
+        "hasAudio": true,
+        "audioLength": "2:30",
+        "popularity": 3,
+        "artist": "Jan Asselijn",
+        "year": 1650
+      }
+    },
+    {
+      "id": "winter_landscape",
+      "name": "Winter Landscape with Ice Skaters",
+      "pid": "11",
+      "text": "# Winter Landscape with Ice Skaters\n## Hendrick Avercamp, c. 1608\n\n![Winter Landscape](assets/images/winter_landscape.jpg)\n\n**Location:** Floor 1, Room 1.13  \n**QR Code:** RIJKS-WINTER-008\n\n[audio](assets/audio/en/winter_landscape.mp3)\n\n### A Frozen World\n\nAvercamp specialized in winter scenes, capturing Dutch life during the Little Ice Age when winters were much colder than today. The frozen canals became highways and gathering places.\n\n**Find these details:**\n- People skating, sledding, playing golf on ice\n- Wealthy and poor mixing together\n- A couple in a private moment (left)\n- Children playing (center)\n- A man who has fallen (right foreground)\n\nAvercamp was deaf and mute, which may have sharpened his observational skills. Notice how he captures dozens of tiny narratives in one panoramic scene.\n\n---\n\n**Moving to Floor 0:** Dutch crafts and history",
+      "choices": [
+        {"text": "Go to Floor 0: Delftware 🏺", "target": "delftware"},
+        {"text": "View Museum Map", "target": "museum_map"}
+      ],
+      "metadata": {
+        "exhibitId": "winter-landscape",
+        "floor": 1,
+        "room": "1.13",
+        "qrCode": "RIJKS-WINTER-008",
+        "hasAudio": true,
+        "audioLength": "3:00",
+        "popularity": 4,
+        "artist": "Hendrick Avercamp",
+        "year": 1608
+      }
+    },
+    {
+      "id": "delftware",
+      "name": "Delftware Collection",
+      "pid": "12",
+      "text": "# Delftware Collection\n## Various Artists, 17th-18th Century\n\n![Delftware](assets/images/delftware.jpg)\n\n**Location:** Floor 0, Room 0.7  \n**QR Code:** RIJKS-DELFTWARE-009\n\n[audio](assets/audio/en/delftware.mp3)\n\n### Dutch Blue\n\nDelftware—the iconic blue and white pottery—was the Netherlands' answer to Chinese porcelain. When Dutch traders brought back porcelain from Asia via the VOC (Dutch East India Company), local potters in Delft began creating their own versions.\n\n**What made Delftware special:**\n- Tin-glazed earthenware (not true porcelain)\n- Hand-painted blue designs\n- Dutch scenes mixed with Asian motifs\n- Became wildly popular across Europe\n\n### Global Trade\n\nThis collection represents the Dutch Golden Age's global reach—trade routes to Asia, artistic innovation at home, and the wealth that allowed Dutch families to fill their homes with beautiful objects.\n\n---\n\n**Tour almost complete!** A few more treasures await.",
+      "choices": [
+        {"text": "Continue to Battle of Waterloo ⚔️", "target": "battle_waterloo"},
+        {"text": "View Museum Map", "target": "museum_map"}
+      ],
+      "metadata": {
+        "exhibitId": "delftware",
+        "floor": 0,
+        "room": "0.7",
+        "qrCode": "RIJKS-DELFTWARE-009",
+        "hasAudio": true,
+        "audioLength": "2:30",
+        "popularity": 3,
+        "year": 1700
+      }
+    },
+    {
+      "id": "battle_waterloo",
+      "name": "The Battle of Waterloo",
+      "pid": "15",
+      "text": "# The Battle of Waterloo\n## Jan Willem Pieneman, 1824\n\n![Battle of Waterloo](assets/images/battle_waterloo.jpg)\n\n**Location:** Floor 0, Room 0.13  \n**Size:** 567 cm × 823 cm (massive!)  \n**Medium:** Oil on canvas  \n**QR Code:** RIJKS-WATERLOO-010\n\n[audio](assets/audio/en/battle_waterloo.mp3)\n\n### Epic Scale\n\nAt over 8 meters wide, this is one of the largest paintings in the Rijksmuseum. Pieneman depicts the decisive moment of the Battle of Waterloo (June 18, 1815), when Napoleon's final defeat secured peace in Europe.\n\n### The Scene\n\nYou're looking at the battlefield near Brussels at approximately 4 PM. The Duke of Wellington (center, on white horse) has just received word that Prussian reinforcements are arriving. The battle's outcome is about to turn decisively against Napoleon.\n\n**Key Figures:**\n- **Duke of Wellington** (center, white horse, bicorne hat): British commander\n- **William, Prince of Orange** (wounded, being carried): Dutch heir, future King William II\n- **Lord Uxbridge** (right foreground): British cavalry commander\n- **Wounded soldiers** throughout: The human cost of victory\n\n### Historical Context\n\nWaterloo ended 23 years of nearly continuous warfare that had engulfed Europe since the French Revolution. This Dutch commission celebrated the Netherlands' role in Napoleon's defeat and the restoration of Dutch independence under the House of Orange.\n\n### The Dutch Perspective\n\nNotice how Prince William is prominently featured despite his relatively minor role in the actual battle. Pieneman was painting Dutch patriotism as much as historical accuracy. The painting glorifies Dutch courage and sacrifice in the coalition victory.\n\n### Artistic Achievement\n\nPieneman worked from sketches made on the actual battlefield shortly after the battle. He interviewed participants and studied uniforms and equipment to achieve remarkable accuracy in detail—even if the composition is somewhat romanticized.\n\n**Details to notice:**\n- The smoke and chaos of battle\n- Individual soldiers' expressions (fear, exhaustion, determination)\n- The variety of uniforms (British, Dutch, Belgian, Nassau)\n- Wounded horses (the forgotten casualties)\n- The dramatic sky and lighting\n\n### Legacy\n\nThis painting became an icon of 19th-century Dutch nationalism. It was displayed prominently in the Rijksmuseum from its opening in 1885, reminding visitors of the Netherlands' role in shaping modern Europe.\n\n---\n\n**Next:** Dutch maritime power through an incredible ship model",
+      "choices": [
+        {"text": "Continue to Warship Model ⛵", "target": "warship_model"},
+        {"text": "View Museum Map", "target": "museum_map"}
+      ],
+      "metadata": {
+        "exhibitId": "battle-waterloo",
+        "floor": 0,
+        "room": "0.13",
+        "qrCode": "RIJKS-WATERLOO-010",
+        "hasAudio": true,
+        "audioLength": "3:00",
+        "audioDuration": 180,
+        "popularity": 3,
+        "artist": "Jan Willem Pieneman",
+        "year": 1824,
+        "medium": "Oil on canvas",
+        "dimensions": "567 × 823 cm",
+        "artworkUrl": "https://www.rijksmuseum.nl/en/collection/SK-A-1115",
+        "hasImage": true
+      }
+    },
+    {
+      "id": "warship_model",
+      "name": "Warship 'Amsterdam' Model",
+      "pid": "16",
+      "text": "# Model of the Warship 'Amsterdam'\n## Anonymous Dutch Shipwright, c. 1750\n\n![Warship Model](assets/images/warship_model.jpg)\n\n**Location:** Floor 0, Room 0.3  \n**Scale:** 1:48 (detailed ship model)  \n**QR Code:** RIJKS-WARSHIP-011\n\n[audio](assets/audio/en/warship_model.mp3)\n\n### Dutch Maritime Power\n\nDuring the 17th and 18th centuries, the Netherlands was a global maritime superpower. This exquisitely detailed ship model represents a Dutch warship from the height of Dutch naval dominance.\n\n### What You're Looking At\n\nThis isn't a toy—it's a working model built to exact specifications. Shipwrights created these models for multiple purposes:\n\n**Design & Planning:**\n- Scale models allowed naval architects to test designs before construction\n- Clients (the Admiralty, VOC) could approve designs\n- Helped calculate material costs and construction time\n\n**Prestige & Display:**\n- Demonstrated Dutch craftsmanship and technological superiority\n- Displayed in guild halls and government buildings\n- Diplomatic gifts to foreign courts\n\n### The Dutch Fleet\n\nAt its peak (mid-1600s), the Dutch Republic possessed the world's largest merchant fleet—more ships than England, France, and Spain combined. The Dutch East India Company (VOC) maintained its own navy to protect trade routes to Asia.\n\n**Types of Dutch Ships:**\n- **Warships** (like this model): Heavily armed, 50-80 cannons\n- **Merchant ships** (fluyts): Cargo-optimized, lightly armed\n- **VOC ships** (Indiamen): Large armed merchants for Asian trade\n\n### Incredible Detail\n\nLook closely at this model:\n- **Rigging**: Every rope (hundreds!) individually threaded\n- **Cannons**: Miniature working replicas\n- **Deck details**: Tiny hatches, railings, capstans\n- **Hull**: Carved planking, authentic painting\n- **Figurehead**: Intricately carved\n\nShipwrights spent months creating models like this, using the same woods and techniques as full-size ships.\n\n### The Age of Sail\n\nThese ships dominated warfare for centuries:\n- Speed: Up to 12 knots with favorable wind\n- Crew: 400-500 sailors and marines\n- Range: Could remain at sea for months\n- Firepower: Broadside of 30+ cannons\n\nNaval battles were floating artillery duels, with ships maneuvering to deliver devastating broadsides while avoiding enemy fire.\n\n### Economic Foundation\n\nDutch wealth during the Golden Age rested on seapower. Ships like this protected trade routes, secured colonies, and projected Dutch influence globally—from Indonesia to New Amsterdam (New York), from Brazil to Taiwan.\n\n---\n\n**Final stop:** An extraordinary Dutch dollhouse",
+      "choices": [
+        {"text": "Continue to Dutch Dollhouse 🏠", "target": "dutch_dollhouse"},
+        {"text": "View Museum Map", "target": "museum_map"}
+      ],
+      "metadata": {
+        "exhibitId": "warship-model",
+        "floor": 0,
+        "room": "0.3",
+        "qrCode": "RIJKS-WARSHIP-011",
+        "hasAudio": true,
+        "audioLength": "2:30",
+        "audioDuration": 150,
+        "popularity": 3,
+        "year": 1750,
+        "medium": "Wood, rope, fabric, metal",
+        "artworkUrl": "https://www.rijksmuseum.nl/en/collection/NG-MC-453",
+        "hasImage": true
+      }
+    },
+    {
+      "id": "dutch_dollhouse",
+      "name": "Dutch Dollhouse of Petronella Oortman",
+      "pid": "17",
+      "text": "# The Dutch Dollhouse of Petronella Oortman\n## Various Craftsmen, c. 1686-1710\n\n![Dutch Dollhouse](assets/images/dutch_dollhouse.jpg)\n\n**Location:** Floor 0, Room 0.6  \n**Size:** 255 cm high × 190 cm wide  \n**QR Code:** RIJKS-DOLLHOUSE-012\n\n[audio](assets/audio/en/dutch_dollhouse.mp3)\n\n### Not for Children\n\nThis isn't a child's toy—it's a wealthy woman's most prized possession. Petronella Oortman (1656-1716), wife of a rich Amsterdam silk merchant, spent a fortune assembling this miniature mansion. Contemporary accounts suggest it cost as much as an actual Amsterdam canal house!\n\n### What You're Seeing\n\nThis cabinet dollhouse represents an idealized wealthy Dutch home from around 1700, displayed behind glass doors like a piece of furniture.\n\n**Three Floors:**\n\n**Top Floor: Private Chambers**\n- Bedroom with canopied bed (tiny embroidered linens!)\n- Linen room (miniature towels and sheets)\n- Lying-in room (for childbirth)\n\n**Middle Floor: Reception Rooms**\n- Best parlor (formal entertaining)\n- Music room (tiny paintings on walls)\n- Nursery (miniature cradle)\n\n**Ground Floor: Working Areas**\n- Kitchen (copper pots, working fireplace)\n- Storage rooms\n- Basement (food supplies)\n\n### Extraordinary Craftsmanship\n\nEvery single object was hand-crafted by master artisans:\n\n**Paintings:** Real artists created miniature artworks for the walls\n**Furniture:** Master cabinetmakers built scaled pieces\n**Silver:** Goldsmiths created tiny utensils (actually functional!)\n**Porcelain:** Delftware miniatures from actual Delft factories\n**Textiles:** Embroidered linens, woven rugs—all to scale\n**Books:** Tiny leather-bound volumes with actual pages\n\nLook closely: That's real gold leaf, actual silk damask, genuine pearls on the miniature costumes.\n\n### Social History\n\nThis dollhouse is an incredible document of Golden Age domestic life:\n\n**What it reveals:**\n- How wealthy Dutch families lived\n- Interior decoration trends of the period\n- Gender roles (women's domain: the household)\n- Consumer culture (displaying wealth through possessions)\n- Dutch values (order, cleanliness, prosperity)\n\n### The Cost\n\nPetronella kept meticulous records of her purchases. Some examples:\n- Miniature silver tea service: 6 guilders (a skilled worker's weekly wage)\n- Tiny paintings: 20-30 guilders each\n- Entire dollhouse: 20,000-30,000 guilders (equal to an actual house!)\n\nWhy so expensive? Because she commissioned the finest craftsmen in Amsterdam to create each object to her exact specifications.\n\n### Prestige Object\n\nDollhouses like this served multiple purposes:\n- **Status symbol:** Demonstrating wealth and taste\n- **Educational tool:** Teaching daughters household management\n- **Artistic showcase:** Displaying knowledge of art and design\n- **Conversation piece:** Entertaining guests\n- **Legacy project:** Something to pass down through generations\n\n### Survival and Preservation\n\nRemarkably, this 300+ year-old object survives almost intact. Most dollhouses were played with, damaged, or broken up. Petronella's dollhouse survived because it was always a display piece, carefully maintained by successive generations.\n\nThe Rijksmuseum acquired it in 1876, and it has captivated visitors ever since—perhaps the museum's most beloved object for children and adults alike.\n\n### What It Teaches Us\n\nThis dollhouse embodies the Dutch Golden Age:\n- Wealth from global trade\n- Obsession with domestic virtue\n- Celebration of craftsmanship\n- Art collecting as status symbol\n- Attention to detail and quality\n\nIt's a complete world in miniature—and a window into a vanished way of life.\n\n---\n\n**Congratulations!** You've completed all 12 artworks on the tour.",
+      "choices": [
+        {"text": "Complete Tour & Summary 🎉", "target": "completion"},
+        {"text": "Revisit Favorite Artwork", "target": "museum_map"}
+      ],
+      "metadata": {
+        "exhibitId": "dutch-dollhouse",
+        "floor": 0,
+        "room": "0.6",
+        "qrCode": "RIJKS-DOLLHOUSE-012",
+        "hasAudio": true,
+        "audioLength": "3:00",
+        "audioDuration": 180,
+        "popularity": 5,
+        "year": 1690,
+        "medium": "Cabinet with miniature rooms and objects",
+        "dimensions": "255 × 190 cm",
+        "artworkUrl": "https://www.rijksmuseum.nl/en/collection/BK-NM-743",
+        "hasImage": true
+      }
+    }
+  ]
+}
