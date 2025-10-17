@@ -50,6 +50,7 @@ site/
 tmp/
 temp/
 *.tmp
+design_notes/
 
 # Session and phase documentation
 PHASE*.md
