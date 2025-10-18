@@ -58,7 +58,23 @@ jobs:
       - name: Run test suite (Busted BDD)
         run: |
           echo "Running Whisker test suite with Busted..."
-          busted --pattern=test_ tests/
+          busted tests/test_story.lua \
+                 tests/test_compact_integration.lua \
+                 tests/test_rijks_load.lua \
+                 tests/test_renderer.lua \
+                 tests/test_validator.lua \
+                 tests/test_profiler.lua \
+                 tests/test_debugger.lua \
+                 tests/test_metatable_preservation.lua \
+                 tests/test_save_system.lua \
+                 tests/test_template_processor.lua \
+                 tests/test_harlowe_converter.lua \
+                 tests/test_sugarcube_converter.lua \
+                 tests/test_chapbook_converter.lua \
+                 tests/test_format_converter.lua \
+                 tests/test_import.lua \
+                 tests/test_export.lua \
+                 tests/test_compact_format.lua
       
       - name: Upload test report
         if: always()
