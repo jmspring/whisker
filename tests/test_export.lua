@@ -1,7 +1,7 @@
 local helper = require("tests.test_helper")
-local FormatConverter = require("engine.format.format_converter")
-local TwineImporter = require("engine.format.twine_importer")
-local json = require("engine.utils.json")
+local FormatConverter = require("whisker.format.format_converter")
+local TwineImporter = require("whisker.format.twine_importer")
+local json = require("whisker.utils.json")
 
 describe("Twine Export", function()
 

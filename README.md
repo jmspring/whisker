@@ -19,7 +19,7 @@
 
 **Option 1: Use the Web Editor**
 
-1. Open `player/web/index.html` in your browser
+1. Open `publisher/web/index.html` in your browser
 2. Create passages and add choices
 3. Click "Play" to test
 4. Export as standalone HTML to share!
@@ -84,7 +84,7 @@ whisker is a full-featured interactive fiction engine built in Lua:
 ### Run an Example Story
 
 **Web Browser** (easiest):
-1. Open `player/web/index.html`
+1. Open `publisher/web/index.html`
 2. Load an example story from `stories/examples/`
 3. Start playing!
 
@@ -96,7 +96,7 @@ whisker is a full-featured interactive fiction engine built in Lua:
 # Windows: https://www.lua.org/download.html
 
 # Run an example
-lua main.lua stories/examples/simple_story.lua
+lua bin/whisker stories/examples/simple_story.lua
 ```
 
 ### Included Examples
@@ -117,22 +117,28 @@ lua main.lua stories/examples/simple_story.lua
 
 ```
 whisker/
-├── player/              # Story players (web, CLI, desktop)
-│   ├── web/            # Browser-based player + editor
-│   ├── cli/            # Command-line player
-│   └── desktop/        # LÖVE2D desktop player
-├── stories/            # Example stories and templates
-│   ├── examples/       # Complete example stories
-│   └── templates/      # Story templates to start from
-├── engine/             # whisker engine (Lua)
+├── bin/                # Entry points
+│   └── whisker        # Main CLI (lua bin/whisker story.lua)
+├── lib/whisker/        # Engine library (Standard Lua layout)
 │   ├── core/          # Story runtime
 │   ├── format/        # Twine import/export
-│   └── tools/         # Debugger, profiler, validator
+│   ├── tools/         # Debugger, profiler, validator
+│   └── utils/         # Utilities
+├── editor/             # Story authoring tools
+│   ├── web/           # Web-based visual editor
+│   ├── desktop/       # Desktop editor (optional)
+│   └── templates/     # Story starter templates
+├── publisher/          # Publishing & players
+│   ├── web/           # Browser player & export
+│   ├── cli/           # Command-line player
+│   └── desktop/       # LÖVE2D desktop player
+├── stories/examples/   # Example stories
+├── config/             # Configuration files
+│   └── default.lua    # Default configuration
 ├── tests/             # Test suite
 ├── docs/              # Documentation
 ├── AUTHORING.md       # Guide for story authors
-├── README.md          # This file
-└── main.lua           # CLI entry point
+└── README.md          # This file
 ```
 
 ## 🌐 Twine Compatibility
@@ -159,7 +165,7 @@ Import and export Twine stories with full support for:
 
 See the **[Authoring Guide](AUTHORING.md)** for a complete tutorial. Here's the quick version:
 
-1. **Open the web editor**: `player/web/index.html`
+1. **Open the web editor**: `publisher/web/index.html`
 2. **Create a passage**:
    ```
    :: Start
@@ -211,32 +217,32 @@ return story
 
 Run it:
 ```bash
-lua main.lua my_story.lua
+lua bin/whisker my_story.lua
 ```
 
 ## 🧰 Command Line Interface
 
 ```bash
 # Play a story
-lua main.lua story.lua
+lua bin/whisker story.lua
 
 # Import Twine HTML and play
-lua main.lua story.html
+lua bin/whisker story.html
 
 # Validate story structure
-lua main.lua --validate story.lua
+lua bin/whisker --validate story.lua
 
 # Convert formats
-lua main.lua --convert json story.html -o output.json
+lua bin/whisker --convert json story.html -o output.json
 
 # Debug mode
-lua main.lua --debug story.lua
+lua bin/whisker --debug story.lua
 
 # Performance profiling
-lua main.lua --profile story.lua
+lua bin/whisker --profile story.lua
 
 # Show help
-lua main.lua --help
+lua bin/whisker --help
 ```
 
 ## 🤝 Contributing
@@ -287,5 +293,5 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 **Start creating interactive stories today!** 🚀
 
-- **Authors**: Open `player/web/index.html` or read the [Authoring Guide](AUTHORING.md)
+- **Authors**: Open `publisher/web/index.html` or read the [Authoring Guide](AUTHORING.md)
 - **Developers**: See the [Getting Started Guide](docs/GETTING_STARTED.md) and [API Reference](docs/API_REFERENCE.md)

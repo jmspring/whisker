@@ -3,7 +3,7 @@
 
 local story_to_whisker = {}
 
-local json = require("engine.utils.json")
+local json = require("whisker.utils.json")
 
 -- Convert a Story object to Whisker JSON document structure
 function story_to_whisker.convert(story)

@@ -46,7 +46,7 @@ function SaveSystem:save_game(slot_name, game_state, story_data)
     }
 
     -- Convert to JSON
-    local json = require("engine.utils.json")
+    local json = require("whisker.utils.json")
     local json_data = json.encode(save_data)
 
     -- Write to file (platform-specific implementation)
@@ -72,7 +72,7 @@ function SaveSystem:load_game(slot_name)
     end
 
     -- Parse JSON
-    local json = require("engine.utils.json")
+    local json = require("whisker.utils.json")
     local save_data = json.decode(json_data)
 
     if not save_data then
@@ -85,7 +85,7 @@ function SaveSystem:load_game(slot_name)
     -- Restore story data if present (with metatable restoration)
     local story = nil
     if save_data.story_data then
-        local Story = require("engine.core.story")
+        local Story = require("whisker.core.story")
         story = Story.from_table(save_data.story_data)
     end
 
@@ -110,7 +110,7 @@ function SaveSystem:serialize_game_state(game_state)
 end
 
 function SaveSystem:deserialize_game_state(data)
-    local GameState = require("engine.core.game_state")
+    local GameState = require("whisker.core.game_state")
     local game_state = GameState.new()
 
     game_state.current_passage = data.current_passage
@@ -159,7 +159,7 @@ function SaveSystem:get_save_metadata(slot_name)
         return nil
     end
 
-    local json = require("engine.utils.json")
+    local json = require("whisker.utils.json")
     local save_data = json.decode(json_data)
 
     if save_data and save_data.metadata then
@@ -194,21 +194,21 @@ function SaveSystem:write_save_file(slot_name, data)
     local filename = self.save_dir .. "/" .. slot_name .. ".sav"
 
     -- Try to use platform-specific file operations
-    local file_utils = require("engine.utils.file_utils")
+    local file_utils = require("whisker.utils.file_utils")
     return file_utils.write_file(filename, data)
 end
 
 function SaveSystem:read_save_file(slot_name)
     local filename = self.save_dir .. "/" .. slot_name .. ".sav"
 
-    local file_utils = require("engine.utils.file_utils")
+    local file_utils = require("whisker.utils.file_utils")
     return file_utils.read_file(filename)
 end
 
 function SaveSystem:delete_save_file(slot_name)
     local filename = self.save_dir .. "/" .. slot_name .. ".sav"
 
-    local file_utils = require("engine.utils.file_utils")
+    local file_utils = require("whisker.utils.file_utils")
     return file_utils.delete_file(filename)
 end
 

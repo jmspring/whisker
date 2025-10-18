@@ -1,5 +1,5 @@
 local helper = require("tests.test_helper")
-local parser = require("engine.format.parsers.sugarcube")
+local parser = require("whisker.format.parsers.sugarcube")
 
 describe("SugarCube Parser", function()
 

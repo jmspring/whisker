@@ -1,6 +1,6 @@
 local helper = require("tests.test_helper")
-local harlowe_parser = require("engine.format.parsers.harlowe")
-local converter = require("engine.format.converters.harlowe")
+local harlowe_parser = require("whisker.format.parsers.harlowe")
+local converter = require("whisker.format.converters.harlowe")
 
 describe("Harlowe Converter", function()
 

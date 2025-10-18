@@ -23,7 +23,7 @@ function Engine.new(story, game_state, config)
 
     -- Ensure story has proper metatable (handles deserialized stories)
     if story and type(story) == "table" then
-        local Story = require("engine.core.story")
+        local Story = require("whisker.core.story")
         -- Check if story has Story metatable
         if getmetatable(story) ~= Story then
             -- Restore metatable if missing
@@ -37,13 +37,13 @@ function Engine.new(story, game_state, config)
 
     -- Initialize game state if not provided
     if not instance.game_state then
-        local GameState = require("engine.core.game_state")
+        local GameState = require("whisker.core.game_state")
         instance.game_state = GameState.new()
     end
 
     -- Initialize interpreter
     if not instance.interpreter then
-        local LuaInterpreter = require("engine.core.lua_interpreter")
+        local LuaInterpreter = require("whisker.core.lua_interpreter")
         instance.interpreter = LuaInterpreter.new()
     end
 
@@ -53,7 +53,7 @@ end
 function Engine:load_story(story)
     -- Ensure story has proper metatable (handles deserialized stories)
     if story and type(story) == "table" then
-        local Story = require("engine.core.story")
+        local Story = require("whisker.core.story")
         -- Check if story has Story metatable
         if getmetatable(story) ~= Story then
             -- Restore metatable if missing
@@ -67,13 +67,13 @@ function Engine:load_story(story)
 
     -- Initialize game state if not provided
     if not self.game_state then
-        local GameState = require("engine.core.game_state")
+        local GameState = require("whisker.core.game_state")
         self.game_state = GameState.new()
     end
 
     -- Initialize interpreter if not provided
     if not self.interpreter then
-        local LuaInterpreter = require("engine.core.lua_interpreter")
+        local LuaInterpreter = require("whisker.core.lua_interpreter")
         self.interpreter = LuaInterpreter.new()
     end
 

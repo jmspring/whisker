@@ -237,12 +237,12 @@ function file_utils.read_json(filepath)
         return nil, err
     end
 
-    local json = require("engine.utils.json")
+    local json = require("whisker.utils.json")
     return json.decode(content)
 end
 
 function file_utils.write_json(filepath, data)
-    local json = require("engine.utils.json")
+    local json = require("whisker.utils.json")
     local content = json.encode(data)
 
     return file_utils.write_file(filepath, content)

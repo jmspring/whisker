@@ -5,7 +5,7 @@
 local FormatConverter = {}
 
 -- Load required modules
-local story_to_whisker = require("engine.format.story_to_whisker")
+local story_to_whisker = require("whisker.format.story_to_whisker")
 
 -- Supported format types
 FormatConverter.FormatType = {
@@ -19,8 +19,8 @@ FormatConverter.FormatType = {
 -- Create new converter instance
 function FormatConverter.new(whisker_format, twine_importer)
     local self = setmetatable({}, {__index = FormatConverter})
-    self.format = whisker_format or require("engine.format.whisker_format")
-    self.importer = twine_importer or require("engine.format.twine_importer").new(self.format)
+    self.format = whisker_format or require("whisker.format.whisker_format")
+    self.importer = twine_importer or require("whisker.format.twine_importer").new(self.format)
     return self
 end
 

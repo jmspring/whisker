@@ -2,9 +2,9 @@
 -- A story about a prospector seeking gold while a corrupt sheriff tries to distract him
 -- Features branching choices with consequences
 
-local Story = require("engine.core.story")
-local Passage = require("engine.core.passage")
-local Choice = require("engine.core.choice")
+local Story = require("whisker.core.story")
+local Passage = require("whisker.core.passage")
+local Choice = require("whisker.core.choice")
 
 -- Create the story
 local story = Story.new({

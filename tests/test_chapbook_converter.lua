@@ -1,6 +1,6 @@
 local helper = require("tests.test_helper")
-local chapbook_parser = require("engine.format.parsers.chapbook")
-local converter = require("engine.format.converters.chapbook")
+local chapbook_parser = require("whisker.format.parsers.chapbook")
+local converter = require("whisker.format.converters.chapbook")
 
 describe("Chapbook Converter", function()
 

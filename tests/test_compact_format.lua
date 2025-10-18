@@ -1,5 +1,5 @@
 local helper = require("tests.test_helper")
-local CompactConverter = require("engine.format.compact_converter")
+local CompactConverter = require("whisker.format.compact_converter")
 
 describe("Compact Format Converter", function()
 

@@ -3,7 +3,7 @@
 -- Cross-platform service-oriented client for running Whisker museum tours
 -- Foundation for iOS/Android native app implementations
 
-local json = require("engine.utils.json")
+local json = require("whisker.utils.json")
 
 -- Museum Client Class
 local MuseumClient = {}

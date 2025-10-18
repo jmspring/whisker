@@ -138,7 +138,7 @@ function Passage:deserialize(data)
 
     -- Restore metatables for choice objects if needed
     if self.choices then
-        local Choice = require("engine.core.choice")
+        local Choice = require("whisker.core.choice")
         for i, choice in ipairs(self.choices) do
             if type(choice) == "table" and not getmetatable(choice) then
                 setmetatable(choice, Choice)
@@ -163,7 +163,7 @@ function Passage.restore_metatable(data)
 
     -- Restore metatables for nested objects (choices)
     if data.choices then
-        local Choice = require("engine.core.choice")
+        local Choice = require("whisker.core.choice")
         for i, choice in ipairs(data.choices) do
             if type(choice) == "table" and not getmetatable(choice) then
                 -- Use Choice's restore method if available, otherwise set metatable directly
@@ -200,7 +200,7 @@ function Passage.from_table(data)
 
     -- Restore choices with proper metatables
     if data.choices then
-        local Choice = require("engine.core.choice")
+        local Choice = require("whisker.core.choice")
         for _, choice_data in ipairs(data.choices) do
             if type(choice_data) == "table" then
                 local choice

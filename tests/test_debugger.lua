@@ -1,9 +1,9 @@
 local helper = require("tests.test_helper")
-local Debugger = require("engine.tools.debugger")
-local Engine = require("engine.core.engine")
-local GameState = require("engine.core.game_state")
-local Story = require("engine.core.story")
-local Passage = require("engine.core.passage")
+local Debugger = require("whisker.tools.debugger")
+local Engine = require("whisker.core.engine")
+local GameState = require("whisker.core.game_state")
+local Story = require("whisker.core.story")
+local Passage = require("whisker.core.passage")
 
 describe("Debugger", function()
 

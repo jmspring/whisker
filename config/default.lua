@@ -270,7 +270,7 @@ config.logging = {
 
 config.paths = {
     -- Source
-    engine_dir = "engine",
+    lib_dir = "lib/whisker",
 
     -- Content
     stories_dir = "stories",
@@ -282,8 +282,9 @@ config.paths = {
     reports_dir = "reports",
     logs_dir = "logs",
 
-    -- Player
-    player_dir = "player",
+    -- Publishing
+    publisher_dir = "publisher",
+    editor_dir = "editor",
 
     -- Tests
     tests_dir = "tests",

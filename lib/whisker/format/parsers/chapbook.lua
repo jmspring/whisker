@@ -1,7 +1,7 @@
 -- Chapbook Twee Parser
 -- Parses Twee notation into structured format
 
-local harlowe_parser = require("engine.format.parsers.harlowe")
+local harlowe_parser = require("whisker.format.parsers.harlowe")
 
 local M = {}
 

@@ -5,9 +5,9 @@ local WebRuntime = {}
 WebRuntime.__index = WebRuntime
 
 -- Dependencies
-local Engine = require('engine')
+local Engine = require('whisker')
 local json = require('json') -- Assuming JSON library available
-local template_processor = require('src.utils.template_processor')
+local template_processor = require('whisker.utils.template_processor')
 
 -- Constructor
 function WebRuntime.new(container_id, config)

@@ -25,7 +25,7 @@ jobs:
         run: luarocks install luacheck
       
       - name: Lint Lua code
-        run: luacheck engine/ tests/ examples/ --config .luacheckrc || true
+        run: luacheck lib/whisker/ tests/ examples/ --config .luacheckrc || true
         continue-on-error: true
 
   test-lua:
@@ -53,7 +53,7 @@ jobs:
 
       - name: Set up Lua paths
         run: |
-          echo "LUA_PATH=./engine/?.lua;./engine/?/init.lua;;" >> $GITHUB_ENV
+          echo "LUA_PATH=./lib/whisker/?.lua;./lib/whisker/?/init.lua;;" >> $GITHUB_ENV
 
       - name: Run test suite (Busted BDD)
         run: |
@@ -127,17 +127,17 @@ jobs:
       - name: Check core directories
         run: |
           echo "Checking project structure..."
-          test -d engine/core && echo "✓ Core directory exists" || echo "✗ Core directory missing"
-          test -d engine/editor && echo "✓ Editor directory exists" || echo "✗ Editor directory missing"
-          test -d engine/format && echo "✓ Format directory exists" || echo "✗ Format directory missing"
+          test -d lib/whisker/core && echo "✓ Core directory exists" || echo "✗ Core directory missing"
+          test -d lib/whisker/editor && echo "✓ Editor directory exists" || echo "✗ Editor directory missing"
+          test -d lib/whisker/format && echo "✓ Format directory exists" || echo "✗ Format directory missing"
           test -d editor/web && echo "✓ Web editor directory exists" || echo "✗ Web editor directory missing"
           test -d examples && echo "✓ Examples directory exists" || echo "✗ Examples directory missing"
           test -d tests && echo "✓ Tests directory exists" || echo "✗ Tests directory missing"
       
       - name: Check key files
         run: |
-          test -f main.lua && echo "✓ main.lua exists" || echo "✗ main.lua missing"
-          test -f config.lua && echo "✓ config.lua exists" || echo "✗ config.lua missing"
+          test -f bin/whisker && echo "✓ main.lua exists" || echo "✗ main.lua missing"
+          test -f config/default.lua && echo "✓ config.lua exists" || echo "✗ config.lua missing"
           test -f README.md && echo "✓ README.md exists" || echo "✗ README.md missing"
           test -f LICENSE && echo "✓ LICENSE exists" || echo "✗ LICENSE missing"
 

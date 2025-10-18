@@ -325,7 +325,7 @@ end
 -- Calculate size savings of compact format
 function CompactConverter:calculate_savings(verbose_doc, compact_doc, json_encoder)
     if not json_encoder then
-        json_encoder = require("engine.utils.json")
+        json_encoder = require("whisker.utils.json")
     end
 
     local verbose_json = json_encoder.encode(verbose_doc)

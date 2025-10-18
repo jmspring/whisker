@@ -1,5 +1,5 @@
 local helper = require("tests.test_helper")
-local parser = require("engine.format.parsers.harlowe")
+local parser = require("whisker.format.parsers.harlowe")
 
 describe("Harlowe Parser", function()
 

@@ -2,9 +2,9 @@
 -- A full-featured adventure game demonstrating whisker capabilities
 -- Includes: variables, conditions, Lua scripting, multiple paths, and endings
 
-local Story = require("engine.core.story")
-local Passage = require("engine.core.passage")
-local Choice = require("engine.core.choice")
+local Story = require("whisker.core.story")
+local Passage = require("whisker.core.passage")
+local Choice = require("whisker.core.choice")
 
 -- Create the story
 local story = Story.new({

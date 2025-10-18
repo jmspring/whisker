@@ -110,5 +110,5 @@ jobs:
       run: luarocks install luacheck
 
     - name: Run luacheck
-      run: luacheck engine/ tests/ --config .luacheckrc || echo "Luacheck completed with warnings"
+      run: luacheck lib/whisker/ tests/ --config .luacheckrc || echo "Luacheck completed with warnings"
       continue-on-error: true

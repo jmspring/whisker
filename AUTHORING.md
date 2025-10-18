@@ -13,7 +13,7 @@
 
 The easiest way to start is with the **Web Editor**:
 
-1. Open `player/web/index.html` in your web browser
+1. Open `publisher/web/index.html` in your web browser
 2. Start writing passages and adding choices
 3. Click "Export" to save your story
 
@@ -54,7 +54,7 @@ PASSAGE: "Inside Cave"
 
 The web editor provides a visual interface similar to Twine:
 
-1. **Open**: `player/web/index.html` in your browser
+1. **Open**: `publisher/web/index.html` in your browser
 2. **Create Passages**: Click "New Passage" to add story moments
 3. **Add Choices**: Use `[[Choice Text->Passage Name]]` syntax
 4. **Preview**: Click "Play" to test your story
@@ -105,7 +105,7 @@ story:set_start_passage("start")
 return story
 ```
 
-Save this as `my_story.lua` and run: `lua main.lua my_story.lua`
+Save this as `my_story.lua` and run: `lua bin/whisker my_story.lua`
 
 ## Adding Interactivity
 
@@ -190,7 +190,7 @@ Export your story as a standalone HTML file:
 If readers have whisker installed, share the `.whisker` file:
 
 1. Export as "Whisker JSON"
-2. Readers run: `lua main.lua your_story.whisker`
+2. Readers run: `lua bin/whisker your_story.whisker`
 
 ## Importing from Twine
 
@@ -306,4 +306,4 @@ Once you're comfortable with basic stories:
 
 ---
 
-**Ready to create?** Open `player/web/index.html` and start writing your first interactive story!
+**Ready to create?** Open `publisher/web/index.html` and start writing your first interactive story!

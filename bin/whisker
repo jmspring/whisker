@@ -1,13 +1,13 @@
 #!/usr/bin/env lua
--- main.lua
+-- bin/whisker
 -- whisker Interactive Fiction Engine
--- Main entry point and command-line interface
+-- Main CLI entry point
 
--- Add engine to package path
-package.path = package.path .. ";./engine/?.lua;./engine/?/init.lua"
+-- Add lib to package path
+package.path = package.path .. ";./lib/?.lua;./lib/?/init.lua"
 
 -- Load configuration
-local config = require("config")
+local config = require("config.default")
 
 -- Core modules
 local Story = require("engine.core.story")
