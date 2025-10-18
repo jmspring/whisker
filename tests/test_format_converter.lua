@@ -1,5 +1,5 @@
 local helper = require("tests.test_helper")
-local FormatConverter = require("src.format.format_converter")
+local FormatConverter = require("whisker.format.format_converter")
 
 describe("Format Converter", function()
 

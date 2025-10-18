@@ -1,5 +1,5 @@
 local helper = require("tests.test_helper")
-local EventSystem = require("src.core.event_system")
+local EventSystem = require("whisker.core.event_system")
 
 describe("Event System", function()
 

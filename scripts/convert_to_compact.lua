@@ -3,8 +3,8 @@
 
 package.path = package.path .. ";./src/?.lua"
 
-local json = require("src.utils.json")
-local CompactConverter = require("src.format.compact_converter")
+local json = require("whisker.utils.json")
+local CompactConverter = require("whisker.format.compact_converter")
 
 -- Check arguments
 if #arg < 1 then

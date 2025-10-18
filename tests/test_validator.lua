@@ -1,8 +1,8 @@
 local helper = require("tests.test_helper")
-local Validator = require("src.tools.validator")
-local Story = require("src.core.story")
-local Passage = require("src.core.passage")
-local Choice = require("src.core.choice")
+local Validator = require("whisker.tools.validator")
+local Story = require("whisker.core.story")
+local Passage = require("whisker.core.passage")
+local Choice = require("whisker.core.choice")
 
 describe("Validator", function()
 

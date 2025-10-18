@@ -1,5 +1,5 @@
 local helper = require("tests.test_helper")
-local string_utils = require("src.utils.string_utils")
+local string_utils = require("whisker.utils.string_utils")
 
 describe("String Utils", function()
 

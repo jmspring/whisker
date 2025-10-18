@@ -1,9 +1,9 @@
 local helper = require("tests.test_helper")
-local Profiler = require("src.tools.profiler")
-local Engine = require("src.core.engine")
-local GameState = require("src.core.game_state")
-local Story = require("src.core.story")
-local Passage = require("src.core.passage")
+local Profiler = require("whisker.tools.profiler")
+local Engine = require("whisker.core.engine")
+local GameState = require("whisker.core.game_state")
+local Story = require("whisker.core.story")
+local Passage = require("whisker.core.passage")
 
 describe("Profiler", function()
 

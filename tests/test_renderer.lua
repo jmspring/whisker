@@ -1,8 +1,8 @@
 local helper = require("tests.test_helper")
-local Renderer = require("src.core.renderer")
-local GameState = require("src.core.game_state")
-local Interpreter = require("src.core.lua_interpreter")
-local Passage = require("src.core.passage")
+local Renderer = require("whisker.core.renderer")
+local GameState = require("whisker.core.game_state")
+local Interpreter = require("whisker.core.lua_interpreter")
+local Passage = require("whisker.core.passage")
 
 describe("Renderer", function()
 

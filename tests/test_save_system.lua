@@ -1,8 +1,8 @@
 local helper = require("tests.test_helper")
-local SaveSystem = require("src.infrastructure.save_system")
-local GameState = require("src.core.game_state")
-local Story = require("src.core.story")
-local Passage = require("src.core.passage")
+local SaveSystem = require("whisker.infrastructure.save_system")
+local GameState = require("whisker.core.game_state")
+local Story = require("whisker.core.story")
+local Passage = require("whisker.core.passage")
 
 describe("Save System", function()
 

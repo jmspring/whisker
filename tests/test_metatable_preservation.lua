@@ -1,10 +1,10 @@
 local helper = require("tests.test_helper")
-local Story = require("src.core.story")
-local Passage = require("src.core.passage")
-local Choice = require("src.core.choice")
-local Engine = require("src.core.engine")
-local SaveSystem = require("src.infrastructure.save_system")
-local json = require("src.utils.json")
+local Story = require("whisker.core.story")
+local Passage = require("whisker.core.passage")
+local Choice = require("whisker.core.choice")
+local Engine = require("whisker.core.engine")
+local SaveSystem = require("whisker.infrastructure.save_system")
+local json = require("whisker.utils.json")
 
 describe("Metatable Preservation", function()
 

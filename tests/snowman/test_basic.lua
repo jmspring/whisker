@@ -1,5 +1,5 @@
 local helper = require("tests.test_helper")
-local parser = require("src.format.parsers.snowman")
+local parser = require("whisker.format.parsers.snowman")
 
 describe("Snowman Basic Features", function()
   local story_content

@@ -1,5 +1,5 @@
 local helper = require("tests.test_helper")
-local template_processor = require('src.utils.template_processor')
+local template_processor = require('whisker.utils.template_processor')
 
 describe("Template Processor", function()
 

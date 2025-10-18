@@ -1,6 +1,6 @@
 local helper = require("tests.test_helper")
-local sugarcube_parser = require("src.format.parsers.sugarcube")
-local converter = require("src.format.converters.sugarcube")
+local sugarcube_parser = require("whisker.format.parsers.sugarcube")
+local converter = require("whisker.format.converters.sugarcube")
 
 describe("SugarCube Converter", function()
 
