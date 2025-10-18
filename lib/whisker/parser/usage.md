@@ -11,8 +11,8 @@ Both files are now available as artifacts above!
 
 ```lua
 -- Load the modules
-local Lexer = require("src.parser.lexer")
-local Parser = require("src.parser.parser")
+local Lexer = require("whisker.parser.lexer")
+local Parser = require("whisker.parser.parser")
 
 -- Sample whisker format input
 local story_source = [[
@@ -193,10 +193,10 @@ The lexer and parser both provide detailed error messages:
 Once parsed, the story data can be used with the Engine:
 
 ```lua
-local Story = require("src.core.story")
-local Passage = require("src.core.passage")
-local Choice = require("src.core.choice")
-local Engine = require("src.core.engine")
+local Story = require("whisker.core.story")
+local Passage = require("whisker.core.passage")
+local Choice = require("whisker.core.choice")
+local Engine = require("whisker.core.engine")
 
 -- Convert parsed data to Story objects
 local story = Story:new()
@@ -248,8 +248,8 @@ Create a test file:
 
 ```lua
 -- test_parser.lua
-local Lexer = require("src.parser.lexer")
-local Parser = require("src.parser.parser")
+local Lexer = require("whisker.parser.lexer")
+local Parser = require("whisker.parser.parser")
 
 local test_cases = {
     {

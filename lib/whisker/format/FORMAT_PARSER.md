@@ -240,7 +240,7 @@ Health: <%= s.health %>
 ### Basic Usage
 
 ```lua
-local FormatConverter = require("src.format.format_converter")
+local FormatConverter = require("whisker.format.format_converter")
 
 -- Create converter instance (parsers loaded automatically)
 local converter = FormatConverter.new()
@@ -383,7 +383,7 @@ This order prevents conflicts between similar patterns.
 
 ```lua
 -- Test Harlowe parser
-local HarloweParser = require("src.format.harlowe_parser")
+local HarloweParser = require("whisker.format.harlowe_parser")
 local parser = HarloweParser:new()
 
 local input = "(set: $health to 100)"

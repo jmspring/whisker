@@ -2,7 +2,8 @@
 
 # Build outputs
 dist/
-build/
+build/output/
+build/temp/
 *.love
 
 # Dependencies

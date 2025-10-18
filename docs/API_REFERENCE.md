@@ -25,7 +25,7 @@ The main container for your interactive fiction.
 #### Constructor
 
 ```lua
-local Story = require("src.core.story")
+local Story = require("whisker.core.story")
 
 local story = Story.new(metadata)
 ```
@@ -132,7 +132,7 @@ Represents a single scene or moment in your story.
 #### Constructor
 
 ```lua
-local Passage = require("src.core.passage")
+local Passage = require("whisker.core.passage")
 
 local passage = Passage.new(config)
 ```
@@ -218,7 +218,7 @@ Represents a player choice that links passages.
 #### Constructor
 
 ```lua
-local Choice = require("src.core.choice")
+local Choice = require("whisker.core.choice")
 
 local choice = Choice.new(config)
 ```
@@ -304,7 +304,7 @@ Manages game state, variables, and history.
 #### Constructor
 
 ```lua
-local GameState = require("src.core.game_state")
+local GameState = require("whisker.core.game_state")
 
 local game_state = GameState.new()
 ```
@@ -405,7 +405,7 @@ The main story execution engine.
 #### Constructor
 
 ```lua
-local Engine = require("src.core.engine")
+local Engine = require("whisker.core.engine")
 
 local engine = Engine.new(story, game_state)
 ```
@@ -494,7 +494,7 @@ Gets the current content object.
 Provides user interface functionality.
 
 ```lua
-local UIFramework = require("src.ui.ui_framework")
+local UIFramework = require("whisker.ui.ui_framework")
 
 local ui = UIFramework.new(platform, config)
 ```
@@ -516,7 +516,7 @@ local ui = UIFramework.new(platform, config)
 Handles player input across platforms.
 
 ```lua
-local InputHandler = require("src.platform.input_handler")
+local InputHandler = require("whisker.platform.input_handler")
 
 local input = InputHandler.new(platform)
 ```
@@ -530,7 +530,7 @@ local input = InputHandler.new(platform)
 Manages multimedia assets.
 
 ```lua
-local AssetManager = require("src.platform.asset_manager")
+local AssetManager = require("whisker.platform.asset_manager")
 
 local assets = AssetManager.new(config)
 ```
@@ -550,7 +550,7 @@ local assets = AssetManager.new(config)
 Validates story structure.
 
 ```lua
-local Validator = require("src.tools.validator")
+local Validator = require("whisker.tools.validator")
 
 local validator = Validator.new()
 local results = validator:validate_story(story)
@@ -566,7 +566,7 @@ local results = validator:validate_story(story)
 Profiles story performance.
 
 ```lua
-local Profiler = require("src.tools.profiler")
+local Profiler = require("whisker.tools.profiler")
 
 local profiler = Profiler.new(engine, game_state)
 profiler:start(Profiler.ProfileMode.FULL)
@@ -586,7 +586,7 @@ print(profiler:generate_report())
 Runtime debugger with breakpoints.
 
 ```lua
-local Debugger = require("src.tools.debugger")
+local Debugger = require("whisker.tools.debugger")
 
 local debugger = Debugger.new(engine, game_state)
 debugger:enable(Debugger.DebugMode.BREAKPOINT)
@@ -609,7 +609,7 @@ debugger:add_breakpoint(Debugger.BreakpointType.PASSAGE, "boss_fight")
 Text rendering with markdown support.
 
 ```lua
-local Renderer = require("src.runtime.renderer")
+local Renderer = require("whisker.runtime.renderer")
 
 local renderer = Renderer.new(platform)
 renderer:set_interpreter(interpreter)
@@ -629,7 +629,7 @@ local rendered = renderer:render_passage(passage, game_state)
 Save and load game states.
 
 ```lua
-local SaveSystem = require("src.system.save_system")
+local SaveSystem = require("whisker.system.save_system")
 
 local save_system = SaveSystem.new(config)
 ```
@@ -650,13 +650,13 @@ Here's a complete example using all major APIs:
 
 ```lua
 -- Load required modules
-local Story = require("src.core.story")
-local Passage = require("src.core.passage")
-local Choice = require("src.core.choice")
-local Engine = require("src.core.engine")
-local GameState = require("src.core.game_state")
-local UIFramework = require("src.ui.ui_framework")
-local SaveSystem = require("src.system.save_system")
+local Story = require("whisker.core.story")
+local Passage = require("whisker.core.passage")
+local Choice = require("whisker.core.choice")
+local Engine = require("whisker.core.engine")
+local GameState = require("whisker.core.game_state")
+local UIFramework = require("whisker.ui.ui_framework")
+local SaveSystem = require("whisker.system.save_system")
 
 -- Create story
 local story = Story.new({

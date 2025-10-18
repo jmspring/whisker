@@ -149,7 +149,7 @@ All Lua tests use **Busted BDD** (Behavior-Driven Development) framework:
 
 ```lua
 local helper = require("tests.test_helper")
-local MyModule = require("src.module.my_module")
+local MyModule = require("whisker.module.my_module")
 
 describe("MyModule", function()
   describe("method_name", function()
@@ -290,7 +290,7 @@ Create a new file in `tests/` following the naming convention `test_<feature>.lu
 
 ```lua
 local helper = require("tests.test_helper")
-local MyFeature = require("src.module.my_feature")
+local MyFeature = require("whisker.module.my_feature")
 
 describe("MyFeature", function()
   -- Tests go here

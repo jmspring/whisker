@@ -212,7 +212,7 @@ Harlowe ←→ Whisker ←→ SugarCube
 ### Basic Parsing
 
 ```lua
-local FormatConverter = require("src.format.format_converter")
+local FormatConverter = require("whisker.format.format_converter")
 local converter = FormatConverter.new()
 
 -- Harlowe → Whisker

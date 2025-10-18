@@ -72,7 +72,7 @@ lua main.lua story.twee
 ### Programmatic Import
 
 ```lua
-local TwineImporter = require("src.format.twine_importer")
+local TwineImporter = require("whisker.format.twine_importer")
 
 -- Import from Twine HTML
 local importer = TwineImporter.new()
@@ -146,7 +146,7 @@ Creates human-readable documentation including:
 ### Programmatic Export
 
 ```lua
-local FormatConverter = require("src.format.format_converter")
+local FormatConverter = require("whisker.format.format_converter")
 
 local converter = FormatConverter.new()
 local story = load_whisker_story("story.whisker")
