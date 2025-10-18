@@ -61,15 +61,15 @@ This is a great starting point to understand how Whisker stories work!
 
 ```bash
 # From project root - plays the default story
-lua examples/cli_runtime/run.lua
+lua publisher/cli/run.lua
 
 # Or play one of the example stories
-lua examples/cli_runtime/run.lua stories/examples/simple_story.lua
-lua examples/cli_runtime/run.lua stories/examples/adventure_game.lua
-lua examples/cli_runtime/run.lua stories/examples/tutorial_story.lua
+lua publisher/cli/run.lua stories/examples/simple_story.lua
+lua publisher/cli/run.lua stories/examples/adventure_game.lua
+lua publisher/cli/run.lua stories/examples/tutorial_story.lua
 
 # Or with your own story
-lua examples/cli_runtime/run.lua path/to/story.json
+lua publisher/cli/run.lua path/to/story.json
 ```
 
 **Requirements:**
@@ -89,11 +89,11 @@ lua examples/cli_runtime/run.lua path/to/story.json
 
 ```bash
 # From project root
-cd examples/desktop_runtime
+cd publisher/desktop
 love .
 
 # Or on macOS
-open -a love examples/desktop_runtime
+open -a love publisher/desktop
 ```
 
 **Requirements:**
@@ -125,7 +125,7 @@ open -a love examples/desktop_runtime
 python3 -m http.server 8000
 
 # Then open in browser:
-# http://localhost:8000/examples/web_runtime/index.html
+# http://localhost:8000/publisher/web/index.html
 ```
 
 **Requirements:**
@@ -163,7 +163,7 @@ A basic cave exploration story perfect for beginners.
 **Play time:** ~2 minutes
 
 ```bash
-lua examples/cli_runtime/run.lua stories/examples/simple_story.lua
+lua publisher/cli/run.lua stories/examples/simple_story.lua
 ```
 
 ### 2. adventure_game.lua - Full-Featured RPG
@@ -182,7 +182,7 @@ A complete fantasy adventure with all Whisker features.
 **Play time:** ~10-15 minutes
 
 ```bash
-lua examples/cli_runtime/run.lua stories/examples/adventure_game.lua
+lua publisher/cli/run.lua stories/examples/adventure_game.lua
 ```
 
 ### 3. tutorial_story.lua - Interactive Tutorial
@@ -199,7 +199,7 @@ Learn Whisker by playing! An interactive guide covering all features.
 **Play time:** ~5-10 minutes
 
 ```bash
-lua examples/cli_runtime/run.lua stories/examples/tutorial_story.lua
+lua publisher/cli/run.lua stories/examples/tutorial_story.lua
 ```
 
 ---
@@ -256,15 +256,15 @@ All examples support loading custom stories:
 
 **CLI:**
 ```bash
-lua examples/cli_runtime/run.lua my_story.lua  # Lua format
-lua examples/cli_runtime/run.lua my_story.json  # JSON format
+lua publisher/cli/run.lua my_story.lua  # Lua format
+lua publisher/cli/run.lua my_story.json  # JSON format
 ```
 
 **Desktop:**
-Place your story file in `examples/desktop_runtime/` directory and update the story path in `main.lua`
+Place your story file in `publisher/desktop/` directory and update the story path in `main.lua`
 
 **Web Runtime:**
-Edit the `STORY_DATA` constant in `examples/web_runtime/index.html`
+Edit the `STORY_DATA` constant in `publisher/web/index.html`
 
 **Standalone Web Demo:**
 Edit the `demoStory` object in `examples/web_demo.html` (around line 300)
@@ -274,7 +274,7 @@ The stories in `stories/examples/` are great starting points. Copy one and modif
 ```bash
 cp stories/examples/simple_story.lua my_story.lua
 # Edit my_story.lua with your own content
-lua examples/cli_runtime/run.lua my_story.lua
+lua publisher/cli/run.lua my_story.lua
 ```
 
 ### Story Format
@@ -340,7 +340,7 @@ Study the examples to learn:
 ### Desktop Runtime Issues
 
 **Problem**: "No main.lua found"
-- **Solution**: Run from inside `examples/desktop_runtime/` or specify full path
+- **Solution**: Run from inside `publisher/desktop/` or specify full path
 
 **Problem**: Fonts not loading
 - **Solution**: Update to LÖVE2D 11.3 or higher
@@ -351,7 +351,7 @@ Study the examples to learn:
 - **Solution**: Use a web server (not file:// protocol) or check browser console
 
 **Problem**: CSS not applied
-- **Solution**: Verify path to `../../src/runtime/web_runtime.css` is correct
+- **Solution**: Verify path to `../../lib/whisker/runtime/web_runtime.css` is correct
 
 ## 🎯 Next Steps
 
@@ -367,7 +367,7 @@ After trying the examples:
 
 For more information:
 - Main README: `../../README.md`
-- Runtime docs: `../../src/runtime/README.md`
+- Runtime docs: `../../lib/whisker/runtime/README.md`
 - API Reference: `../../docs/API_REFERENCE.md`
 - Story format: `../../docs/FORMAT_REFERENCE.md`
 

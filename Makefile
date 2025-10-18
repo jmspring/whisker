@@ -94,14 +94,14 @@ docs-serve:
 lint:
 	@echo "$(BLUE)Running linters...$(RESET)"
 	@echo "Linting Lua code..."
-	@luacheck src/ tests/ --config .luacheckrc || true
+	@luacheck lib/whisker/ tests/ --config .luacheckrc || true
 	@if [ -d "editor/web" ]; then \
 		echo "Linting web editor..."; \
 		cd editor/web && npm run lint || true; \
 	fi
-	@if [ -d "runtime/web" ]; then \
-		echo "Linting web runtime..."; \
-		cd runtime/web && npm run lint || true; \
+	@if [ -d "publisher/web" ]; then \
+		echo "Linting web publisher..."; \
+		cd publisher/web && npm run lint || true; \
 	fi
 	@echo "$(GREEN)✓ Linting complete!$(RESET)"
 
@@ -111,8 +111,8 @@ format:
 	@if [ -d "editor/web" ]; then \
 		cd editor/web && npm run format || true; \
 	fi
-	@if [ -d "runtime/web" ]; then \
-		cd runtime/web && npm run format || true; \
+	@if [ -d "publisher/web" ]; then \
+		cd publisher/web && npm run format || true; \
 	fi
 	@echo "$(GREEN)✓ Formatting complete!$(RESET)"
 
@@ -155,4 +155,4 @@ docker-clean:
 # Watch for changes and rebuild (requires entr or similar)
 watch:
 	@echo "$(BLUE)Watching for changes...$(RESET)"
-	@find src/ -name "*.lua" | entr -c make build
+	@find lib/whisker/ -name "*.lua" | entr -c make build
