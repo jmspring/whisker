@@ -1,106 +1,65 @@
--- Test Compact Format Integration
--- Tests that compact format files can be loaded and used by the story loader
-
-package.path = package.path .. ";./src/?.lua"
-
+local helper = require("tests.test_helper")
 local whisker_loader = require("src.format.whisker_loader")
 local CompactConverter = require("src.format.compact_converter")
 local json = require("src.utils.json")
 
--- Test counters
-local tests_passed = 0
-local tests_failed = 0
+describe("Compact Format Integration", function()
 
--- Test helpers
-local function test(name, func)
-    io.write("Testing: " .. name .. " ... ")
-    local success, err = pcall(func)
-    if success then
-        io.write("✓ PASSED\n")
-        tests_passed = tests_passed + 1
-    else
-        io.write("✗ FAILED\n")
-        io.write("  Error: " .. tostring(err) .. "\n")
-        tests_failed = tests_failed + 1
-    end
-end
+  describe("File Loading", function()
+    it("should load compact format file", function()
+      local story, err = whisker_loader.load_from_file("examples/stories/simple_story_compact.whisker")
 
-local function assert_equal(actual, expected, message)
-    if actual ~= expected then
-        error(string.format("%s\nExpected: %s\nActual: %s",
-            message or "Values not equal", tostring(expected), tostring(actual)))
-    end
-end
+      assert.is_not_nil(story)
+      assert.equals("The Cave", story.metadata.name)
+      assert.equals("whisker Tutorial", story.metadata.author)
+    end)
 
-local function assert_not_nil(value, message)
-    if value == nil then
-        error(message or "Value should not be nil")
-    end
-end
+    it("should load correct number of passages", function()
+      local story, err = whisker_loader.load_from_file("examples/stories/simple_story_compact.whisker")
 
-local function assert_true(value, message)
-    if not value then
-        error(message or "Expected true, got false")
-    end
-end
+      assert.is_not_nil(story)
 
---------------------------------------------------------------------------------
--- INTEGRATION TESTS
---------------------------------------------------------------------------------
-
-test("Load compact format file", function()
-    local story, err = whisker_loader.load_from_file("examples/stories/simple_story_compact.whisker")
-
-    assert_not_nil(story, "Story should not be nil: " .. tostring(err))
-    assert_equal(story.metadata.name, "The Cave", "Title should match")
-    assert_equal(story.metadata.author, "whisker Tutorial", "Author should match")
-end)
-
-test("Compact format has correct passages", function()
-    local story, err = whisker_loader.load_from_file("examples/stories/simple_story_compact.whisker")
-
-    assert_not_nil(story, "Story should not be nil: " .. tostring(err))
-
-    -- Count passages
-    local passage_count = 0
-    for _ in pairs(story.passages) do
+      local passage_count = 0
+      for _ in pairs(story.passages) do
         passage_count = passage_count + 1
-    end
+      end
 
-    assert_equal(passage_count, 5, "Should have 5 passages")
-end)
+      assert.equals(5, passage_count)
+    end)
 
-test("Compact format passages have choices", function()
-    local story, err = whisker_loader.load_from_file("examples/stories/simple_story_compact.whisker")
+    it("should preserve passage choices", function()
+      local story, err = whisker_loader.load_from_file("examples/stories/simple_story_compact.whisker")
 
-    assert_not_nil(story, "Story should not be nil: " .. tostring(err))
+      assert.is_not_nil(story)
 
-    local start = story.passages["start"]
-    assert_not_nil(start, "Start passage should exist")
-    assert_equal(#start.choices, 2, "Start passage should have 2 choices")
-    assert_equal(start.choices[1].text, "Enter the cave", "First choice text should match")
-    assert_equal(start.choices[1].target_passage, "inside_cave", "First choice target should match")
-end)
+      local start = story.passages["start"]
+      assert.is_not_nil(start)
+      assert.equals(2, #start.choices)
+      assert.equals("Enter the cave", start.choices[1].text)
+      assert.equals("inside_cave", start.choices[1].target_passage)
+    end)
 
-test("Compact format start passage is set", function()
-    local story, err = whisker_loader.load_from_file("examples/stories/simple_story_compact.whisker")
+    it("should set start passage correctly", function()
+      local story, err = whisker_loader.load_from_file("examples/stories/simple_story_compact.whisker")
 
-    assert_not_nil(story, "Story should not be nil: " .. tostring(err))
-    assert_equal(story.start_passage, "start", "Start passage should be 'start'")
-end)
+      assert.is_not_nil(story)
+      assert.equals("start", story.start_passage)
+    end)
 
-test("Compact format passage content is preserved", function()
-    local story, err = whisker_loader.load_from_file("examples/stories/simple_story_compact.whisker")
+    it("should preserve passage content", function()
+      local story, err = whisker_loader.load_from_file("examples/stories/simple_story_compact.whisker")
 
-    assert_not_nil(story, "Story should not be nil: " .. tostring(err))
+      assert.is_not_nil(story)
 
-    local start = story.passages["start"]
-    assert_not_nil(start, "Start passage should exist")
-    assert_true(start.content:find("dark cave"), "Passage content should contain 'dark cave'")
-end)
+      local start = story.passages["start"]
+      assert.is_not_nil(start)
+      assert.is_not_nil(start.content:find("dark cave"))
+    end)
+  end)
 
-test("Load compact format from string", function()
-    local compact_json = [[
+  describe("String Loading", function()
+    it("should load compact format from JSON string", function()
+      local compact_json = [[
 {
   "format": "whisker",
   "formatVersion": "2.0",
@@ -134,21 +93,22 @@ test("Load compact format from string", function()
 }
 ]]
 
-    local story, err = whisker_loader.load_from_string(compact_json)
+      local story, err = whisker_loader.load_from_string(compact_json)
 
-    assert_not_nil(story, "Story should not be nil: " .. tostring(err))
-    assert_equal(story.metadata.name, "Test Story", "Title should match")
+      assert.is_not_nil(story)
+      assert.equals("Test Story", story.metadata.name)
 
-    local passage_count = 0
-    for _ in pairs(story.passages) do
+      local passage_count = 0
+      for _ in pairs(story.passages) do
         passage_count = passage_count + 1
-    end
-    assert_equal(passage_count, 2, "Should have 2 passages")
-end)
+      end
+      assert.equals(2, passage_count)
+    end)
+  end)
 
-test("Compact format preserves non-default values", function()
-    -- Create compact format with non-default values
-    local compact_json = [[
+  describe("Non-Default Values", function()
+    it("should preserve custom position and size", function()
+      local compact_json = [[
 {
   "format": "whisker",
   "formatVersion": "2.0",
@@ -173,21 +133,23 @@ test("Compact format preserves non-default values", function()
 }
 ]]
 
-    local story, err = whisker_loader.load_from_string(compact_json)
+      local story, err = whisker_loader.load_from_string(compact_json)
 
-    assert_not_nil(story, "Story should not be nil: " .. tostring(err))
+      assert.is_not_nil(story)
 
-    local start = story.passages["start"]
-    assert_not_nil(start, "Start passage should exist")
-    assert_equal(start.position.x, 100, "X position should be preserved")
-    assert_equal(start.position.y, 200, "Y position should be preserved")
-    assert_equal(start.size.width, 150, "Width should be preserved")
-    assert_equal(start.size.height, 200, "Height should be preserved")
-    assert_equal(#start.tags, 2, "Tags should be preserved")
-end)
+      local start = story.passages["start"]
+      assert.is_not_nil(start)
+      assert.equals(100, start.position.x)
+      assert.equals(200, start.position.y)
+      assert.equals(150, start.size.width)
+      assert.equals(200, start.size.height)
+      assert.equals(2, #start.tags)
+    end)
+  end)
 
-test("Compact format with conditional choices", function()
-    local compact_json = [[
+  describe("Conditional Choices", function()
+    it("should preserve choice conditions", function()
+      local compact_json = [[
 {
   "format": "whisker",
   "formatVersion": "2.0",
@@ -232,67 +194,49 @@ test("Compact format with conditional choices", function()
 }
 ]]
 
-    local story, err = whisker_loader.load_from_string(compact_json)
+      local story, err = whisker_loader.load_from_string(compact_json)
 
-    assert_not_nil(story, "Story should not be nil: " .. tostring(err))
+      assert.is_not_nil(story)
 
-    local start = story.passages["start"]
-    assert_equal(#start.choices, 2, "Should have 2 choices")
-    assert_equal(start.choices[2].condition, "has_key == true", "Condition should be preserved")
-end)
+      local start = story.passages["start"]
+      assert.equals(2, #start.choices)
+      assert.equals("has_key == true", start.choices[2].condition)
+    end)
+  end)
 
-test("Compact format backwards compatible with verbose loader", function()
-    -- Load the compact example and verify it works exactly like verbose format
-    local story, err = whisker_loader.load_from_file("examples/stories/simple_story_compact.whisker")
+  describe("Backwards Compatibility", function()
+    it("should work with verbose loader expectations", function()
+      local story, err = whisker_loader.load_from_file("examples/stories/simple_story_compact.whisker")
 
-    assert_not_nil(story, "Story should not be nil: " .. tostring(err))
+      assert.is_not_nil(story)
 
-    -- All passages should have content field after loading
-    for id, passage in pairs(story.passages) do
-        assert_not_nil(passage.content, "Passage " .. id .. " should have content field")
-        assert_true(#passage.content > 0, "Passage " .. id .. " content should not be empty")
-    end
-end)
+      for id, passage in pairs(story.passages) do
+        assert.is_not_nil(passage.content)
+        assert.is_true(#passage.content > 0)
+      end
+    end)
+  end)
 
-test("Mixed format detection works correctly", function()
-    local converter = CompactConverter.new()
+  describe("Format Detection", function()
+    it("should detect verbose vs compact formats", function()
+      local converter = CompactConverter.new()
 
-    -- Create verbose doc
-    local verbose_doc = {
+      local verbose_doc = {
         format = "whisker",
         formatVersion = "1.0",
         metadata = {title = "Test"},
         passages = {}
-    }
+      }
 
-    -- Create compact doc
-    local compact_doc = {
+      local compact_doc = {
         format = "whisker",
         formatVersion = "2.0",
         metadata = {title = "Test"},
         passages = {}
-    }
+      }
 
-    assert_true(converter:is_verbose(verbose_doc), "Should detect verbose format")
-    assert_true(converter:is_compact(compact_doc), "Should detect compact format")
+      assert.is_true(converter:is_verbose(verbose_doc))
+      assert.is_true(converter:is_compact(compact_doc))
+    end)
+  end)
 end)
-
---------------------------------------------------------------------------------
--- PRINT RESULTS
---------------------------------------------------------------------------------
-
-print("\n" .. string.rep("=", 70))
-print("INTEGRATION TEST RESULTS")
-print(string.rep("=", 70))
-print("Passed: " .. tests_passed)
-print("Failed: " .. tests_failed)
-print("Total:  " .. (tests_passed + tests_failed))
-print(string.rep("=", 70))
-
-if tests_failed > 0 then
-    print("SOME TESTS FAILED")
-    os.exit(1)
-else
-    print("ALL TESTS PASSED ✓")
-    os.exit(0)
-end
