@@ -71,10 +71,18 @@ jobs:
                  tests/test_harlowe_converter.lua \
                  tests/test_sugarcube_converter.lua \
                  tests/test_chapbook_converter.lua \
+                 tests/test_snowman_converter.lua \
                  tests/test_format_converter.lua \
                  tests/test_import.lua \
                  tests/test_export.lua \
-                 tests/test_compact_format.lua
+                 tests/test_compact_format.lua \
+                 tests/test_harlowe_parser.lua \
+                 tests/test_sugarcube_parser.lua \
+                 tests/test_chapbook_parser.lua \
+                 tests/test_snowman_parser.lua \
+                 tests/test_converter_roundtrip.lua \
+                 tests/test_event_system.lua \
+                 tests/test_string_utils.lua
       
       - name: Upload test report
         if: always()
