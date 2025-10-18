@@ -48,16 +48,17 @@ jobs:
       - name: Install dependencies
         run: |
           luarocks install luafilesystem || echo "LuaFileSystem install failed, continuing..."
+          luarocks install busted
         continue-on-error: true
-      
+
       - name: Set up Lua paths
         run: |
           echo "LUA_PATH=./src/?.lua;./src/?/init.lua;;" >> $GITHUB_ENV
-          
-      - name: Run test suite
+
+      - name: Run test suite (Busted BDD)
         run: |
-          echo "Running Whisker test suite..."
-          NO_COLOR=1 lua tests/test_all.lua
+          echo "Running Whisker test suite with Busted..."
+          busted --pattern=test_ tests/
       
       - name: Upload test report
         if: always()

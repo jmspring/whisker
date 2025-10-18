@@ -22,8 +22,11 @@ jobs:
     - name: Install LuaRocks
       uses: leafo/gh-actions-luarocks@v4
 
-    - name: Run Lua Test Suite
-      run: lua tests/test_all.lua
+    - name: Install Busted
+      run: luarocks install busted
+
+    - name: Run Lua Test Suite (Busted BDD)
+      run: busted --pattern=test_ tests/
 
     - name: Upload test results
       if: always()
