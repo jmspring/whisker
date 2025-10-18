@@ -22,37 +22,38 @@ The museum tour system consists of:
 ✅ **Analytics**: Privacy-first visitor insights
 ✅ **Cross-platform**: Works on any device with Lua support
 
-## Quick Start
+## Quick Start (2 Minutes)
 
-### 1. Install Lua and Dependencies
-
-```bash
-# macOS
-brew install lua
-
-# Ubuntu/Debian
-sudo apt-get install lua5.3
-
-# Windows - download from lua.org
-```
-
-### 2. Run the Example Tour
+### Test CLI Client
 
 ```bash
+# Install Lua (if needed)
+brew install lua              # macOS
+# sudo apt-get install lua5.3 # Linux
+# download from lua.org       # Windows
+
+# Run the example tour
 cd examples/museum_tours
 lua museum_client.lua natural_history/story.whisker
 ```
 
-### 3. Navigate the Tour
+**Commands:** `[m]ap` | `[q]r` scan | `[s]tats` | `[h]elp` | `[x]` exit
 
+### Test Web Runtime
+
+```bash
+cd examples/web_runtime
+python3 -m http.server 8000
+open http://localhost:8000/museum.html
 ```
-Commands:
-  [1-9]  Choose numbered option
-  [m]    View museum map
-  [q]    Scan QR code
-  [s]    View statistics
-  [h]    Help
-  [x]    Exit
+
+**On mobile:**
+```bash
+# Find your IP address
+ifconfig | grep inet  # macOS/Linux
+ipconfig              # Windows
+
+# Open on phone: http://YOUR_IP:8000/museum.html
 ```
 
 ## Example Tour: Natural History Museum
@@ -199,6 +200,30 @@ class MuseumClient {
 
 ## Creating Your Own Museum Tour
 
+### Timeline & Budget
+
+**Time Estimate:**
+- Content authoring: 2-3 days
+- Asset collection: 1-2 days
+- Testing & refinement: 1 day
+- Deployment: 2-3 hours
+- **Total: ~1 week**
+
+**Budget Estimate:**
+
+**Professional Production:**
+- Photography: $500-1,000
+- Audio recording: $1,000-2,000
+- QR code labels: $50-100
+- Icon design: $200-500
+- **Total: $1,750-3,600**
+
+**DIY Approach:**
+- Smartphone photos: Free
+- Text-to-speech audio: Free
+- Self-generated QR codes: Free
+- **Total: $0-50** (printing only)
+
 ### Step 1: Plan Your Tour
 
 ```
@@ -244,11 +269,7 @@ lua museum_client.lua my_tour_enhanced.whisker
 
 ### Step 5: Deploy
 
-Options:
-- **Web**: Deploy to Vercel/Netlify with web runtime
-- **iOS**: Build native app with Swift
-- **Android**: Build native app with Kotlin
-- **Kiosk**: Run on tablets at museum entrance
+See detailed deployment options below.
 
 ## Asset Management
 
@@ -407,59 +428,97 @@ Unlock exhibits as visitors progress:
 
 ## Deployment Options
 
-### Option 1: Web App (Browser)
+### Option 1: Web App (Recommended)
 
-Deploy as Progressive Web App (PWA):
+Deploy as Progressive Web App (PWA) for maximum reach:
 
+**Vercel/Netlify (Easiest):**
 ```bash
-# Build and deploy
 cd examples/web_runtime
-npm run build
 vercel deploy
+# or
+netlify deploy
 ```
+
+**GitHub Pages:**
+```bash
+# 1. Enable Pages in repo settings
+# 2. Point to: /examples/web_runtime/
+# 3. Access at: https://username.github.io/whisker/examples/web_runtime/museum.html
+```
+
+**Custom Server:**
+```bash
+# Copy to web server
+sudo cp -r examples/web_runtime /var/www/museum-tour
+
+# Configure nginx/apache (HTTPS required for service worker)
+sudo systemctl restart nginx
+```
+
+**Browser Support:**
+- ✅ iOS Safari 13+
+- ✅ Chrome Android 80+
+- ✅ Chrome Desktop 80+
+- ✅ Safari Desktop 13+
+- ✅ Firefox 75+
+- ✅ Edge 80+
 
 **Pros:**
 - No app store approval
 - Instant updates
 - Cross-platform
 - Easy QR code integration
+- Installable on iOS/Android home screens
 
 **Cons:**
-- Requires initial internet connection
-- Limited native features on iOS
+- Requires initial internet connection for first load
+- Limited camera access on some browsers
 
-### Option 2: Native iOS App
+### Option 2: Native Mobile Apps
 
-Use SwiftUI with embedded Lua runtime:
+Use the CLI client architecture as reference for native implementations:
 
+**iOS (Swift/SwiftUI):**
 ```swift
 import WhiskerRuntime
 
-struct MuseumTourApp: App {
-    var body: some Scene {
-        WindowGroup {
-            MuseumClientView(
-                storyURL: "https://museum.org/tours/natural_history.whisker"
-            )
-        }
-    }
+class MuseumClient {
+    func loadStory(filepath: String) -> Result<Story, Error>
+    func gotoPassage(id: String) -> Bool
+    func scanQR(code: String) -> Bool
+    func playAudio(path: String)
+    func exportSession() -> SessionData
+}
+```
+
+**Android (Kotlin/Jetpack Compose):**
+```kotlin
+class MuseumClient {
+    fun loadStory(filepath: String): Result<Story>
+    fun gotoPassage(id: String): Boolean
+    fun scanQR(code: String): Boolean
+    fun playAudio(path: String)
+    fun exportSession(): SessionData
 }
 ```
 
 **Pros:**
-- Full native features
+- Full native features (camera, audio, offline)
 - Better performance
-- Offline-first
-- App Store distribution
+- True offline-first
+- App Store/Play Store distribution
+- Professional appearance
 
 **Cons:**
-- Requires app development
-- App Store approval process
-- Update cycle longer
+- Development time (2-4 weeks)
+- App store approval process
+- Maintenance overhead
+- Update cycle slower
 
 ### Option 3: Kiosk Mode
 
-Run on tablets at museum entrance:
+Deploy on tablets at museum entrance or information desks:
 
 ```bash
 # Launch in fullscreen kiosk mode
@@ -469,16 +528,24 @@ lua museum_client.lua \
   --story natural_history/story.whisker
 ```
 
+**Hardware Setup:**
+- iPads or Android tablets with stands
+- Kiosk mode apps (Guided Access on iOS, Kiosk Browser on Android)
+- Power adapters and cable management
+- Regular cleaning and maintenance schedule
+
 **Pros:**
 - Controlled environment
 - No visitor setup needed
 - Reliable hardware
 - Centralized updates
+- No internet dependency concerns
 
 **Cons:**
-- Hardware cost
-- Maintenance required
-- Not portable
+- Hardware cost ($300-500 per tablet)
+- Physical maintenance required
+- Not portable for visitors
+- Need multiple units for large museums
 
 ## Testing
 
