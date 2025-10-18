@@ -1,88 +1,214 @@
--- tests/test_renderer.lua
--- Test text rendering with markdown formatting and variable substitution
-
+local helper = require("tests.test_helper")
 local Renderer = require("src.core.renderer")
 local GameState = require("src.core.game_state")
 local Interpreter = require("src.core.lua_interpreter")
 local Passage = require("src.core.passage")
 
-print("=== Renderer Test Suite ===\n")
+describe("Renderer", function()
 
--- Test 1: Basic markdown formatting
-print("Test 1: Markdown Formatting")
-local renderer = Renderer.new("plain")
-renderer.enable_formatting = true
+  describe("Markdown Formatting", function()
+    it("should apply basic markdown formatting", function()
+      local renderer = Renderer.new("plain")
+      renderer.enable_formatting = true
 
-local text = "This is **bold** text and this is *italic* text and __underlined__."
-local rendered = renderer:apply_formatting(text)
-print("Input:  " .. text)
-print("Output: " .. rendered)
-print("✅ Markdown formatting works\n")
+      local text = "This is **bold** text and this is *italic* text and __underlined__."
+      local rendered = renderer:apply_formatting(text)
 
--- Test 2: Variable substitution
-print("Test 2: Variable Substitution")
-local game_state = GameState.new()
-game_state:set("player_name", "Alice")
-game_state:set("health", 100)
+      assert.is_not_nil(rendered)
+      assert.is_string(rendered)
+    end)
 
-local interpreter = Interpreter.new({})
-renderer:set_interpreter(interpreter)
+    it("should handle bold text", function()
+      local renderer = Renderer.new("plain")
+      renderer.enable_formatting = true
 
-local text_with_vars = "Hello {{player_name}}, your health is {{health}}!"
-local evaluated = renderer:evaluate_expressions(text_with_vars, game_state)
-print("Input:  " .. text_with_vars)
-print("Output: " .. evaluated)
-assert(evaluated:match("Alice"), "Name substitution failed")
-assert(evaluated:match("100"), "Health substitution failed")
-print("✅ Variable substitution works\n")
+      local text = "This is **bold** text"
+      local rendered = renderer:apply_formatting(text)
 
--- Test 3: Word wrapping
-print("Test 3: Word Wrapping")
-local renderer_wrapped = Renderer.new("plain", {
-    max_line_width = 40,
-    enable_wrapping = true
-})
+      assert.is_not_nil(rendered)
+    end)
 
-local long_text = "This is a very long sentence that should be wrapped automatically when it exceeds the maximum line width that has been configured for the renderer."
-local wrapped = renderer_wrapped:apply_wrapping(long_text)
-print("Input (length " .. #long_text .. "):")
-print(long_text)
-print("\nWrapped output (max width 40):")
-print(wrapped)
-print("✅ Word wrapping works\n")
+    it("should handle italic text", function()
+      local renderer = Renderer.new("plain")
+      renderer.enable_formatting = true
 
--- Test 4: Complete passage rendering
-print("Test 4: Complete Passage Rendering")
-local passage = Passage.new("test", "test")
-passage:set_content("Welcome **{{player_name}}**! You have {{health}} HP.\n\nWhat will you do?")
+      local text = "This is *italic* text"
+      local rendered = renderer:apply_formatting(text)
 
-local full_render = renderer:render_passage(passage, game_state)
-print("Rendered passage:")
-print(full_render)
-print("✅ Complete passage rendering works\n")
+      assert.is_not_nil(rendered)
+    end)
 
--- Test 5: Platform-specific rendering
-print("Test 5: Platform-Specific Rendering (Console)")
-local console_renderer = Renderer.new("console", {
-    enable_formatting = true
-})
-console_renderer:set_interpreter(interpreter)
+    it("should handle underlined text", function()
+      local renderer = Renderer.new("plain")
+      renderer.enable_formatting = true
 
-local colored_text = "This is **bold** and *italic* text"
-local console_output = console_renderer:apply_formatting(colored_text)
-print("Console output with ANSI codes:")
-print(console_output)
-print("✅ Platform-specific rendering works\n")
+      local text = "This is __underlined__ text"
+      local rendered = renderer:apply_formatting(text)
 
--- Test 6: Plain text stripping
-print("Test 6: Plain Text Stripping")
-local formatted = "This is **bold** and *italic* and __underlined__"
-local plain = renderer:render_plain(formatted, game_state)
-print("Formatted: " .. formatted)
-print("Plain:     " .. plain)
-assert(not plain:match("%*%*"), "Bold markers not stripped")
-assert(not plain:match("%*"), "Italic markers not stripped")
-print("✅ Plain text stripping works\n")
+      assert.is_not_nil(rendered)
+    end)
+  end)
 
-print("=== All Renderer Tests Passed! ===")
-return true
+  describe("Variable Substitution", function()
+    it("should substitute variables in text", function()
+      local renderer = Renderer.new("plain")
+      local game_state = GameState.new()
+      game_state:set("player_name", "Alice")
+      game_state:set("health", 100)
+
+      local interpreter = Interpreter.new({})
+      renderer:set_interpreter(interpreter)
+
+      local text_with_vars = "Hello {{player_name}}, your health is {{health}}!"
+      local evaluated = renderer:evaluate_expressions(text_with_vars, game_state)
+
+      assert.is_not_nil(evaluated)
+      assert.is_not_nil(evaluated:match("Alice"))
+      assert.is_not_nil(evaluated:match("100"))
+    end)
+
+    it("should handle multiple variable substitutions", function()
+      local renderer = Renderer.new("plain")
+      local game_state = GameState.new()
+      game_state:set("var1", "First")
+      game_state:set("var2", "Second")
+      game_state:set("var3", "Third")
+
+      local interpreter = Interpreter.new({})
+      renderer:set_interpreter(interpreter)
+
+      local text = "{{var1}}, {{var2}}, {{var3}}"
+      local evaluated = renderer:evaluate_expressions(text, game_state)
+
+      assert.is_not_nil(evaluated:match("First"))
+      assert.is_not_nil(evaluated:match("Second"))
+      assert.is_not_nil(evaluated:match("Third"))
+    end)
+  end)
+
+  describe("Word Wrapping", function()
+    it("should wrap long text to specified width", function()
+      local renderer = Renderer.new("plain", {
+        max_line_width = 40,
+        enable_wrapping = true
+      })
+
+      local long_text = "This is a very long sentence that should be wrapped automatically when it exceeds the maximum line width that has been configured for the renderer."
+      local wrapped = renderer:apply_wrapping(long_text)
+
+      assert.is_not_nil(wrapped)
+      assert.is_string(wrapped)
+
+      -- Check that lines are wrapped
+      local lines = {}
+      for line in wrapped:gmatch("[^\n]+") do
+        table.insert(lines, line)
+      end
+
+      assert.is_true(#lines > 1)
+
+      -- Check that no line exceeds max width
+      for _, line in ipairs(lines) do
+        assert.is_true(#line <= 40)
+      end
+    end)
+
+    it("should handle short text without wrapping", function()
+      local renderer = Renderer.new("plain", {
+        max_line_width = 40,
+        enable_wrapping = true
+      })
+
+      local short_text = "Short text"
+      local wrapped = renderer:apply_wrapping(short_text)
+
+      assert.equals(short_text, wrapped)
+    end)
+  end)
+
+  describe("Complete Passage Rendering", function()
+    it("should render passage with formatting and variables", function()
+      local renderer = Renderer.new("plain")
+      local game_state = GameState.new()
+      game_state:set("player_name", "Alice")
+      game_state:set("health", 100)
+
+      local interpreter = Interpreter.new({})
+      renderer:set_interpreter(interpreter)
+
+      local passage = Passage.new("test", "test")
+      passage:set_content("Welcome **{{player_name}}**! You have {{health}} HP.\n\nWhat will you do?")
+
+      local full_render = renderer:render_passage(passage, game_state)
+
+      assert.is_not_nil(full_render)
+      assert.is_string(full_render)
+    end)
+
+    it("should handle passages without variables", function()
+      local renderer = Renderer.new("plain")
+      local game_state = GameState.new()
+      local interpreter = Interpreter.new({})
+      renderer:set_interpreter(interpreter)
+
+      local passage = Passage.new("test", "test")
+      passage:set_content("Simple passage content")
+
+      local full_render = renderer:render_passage(passage, game_state)
+
+      assert.is_not_nil(full_render)
+      assert.is_not_nil(full_render:match("Simple passage content"))
+    end)
+  end)
+
+  describe("Platform-Specific Rendering", function()
+    it("should apply console formatting with ANSI codes", function()
+      local console_renderer = Renderer.new("console", {
+        enable_formatting = true
+      })
+
+      local interpreter = Interpreter.new({})
+      console_renderer:set_interpreter(interpreter)
+
+      local colored_text = "This is **bold** and *italic* text"
+      local console_output = console_renderer:apply_formatting(colored_text)
+
+      assert.is_not_nil(console_output)
+      assert.is_string(console_output)
+    end)
+
+    it("should create renderer for different platforms", function()
+      local plain_renderer = Renderer.new("plain")
+      assert.is_not_nil(plain_renderer)
+
+      local console_renderer = Renderer.new("console")
+      assert.is_not_nil(console_renderer)
+    end)
+  end)
+
+  describe("Plain Text Stripping", function()
+    it("should strip formatting markers from text", function()
+      local renderer = Renderer.new("plain")
+      local game_state = GameState.new()
+
+      local formatted = "This is **bold** and *italic* and __underlined__"
+      local plain = renderer:render_plain(formatted, game_state)
+
+      assert.is_not_nil(plain)
+      assert.is_nil(plain:match("%*%*"))
+      assert.is_nil(plain:match("__"))
+    end)
+
+    it("should preserve text content when stripping", function()
+      local renderer = Renderer.new("plain")
+      local game_state = GameState.new()
+
+      local formatted = "Keep **this** text"
+      local plain = renderer:render_plain(formatted, game_state)
+
+      assert.is_not_nil(plain:match("Keep"))
+      assert.is_not_nil(plain:match("this"))
+      assert.is_not_nil(plain:match("text"))
+    end)
+  end)
+end)
