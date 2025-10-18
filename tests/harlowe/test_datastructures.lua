@@ -1,5 +1,5 @@
 local helper = require("tests.test_helper")
-local parser = require("whisker.parsers.harlowe")
+local parser = require("src.format.parsers.harlowe")
 
 describe("Harlowe Data Structures", function()
   local story_content

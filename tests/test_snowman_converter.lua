@@ -1,6 +1,6 @@
 local helper = require("tests.test_helper")
-local snowman_parser = require("whisker.parsers.snowman")
-local converter = require("whisker.converters.snowman")
+local snowman_parser = require("src.format.parsers.snowman")
+local converter = require("src.format.converters.snowman")
 
 describe("Snowman Converter", function()
 

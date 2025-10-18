@@ -1,5 +1,5 @@
 local helper = require("tests.test_helper")
-local parser = require("whisker.parsers.sugarcube")
+local parser = require("src.format.parsers.sugarcube")
 
 describe("SugarCube Inventory System", function()
   local story_content

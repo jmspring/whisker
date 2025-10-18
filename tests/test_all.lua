@@ -190,7 +190,7 @@ print(colorize("Run them separately with: busted tests/test_*_converter.lua", "c
 
 -- Note: The following Phase 5-9 tests are disabled because they require:
 -- 1. Save system implementation
--- 2. Format-specific parser modules (whisker.parsers.harlowe, etc.)
+-- 2. Format-specific parser modules (src.format.parsers.harlowe, etc.)
 -- 3. Format-specific runtime environments
 -- These will be enabled once the required infrastructure is in place
 

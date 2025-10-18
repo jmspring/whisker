@@ -1,5 +1,5 @@
 local helper = require("tests.test_helper")
-local parser = require("whisker.parsers.chapbook")
+local parser = require("src.format.parsers.chapbook")
 
 describe("Chapbook Modifiers System", function()
   local story_content
