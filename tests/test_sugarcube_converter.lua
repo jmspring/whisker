@@ -125,7 +125,7 @@ Text content
 
       assert.matches("{name}", result)
       assert.matches("{gold}", result)
-      assert.not_matches("$", result)
+      assert.not_matches("%$", result)
     end)
 
     it("should convert link macro to standard links", function()
@@ -150,7 +150,7 @@ Welcome, $name!
       local snowman = converter.to_snowman(parsed)
 
       assert.is_not_nil(snowman)
-      assert.matches("<%", snowman)
+      assert.matches("<%%", snowman)
       assert.matches("s%.name", snowman)
     end)
 
