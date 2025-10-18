@@ -158,8 +158,17 @@ function FormatConverter:to_twine_html(doc, options)
     -- Convert passages
     for _, passage in ipairs(doc.passages or {}) do
         local converted_text = self:convert_whisker_to_twine(passage.text, target_format)
-        local position = string.format("%d,%d", passage.position.x, passage.position.y)
-        local size = string.format("%d,%d", passage.size.width, passage.size.height)
+
+        -- Handle optional position and size (compact format 2.0 may not have these)
+        local position = "0,0"
+        local size = "100,100"
+        if passage.position and passage.position.x and passage.position.y then
+            position = string.format("%d,%d", passage.position.x, passage.position.y)
+        end
+        if passage.size and passage.size.width and passage.size.height then
+            size = string.format("%d,%d", passage.size.width, passage.size.height)
+        end
+
         local tags = table.concat(passage.tags or {}, " ")
 
         table.insert(html, string.format(
@@ -206,7 +215,8 @@ function FormatConverter:to_twee(doc, options)
             header = header .. " [" .. table.concat(passage.tags, " ") .. "]"
         end
 
-        if passage.position then
+        -- Add position if available (optional in compact format 2.0)
+        if passage.position and passage.position.x and passage.position.y then
             header = header .. string.format(" {%d,%d}", passage.position.x, passage.position.y)
         end
 
