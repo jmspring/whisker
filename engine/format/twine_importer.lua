@@ -15,7 +15,7 @@ TwineImporter.SupportedFormats = {
 -- Create new importer instance
 function TwineImporter.new(whisker_format)
     local self = setmetatable({}, {__index = TwineImporter})
-    self.format = whisker_format or require("src.format.whisker_format")
+    self.format = whisker_format or require("engine.format.whisker_format")
     return self
 end
 

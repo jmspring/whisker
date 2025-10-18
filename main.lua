@@ -3,35 +3,35 @@
 -- whisker Interactive Fiction Engine
 -- Main entry point and command-line interface
 
--- Add src to package path
-package.path = package.path .. ";./src/?.lua;./src/?/init.lua"
+-- Add engine to package path
+package.path = package.path .. ";./engine/?.lua;./engine/?/init.lua"
 
 -- Load configuration
 local config = require("config")
 
 -- Core modules
-local Story = require("src.core.story")
-local Passage = require("src.core.passage")
-local Choice = require("src.core.choice")
-local Engine = require("src.core.engine")
-local GameState = require("src.core.game_state")
+local Story = require("engine.core.story")
+local Passage = require("engine.core.passage")
+local Choice = require("engine.core.choice")
+local Engine = require("engine.core.engine")
+local GameState = require("engine.core.game_state")
 
 -- UI and infrastructure
-local UIFramework = require("src.ui.ui_framework")
-local InputHandler = require("src.infrastructure.input_handler")
+local UIFramework = require("engine.ui.ui_framework")
+local InputHandler = require("engine.infrastructure.input_handler")
 
 -- Format support
-local TwineImporter = require("src.format.twine_importer")
-local FormatConverter = require("src.format.format_converter")
-local WhiskerLoader = require("src.format.whisker_loader")
+local TwineImporter = require("engine.format.twine_importer")
+local FormatConverter = require("engine.format.format_converter")
+local WhiskerLoader = require("engine.format.whisker_loader")
 
 -- Tools (optional)
-local Validator = require("src.tools.validator")
-local Profiler = require("src.tools.profiler")
-local Debugger = require("src.tools.debugger")
+local Validator = require("engine.tools.validator")
+local Profiler = require("engine.tools.profiler")
+local Debugger = require("engine.tools.debugger")
 
 -- Save system
-local SaveSystem = require("src.infrastructure.save_system")
+local SaveSystem = require("engine.infrastructure.save_system")
 
 -- Version info
 local VERSION = "1.0.0"

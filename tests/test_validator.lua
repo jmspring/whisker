@@ -1,8 +1,8 @@
 local helper = require("tests.test_helper")
-local Validator = require("src.tools.validator")
-local Story = require("src.core.story")
-local Passage = require("src.core.passage")
-local Choice = require("src.core.choice")
+local Validator = require("engine.tools.validator")
+local Story = require("engine.core.story")
+local Passage = require("engine.core.passage")
+local Choice = require("engine.core.choice")
 
 describe("Validator", function()
 

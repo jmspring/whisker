@@ -1,10 +1,10 @@
 local helper = require("tests.test_helper")
-local Story = require("src.core.story")
-local Passage = require("src.core.passage")
-local Choice = require("src.core.choice")
-local Engine = require("src.core.engine")
-local SaveSystem = require("src.infrastructure.save_system")
-local json = require("src.utils.json")
+local Story = require("engine.core.story")
+local Passage = require("engine.core.passage")
+local Choice = require("engine.core.choice")
+local Engine = require("engine.core.engine")
+local SaveSystem = require("engine.infrastructure.save_system")
+local json = require("engine.utils.json")
 
 describe("Metatable Preservation", function()
 

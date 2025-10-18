@@ -1,10 +1,10 @@
--- examples/stories/gold_rush.lua
+-- stories/examples/gold_rush.lua
 -- A story about a prospector seeking gold while a corrupt sheriff tries to distract him
 -- Features branching choices with consequences
 
-local Story = require("src.core.story")
-local Passage = require("src.core.passage")
-local Choice = require("src.core.choice")
+local Story = require("engine.core.story")
+local Passage = require("engine.core.passage")
+local Choice = require("engine.core.choice")
 
 -- Create the story
 local story = Story.new({

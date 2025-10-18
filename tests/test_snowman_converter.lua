@@ -1,6 +1,6 @@
 local helper = require("tests.test_helper")
-local snowman_parser = require("src.format.parsers.snowman")
-local converter = require("src.format.converters.snowman")
+local snowman_parser = require("engine.format.parsers.snowman")
+local converter = require("engine.format.converters.snowman")
 
 describe("Snowman Converter", function()
 

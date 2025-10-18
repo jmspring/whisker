@@ -2,9 +2,9 @@
 -- Interactive tutorial demonstrating whisker features
 -- Learn by example with hands-on demonstrations
 
-local Story = require("src.core.story")
-local Passage = require("src.core.passage")
-local Choice = require("src.core.choice")
+local Story = require("engine.core.story")
+local Passage = require("engine.core.passage")
+local Choice = require("engine.core.choice")
 
 local story = Story.new({
     title = "whisker Tutorial",

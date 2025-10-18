@@ -5,15 +5,15 @@
 local whisker_loader = {}
 
 -- Load Story, Passage, and Choice classes
-local Story = require("src.core.story")
-local Passage = require("src.core.passage")
-local Choice = require("src.core.choice")
+local Story = require("engine.core.story")
+local Passage = require("engine.core.passage")
+local Choice = require("engine.core.choice")
 
 -- Load JSON parser
-local json = require("src.utils.json")
+local json = require("engine.utils.json")
 
 -- Load compact format converter
-local CompactConverter = require("src.format.compact_converter")
+local CompactConverter = require("engine.format.compact_converter")
 
 -- Load a .whisker file and convert to Story object
 function whisker_loader.load_from_file(filename)

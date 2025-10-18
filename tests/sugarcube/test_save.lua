@@ -1,5 +1,5 @@
 local helper = require("tests.test_helper")
-local parser = require("src.format.parsers.sugarcube")
+local parser = require("engine.format.parsers.sugarcube")
 
 describe("SugarCube Save System", function()
   local story_content

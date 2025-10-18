@@ -25,7 +25,7 @@ jobs:
         run: luarocks install luacheck
       
       - name: Lint Lua code
-        run: luacheck src/ tests/ examples/ --config .luacheckrc || true
+        run: luacheck engine/ tests/ examples/ --config .luacheckrc || true
         continue-on-error: true
 
   test-lua:
@@ -53,7 +53,7 @@ jobs:
 
       - name: Set up Lua paths
         run: |
-          echo "LUA_PATH=./src/?.lua;./src/?/init.lua;;" >> $GITHUB_ENV
+          echo "LUA_PATH=./engine/?.lua;./engine/?/init.lua;;" >> $GITHUB_ENV
 
       - name: Run test suite (Busted BDD)
         run: |
@@ -127,9 +127,9 @@ jobs:
       - name: Check core directories
         run: |
           echo "Checking project structure..."
-          test -d src/core && echo "✓ Core directory exists" || echo "✗ Core directory missing"
-          test -d src/editor && echo "✓ Editor directory exists" || echo "✗ Editor directory missing"
-          test -d src/format && echo "✓ Format directory exists" || echo "✗ Format directory missing"
+          test -d engine/core && echo "✓ Core directory exists" || echo "✗ Core directory missing"
+          test -d engine/editor && echo "✓ Editor directory exists" || echo "✗ Editor directory missing"
+          test -d engine/format && echo "✓ Format directory exists" || echo "✗ Format directory missing"
           test -d editor/web && echo "✓ Web editor directory exists" || echo "✗ Web editor directory missing"
           test -d examples && echo "✓ Examples directory exists" || echo "✗ Examples directory missing"
           test -d tests && echo "✓ Tests directory exists" || echo "✗ Tests directory missing"

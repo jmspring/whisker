@@ -1,6 +1,6 @@
 local helper = require("tests.test_helper")
-local whisker_loader = require("src.format.whisker_loader")
-local json = require("src.utils.json")
+local whisker_loader = require("engine.format.whisker_loader")
+local json = require("engine.utils.json")
 
 describe("Rijksmuseum Tour Loading", function()
   local rijks_story

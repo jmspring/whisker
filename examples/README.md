@@ -64,9 +64,9 @@ This is a great starting point to understand how Whisker stories work!
 lua examples/cli_runtime/run.lua
 
 # Or play one of the example stories
-lua examples/cli_runtime/run.lua examples/stories/simple_story.lua
-lua examples/cli_runtime/run.lua examples/stories/adventure_game.lua
-lua examples/cli_runtime/run.lua examples/stories/tutorial_story.lua
+lua examples/cli_runtime/run.lua stories/examples/simple_story.lua
+lua examples/cli_runtime/run.lua stories/examples/adventure_game.lua
+lua examples/cli_runtime/run.lua stories/examples/tutorial_story.lua
 
 # Or with your own story
 lua examples/cli_runtime/run.lua path/to/story.json
@@ -163,7 +163,7 @@ A basic cave exploration story perfect for beginners.
 **Play time:** ~2 minutes
 
 ```bash
-lua examples/cli_runtime/run.lua examples/stories/simple_story.lua
+lua examples/cli_runtime/run.lua stories/examples/simple_story.lua
 ```
 
 ### 2. adventure_game.lua - Full-Featured RPG
@@ -182,7 +182,7 @@ A complete fantasy adventure with all Whisker features.
 **Play time:** ~10-15 minutes
 
 ```bash
-lua examples/cli_runtime/run.lua examples/stories/adventure_game.lua
+lua examples/cli_runtime/run.lua stories/examples/adventure_game.lua
 ```
 
 ### 3. tutorial_story.lua - Interactive Tutorial
@@ -199,7 +199,7 @@ Learn Whisker by playing! An interactive guide covering all features.
 **Play time:** ~5-10 minutes
 
 ```bash
-lua examples/cli_runtime/run.lua examples/stories/tutorial_story.lua
+lua examples/cli_runtime/run.lua stories/examples/tutorial_story.lua
 ```
 
 ---
@@ -270,9 +270,9 @@ Edit the `STORY_DATA` constant in `examples/web_runtime/index.html`
 Edit the `demoStory` object in `examples/web_demo.html` (around line 300)
 
 **Using Example Stories as Templates:**
-The stories in `examples/stories/` are great starting points. Copy one and modify it:
+The stories in `stories/examples/` are great starting points. Copy one and modify it:
 ```bash
-cp examples/stories/simple_story.lua my_story.lua
+cp stories/examples/simple_story.lua my_story.lua
 # Edit my_story.lua with your own content
 lua examples/cli_runtime/run.lua my_story.lua
 ```

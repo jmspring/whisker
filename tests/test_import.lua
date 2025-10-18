@@ -1,7 +1,7 @@
 local helper = require("tests.test_helper")
-local TwineImporter = require("src.format.twine_importer")
-local FormatConverter = require("src.format.format_converter")
-local json = require("src.utils.json")
+local TwineImporter = require("engine.format.twine_importer")
+local FormatConverter = require("engine.format.format_converter")
+local json = require("engine.utils.json")
 
 describe("Twine Import", function()
 

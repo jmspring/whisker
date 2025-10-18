@@ -346,7 +346,7 @@ local story, err = whisker_loader.load_from_file("story.whisker")
 
 ### Complete Compact Story
 
-See `examples/stories/simple_story_compact.whisker` for a complete working example.
+See `stories/examples/simple_story_compact.whisker` for a complete working example.
 
 ### Minimal Compact Story
 

@@ -13,7 +13,7 @@ return {
     ROOT = {"tests/"},
 
     -- Lua path for source code
-    lpath = "src/?.lua;src/?/init.lua",
+    lpath = "engine/?.lua;engine/?/init.lua",
 
     -- Verbose output
     verbose = false,

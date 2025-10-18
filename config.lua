@@ -270,7 +270,7 @@ config.logging = {
 
 config.paths = {
     -- Source
-    src_dir = "src",
+    engine_dir = "engine",
 
     -- Content
     stories_dir = "stories",
@@ -282,8 +282,8 @@ config.paths = {
     reports_dir = "reports",
     logs_dir = "logs",
 
-    -- Examples
-    examples_dir = "examples",
+    -- Player
+    player_dir = "player",
 
     -- Tests
     tests_dir = "tests",

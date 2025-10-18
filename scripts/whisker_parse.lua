@@ -24,9 +24,9 @@ Examples:
 
 package.path = package.path .. ";./src/?.lua"
 
-local json = require("src.utils.json")
-local whisker_loader = require("src.format.whisker_loader")
-local CompactConverter = require("src.format.compact_converter")
+local json = require("engine.utils.json")
+local whisker_loader = require("engine.format.whisker_loader")
+local CompactConverter = require("engine.format.compact_converter")
 
 --------------------------------------------------------------------------------
 -- UTILITY FUNCTIONS

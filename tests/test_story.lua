@@ -1,9 +1,9 @@
 local helper = require("tests.test_helper")
-local Story = require("src.core.story")
-local Passage = require("src.core.passage")
-local Choice = require("src.core.choice")
-local Engine = require("src.core.engine")
-local GameState = require("src.core.game_state")
+local Story = require("engine.core.story")
+local Passage = require("engine.core.passage")
+local Choice = require("engine.core.choice")
+local Engine = require("engine.core.engine")
+local GameState = require("engine.core.game_state")
 
 describe("Story Integration", function()
 

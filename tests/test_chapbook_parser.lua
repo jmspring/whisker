@@ -1,5 +1,5 @@
 local helper = require("tests.test_helper")
-local parser = require("src.format.parsers.chapbook")
+local parser = require("engine.format.parsers.chapbook")
 
 describe("Chapbook Parser", function()
 

@@ -1,5 +1,5 @@
 local helper = require("tests.test_helper")
-local parser = require("src.format.parsers.snowman")
+local parser = require("engine.format.parsers.snowman")
 
 describe("Snowman Parser", function()
 

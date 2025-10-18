@@ -2,9 +2,9 @@
 -- A minimal working example of a whisker story
 -- Demonstrates basic story structure with passages and choices
 
-local Story = require("src.core.story")
-local Passage = require("src.core.passage")
-local Choice = require("src.core.choice")
+local Story = require("engine.core.story")
+local Passage = require("engine.core.passage")
+local Choice = require("engine.core.choice")
 
 -- Create the story
 local story = Story.new({

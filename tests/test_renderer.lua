@@ -1,8 +1,8 @@
 local helper = require("tests.test_helper")
-local Renderer = require("src.core.renderer")
-local GameState = require("src.core.game_state")
-local Interpreter = require("src.core.lua_interpreter")
-local Passage = require("src.core.passage")
+local Renderer = require("engine.core.renderer")
+local GameState = require("engine.core.game_state")
+local Interpreter = require("engine.core.lua_interpreter")
+local Passage = require("engine.core.passage")
 
 describe("Renderer", function()
 

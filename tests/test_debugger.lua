@@ -1,9 +1,9 @@
 local helper = require("tests.test_helper")
-local Debugger = require("src.tools.debugger")
-local Engine = require("src.core.engine")
-local GameState = require("src.core.game_state")
-local Story = require("src.core.story")
-local Passage = require("src.core.passage")
+local Debugger = require("engine.tools.debugger")
+local Engine = require("engine.core.engine")
+local GameState = require("engine.core.game_state")
+local Story = require("engine.core.story")
+local Passage = require("engine.core.passage")
 
 describe("Debugger", function()
 

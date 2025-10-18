@@ -144,7 +144,7 @@ function Story:deserialize(data)
 
     -- Restore metatables for passage objects if needed
     if self.passages then
-        local Passage = require("src.core.passage")
+        local Passage = require("engine.core.passage")
         for id, passage in pairs(self.passages) do
             if type(passage) == "table" and not getmetatable(passage) then
                 setmetatable(passage, Passage)
@@ -169,7 +169,7 @@ function Story.restore_metatable(data)
 
     -- Restore metatables for nested objects (passages)
     if data.passages then
-        local Passage = require("src.core.passage")
+        local Passage = require("engine.core.passage")
         for id, passage in pairs(data.passages) do
             if type(passage) == "table" and not getmetatable(passage) then
                 -- Use Passage's restore method if available, otherwise set metatable directly
@@ -212,7 +212,7 @@ function Story.from_table(data)
 
     -- Restore passages with proper metatables
     if data.passages then
-        local Passage = require("src.core.passage")
+        local Passage = require("engine.core.passage")
         for id, passage_data in pairs(data.passages) do
             if type(passage_data) == "table" then
                 local passage

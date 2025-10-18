@@ -1,13 +1,13 @@
 local helper = require("tests.test_helper")
-local whisker_loader = require("src.format.whisker_loader")
-local CompactConverter = require("src.format.compact_converter")
-local json = require("src.utils.json")
+local whisker_loader = require("engine.format.whisker_loader")
+local CompactConverter = require("engine.format.compact_converter")
+local json = require("engine.utils.json")
 
 describe("Compact Format Integration", function()
 
   describe("File Loading", function()
     it("should load compact format file", function()
-      local story, err = whisker_loader.load_from_file("examples/stories/simple_story_compact.whisker")
+      local story, err = whisker_loader.load_from_file("stories/examples/simple_story_compact.whisker")
 
       assert.is_not_nil(story)
       assert.equals("The Cave", story.metadata.name)
@@ -15,7 +15,7 @@ describe("Compact Format Integration", function()
     end)
 
     it("should load correct number of passages", function()
-      local story, err = whisker_loader.load_from_file("examples/stories/simple_story_compact.whisker")
+      local story, err = whisker_loader.load_from_file("stories/examples/simple_story_compact.whisker")
 
       assert.is_not_nil(story)
 
@@ -28,7 +28,7 @@ describe("Compact Format Integration", function()
     end)
 
     it("should preserve passage choices", function()
-      local story, err = whisker_loader.load_from_file("examples/stories/simple_story_compact.whisker")
+      local story, err = whisker_loader.load_from_file("stories/examples/simple_story_compact.whisker")
 
       assert.is_not_nil(story)
 
@@ -40,14 +40,14 @@ describe("Compact Format Integration", function()
     end)
 
     it("should set start passage correctly", function()
-      local story, err = whisker_loader.load_from_file("examples/stories/simple_story_compact.whisker")
+      local story, err = whisker_loader.load_from_file("stories/examples/simple_story_compact.whisker")
 
       assert.is_not_nil(story)
       assert.equals("start", story.start_passage)
     end)
 
     it("should preserve passage content", function()
-      local story, err = whisker_loader.load_from_file("examples/stories/simple_story_compact.whisker")
+      local story, err = whisker_loader.load_from_file("stories/examples/simple_story_compact.whisker")
 
       assert.is_not_nil(story)
 
@@ -206,7 +206,7 @@ describe("Compact Format Integration", function()
 
   describe("Backwards Compatibility", function()
     it("should work with verbose loader expectations", function()
-      local story, err = whisker_loader.load_from_file("examples/stories/simple_story_compact.whisker")
+      local story, err = whisker_loader.load_from_file("stories/examples/simple_story_compact.whisker")
 
       assert.is_not_nil(story)
 

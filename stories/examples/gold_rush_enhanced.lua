@@ -1,10 +1,10 @@
--- examples/stories/gold_rush_enhanced.lua
+-- stories/examples/gold_rush_enhanced.lua
 -- Enhanced story with saloon owner gambler, suit store owner, and native encounter
 -- A story about a prospector seeking gold while dealing with various town characters
 
-local Story = require("src.core.story")
-local Passage = require("src.core.passage")
-local Choice = require("src.core.choice")
+local Story = require("engine.core.story")
+local Passage = require("engine.core.passage")
+local Choice = require("engine.core.choice")
 
 -- Create the story
 local story = Story.new({
