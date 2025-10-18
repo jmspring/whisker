@@ -125,7 +125,7 @@ Optimized format with minimal redundancy:
 ### Loading Stories
 
 ```lua
-local whisker_loader = require("src.format.whisker_loader")
+local whisker_loader = require("whisker.format.whisker_loader")
 
 -- Load from file
 local story, err = whisker_loader.load_from_file("story.whisker")
@@ -147,7 +147,7 @@ print("Start: " .. story.start_passage)
 ### Validating Stories
 
 ```lua
-local whisker_loader = require("src.format.whisker_loader")
+local whisker_loader = require("whisker.format.whisker_loader")
 
 -- Parse JSON
 local data, err = json.decode(json_text)
@@ -168,8 +168,8 @@ end
 ### Format Conversion
 
 ```lua
-local CompactConverter = require("src.format.compact_converter")
-local json = require("src.utils.json")
+local CompactConverter = require("whisker.format.compact_converter")
+local json = require("whisker.utils.json")
 
 -- Create converter
 local converter = CompactConverter.new()
@@ -621,7 +621,7 @@ lua scripts/whisker_parse.lua check-links examples/museum_tours/rijksmuseum/rijk
 Verify data integrity through format conversion:
 
 ```lua
-local CompactConverter = require("src.format.compact_converter")
+local CompactConverter = require("whisker.format.compact_converter")
 local converter = CompactConverter.new()
 
 -- Load original verbose story

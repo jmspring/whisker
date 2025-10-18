@@ -13,8 +13,8 @@ This document explains the metatable preservation system that ensures Story obje
 ## The Problem
 
 ```lua
-local Story = require("src.core.story")
-local json = require("src.utils.json")
+local Story = require("whisker.core.story")
+local json = require("whisker.utils.json")
 
 -- Create a story with methods
 local story = Story:new({title = "My Story"})
@@ -40,8 +40,8 @@ whisker provides two mechanisms to restore metatables:
 Restores the metatable to an existing table, recursively restoring nested objects.
 
 ```lua
-local Story = require("src.core.story")
-local json = require("src.utils.json")
+local Story = require("whisker.core.story")
+local json = require("whisker.utils.json")
 
 local story = Story:new({title = "My Story"})
 local json_str = json.encode(story:serialize())
@@ -63,7 +63,7 @@ restored:get_metadata("name")  -- ✓ Works: "My Story"
 Creates a new properly-initialized instance from a plain table.
 
 ```lua
-local Story = require("src.core.story")
+local Story = require("whisker.core.story")
 
 local plain_table = {
     metadata = {name = "My Story", author = "Me"},
@@ -107,7 +107,7 @@ Several whisker components automatically restore metatables:
 The Engine automatically restores metatables when loading stories:
 
 ```lua
-local Engine = require("src.core.engine")
+local Engine = require("whisker.core.engine")
 
 -- Load a plain table (e.g., from JSON)
 local plain_story_data = json.decode(json_string)
@@ -125,7 +125,7 @@ engine.current_story:get_start_passage()  -- ✓ Works
 The SaveSystem automatically restores metatables when loading saves:
 
 ```lua
-local SaveSystem = require("src.system.save_system")
+local SaveSystem = require("whisker.system.save_system")
 
 local save_system = SaveSystem:new()
 
@@ -151,8 +151,8 @@ story:deserialize(plain_data)  -- Automatically restores Passage and Choice meta
 ### Use Case 1: Saving and Loading
 
 ```lua
-local Story = require("src.core.story")
-local json = require("src.utils.json")
+local Story = require("whisker.core.story")
+local json = require("whisker.utils.json")
 
 -- Save
 local story = Story:new({title = "My Story"})
@@ -171,7 +171,7 @@ restored_story:get_start_passage()  -- ✓ Works
 
 ```lua
 -- module_a.lua
-local Story = require("src.core.story")
+local Story = require("whisker.core.story")
 
 function create_story()
     local story = Story:new({title = "Shared Story"})
@@ -179,7 +179,7 @@ function create_story()
 end
 
 -- module_b.lua
-local Story = require("src.core.story")
+local Story = require("whisker.core.story")
 
 function use_story(story_data)
     -- Restore metatable
@@ -193,8 +193,8 @@ end
 ### Use Case 3: Format Conversion
 
 ```lua
-local Story = require("src.core.story")
-local TwineImporter = require("src.format.twine_importer")
+local Story = require("whisker.core.story")
+local TwineImporter = require("whisker.format.twine_importer")
 
 -- Import from Twine (returns plain table)
 local importer = TwineImporter:new()
@@ -312,7 +312,7 @@ end
 This means the object doesn't have a metatable. Solution:
 
 ```lua
-local Story = require("src.core.story")
+local Story = require("whisker.core.story")
 local restored = Story.restore_metatable(your_data)
 ```
 

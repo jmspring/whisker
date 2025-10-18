@@ -10,28 +10,28 @@ package.path = package.path .. ";./lib/?.lua;./lib/?/init.lua"
 local config = require("config.default")
 
 -- Core modules
-local Story = require("engine.core.story")
-local Passage = require("engine.core.passage")
-local Choice = require("engine.core.choice")
-local Engine = require("engine.core.engine")
-local GameState = require("engine.core.game_state")
+local Story = require("whisker.core.story")
+local Passage = require("whisker.core.passage")
+local Choice = require("whisker.core.choice")
+local Engine = require("whisker.core.engine")
+local GameState = require("whisker.core.game_state")
 
 -- UI and infrastructure
-local UIFramework = require("engine.ui.ui_framework")
-local InputHandler = require("engine.infrastructure.input_handler")
+local UIFramework = require("whisker.ui.ui_framework")
+local InputHandler = require("whisker.infrastructure.input_handler")
 
 -- Format support
-local TwineImporter = require("engine.format.twine_importer")
-local FormatConverter = require("engine.format.format_converter")
-local WhiskerLoader = require("engine.format.whisker_loader")
+local TwineImporter = require("whisker.format.twine_importer")
+local FormatConverter = require("whisker.format.format_converter")
+local WhiskerLoader = require("whisker.format.whisker_loader")
 
 -- Tools (optional)
-local Validator = require("engine.tools.validator")
-local Profiler = require("engine.tools.profiler")
-local Debugger = require("engine.tools.debugger")
+local Validator = require("whisker.tools.validator")
+local Profiler = require("whisker.tools.profiler")
+local Debugger = require("whisker.tools.debugger")
 
 -- Save system
-local SaveSystem = require("engine.infrastructure.save_system")
+local SaveSystem = require("whisker.infrastructure.save_system")
 
 -- Version info
 local VERSION = "1.0.0"
@@ -53,7 +53,8 @@ local function print_help()
 %s v%s - Interactive Fiction Engine
 
 USAGE:
-    lua main.lua [OPTIONS] <story_file>
+    ./bin/whisker [OPTIONS] <story_file>
+    lua bin/whisker [OPTIONS] <story_file>
 
 OPTIONS:
     -h, --help              Show this help message
@@ -67,19 +68,19 @@ OPTIONS:
 
 EXAMPLES:
     # Play a story
-    lua main.lua examples/adventure_game.lua
+    ./bin/whisker stories/examples/adventure_game.lua
 
     # Validate a story
-    lua main.lua --validate examples/simple_story.lua
+    ./bin/whisker --validate stories/examples/simple_story.lua
 
     # Convert Twine HTML to JSON
-    lua main.lua --convert json story.html -o story.json
+    ./bin/whisker --convert json story.html -o story.json
 
     # Play with debugging
-    lua main.lua --debug examples/tutorial_story.lua
+    ./bin/whisker --debug stories/examples/tutorial_story.lua
 
     # Profile performance
-    lua main.lua --profile examples/adventure_game.lua
+    ./bin/whisker --profile stories/examples/adventure_game.lua
 
 STORY FORMATS:
     Supported input formats:

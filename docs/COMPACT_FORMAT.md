@@ -181,7 +181,7 @@ Whisker Compact Format is an optimized version of the Whisker story format that 
 The Whisker loader automatically detects and converts compact format files:
 
 ```lua
-local whisker_loader = require("src.format.whisker_loader")
+local whisker_loader = require("whisker.format.whisker_loader")
 
 -- Loads both 1.0 and 2.0 formats transparently
 local story, err = whisker_loader.load_from_file("story.whisker")
@@ -194,8 +194,8 @@ No code changes needed! The loader detects `formatVersion: "2.0"` and automatica
 #### Converting to Compact Format
 
 ```lua
-local CompactConverter = require("src.format.compact_converter")
-local json = require("src.utils.json")
+local CompactConverter = require("whisker.format.compact_converter")
+local json = require("whisker.utils.json")
 
 -- Load verbose format
 local verbose_doc = json.decode(verbose_json_string)
@@ -223,7 +223,7 @@ local verbose_doc, err = converter:to_verbose(compact_doc)
 
 ```lua
 local converter = CompactConverter.new()
-local json = require("src.utils.json")
+local json = require("whisker.utils.json")
 
 -- Convert and measure
 local compact_doc = converter:to_compact(verbose_doc)
@@ -324,9 +324,9 @@ lua scripts/convert_to_compact.lua input.whisker output.whisker
 ```
 
 ```lua
-local whisker_loader = require("src.format.whisker_loader")
-local CompactConverter = require("src.format.compact_converter")
-local json = require("src.utils.json")
+local whisker_loader = require("whisker.format.whisker_loader")
+local CompactConverter = require("whisker.format.compact_converter")
+local json = require("whisker.utils.json")
 
 -- Load existing story (any format)
 local story, err = whisker_loader.load_from_file("story.whisker")
@@ -421,7 +421,7 @@ The following defaults are omitted in compact format:
 Always validate after manual editing:
 
 ```lua
-local whisker_loader = require("src.format.whisker_loader")
+local whisker_loader = require("whisker.format.whisker_loader")
 
 local is_valid, errors = whisker_loader.validate(doc)
 if not is_valid then

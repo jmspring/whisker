@@ -65,9 +65,9 @@ Create a new file called `my_first_story.lua`:
 
 ```lua
 -- my_first_story.lua
-local Story = require("src.core.story")
-local Passage = require("src.core.passage")
-local Choice = require("src.core.choice")
+local Story = require("whisker.core.story")
+local Passage = require("whisker.core.passage")
+local Choice = require("whisker.core.choice")
 
 -- Create the story
 local story = Story.new({

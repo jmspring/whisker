@@ -190,9 +190,9 @@ See the **[Authoring Guide](AUTHORING.md)** for a complete tutorial. Here's the 
 Create stories in Lua with full programmatic control:
 
 ```lua
-local Story = require("engine.core.story")
-local Passage = require("engine.core.passage")
-local Choice = require("engine.core.choice")
+local Story = require("whisker.core.story")
+local Passage = require("whisker.core.passage")
+local Choice = require("whisker.core.choice")
 
 local story = Story.new({
     title = "My First Adventure",

@@ -33,9 +33,9 @@ lua main.lua examples/simple_story.lua
 ### Create Your First Story
 
 ```lua
-local Story = require("src.core.story")
-local Passage = require("src.core.passage")
-local Choice = require("src.core.choice")
+local Story = require("whisker.core.story")
+local Passage = require("whisker.core.passage")
+local Choice = require("whisker.core.choice")
 
 local story = Story.new({
     title = "My First Story",
