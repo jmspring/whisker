@@ -85,7 +85,7 @@ describe("Chapbook Inserts System", function()
     -- Inserts must be on one line
     for _, passage in ipairs(parsed.passages) do
       for insert in passage.content:gmatch("{[^}]+}") do
-        assert.is_false(insert:match("\n"))
+        assert.is_nil(insert:match("\n"))
       end
     end
   end)

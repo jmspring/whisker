@@ -14,7 +14,12 @@ describe("SugarCube Combat System", function()
     local init = helper.find_passage(parsed, "StoryInit")
     assert.is_not_nil(init)
     assert.matches("%$player to {", init.content)
-    assert.matches("%$enemy to {", init.content)
+  end)
+
+  it("should parse enemy initialization", function()
+    local init_combat = helper.find_passage(parsed, "InitCombat")
+    assert.is_not_nil(init_combat)
+    assert.matches("%$enemy to {", init_combat.content)
   end)
 
   it("should parse Math.max function", function()
@@ -30,7 +35,7 @@ describe("SugarCube Combat System", function()
 
   it("should parse append macro with selector", function()
     local combat = helper.find_passage(parsed, "Combat")
-    assert.matches('<>',combat.content)
+    assert.matches('<<append "#log">>', combat.content)
   end)
 
   it("should parse goto macro", function()
