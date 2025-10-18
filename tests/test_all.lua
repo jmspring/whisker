@@ -179,42 +179,14 @@ run_test(
     "Tests compact format conversion (1.0 ↔ 2.0) and file size optimization"
 )
 
--- Note: The following converter tests are disabled because they require:
--- 1. BDD testing framework (describe/it/assert) which is not available
--- 2. Parser modules (whisker.parsers.*) which haven't been implemented yet
--- These will be enabled once the required infrastructure is in place
+-- Note: Converter tests use Busted BDD framework
+-- Run with: busted tests/test_*_converter.lua
 
---[[
-run_test(
-    "Harlowe Converter Test",
-    "tests/test_harlowe_converter.lua",
-    "Tests Harlowe format conversion to/from other formats"
-)
+-- These tests are run via Busted, not the standard test runner
+-- To run them: busted tests/
 
-run_test(
-    "SugarCube Converter Test",
-    "tests/test_sugarcube_converter.lua",
-    "Tests SugarCube format conversion to/from other formats"
-)
-
-run_test(
-    "Chapbook Converter Test",
-    "tests/test_chapbook_converter.lua",
-    "Tests Chapbook format conversion to/from other formats"
-)
-
-run_test(
-    "Snowman Converter Test",
-    "tests/test_snoman_converter.lua",
-    "Tests Snowman format conversion to/from other formats"
-)
-
-run_test(
-    "Converter Roundtrip Test",
-    "tests/test_converter_roundtrip.lua",
-    "Tests round-trip conversion between different formats"
-)
---]]
+print(colorize("\nNote: Converter tests (Harlowe, SugarCube, Chapbook, Snowman) use Busted BDD framework.", "cyan"))
+print(colorize("Run them separately with: busted tests/test_*_converter.lua", "cyan"))
 
 -- Note: The following Phase 5-9 tests are disabled because they require:
 -- 1. Save system implementation

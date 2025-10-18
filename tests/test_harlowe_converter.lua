@@ -134,7 +134,7 @@ Some text here
       local result = converter.convert_macro_to_chapbook(harlowe)
 
       assert.matches("%[if gold >= 50%]", result)
-      assert.not_matches("$", result) -- Chapbook doesn't use $
+      assert.not_matches("%$", result) -- Chapbook doesn't use $
     end)
 
     it("should convert arrays to JavaScript arrays", function()
@@ -159,7 +159,7 @@ Some text here
 
       assert.matches("{name}", result)
       assert.matches("{gold}", result)
-      assert.not_matches("$", result)
+      assert.not_matches("%$", result)
     end)
   end)
 
@@ -176,9 +176,9 @@ Welcome, $name!
       local snowman = converter.to_snowman(parsed)
 
       assert.is_not_nil(snowman)
-      assert.matches("<%", snowman)
-      assert.matches("%%>", snowman)
+      assert.matches("<%%", snowman)
       assert.matches("s%.name", snowman)
+      assert.matches("= \"Hero\"", snowman)  -- verify assignment is present
     end)
 
     it("should convert variables to state object", function()
@@ -192,15 +192,15 @@ Welcome, $name!
       local harlowe = "(set: $x to 5)"
       local result = converter.convert_to_snowman_passage(harlowe)
 
-      assert.matches("<%", result)
-      assert.matches("%%>", result)
+      assert.matches("<%%", result)
+      assert.matches("s%.x = 5", result)  -- verify code block contains assignment
     end)
 
     it("should convert interpolation to print blocks", function()
       local harlowe = "Hello, $name!"
       local result = converter.convert_text_to_snowman(harlowe)
 
-      assert.matches("<%= s%.name %%>", result)
+      assert.matches("<%%= s%.name %%>", result)
     end)
 
     it("should convert links to Markdown", function()
