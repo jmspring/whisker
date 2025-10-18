@@ -51,6 +51,7 @@ tmp/
 temp/
 *.tmp
 design_notes/
+tests/test_report.txt
 
 # Session and phase documentation
 PHASE*.md
