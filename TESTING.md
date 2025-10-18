@@ -6,15 +6,452 @@ Comprehensive testing documentation for the Whisker Interactive Fiction Engine.
 
 ## Overview
 
-Whisker has two types of tests:
-1. **Lua Tests** - Test the Lua runtime and game engine (`tests/` directory)
-2. **JavaScript Tests** - Test the web editor, particularly Twine import (`editor/web/js/__tests__/`)
+Whisker has two comprehensive test suites:
 
-This guide covers the JavaScript tests for the web editor.
+1. **Lua Tests** - Test the core runtime and game engine (`tests/` directory) - **459 tests**
+2. **JavaScript Tests** - Test the web editor, particularly Twine import (`editor/web/js/__tests__/`) - **290+ tests**
+
+Both test suites run automatically in CI and must pass before merging.
 
 ---
 
-## Quick Start
+## Table of Contents
+
+### Lua Testing
+- [Lua Quick Start](#lua-quick-start)
+- [Lua Test Structure](#lua-test-structure)
+- [Running Lua Tests](#running-lua-tests)
+- [Lua Test Coverage](#lua-test-coverage)
+- [Writing Lua Tests](#writing-lua-tests)
+- [Lua Test Patterns](#lua-test-patterns)
+
+### JavaScript Testing
+- [JavaScript Quick Start](#javascript-quick-start)
+- [JavaScript Test Structure](#javascript-test-structure)
+- [JavaScript Test Coverage](#javascript-test-coverage)
+- [Writing JavaScript Tests](#writing-new-tests)
+
+---
+
+# Lua Testing
+
+## Lua Quick Start
+
+### Install Lua and Dependencies
+
+```bash
+# Install Lua 5.4 (macOS with Homebrew)
+brew install lua@5.4
+
+# Install LuaRocks
+brew install luarocks
+
+# Install Busted (BDD testing framework)
+luarocks install busted
+```
+
+### Run All Lua Tests
+
+```bash
+# Run all tests
+busted
+
+# Run specific test file
+busted tests/test_story.lua
+
+# Run with verbose output
+busted --verbose
+
+# Run with coverage (requires luacov)
+busted --coverage
+```
+
+### Run Tests Locally (Same as CI)
+
+```bash
+# Exact command used in GitHub Actions
+busted tests/test_story.lua \
+       tests/test_compact_integration.lua \
+       tests/test_rijks_load.lua \
+       tests/test_renderer.lua \
+       tests/test_validator.lua \
+       tests/test_profiler.lua \
+       tests/test_debugger.lua \
+       tests/test_metatable_preservation.lua \
+       tests/test_save_system.lua \
+       tests/test_template_processor.lua \
+       tests/test_harlowe_converter.lua \
+       tests/test_sugarcube_converter.lua \
+       tests/test_chapbook_converter.lua \
+       tests/test_snowman_converter.lua \
+       tests/test_format_converter.lua \
+       tests/test_import.lua \
+       tests/test_export.lua \
+       tests/test_compact_format.lua \
+       tests/test_harlowe_parser.lua \
+       tests/test_sugarcube_parser.lua \
+       tests/test_chapbook_parser.lua \
+       tests/test_snowman_parser.lua \
+       tests/test_converter_roundtrip.lua \
+       tests/test_event_system.lua \
+       tests/test_string_utils.lua
+```
+
+---
+
+## Lua Test Structure
+
+### Test Files Organization
+
+```
+tests/
+├── test_helper.lua              # Shared test utilities
+├── test_story.lua               # Core story integration tests
+├── test_compact_integration.lua # Compact format integration
+├── test_rijks_load.lua         # Large story loading tests
+├── test_renderer.lua            # Text rendering and markdown
+├── test_validator.lua           # Story validation
+├── test_profiler.lua            # Performance profiling
+├── test_debugger.lua            # Debugging features
+├── test_metatable_preservation.lua # Serialization
+├── test_save_system.lua         # Save/load functionality
+├── test_template_processor.lua  # Template processing
+├── test_event_system.lua        # Event system
+├── test_string_utils.lua        # String utilities
+├── test_format_converter.lua    # Format conversion
+├── test_import.lua              # Twine import
+├── test_export.lua              # Twine export
+├── test_compact_format.lua      # Compact format conversion
+├── test_harlowe_converter.lua   # Harlowe format converter
+├── test_sugarcube_converter.lua # SugarCube converter
+├── test_chapbook_converter.lua  # Chapbook converter
+├── test_snowman_converter.lua   # Snowman converter
+├── test_harlowe_parser.lua      # Harlowe parser
+├── test_sugarcube_parser.lua    # SugarCube parser
+├── test_chapbook_parser.lua     # Chapbook parser
+├── test_snowman_parser.lua      # Snowman parser
+├── test_converter_roundtrip.lua # Roundtrip conversion tests
+├── fixtures/                    # Test fixtures
+│   ├── harlowe/
+│   ├── sugarcube/
+│   ├── chapbook/
+│   ├── snowman/
+│   └── twine/
+├── harlowe/                     # Harlowe-specific tests
+├── sugarcube/                   # SugarCube-specific tests
+├── chapbook/                    # Chapbook-specific tests
+└── snowman/                     # Snowman-specific tests
+```
+
+### Test File Structure
+
+All Lua tests use **Busted BDD** (Behavior-Driven Development) framework:
+
+```lua
+local helper = require("tests.test_helper")
+local MyModule = require("src.module.my_module")
+
+describe("MyModule", function()
+  describe("method_name", function()
+    it("should do something specific", function()
+      -- Arrange
+      local input = "test"
+
+      -- Act
+      local result = MyModule.method_name(input)
+
+      -- Assert
+      assert.equals("expected", result)
+    end)
+  end)
+end)
+```
+
+---
+
+## Running Lua Tests
+
+### Run All Tests
+
+```bash
+busted
+```
+
+### Run Specific Test File
+
+```bash
+busted tests/test_story.lua
+```
+
+### Run Multiple Files
+
+```bash
+busted tests/test_story.lua tests/test_renderer.lua
+```
+
+### Run Tests Matching Pattern
+
+```bash
+busted --pattern=converter
+```
+
+### Run with Verbose Output
+
+```bash
+busted --verbose
+```
+
+### Run Single Test by Name
+
+```bash
+busted --filter="should load compact format file"
+```
+
+### Run with Coverage
+
+```bash
+# Install luacov first
+luarocks install luacov
+
+# Run with coverage
+busted --coverage
+
+# Generate coverage report
+luacov
+
+# View report
+cat luacov.report.out
+```
+
+---
+
+## Lua Test Coverage
+
+### Test Categories
+
+| Category | Files | Tests | Status |
+|----------|-------|-------|--------|
+| **Core Integration** | 3 | 39 | ✅ Passing |
+| **Engine Core** | 7 | 122 | ✅ Passing |
+| **Format Conversion** | 4 | 143 | ✅ Passing |
+| **Format Converters** | 4 | 81 | ✅ Passing |
+| **Format Parsers** | 4 | 40 | ✅ Passing |
+| **Utilities** | 2 | 32 | ✅ Passing |
+| **Roundtrip** | 1 | 14 | ✅ Passing (2 pending) |
+| **Total** | **26** | **459** | **✅ All Passing** |
+
+### Coverage by Component
+
+#### Core Integration (39 tests)
+- ✅ Story creation and management (13 tests)
+- ✅ Compact format integration (10 tests)
+- ✅ Large story loading (16 tests)
+
+#### Engine Core (122 tests)
+- ✅ Text rendering (14 tests)
+- ✅ Story validation (12 tests)
+- ✅ Performance profiling (7 tests)
+- ✅ Debugging features (8 tests)
+- ✅ Metatable preservation (15 tests)
+- ✅ Save system (5 tests)
+- ✅ Template processing (27 tests)
+- ✅ Event system (18 tests)
+- ✅ String utilities (16 tests)
+
+#### Format Conversion (143 tests)
+- ✅ Format converter (45 tests)
+- ✅ Twine import (48 tests)
+- ✅ Twine export (42 tests)
+- ✅ Compact format conversion (8 tests)
+
+#### Format Converters (81 tests)
+- ✅ Harlowe converter (20 tests)
+- ✅ SugarCube converter (21 tests)
+- ✅ Chapbook converter (20 tests)
+- ✅ Snowman converter (20 tests)
+
+#### Format Parsers (40 tests)
+- ✅ Harlowe parser (10 tests)
+- ✅ SugarCube parser (10 tests)
+- ✅ Chapbook parser (10 tests)
+- ✅ Snowman parser (10 tests)
+
+#### Roundtrip Tests (14 tests)
+- ✅ Cross-format conversions (12 tests)
+- ⏸️ Conversion loss detection (2 pending)
+
+---
+
+## Writing Lua Tests
+
+### Step 1: Create Test File
+
+Create a new file in `tests/` following the naming convention `test_<feature>.lua`:
+
+```lua
+local helper = require("tests.test_helper")
+local MyFeature = require("src.module.my_feature")
+
+describe("MyFeature", function()
+  -- Tests go here
+end)
+```
+
+### Step 2: Write Test Groups
+
+Organize tests into logical groups using `describe`:
+
+```lua
+describe("MyFeature", function()
+  describe("Initialization", function()
+    it("should create instance with defaults", function()
+      local feature = MyFeature.new()
+      assert.is_not_nil(feature)
+    end)
+  end)
+
+  describe("Processing", function()
+    it("should process valid input", function()
+      local feature = MyFeature.new()
+      local result = feature:process("test")
+      assert.equals("processed: test", result)
+    end)
+  end)
+end)
+```
+
+### Step 3: Use Helper Functions
+
+```lua
+local function create_test_story()
+  local story = Story.new()
+  story:set_metadata("name", "Test Story")
+  local start = Passage.new("start", "start")
+  start:set_content("Test content")
+  story:add_passage(start)
+  story:set_start_passage("start")
+  return story
+end
+
+describe("Story Tests", function()
+  it("should work with test story", function()
+    local story = create_test_story()
+    assert.is_not_nil(story)
+  end)
+end)
+```
+
+### Step 4: Use Setup/Teardown
+
+```lua
+describe("MyFeature", function()
+  local feature
+
+  before_each(function()
+    feature = MyFeature.new()
+  end)
+
+  after_each(function()
+    feature = nil
+  end)
+
+  it("should use setup feature", function()
+    assert.is_not_nil(feature)
+  end)
+end)
+```
+
+---
+
+## Lua Test Patterns
+
+### Testing Return Values
+
+```lua
+it("should return correct value", function()
+  local result = MyModule.calculate(5, 3)
+  assert.equals(8, result)
+end)
+```
+
+### Testing Tables
+
+```lua
+it("should return correct table", function()
+  local result = MyModule.get_data()
+  assert.is_table(result)
+  assert.equals("value", result.key)
+end)
+```
+
+### Testing Nil/Not Nil
+
+```lua
+it("should return non-nil value", function()
+  local result = MyModule.get_something()
+  assert.is_not_nil(result)
+end)
+
+it("should return nil for invalid input", function()
+  local result = MyModule.get_something(nil)
+  assert.is_nil(result)
+end)
+```
+
+### Testing Errors
+
+```lua
+it("should throw error for invalid input", function()
+  assert.has_error(function()
+    MyModule.process(nil)
+  end)
+end)
+
+it("should throw specific error message", function()
+  assert.has_error(function()
+    MyModule.process(nil)
+  end, "Input cannot be nil")
+end)
+```
+
+### Testing String Patterns
+
+```lua
+it("should match pattern", function()
+  local result = MyModule.format("test")
+  assert.matches("^formatted:", result)
+end)
+```
+
+### Testing with Mock Data
+
+```lua
+it("should process story correctly", function()
+  local story = {
+    metadata = { title = "Test" },
+    passages = {
+      { id = "start", content = "Hello" }
+    }
+  }
+
+  local result = MyModule.process_story(story)
+  assert.is_not_nil(result)
+end)
+```
+
+### Pending Tests
+
+```lua
+pending("should implement feature X", function()
+  -- Test will be skipped but marked as pending
+end)
+```
+
+---
+
+# JavaScript Testing
+
+## JavaScript Quick Start
 
 ### Install Dependencies
 

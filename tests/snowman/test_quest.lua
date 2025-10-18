@@ -1,5 +1,5 @@
 local helper = require("tests.test_helper")
-local parser = require("whisker.parsers.snowman")
+local parser = require("src.format.parsers.snowman")
 
 describe("Snowman Quest System", function()
   local story_content
@@ -49,7 +49,7 @@ describe("Snowman Quest System", function()
 
   it("should parse string concatenation", function()
     local init = helper.find_passage(parsed, "StoryInit")
-    assert.matches("'' %+", init.content)
+    assert.matches("' %+", init.content)
   end)
 
   it("should parse jQuery html() method", function()

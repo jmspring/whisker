@@ -1,5 +1,5 @@
 local helper = require("tests.test_helper")
-local parser = require("whisker.parsers.sugarcube")
+local parser = require("src.format.parsers.sugarcube")
 
 describe("SugarCube Save System", function()
   local story_content
@@ -11,7 +11,9 @@ describe("SugarCube Save System", function()
   end)
 
   it("should parse textbox macro", function()
-    local save_passage = helper.find_passage_with_pattern(parsed, "<>", save_passage.content)
+    local save_passage = helper.find_passage_with_pattern(parsed, "<<textbox")
+    assert.is_not_nil(save_passage)
+    assert.matches("<<textbox", save_passage.content)
   end)
 
   it("should parse array indexing", function()
@@ -25,7 +27,7 @@ describe("SugarCube Save System", function()
   end)
 
   it("should parse closing button tag", function()
-    local save_passage = helper.find_passage_with_pattern(parsed, "<>")
+    local save_passage = helper.find_passage_with_pattern(parsed, "<</button>>")
     assert.is_not_nil(save_passage)
   end)
 end)

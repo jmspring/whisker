@@ -48,16 +48,41 @@ jobs:
       - name: Install dependencies
         run: |
           luarocks install luafilesystem || echo "LuaFileSystem install failed, continuing..."
+          luarocks install busted
         continue-on-error: true
-      
+
       - name: Set up Lua paths
         run: |
           echo "LUA_PATH=./src/?.lua;./src/?/init.lua;;" >> $GITHUB_ENV
-          
-      - name: Run test suite
+
+      - name: Run test suite (Busted BDD)
         run: |
-          echo "Running Whisker test suite..."
-          NO_COLOR=1 lua tests/test_all.lua
+          echo "Running Whisker test suite with Busted..."
+          busted tests/test_story.lua \
+                 tests/test_compact_integration.lua \
+                 tests/test_rijks_load.lua \
+                 tests/test_renderer.lua \
+                 tests/test_validator.lua \
+                 tests/test_profiler.lua \
+                 tests/test_debugger.lua \
+                 tests/test_metatable_preservation.lua \
+                 tests/test_save_system.lua \
+                 tests/test_template_processor.lua \
+                 tests/test_harlowe_converter.lua \
+                 tests/test_sugarcube_converter.lua \
+                 tests/test_chapbook_converter.lua \
+                 tests/test_snowman_converter.lua \
+                 tests/test_format_converter.lua \
+                 tests/test_import.lua \
+                 tests/test_export.lua \
+                 tests/test_compact_format.lua \
+                 tests/test_harlowe_parser.lua \
+                 tests/test_sugarcube_parser.lua \
+                 tests/test_chapbook_parser.lua \
+                 tests/test_snowman_parser.lua \
+                 tests/test_converter_roundtrip.lua \
+                 tests/test_event_system.lua \
+                 tests/test_string_utils.lua
       
       - name: Upload test report
         if: always()

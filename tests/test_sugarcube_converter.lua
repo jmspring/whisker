@@ -1,6 +1,6 @@
 local helper = require("tests.test_helper")
-local sugarcube_parser = require("whisker.parsers.sugarcube")
-local converter = require("whisker.converters.sugarcube")
+local sugarcube_parser = require("src.format.parsers.sugarcube")
+local converter = require("src.format.converters.sugarcube")
 
 describe("SugarCube Converter", function()
 
@@ -125,7 +125,7 @@ Text content
 
       assert.matches("{name}", result)
       assert.matches("{gold}", result)
-      assert.not_matches("$", result)
+      assert.not_matches("%$", result)
     end)
 
     it("should convert link macro to standard links", function()
@@ -150,7 +150,7 @@ Welcome, $name!
       local snowman = converter.to_snowman(parsed)
 
       assert.is_not_nil(snowman)
-      assert.matches("<%", snowman)
+      assert.matches("<%%", snowman)
       assert.matches("s%.name", snowman)
     end)
 

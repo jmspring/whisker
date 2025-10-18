@@ -1,5 +1,5 @@
 local helper = require("tests.test_helper")
-local parser = require("whisker.parsers.sugarcube")
+local parser = require("src.format.parsers.sugarcube")
 
 describe("SugarCube Time System", function()
   local story_content
@@ -17,23 +17,23 @@ describe("SugarCube Time System", function()
 
   it("should parse HTML in StoryCaption", function()
     local caption = helper.find_passage(parsed, "StoryCaption")
-    assert.matches("", caption.content)
+    assert.matches("<div", caption.content)
   end)
 
   it("should parse elseif macro", function()
     local start = helper.find_passage(parsed, "Start")
     assert.is_not_nil(start)
-    assert.matches("<>", start.content)
+    assert.matches("<<elseif", start.content)
   end)
 
   it("should parse closing if tag", function()
     local start = helper.find_passage(parsed, "Start")
-    assert.matches("<>", start.content)
+    assert.matches("<</if>>", start.content)
   end)
 
   it("should parse link with passage parameter", function()
     local start = helper.find_passage(parsed, "Start")
-    assert.matches('<>', start.content)
+    assert.matches('<<link .* "Work">>', start.content)
   end)
 
   it("should parse modulo operator", function()

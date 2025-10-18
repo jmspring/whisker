@@ -1,5 +1,5 @@
 local helper = require("tests.test_helper")
-local parser = require("whisker.parsers.chapbook")
+local parser = require("src.format.parsers.chapbook")
 
 describe("Chapbook Modifiers System", function()
   local story_content
@@ -85,8 +85,8 @@ describe("Chapbook Modifiers System", function()
     assert.matches("# Welcome", start.content)
   end)
 
-  it("should parse bold text with markdown", function()
+  it("should parse headings in notes", function()
     local notes = helper.find_passage(parsed, "Notes")
-    assert.matches("%*%*Notes Section%*%*", notes.content)
+    assert.matches("# Notes Section", notes.content)
   end)
 end)

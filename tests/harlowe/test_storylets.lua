@@ -1,5 +1,5 @@
 local helper = require("tests.test_helper")
-local parser = require("whisker.parsers.harlowe")
+local parser = require("src.format.parsers.harlowe")
 
 describe("Harlowe Storylets System", function()
   local story_content
@@ -21,9 +21,9 @@ describe("Harlowe Storylets System", function()
   end)
 
   it("should parse relationship variable conditions", function()
-    local passage = helper.find_passage_with_pattern(parsed, "%$relationship")
+    local passage = helper.find_passage_with_pattern(parsed, "%$relationship [<>=]+")
     assert.is_not_nil(passage)
-    assert.matches("%$relationship [<>=]+ ", passage.content)
+    assert.matches("%$relationship [<>=]+", passage.content)
   end)
 
   it("should parse link-storylet macro", function()

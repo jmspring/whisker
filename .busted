@@ -1,0 +1,40 @@
+return {
+  _all = {
+    -- Test file pattern
+    pattern = "test_",
+
+    -- Exclude test helper and old test runner
+    exclude = {
+      "test_helper.lua",
+      "test_all.lua"
+    },
+
+    -- Root directory for tests
+    ROOT = {"tests/"},
+
+    -- Lua path for source code
+    lpath = "src/?.lua;src/?/init.lua",
+
+    -- Verbose output
+    verbose = false,
+
+    -- Coverage (optional, requires luacov)
+    coverage = false,
+  },
+
+  -- Default configuration
+  default = {
+    verbose = false,
+    coverage = false,
+  },
+
+  -- Verbose mode
+  verbose = {
+    verbose = true,
+  },
+
+  -- Coverage mode
+  coverage = {
+    coverage = true,
+  }
+}

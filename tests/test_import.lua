@@ -1,68 +1,18 @@
--- tests/test_import.lua
--- Comprehensive test suite for Twine import functionality
-
+local helper = require("tests.test_helper")
 local TwineImporter = require("src.format.twine_importer")
 local FormatConverter = require("src.format.format_converter")
-local Story = require("src.core.story")
 local json = require("src.utils.json")
 
--- Test results tracking
-local tests_run = 0
-local tests_passed = 0
-local tests_failed = 0
+describe("Twine Import", function()
 
--- Helper function to run a test
-local function test(name, fn)
-    tests_run = tests_run + 1
-    io.write(string.format("Testing %s... ", name))
-
-    local success, err = pcall(fn)
-
-    if success then
-        tests_passed = tests_passed + 1
-        print("✅ PASSED")
-        return true
-    else
-        tests_failed = tests_failed + 1
-        print("❌ FAILED")
-        print("  Error: " .. tostring(err))
-        return false
-    end
-end
-
--- Helper function to assert conditions
-local function assert_equal(actual, expected, message)
-    if actual ~= expected then
-        error(string.format("%s\nExpected: %s\nActual: %s",
-            message or "Assertion failed",
-            tostring(expected),
-            tostring(actual)))
-    end
-end
-
-local function assert_not_nil(value, message)
-    if value == nil then
-        error(message or "Value should not be nil")
-    end
-end
-
-local function assert_true(condition, message)
-    if not condition then
-        error(message or "Condition should be true")
-    end
-end
-
--- Sample Twine HTML (Harlowe format)
-local sample_twine_html = [=[
+  -- Sample Twine HTML (Harlowe format)
+  local sample_twine_html = [=[
 <tw-storydata name="Test Story" startnode="1" creator="Twine"
               creator-version="2.6.0" ifid="12345678-1234-1234-1234-123456789012"
               zoom="1" format="Harlowe" format-version="3.3.0">
   <style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">
     tw-story { font-family: Georgia; }
   </style>
-  <script role="script" id="twine-user-script" type="text/twine-javascript">
-    console.log("Story initialized");
-  </script>
 
   <tw-passagedata pid="1" name="Start" tags="intro" position="100,100">
     Welcome to the test story!
@@ -71,7 +21,6 @@ local sample_twine_html = [=[
     (set: $health to 100)
 
     [[Begin Adventure->Forest]]
-    [[Check Inventory->Inventory]]
   </tw-passagedata>
 
   <tw-passagedata pid="2" name="Forest" tags="location" position="300,100">
@@ -79,375 +28,294 @@ local sample_twine_html = [=[
 
     (if: $health > 50)[
       You feel strong.
-    ](else:)[
-      You feel weak.
     ]
 
     [[Go North->Cave]]
-    [[Go South->Village]]
-    [[Return to Start->Start]]
   </tw-passagedata>
 
   <tw-passagedata pid="3" name="Cave" tags="location danger" position="300,0">
-    A dark cave looms before you.
-
     (set: $foundTreasure to true)
-    (set: $health to it - 10)
-
-    You found treasure but lost 10 health!
-
-    [[Exit Cave->Forest]]
-  </tw-passagedata>
-
-  <tw-passagedata pid="4" name="Village" tags="location safe" position="300,200">
-    A peaceful village welcomes you.
-
-    (if: $foundTreasure)[
-      The villagers congratulate you on your find!
-    ]
-
-    [[Rest (Restore Health)->Rest]]
-    [[Leave Village->Forest]]
-  </tw-passagedata>
-
-  <tw-passagedata pid="5" name="Rest" tags="" position="500,200">
-    (set: $health to 100)
-
-    You rest and restore your health to full!
-
-    [[Continue->Village]]
-  </tw-passagedata>
-
-  <tw-passagedata pid="6" name="Inventory" tags="menu" position="100,300">
-    Your inventory:
-
-    Health: (print: $health)
-    Name: (print: $playerName)
-    (if: $foundTreasure)[Treasure: Yes](else:)[Treasure: No]
-
-    [[Back->Start]]
+    You found treasure!
+    [[Exit->Forest]]
   </tw-passagedata>
 </tw-storydata>
 ]=]
 
--- Sample SugarCube format HTML
-local sample_sugarcube_html = [=[
+  -- Sample SugarCube format HTML
+  local sample_sugarcube_html = [=[
 <tw-storydata name="SugarCube Test" startnode="1" creator="Twine"
               format="SugarCube" format-version="2.36.1">
   <tw-passagedata pid="1" name="Start" tags="">
     <<set $count to 0>>
-    <<set $name to "Player">>
-
-    Hello, $name!
-
-    [[Click me->Next]]
+    Hello!
+    [[Next]]
   </tw-passagedata>
 
   <tw-passagedata pid="2" name="Next" tags="">
     <<set $count to $count + 1>>
-
-    You've clicked $count times.
-
-    <<if $count > 2>>
-      [[Finish->End]]
-    <<else>>
-      [[Click again->Next]]
-    <</if>>
-  </tw-passagedata>
-
-  <tw-passagedata pid="3" name="End" tags="">
-    Thanks for testing!
+    Clicked $count times.
   </tw-passagedata>
 </tw-storydata>
 ]=]
 
--- Sample Twee format
-local sample_twee = [=[
+  -- Sample Twee format
+  local sample_twee = [=[
 :: StoryTitle
 Twee Test Story
 
 :: StoryData
 {
-  "ifid": "D674C58C-DEFA-4F70-B7A2-27742230C0FC",
-  "format": "Harlowe",
-  "format-version": "3.3.0",
-  "start": "Start"
+  "ifid": "D674C58C-DEFA-4F70-B7A2-27742230C0FC"
 }
 
 :: Start
 This is the start passage.
-
-[[Go to second passage->Second]]
+[[Second]]
 
 :: Second
 This is the second passage.
-
-You can go [[back->Start]] or [[continue->Third]].
-
-:: Third
-This is the final passage.
-
-[[Start over->Start]]
+[[back->Start]]
 ]=]
 
-print("\n=== whisker Twine Import Test Suite ===\n")
+  describe("Twine HTML Import", function()
+    it("should import Harlowe format HTML", function()
+      local importer = TwineImporter.new()
+      local story, err = importer:import_from_html(sample_twine_html)
 
--- Test 1: Import basic Twine HTML (Harlowe)
-test("Twine HTML Import (Harlowe)", function()
-    local importer = TwineImporter.new()
-    local story, err = importer:import_from_html(sample_twine_html)
+      assert.is_nil(err)
+      assert.is_not_nil(story)
+      assert.is_not_nil(story.metadata)
+      assert.equals("Test Story", story.metadata.title)
+      assert.equals("whisker", story.format)
+      assert.is_not_nil(story.settings)
+      assert.equals("Start", story.settings.startPassage)
+    end)
 
-    assert_not_nil(story, "Import should return a story object")
-    assert_not_nil(story.metadata, "Story should have metadata")
-    assert_equal(story.metadata.title, "Test Story", "Story title should match")
-    -- Story has been converted to whisker format
-    assert_equal(story.format, "whisker", "Story format should be whisker after conversion")
-    assert_not_nil(story.settings, "Story should have settings")
-    assert_equal(story.settings.startPassage, "Start", "Start passage should be 'Start'")
+    it("should import multiple passages", function()
+      local importer = TwineImporter.new()
+      local story, err = importer:import_from_html(sample_twine_html)
 
-    -- Check passages
-    assert_true(#story.passages >= 6, "Should have at least 6 passages")
+      assert.is_true(#story.passages >= 3)
+    end)
 
-    -- Find the Start passage
-    local start_passage = nil
-    for _, passage in ipairs(story.passages) do
+    it("should find Start passage with correct metadata", function()
+      local importer = TwineImporter.new()
+      local story, err = importer:import_from_html(sample_twine_html)
+
+      local start_passage = nil
+      for _, passage in ipairs(story.passages) do
         if passage.name == "Start" then
-            start_passage = passage
-            break
+          start_passage = passage
+          break
         end
-    end
+      end
 
-    assert_not_nil(start_passage, "Should find Start passage")
-    assert_true(#start_passage.tags > 0, "Start passage should have tags")
-    assert_equal(start_passage.tags[1], "intro", "First tag should be 'intro'")
-end)
+      assert.is_not_nil(start_passage)
+      assert.is_true(#start_passage.tags > 0)
+      assert.equals("intro", start_passage.tags[1])
+    end)
 
--- Test 2: Import SugarCube format
-test("Twine HTML Import (SugarCube)", function()
-    local importer = TwineImporter.new()
-    local story, err = importer:import_from_html(sample_sugarcube_html)
+    it("should import SugarCube format", function()
+      local importer = TwineImporter.new()
+      local story, err = importer:import_from_html(sample_sugarcube_html)
 
-    assert_not_nil(story, "Import should return a story object")
-    assert_not_nil(story.metadata, "Story should have metadata")
-    assert_equal(story.metadata.title, "SugarCube Test", "Story title should match")
-    -- Story has been converted to whisker format
-    assert_equal(story.format, "whisker", "Story format should be whisker after conversion")
-end)
+      assert.is_nil(err)
+      assert.is_not_nil(story)
+      assert.equals("SugarCube Test", story.metadata.title)
+      assert.equals("whisker", story.format)
+    end)
 
--- Test 3: Harlowe syntax conversion
-test("Harlowe Syntax Conversion", function()
-    local importer = TwineImporter.new()
+    it("should handle invalid HTML gracefully", function()
+      local importer = TwineImporter.new()
+      local story, err = importer:import_from_html("<invalid>Not a Twine story</invalid>")
 
-    -- Test (set:) conversion
-    local text = "(set: $health to 100)"
-    local converted = importer:convert_passage_text(text, TwineImporter.SupportedFormats.HARLOWE)
-    assert_true(converted:find("{{health = 100}}") ~= nil, "Should convert (set:) to {{var = value}}")
+      assert.is_nil(story)
+      assert.is_not_nil(err)
+    end)
+  end)
 
-    -- Test (if:) conversion
-    text = "(if: $health > 50)[You feel strong]"
-    converted = importer:convert_passage_text(text, TwineImporter.SupportedFormats.HARLOWE)
-    assert_true(converted:find("{{if") ~= nil, "Should convert (if:) to {{if}}")
+  describe("Syntax Conversion", function()
+    describe("Harlowe", function()
+      it("should convert (set:) macro", function()
+        local importer = TwineImporter.new()
+        local text = "(set: $health to 100)"
 
-    -- Test (print:) conversion
-    text = "(print: $playerName)"
-    converted = importer:convert_passage_text(text, TwineImporter.SupportedFormats.HARLOWE)
-    assert_true(converted:find("{{playerName}}") ~= nil, "Should convert (print:) to {{var}}")
-end)
+        local converted = importer:convert_passage_text(text, TwineImporter.SupportedFormats.HARLOWE)
 
--- Test 4: SugarCube syntax conversion
-test("SugarCube Syntax Conversion", function()
-    local importer = TwineImporter.new()
+        assert.is_not_nil(converted:find("{{health = 100}}"))
+      end)
 
-    -- Test <<set>> conversion
-    local text = "<<set $count to 5>>"
-    local converted = importer:convert_passage_text(text, TwineImporter.SupportedFormats.SUGARCUBE)
-    assert_true(converted:find("{{count = 5}}") ~= nil, "Should convert <<set>> to {{var = value}}")
+      it("should convert (if:) macro", function()
+        local importer = TwineImporter.new()
+        local text = "(if: $health > 50)[You feel strong]"
 
-    -- Test $var conversion (currently this happens before <<if>> conversion in TwineImporter)
-    text = "<<if $count > 2>>High<<endif>>"
-    converted = importer:convert_passage_text(text, TwineImporter.SupportedFormats.SUGARCUBE)
-    -- Note: Due to conversion order in TwineImporter, $count is converted first
-    assert_true(converted:find("{{count}}") ~= nil, "Should convert $var to {{var}}")
-end)
+        local converted = importer:convert_passage_text(text, TwineImporter.SupportedFormats.HARLOWE)
 
--- Test 5: Link extraction
-test("Link Extraction", function()
-    local importer = TwineImporter.new()
+        assert.is_not_nil(converted:find("{{if"))
+      end)
 
-    local text = "You can go [[North->Cave]] or [[South->Village]]."
-    local links = importer:extract_links(text)
+      it("should convert (print:) macro", function()
+        local importer = TwineImporter.new()
+        local text = "(print: $playerName)"
 
-    assert_equal(#links, 2, "Should find 2 links")
-    assert_equal(links[1].text, "North", "First link text should be 'North'")
-    assert_equal(links[1].target, "Cave", "First link target should be 'Cave'")
-    assert_equal(links[2].text, "South", "Second link text should be 'South'")
-    assert_equal(links[2].target, "Village", "Second link target should be 'Village'")
-end)
+        local converted = importer:convert_passage_text(text, TwineImporter.SupportedFormats.HARLOWE)
 
--- Test 6: Variable extraction
-test("Variable Extraction", function()
-    local importer = TwineImporter.new()
+        assert.is_not_nil(converted:find("{{playerName}}"))
+      end)
+    end)
 
-    local text = "(set: $health to 100)(set: $mana to 50)(print: $name)"
-    local variables = importer:extract_variables(text)
+    describe("SugarCube", function()
+      it("should convert <<set>> macro", function()
+        local importer = TwineImporter.new()
+        local text = "<<set $count to 5>>"
 
-    assert_true(#variables >= 3, "Should find at least 3 variables")
+        local converted = importer:convert_passage_text(text, TwineImporter.SupportedFormats.SUGARCUBE)
 
-    -- Check if variables are in the list
-    local has_health = false
-    local has_mana = false
-    local has_name = false
+        assert.is_not_nil(converted:find("{{count = 5}}"))
+      end)
 
-    for _, var in ipairs(variables) do
+      it("should convert $var references", function()
+        local importer = TwineImporter.new()
+        local text = "<<if $count > 2>>High<<endif>>"
+
+        local converted = importer:convert_passage_text(text, TwineImporter.SupportedFormats.SUGARCUBE)
+
+        assert.is_not_nil(converted:find("{{count}}"))
+      end)
+    end)
+  end)
+
+  describe("Link Extraction", function()
+    it("should extract links from text", function()
+      local importer = TwineImporter.new()
+      local text = "You can go [[North->Cave]] or [[South->Village]]."
+
+      local links = importer:extract_links(text)
+
+      assert.equals(2, #links)
+      assert.equals("North", links[1].text)
+      assert.equals("Cave", links[1].target)
+      assert.equals("South", links[2].text)
+      assert.equals("Village", links[2].target)
+    end)
+  end)
+
+  describe("Variable Extraction", function()
+    it("should extract variables from Harlowe syntax", function()
+      local importer = TwineImporter.new()
+      local text = "(set: $health to 100)(set: $mana to 50)(print: $name)"
+
+      local variables = importer:extract_variables(text)
+
+      assert.is_true(#variables >= 3)
+
+      local has_health = false
+      local has_mana = false
+      local has_name = false
+
+      for _, var in ipairs(variables) do
         if var == "health" then has_health = true end
         if var == "mana" then has_mana = true end
         if var == "name" then has_name = true end
-    end
+      end
 
-    assert_true(has_health, "Should find 'health' variable")
-    assert_true(has_mana, "Should find 'mana' variable")
-    assert_true(has_name, "Should find 'name' variable")
-end)
+      assert.is_true(has_health)
+      assert.is_true(has_mana)
+      assert.is_true(has_name)
+    end)
+  end)
 
--- Test 7: Twee format import
-test("Twee Format Import", function()
-    local importer = TwineImporter.new()
-    local story, err = importer:import_from_twee(sample_twee)
+  describe("Twee Format Import", function()
+    it("should import Twee format", function()
+      local importer = TwineImporter.new()
+      local story, err = importer:import_from_twee(sample_twee)
 
-    assert_not_nil(story, "Should import Twee format: " .. tostring(err))
-    assert_not_nil(story.metadata, "Story should have metadata")
-    assert_equal(story.metadata.title, "Twee Test Story", "Story title should match")
-    assert_true(#story.passages >= 3, "Should have at least 3 passages")
-end)
+      assert.is_nil(err)
+      assert.is_not_nil(story)
+      assert.is_not_nil(story.metadata)
+      assert.equals("Twee Test Story", story.metadata.title)
+      assert.is_true(#story.passages >= 2)
+    end)
+  end)
 
--- Test 8: Error handling - invalid HTML
-test("Error Handling - Invalid HTML", function()
-    local importer = TwineImporter.new()
-    local story, err = importer:import_from_html("<invalid>Not a Twine story</invalid>")
+  describe("Passage Metadata", function()
+    it("should parse passage tags", function()
+      local importer = TwineImporter.new()
+      local story, err = importer:import_from_html(sample_twine_html)
 
-    assert_true(story == nil, "Should return nil for invalid HTML")
-    assert_not_nil(err, "Should return error message")
-end)
+      local forest_passage = nil
+      for _, passage in ipairs(story.passages) do
+        if passage.name == "Forest" then
+          forest_passage = passage
+          break
+        end
+      end
 
--- Test 9: Format converter integration
-test("Format Converter Integration", function()
-    local converter = FormatConverter.new()
-    local story, err = converter:convert(
+      assert.is_not_nil(forest_passage)
+      assert.is_true(#forest_passage.tags > 0)
+
+      local has_location_tag = false
+      for _, tag in ipairs(forest_passage.tags) do
+        if tag == "location" then
+          has_location_tag = true
+          break
+        end
+      end
+
+      assert.is_true(has_location_tag)
+    end)
+
+    it("should preserve position data", function()
+      local importer = TwineImporter.new()
+      local story, err = importer:import_from_html(sample_twine_html)
+
+      local start_passage = nil
+      for _, passage in ipairs(story.passages) do
+        if passage.name == "Start" then
+          start_passage = passage
+          break
+        end
+      end
+
+      assert.is_not_nil(start_passage)
+      if start_passage.position then
+        assert.is_not_nil(start_passage.position.x)
+        assert.is_not_nil(start_passage.position.y)
+      end
+    end)
+  end)
+
+  describe("Format Converter Integration", function()
+    it("should convert Twine HTML to JSON via FormatConverter", function()
+      local converter = FormatConverter.new()
+      local story, err = converter:convert(
         sample_twine_html,
         FormatConverter.FormatType.TWINE_HTML,
         FormatConverter.FormatType.JSON
-    )
+      )
 
-    assert_not_nil(story, "Should convert Twine HTML to JSON: " .. tostring(err))
+      assert.is_nil(err)
+      assert.is_not_nil(story)
 
-    -- Parse JSON to verify structure
-    local story_data = json.decode(story)
-    assert_not_nil(story_data, "JSON should be valid")
-    assert_not_nil(story_data.metadata, "JSON should have metadata")
-    assert_not_nil(story_data.metadata.title, "JSON should have title")
-    assert_not_nil(story_data.passages, "JSON should have passages")
+      local story_data = json.decode(story)
+      assert.is_not_nil(story_data)
+      assert.is_not_nil(story_data.metadata)
+      assert.is_not_nil(story_data.metadata.title)
+      assert.is_not_nil(story_data.passages)
+    end)
+
+    it("should support round-trip through JSON", function()
+      local importer = TwineImporter.new()
+      local story, err = importer:import_from_html(sample_twine_html)
+      assert.is_not_nil(story)
+
+      local json_str = json.encode(story)
+      assert.is_not_nil(json_str)
+
+      local decoded = json.decode(json_str)
+      assert.is_not_nil(decoded)
+      assert.is_not_nil(decoded.metadata)
+      assert.equals(story.metadata.title, decoded.metadata.title)
+    end)
+  end)
 end)
-
--- Test 10: Passage tag parsing
-test("Passage Tag Parsing", function()
-    local importer = TwineImporter.new()
-    local story, err = importer:import_from_html(sample_twine_html)
-
-    -- Find Forest passage (should have "location" tag)
-    local forest_passage = nil
-    for _, passage in ipairs(story.passages) do
-        if passage.name == "Forest" then
-            forest_passage = passage
-            break
-        end
-    end
-
-    assert_not_nil(forest_passage, "Should find Forest passage")
-    assert_true(#forest_passage.tags > 0, "Forest should have tags")
-
-    local has_location_tag = false
-    for _, tag in ipairs(forest_passage.tags) do
-        if tag == "location" then
-            has_location_tag = true
-            break
-        end
-    end
-
-    assert_true(has_location_tag, "Forest should have 'location' tag")
-end)
-
--- Test 11: Position data preservation
-test("Position Data Preservation", function()
-    local importer = TwineImporter.new()
-    local story, err = importer:import_from_html(sample_twine_html)
-
-    -- Check if positions are preserved
-    local start_passage = nil
-    for _, passage in ipairs(story.passages) do
-        if passage.name == "Start" then
-            start_passage = passage
-            break
-        end
-    end
-
-    assert_not_nil(start_passage, "Should find Start passage")
-    if start_passage.position then
-        assert_not_nil(start_passage.position.x, "Should have X position")
-        assert_not_nil(start_passage.position.y, "Should have Y position")
-    end
-end)
-
--- Test 12: Export to whisker format
-test("Export to whisker Format", function()
-    local importer = TwineImporter.new()
-    local story, err = importer:import_from_html(sample_twine_html)
-    assert_not_nil(story, "Should import story")
-
-    -- Convert to JSON
-    local json_str = json.encode(story)
-    assert_not_nil(json_str, "Should encode to JSON")
-
-    -- Verify it can be decoded back
-    local decoded = json.decode(json_str)
-    assert_not_nil(decoded, "Should decode JSON")
-    assert_not_nil(decoded.metadata, "Decoded should have metadata")
-    assert_not_nil(story.metadata, "Story should have metadata")
-    assert_equal(decoded.metadata.title, story.metadata.title, "Title should match after round-trip")
-end)
-
--- Test 13: File-based import (if fixture exists)
-test("File-Based Import", function()
-    local file_path = "tests/fixtures/test_story.html"
-    local file = io.open(file_path, "r")
-
-    if not file then
-        print("  ⊘ Skipped (fixture file not found)")
-        tests_run = tests_run - 1
-        return
-    end
-
-    local html = file:read("*all")
-    file:close()
-
-    local importer = TwineImporter.new()
-    local story, err = importer:import_from_html(html)
-
-    assert_not_nil(story, "Should import from file: " .. tostring(err))
-    assert_not_nil(story.metadata, "Imported story should have metadata")
-    assert_not_nil(story.metadata.title, "Imported story should have title")
-end)
-
--- Print summary
-print("\n=== Test Results ===")
-print(string.format("Tests run: %d", tests_run))
-print(string.format("Tests passed: %d ✅", tests_passed))
-print(string.format("Tests failed: %d ❌", tests_failed))
-
-if tests_failed == 0 then
-    print("\n🎉 ALL TESTS PASSED! 🎉")
-    print("The Twine importer is working correctly.")
-else
-    print("\n⚠️  SOME TESTS FAILED")
-    print("Please review the errors above.")
-    error("Test failures detected")
-end

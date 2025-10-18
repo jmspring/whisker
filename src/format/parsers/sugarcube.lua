@@ -2,7 +2,7 @@
 -- Parses Twee notation into structured format
 
 -- Use the same basic Twee parser since the passage structure is the same
-local harlowe_parser = require("whisker.parsers.harlowe")
+local harlowe_parser = require("src.format.parsers.harlowe")
 
 local M = {}
 
