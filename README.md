@@ -3,6 +3,20 @@
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![Lua](https://img.shields.io/badge/lua-5.1%2B-purple.svg)](https://www.lua.org/)
 
+> **📦 REPOSITORY REORGANIZED**
+>
+> This project has moved to the **writewhisker** organization with separate repositories:
+>
+> - **[whisker-core](https://github.com/writewhisker/whisker-core)** (MIT) - Core Lua library
+> - **[whisker-editor-web](https://github.com/writewhisker/whisker-editor-web)** (AGPLv3) - Visual web editor
+>   🌐 **[Try it live!](https://writewhisker.github.io/whisker-editor-web/)**
+>
+> **This repository will be archived.** Please use the new repositories for all future development.
+>
+> See **[ARCHIVE_NOTICE.md](ARCHIVE_NOTICE.md)** for migration details.
+
+---
+
 **Create interactive fiction and choice-based stories.** whisker helps you write branching narratives that run anywhere - in web browsers, on the command line, or as desktop apps.
 
 ## ✨ For Story Authors
